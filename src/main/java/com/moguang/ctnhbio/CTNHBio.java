@@ -38,6 +38,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
+@SuppressWarnings("removal")
 @Mod(CTNHBio.MODID)
 public class CTNHBio
 {
@@ -45,9 +46,9 @@ public class CTNHBio
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final CBRegistrate REGISTRATE = CBRegistrate.create();
 
-    public CTNHBio(FMLJavaModLoadingContext context)
+    public CTNHBio()
     {
-        IEventBus modEventBus = context.getModEventBus();
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addCreative);
         modEventBus.addGenericListener(MachineDefinition.class, EventHandler::registerMachines);

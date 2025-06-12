@@ -8,6 +8,7 @@ import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.chance.logic.ChanceLogic;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.registry.CBEntities;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +24,7 @@ public class EventHandler {
 //        CTNHItems.init();
 //        CTNHBlocks.init();
 //        CTNHMultiblockMachines.init();
+        CBEntities.init();
     }
 
     public static void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {
