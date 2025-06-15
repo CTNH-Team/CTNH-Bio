@@ -2,6 +2,9 @@ package com.moguang.ctnhbio.common.machine;
 
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
+import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
+import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import com.moguang.ctnhbio.common.entity.BasicLivingMachineEntity;
 import com.moguang.ctnhbio.registry.CBEntities;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
