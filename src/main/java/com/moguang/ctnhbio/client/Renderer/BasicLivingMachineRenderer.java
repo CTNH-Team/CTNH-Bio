@@ -1,6 +1,6 @@
 package com.moguang.ctnhbio.client.Renderer;
 
-import com.moguang.ctnhbio.common.entity.BasicMobEntity;
+import com.moguang.ctnhbio.common.entity.BasicLivingMachineEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -11,20 +11,20 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class BasicMobRenderer extends EntityRenderer<BasicMobEntity> {
+public class BasicLivingMachineRenderer extends EntityRenderer<BasicLivingMachineEntity> {
 
-    public BasicMobRenderer(EntityRendererProvider.Context context) {
+    public BasicLivingMachineRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public void render(BasicMobEntity entity, float entityYaw, float partialTicks,
+    public void render(BasicLivingMachineEntity entity, float entityYaw, float partialTicks,
                        PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 
         poseStack.pushPose();
 
-        poseStack.translate(-1.5, 0.0, -1.5);
-        poseStack.scale(3.0F, 3.0F, 3.0F);
+        poseStack.translate(-0.5, 0, -0.5);
+        //poseStack.scale(3.0F, 3.0F, 3.0F);
         BlockState state = Blocks.OAK_LOG.defaultBlockState();
 
         Minecraft.getInstance().getBlockRenderer().renderSingleBlock(
@@ -39,7 +39,7 @@ public class BasicMobRenderer extends EntityRenderer<BasicMobEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BasicMobEntity basicMobEntity) {
+    public ResourceLocation getTextureLocation(BasicLivingMachineEntity BasicLivingMachineEntity) {
         return null;
     }
 }

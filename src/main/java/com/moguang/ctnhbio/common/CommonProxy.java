@@ -2,6 +2,7 @@ package com.moguang.ctnhbio.common;
 
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.registry.CBCreativeModeTabs;
+import com.moguang.ctnhbio.registry.CBEntities;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -13,7 +14,9 @@ public class CommonProxy {
                 .get().getModEventBus();
     }
     public static void init() {
+        CBEntities.init();
         CBCreativeModeTabs.init();
         CTNHBio.REGISTRATE.registerRegistrate();
+
     }
 }

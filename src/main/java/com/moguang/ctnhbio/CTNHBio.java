@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -46,11 +47,15 @@ public class CTNHBio
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final CBRegistrate REGISTRATE = CBRegistrate.create();
 
+
+
     public CTNHBio()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(this::onRegisterEntityRenderers);
+
         modEventBus.addGenericListener(MachineDefinition.class, EventHandler::registerMachines);
         modEventBus.addGenericListener(GTRecipeType.class, EventHandler::registerRecipeTypes);
         modEventBus.addGenericListener(DimensionMarker.class, EventHandler::registerDimensionMarkers);
@@ -68,6 +73,10 @@ public class CTNHBio
     {
 //        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
 //            event.accept(EXAMPLE_BLOCK_ITEM);
+    }
+
+    private void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+
     }
 
 
