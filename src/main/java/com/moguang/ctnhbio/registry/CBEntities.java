@@ -8,9 +8,10 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBEntities {
     public static EntityEntry<BasicLivingMachineEntity> BASIC_LIVING_MACHINE_ENTITY = REGISTRATE
-            .entity("living_machine", BasicLivingMachineEntity::new, MobCategory.MISC)
-            .properties(props -> props.sized(0.1F, 0.1F))
+            .entity("living_machine", BasicLivingMachineEntity::new, MobCategory.CREATURE)
+            .properties(props -> props.sized(0.9F, 0.9F))
             .attributes(BasicLivingMachineEntity::createAttributes)
+
             .lang("living machine")
             .register();
 
