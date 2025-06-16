@@ -23,15 +23,18 @@ public class BasicLivingMachineEntity extends LivingEntity {
         super(type, level);
         //this.anchor = BlockPos.ZERO;
         this.noPhysics = true;
+        this.setCustomNameVisible(true);
 
+        //machine.createUIWidget()
         //this.setBoundingBox(new AABB(this.blockPosition()));
 
     }
 
     public BasicLivingMachine getMachine() {
 
-        if(this.level().getBlockEntity(this.anchor) instanceof MetaMachineBlockEntity blockEntity &&
-        blockEntity.getMetaMachine() instanceof BasicLivingMachine machine)
+        if(this.anchor != null &&
+                this.level().getBlockEntity(this.anchor) instanceof MetaMachineBlockEntity blockEntity &&
+                blockEntity.getMetaMachine() instanceof BasicLivingMachine machine)
         {
             machine.machineEntity = this;
             return machine;
@@ -45,12 +48,14 @@ public class BasicLivingMachineEntity extends LivingEntity {
     }
 
     public void setAnchor(BasicLivingMachine livingMachine) {
-        //this.machine = block;
+
         this.anchor = livingMachine.getPos();
-        this.setPos(anchor.getX() + 0.5, anchor.getY(), anchor.getZ() + 0.5);
         this.machine = livingMachine;
         this.getPersistentData().putLong("anchor", anchor.asLong());
 
+        this.setPos(anchor.getX() + 0.5, anchor.getY(), anchor.getZ() + 0.5);
+        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D * machine.getTier());
+        this.setHealth(this.getMaxHealth());
     }
 
     @Override
@@ -71,7 +76,8 @@ public class BasicLivingMachineEntity extends LivingEntity {
     {
         super.die(source);
         if (this.getMachine() != null) {
-            level().destroyBlock(this.getMachine().getPos(), true);
+            //level().destroyBlock(this.getMachine().getPos(), true);
+            level().removeBlock(this.getMachine().getPos(), false);
         }
     }
 

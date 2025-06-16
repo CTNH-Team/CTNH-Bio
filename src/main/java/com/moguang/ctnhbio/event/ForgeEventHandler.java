@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -22,28 +23,31 @@ import java.util.UUID;
 public class ForgeEventHandler {
     //public static final Map<UUID, Boolean> isHoldingLeftClick = new HashMap<>();
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 
         Level level = event.getLevel();
         BlockPos pos = event.getPos();
         BlockState state = level.getBlockState(pos);
         Player player = event.getEntity();
+        ItemStack stack = event.getItemStack();
         if (level.isClientSide) {
             return;
         }
 
         if (state.getBlock() instanceof MetaMachineBlock block &&
                 block.getDefinition().getId().getNamespace().equals(CTNHBio.MODID) &&
-                block.getDefinition().getId().getPath().contains("living_machine") &&
                 block.getMachine(level, pos) instanceof BasicLivingMachine machine
         ) {
             InteractionResult result = machine.machineEntity.interact(player, event.getHand());
+            if (!result.consumesAction()) {
+                result = stack.interactLivingEntity(player, machine.machineEntity, event.getHand());
+            }
 
+            //System.out.println("111");
             if (result.consumesAction()) {
                 event.setCanceled(true);
             }
-
         }
     }
 
@@ -58,17 +62,16 @@ public class ForgeEventHandler {
         Minecraft mc = Minecraft.getInstance();
 
         //boolean previouslyHolding = isHoldingLeftClick.getOrDefault(id, false);
-        boolean cooledDown = player.getAttackStrengthScale(0.5f) >= 1.0f;
+        //boolean cooledDown = ;
 
 
         if (!player.isCreative() &&
                 state.getBlock() instanceof MetaMachineBlock block &&
                 block.getDefinition().getId().getNamespace().equals(CTNHBio.MODID) &&
-                //block.getDefinition().getId().getPath().contains("living_machine") &&
                 block.getMachine(level, pos) instanceof BasicLivingMachine machine &&
                 !stack.isCorrectToolForDrops(state)
         ) {
-            if(cooledDown){
+            if(player.getAttackStrengthScale(0.5f) >= 1.0f){
                 if(!level.isClientSide) player.attack(machine.machineEntity);
                 player.resetAttackStrengthTicker();
             }

@@ -14,9 +14,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class BasicLivingMachineRenderer extends EntityRenderer<BasicLivingMachineEntity> {
+public class BasicLivingMachineEntityRenderer extends EntityRenderer<BasicLivingMachineEntity> {
 
-    public BasicLivingMachineRenderer(EntityRendererProvider.Context context) {
+    public BasicLivingMachineEntityRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
@@ -29,7 +29,6 @@ public class BasicLivingMachineRenderer extends EntityRenderer<BasicLivingMachin
     public void render(BasicLivingMachineEntity entity, float entityYaw, float partialTicks,
                        PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 
-        //super.render(entity, entityYaw, partialTicks, poseStack, bufferSource, packedLight);
         poseStack.pushPose();
 
         poseStack.translate(-0.5, 0, -0.5);
@@ -44,8 +43,8 @@ public class BasicLivingMachineRenderer extends EntityRenderer<BasicLivingMachin
                 light,
                 OverlayTexture.NO_OVERLAY
         );
-
         poseStack.popPose();
+        super.render(entity, entityYaw, partialTicks, poseStack, bufferSource, packedLight);
     }
 
     @Override
