@@ -1,9 +1,11 @@
 package com.moguang.ctnhbio.common.entity;
 
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
+import com.moguang.ctnhbio.api.block.TransparentMetaMachineBlock;
 import com.moguang.ctnhbio.common.machine.BasicLivingMachine;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -12,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 
@@ -22,7 +25,7 @@ public class BasicLivingMachineEntity extends LivingEntity {
     public BasicLivingMachineEntity(EntityType<? extends LivingEntity> type, Level level) {
         super(type, level);
         //this.anchor = BlockPos.ZERO;
-        this.noPhysics = true;
+        //this.noPhysics = true;
         this.setCustomNameVisible(true);
 
         //machine.createUIWidget()
@@ -56,6 +59,15 @@ public class BasicLivingMachineEntity extends LivingEntity {
         this.setPos(anchor.getX() + 0.5, anchor.getY(), anchor.getZ() + 0.5);
         this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D * machine.getTier());
         this.setHealth(this.getMaxHealth());
+    }
+
+    @Override
+    public void setCustomName(@Nullable Component name) {
+        super.setCustomName(name);
+        if(level().getBlockState(blockPosition()).getBlock() instanceof TransparentMetaMachineBlock block)
+        {
+            block.setName(name);
+        }
     }
 
     @Override
@@ -136,8 +148,9 @@ public class BasicLivingMachineEntity extends LivingEntity {
         double y = Math.floor(this.getY());
         double z = Math.floor(this.getZ()) + 0.5;
 
-        this.setPos(x, y, z);
-        this.setDeltaMovement(Vec3.ZERO);
+        //this.setPos(x, y, z);
+        //this.setDeltaMovement(Vec3.ZERO);
+        this.setDeltaMovement(0, 0, 0);
     }
 
     @Override
@@ -159,4 +172,14 @@ public class BasicLivingMachineEntity extends LivingEntity {
     public boolean isPickable() {
         return true;
     }
+
+    @Override
+    public void checkInsideBlocks() {
+    }
+
+    @Override
+    public boolean isInWall() {
+        return false;
+    }
+
 }

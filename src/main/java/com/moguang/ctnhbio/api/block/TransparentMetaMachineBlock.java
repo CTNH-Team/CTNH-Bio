@@ -3,6 +3,7 @@ package com.moguang.ctnhbio.api.block;
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -10,6 +11,13 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class TransparentMetaMachineBlock extends MetaMachineBlock {
+
+    private Component name = null;
+
+    public void setName(Component name) {
+        this.name = name;
+    }
+
     public TransparentMetaMachineBlock(Properties properties, MachineDefinition definition) {
         super(properties, definition);
     }
@@ -36,5 +44,13 @@ public class TransparentMetaMachineBlock extends MetaMachineBlock {
     @Override
     public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
         return Shapes.empty();
+    }
+
+    @Override
+    public String getDescriptionId() {
+        if (name != null) {
+            return name.getString();
+        }
+        return super.getDescriptionId();
     }
 }
