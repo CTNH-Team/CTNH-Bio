@@ -102,6 +102,7 @@ public class BasicLivingMachine extends SimpleTieredMachine {
     @Override
     public void onMachineRemoved() {
         super.onMachineRemoved();
+        //this.holder
         if (machineEntity != null) {
             machineEntity.discard();
 

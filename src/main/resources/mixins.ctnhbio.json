@@ -5,7 +5,11 @@
   "refmap": "mixins.ctnhbio.refmap.json",
   "mixins": [
     "GTJadePluginMixin",
-    "GTMixin"
+    "GTMaterialItemsMixin",
+    "GTMixin",
+    "jei.JeiBaseLootMixin",
+    "jei.JeiGameplayLootMixin",
+    "jei.LootTableAccessor"
   ],
   "client": [],
   "minVersion": "0.8"

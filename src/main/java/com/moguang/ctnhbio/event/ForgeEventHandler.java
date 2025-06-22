@@ -1,8 +1,10 @@
 package com.moguang.ctnhbio.event;
 
+import com.google.gson.Gson;
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.common.machine.BasicLivingMachine;
+import com.yanny.ali.registries.LootCategories;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
@@ -10,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -87,5 +90,9 @@ public class ForgeEventHandler {
 
     }
 
+    @SubscribeEvent
+    public static void onDataReload(AddReloadListenerEvent event) {
+        event.addListener(LootCategories.getReloadListener(new Gson(), "loot_categories"));
+    }
 
 }

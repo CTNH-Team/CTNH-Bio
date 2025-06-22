@@ -1,5 +1,6 @@
 package com.moguang.ctnhbio;
 
+import com.github.elenterius.biomancy.init.ModEnchantments;
 import com.gregtechceu.gtceu.api.data.DimensionMarker;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
@@ -61,6 +62,7 @@ public class CTNHBio
         modEventBus.addGenericListener(DimensionMarker.class, EventHandler::registerDimensionMarkers);
         modEventBus.addGenericListener(ChanceLogic.class,EventHandler::registerChanceLogic);
         DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+
     }
 
     public static ResourceLocation id(String name) {return new ResourceLocation(MODID, name); }

@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.common.entity;
 
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
+import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.moguang.ctnhbio.api.block.TransparentMetaMachineBlock;
 import com.moguang.ctnhbio.common.machine.BasicLivingMachine;
 import net.minecraft.core.BlockPos;
@@ -19,8 +20,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 
 public class BasicLivingMachineEntity extends LivingEntity {
-    public BlockPos anchor;
-    public BasicLivingMachine machine;
+    private BlockPos anchor;
+    private BasicLivingMachine machine;
+    private IMachineBlockEntity machineHolder;
 
     public BasicLivingMachineEntity(EntityType<? extends LivingEntity> type, Level level) {
         super(type, level);
@@ -53,6 +55,7 @@ public class BasicLivingMachineEntity extends LivingEntity {
     public void setAnchor(BasicLivingMachine livingMachine) {
 
         this.anchor = livingMachine.getPos();
+        this.machineHolder = livingMachine.holder;
         this.machine = livingMachine;
         this.getPersistentData().putLong("anchor", anchor.asLong());
 
