@@ -7,9 +7,10 @@
     "GTJadePluginMixin",
     "GTMaterialItemsMixin",
     "GTMixin",
+    "jei.GTRecipeWidgetMixin",
     "jei.JeiBaseLootMixin",
     "jei.JeiGameplayLootMixin",
-    "jei.LootTableAccessor"
+    "jei.LootTableMixin"
   ],
   "client": [],
   "minVersion": "0.8"

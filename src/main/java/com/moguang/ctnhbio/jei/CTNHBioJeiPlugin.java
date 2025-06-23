@@ -4,6 +4,7 @@ import com.github.elenterius.biomancy.init.ModEnchantments;
 import com.gregtechceu.gtceu.api.item.IGTTool;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.mixin.jei.LootTableAccessor;
+import com.moguang.ctnhbio.utils.LootTableAccess;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.yanny.ali.compatibility.common.GameplayLootType;
 import mezz.jei.api.IModPlugin;
@@ -48,7 +49,7 @@ public class CTNHBioJeiPlugin implements IModPlugin {
 
         List<GameplayLootType> toHide = allRecipes
                 .filter(recipe -> {
-                    ResourceLocation seq = ((LootTableAccessor)recipe.entry()).getRandomSequence();
+                    ResourceLocation seq = ((LootTableAccess)recipe.entry()).getRandomSequence();
                     if (seq == null) return true;
 
                     String[] parts = seq.getPath().split("/");

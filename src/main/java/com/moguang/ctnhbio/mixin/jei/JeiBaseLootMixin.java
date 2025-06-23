@@ -1,5 +1,6 @@
 package com.moguang.ctnhbio.mixin.jei;
 
+import com.moguang.ctnhbio.utils.LootTableAccess;
 import com.yanny.ali.compatibility.common.GameplayLootType;
 import com.yanny.ali.compatibility.common.IType;
 import com.yanny.ali.compatibility.jei.JeiBaseLoot;
@@ -33,7 +34,7 @@ public abstract class JeiBaseLootMixin {
         if (!loot.id().contains("despoil")) return;
 
         // 获取刷怪蛋
-        ResourceLocation lootTableId = ((LootTableAccessor) loot.entry()).getRandomSequence();
+        ResourceLocation lootTableId = ((LootTableAccess) loot.entry()).getRandomSequence();
         EntityType<?> type = tryGuessEntityTypeFromDespoilId(lootTableId);
         if (type == null) return;
 

@@ -1,5 +1,6 @@
 package com.moguang.ctnhbio.mixin.jei;
 
+import com.moguang.ctnhbio.utils.LootTableAccess;
 import com.yanny.ali.api.Rect;
 import com.yanny.ali.compatibility.common.GameplayLootType;
 import com.yanny.ali.compatibility.common.GenericUtils;
@@ -42,7 +43,7 @@ public abstract class JeiGameplayLootMixin{
             CallbackInfoReturnable<Pair<List<IRecipeWidget>, List<IRecipeSlotDrawable>>> cir
     ) {
         if(!recipe.id().contains("despoil")) return;
-        ResourceLocation lootTableId = ((LootTableAccessor)recipe.entry()).getRandomSequence();
+        ResourceLocation lootTableId = ((LootTableAccess)recipe.entry()).getRandomSequence();
 
         EntityType<?> type = tryGuessEntityTypeFromDespoilId(lootTableId);
         if (type == null || Minecraft.getInstance().level == null) {
