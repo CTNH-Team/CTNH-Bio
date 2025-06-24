@@ -1,4 +1,4 @@
-package com.moguang.ctnhbio.common.machine;
+package com.moguang.ctnhbio.api.machine;
 
 import com.google.common.collect.Tables;
 import com.gregtechceu.gtceu.api.GTValues;
@@ -15,12 +15,13 @@ import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
 import com.gregtechceu.gtceu.data.lang.LangHandler;
 import com.gregtechceu.gtceu.utils.GTUtil;
-import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.utils.Position;
+import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.gui.CBGuiTextures;
-import com.moguang.ctnhbio.common.entity.BasicLivingMachineEntity;
+import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.registry.CBEntities;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import net.minecraft.Util;
@@ -39,13 +40,18 @@ import java.util.function.BiFunction;
 
 public class BasicLivingMachine extends SimpleTieredMachine {
 
-    public BasicLivingMachineEntity machineEntity;
+    private LivingMetaMachineEntity machineEntity;
 
     public BasicLivingMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, Object... args) {
         super(holder, tier, tankScalingFunction, args);
+        getMachineEntity();
+    }
 
-
-
+    public LivingMetaMachineEntity getMachineEntity() {
+        if(machineEntity == null) {
+            machineEntity = ((LivingMetaMachineBlockEntity) holder).getCachedEntity();
+        }
+        return machineEntity;
     }
 
     @Override
@@ -57,39 +63,43 @@ public class BasicLivingMachine extends SimpleTieredMachine {
     public void doExplosion(float explosionPower) {
         float inputTier = explosionPower -1;
         if(inputTier - tier >= 2) {
-            this.machineEntity.die(GTDamageTypes.ELECTRIC.source(this.getLevel()));
+            if(machineEntity != null && machineEntity.isAlive())
+            {
+                machineEntity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()), machineEntity.getMaxHealth());
+                //machineEntity.;
+            }
         }
         else {
-            this.energyContainer.changeEnergy(GTValues.V[tier]);
+            this.energyContainer.changeEnergy(GTValues.V[tier + 1]);
             this.machineEntity.hurt(GTDamageTypes.ELECTRIC.source(this.getLevel()), tier);
         }
 
 
     }
 
-    @Override
-    public void onMachinePlaced(@Nullable LivingEntity player, ItemStack stack) {
-        super.onMachinePlaced(player, stack);
-        this.machineEntity = new BasicLivingMachineEntity(CBEntities.BASIC_LIVING_MACHINE_ENTITY.get(), this.getLevel());
-        machineEntity.setAnchor(this);
-        Objects.requireNonNull(this.getLevel()).addFreshEntity(machineEntity);
-        //System.out.println(this.holder.getDefinition().getId());
-//        Field field = null;
-//        try {
-//            field = NotifiableEnergyContainer.class.getDeclaredField("inputVoltage");
-//        } catch (NoSuchFieldException e) {
-//            throw new RuntimeException(e);
-//        }
-//        field.setAccessible(true); // 关闭 Java 的访问检查
+//    @Override
+//    public void onMachinePlaced(@Nullable LivingEntity player, ItemStack stack) {
+//        super.onMachinePlaced(player, stack);
+//        this.machineEntity = new LivingMetaMachineEntity(CBEntities.LIVING_META_MACHINE_ENTITY.get(), this.getLevel());
+//        machineEntity.setAnchor(this);
+//        Objects.requireNonNull(this.getLevel()).addFreshEntity(machineEntity);
+//        //System.out.println(this.holder.getDefinition().getId());
+////        Field field = null;
+////        try {
+////            field = NotifiableEnergyContainer.class.getDeclaredField("inputVoltage");
+////        } catch (NoSuchFieldException e) {
+////            throw new RuntimeException(e);
+////        }
+////        field.setAccessible(true); // 关闭 Java 的访问检查
+////
+////        try {
+////            field.setLong(this.energyContainer, 4 * field.getLong(this.energyContainer));
+////        } catch (IllegalAccessException e) {
+////            throw new RuntimeException(e);
+////        }
 //
-//        try {
-//            field.setLong(this.energyContainer, 4 * field.getLong(this.energyContainer));
-//        } catch (IllegalAccessException e) {
-//            throw new RuntimeException(e);
-//        }
-
-        //energyContainer = createEnergyContainer(args);
-    }
+//        //energyContainer = createEnergyContainer(args);
+//    }
 
 
     @Override
@@ -99,16 +109,16 @@ public class BasicLivingMachine extends SimpleTieredMachine {
 
     }
 
-    @Override
-    public void onMachineRemoved() {
-        super.onMachineRemoved();
-        //this.holder
-        if (machineEntity != null) {
-            machineEntity.discard();
-
-            machineEntity = null;
-        }
-    }
+//    @Override
+//    public void onMachineRemoved() {
+//        super.onMachineRemoved();
+//        //this.holder
+//        if (machineEntity != null) {
+//            machineEntity.discard();
+//
+//            machineEntity = null;
+//        }
+//    }
 
     //protected class EnergyBatteryTrait extends BatteryBufferMachine.EnergyBatteryTrait{
 

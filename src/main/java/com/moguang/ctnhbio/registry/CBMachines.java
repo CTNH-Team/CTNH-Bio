@@ -8,12 +8,12 @@ import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
-import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
 
 import com.gregtechceu.gtceu.api.registry.registrate.MachineBuilder;
-import com.moguang.ctnhbio.api.block.TransparentMetaMachineBlock;
+import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.client.Renderer.InvisibleRenderer;
-import com.moguang.ctnhbio.common.machine.BasicLivingMachine;
+import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 
 import java.util.Locale;
 import java.util.function.BiFunction;
@@ -44,9 +44,9 @@ public class CBMachines {
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_" + name,
                             MachineDefinition::createDefinition,
                             holder -> factory.apply(holder, tier),
-                            TransparentMetaMachineBlock::new,
+                            LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
-                            MetaMachineBlockEntity::createBlockEntity)
+                            LivingMetaMachineBlockEntity::createLivingBlockEntity)
                     .tier(tier);
             definitions[tier] = builder.apply(tier, register);
         }

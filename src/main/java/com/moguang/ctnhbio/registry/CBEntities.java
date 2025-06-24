@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.registry;
 
-import com.moguang.ctnhbio.common.entity.BasicLivingMachineEntity;
+import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
+import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -8,11 +9,12 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBEntities {
-    public static EntityEntry<BasicLivingMachineEntity> BASIC_LIVING_MACHINE_ENTITY = REGISTRATE
-            .entity("living_machine", BasicLivingMachineEntity::new, MobCategory.CREATURE)
+    public static EntityEntry<LivingMetaMachineEntity> LIVING_META_MACHINE_ENTITY = REGISTRATE
+            .entity("living_machine", LivingMetaMachineEntity::createLivingMetaMachineEntity, MobCategory.CREATURE)
             .properties(props -> props.sized(0.9F, 0.9F))
-            .attributes(BasicLivingMachineEntity::createAttributes)
+            .attributes(LivingMetaMachineEntity::createAttributes)
             .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
+            .renderer(() -> BasicLivingMachineEntityRenderer::new)
             .lang("Living Machine")
             .register();
 

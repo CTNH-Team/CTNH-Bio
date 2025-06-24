@@ -1,11 +1,8 @@
 package com.moguang.ctnhbio.jade;
 
 import com.gregtechceu.gtceu.GTCEu;
-import com.gregtechceu.gtceu.api.capability.GTCapabilityHelper;
-import com.gregtechceu.gtceu.api.capability.IControllable;
 import com.gregtechceu.gtceu.integration.jade.provider.CapabilityBlockProvider;
-import com.moguang.ctnhbio.common.machine.BasicLivingMachine;
-import net.minecraft.ChatFormatting;
+import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,9 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.Nullable;
-import snownee.jade.addon.vanilla.StatusEffectsProvider;
 import snownee.jade.api.BlockAccessor;
-import snownee.jade.api.EntityAccessor;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 import snownee.jade.api.theme.IThemeHelper;
@@ -54,12 +49,12 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<BasicLi
 
     @Override
     protected void write(CompoundTag data, BasicLivingMachine machine) {
-        var maxHealth = machine.machineEntity.getMaxHealth();
-        var health = machine.machineEntity.getHealth();
+        var maxHealth = machine.getMachineEntity().getMaxHealth();
+        var health = machine.getMachineEntity().getHealth();
         data.putFloat("MaxHealth", maxHealth);
         data.putFloat("Health", health);
 
-        LivingEntity living = machine.machineEntity;
+        LivingEntity living = machine.getMachineEntity();
         Collection<MobEffectInstance> effects = living.getActiveEffects();
         if (!effects.isEmpty()) {
             ListTag list = new ListTag();

@@ -19,9 +19,9 @@ public class ClientRegister {
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
 
-        event.registerEntityRenderer(CBEntities.BASIC_LIVING_MACHINE_ENTITY.get(),
-                BasicLivingMachineEntityRenderer::new
-        );
+//        event.registerEntityRenderer(CBEntities.LIVING_META_MACHINE_ENTITY.get(),
+//                BasicLivingMachineEntityRenderer::new
+//        );
     }
 
 }

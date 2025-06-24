@@ -3,7 +3,6 @@ package com.moguang.ctnhbio.jei;
 import com.github.elenterius.biomancy.init.ModEnchantments;
 import com.gregtechceu.gtceu.api.item.IGTTool;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
-import com.moguang.ctnhbio.mixin.jei.LootTableAccessor;
 import com.moguang.ctnhbio.utils.LootTableAccess;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.yanny.ali.compatibility.common.GameplayLootType;
