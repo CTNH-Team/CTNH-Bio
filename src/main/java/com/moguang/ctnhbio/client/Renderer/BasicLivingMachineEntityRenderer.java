@@ -2,12 +2,18 @@ package com.moguang.ctnhbio.client.Renderer;
 
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.SlimeModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -16,8 +22,13 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class BasicLivingMachineEntityRenderer extends EntityRenderer<LivingMetaMachineEntity> {
 
+    private final EntityModel<LivingMetaMachineEntity> model;
+    private final ResourceLocation SLIME_TEXTURE = new ResourceLocation("textures/entity/slime/slime.png");
+    private final ResourceLocation LOG_TEXTURE = new ResourceLocation("textures/block/oak_log.png");
+
     public BasicLivingMachineEntityRenderer(EntityRendererProvider.Context context) {
         super(context);
+        this.model = new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME));
     }
 
     @Override
@@ -30,30 +41,32 @@ public class BasicLivingMachineEntityRenderer extends EntityRenderer<LivingMetaM
                        PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 
         poseStack.pushPose();
+        float scale = 2.5f; // 缩小史莱姆模型
+        poseStack.translate(0, -scale, 0);
+        poseStack.scale(scale, scale, scale);
+        int overlay = entity.hurtTime > 0 ?
+                LivingEntityRenderer.getOverlayCoords(entity, partialTicks) :
+                OverlayTexture.NO_OVERLAY;
 
-        poseStack.translate(-0.5, 0, -0.5);
-        //poseStack.scale(3.0F, 3.0F, 3.0F);
-        BlockState state = Blocks.OAK_LOG.defaultBlockState();
-        int light = LevelRenderer.getLightColor(entity.level(), BlockPos.containing(entity.position().add(0,0,0)));
-
-        Minecraft.getInstance().getBlockRenderer().renderSingleBlock(
-                state,
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(LOG_TEXTURE));
+        this.model.renderToBuffer(
                 poseStack,
-                bufferSource,
-                light,
-                OverlayTexture.NO_OVERLAY
+                vertexConsumer,
+                packedLight,
+                overlay,
+                1.0f, 1.0f, 1.0f, 1.0f
         );
         poseStack.popPose();
         super.render(entity, entityYaw, partialTicks, poseStack, bufferSource, packedLight);
     }
 
-    @Override
-    protected int getBlockLightLevel(LivingMetaMachineEntity p_114496_, BlockPos p_114497_) {
-        return super.getBlockLightLevel(p_114496_, p_114497_);
-    }
+//    @Override
+//    protected int getBlockLightLevel(LivingMetaMachineEntity p_114496_, BlockPos p_114497_) {
+//        return super.getBlockLightLevel(p_114496_, p_114497_);
+//    }
 
     @Override
     public ResourceLocation getTextureLocation(LivingMetaMachineEntity LivingMetaMachineEntity) {
-        return null;
+        return LOG_TEXTURE;
     }
 }

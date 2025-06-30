@@ -1,4 +1,4 @@
-package com.moguang.ctnhbio.jei;
+package com.moguang.ctnhbio.integration.jei;
 
 import com.github.elenterius.biomancy.init.ModEnchantments;
 import com.gregtechceu.gtceu.api.item.IGTTool;
@@ -8,6 +8,8 @@ import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.yanny.ali.compatibility.common.GameplayLootType;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.recipe.IFocus;
+import mezz.jei.api.recipe.IFocusFactory;
 import mezz.jei.api.recipe.IRecipeManager;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -35,6 +37,7 @@ public class CTNHBioJeiPlugin implements IModPlugin {
         return ID;
     }
 
+
     @Override
     public void onRuntimeAvailable(@NotNull IJeiRuntime jeiRuntime) {
         IRecipeManager recipeManager = jeiRuntime.getRecipeManager();
@@ -43,7 +46,9 @@ public class CTNHBioJeiPlugin implements IModPlugin {
         //List<GameplayLootType> toHide = new ArrayList<>();
 
         // 获取所有该类型的配方
+        //IFocus<ItemStack> focus = IFocusFactory.
 
+        //System.out.println(jeiRuntime.getIngredientFilter().getFilterText());
         var allRecipes = recipeManager.createRecipeLookup(aliGameplayType).get();
 
         List<GameplayLootType> toHide = allRecipes

@@ -1,8 +1,7 @@
 package com.moguang.ctnhbio.mixin;
 
 import com.gregtechceu.gtceu.integration.jade.GTJadePlugin;
-import com.gregtechceu.gtceu.integration.jade.provider.ElectricContainerBlockProvider;
-import com.moguang.ctnhbio.jade.LivingMachineStatusProvider;
+import com.moguang.ctnhbio.integration.jade.LivingMachineStatusProvider;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;

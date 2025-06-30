@@ -2,6 +2,7 @@ package com.moguang.ctnhbio.api.block;
 
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
+import com.moguang.ctnhbio.api.ILivingEntityHostBlock;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import net.minecraft.core.BlockPos;
@@ -18,9 +19,19 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class LivingMetaMachineBlock extends MetaMachineBlock {
+public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingEntityHostBlock<LivingMetaMachineEntity> {
 
-    //private LivingMetaMachineEntity entity = null;
+    //private LivingMetaMachineEntity machineEntity = null;
+    @Override
+    public LivingMetaMachineEntity getHostedEntity(Level level, BlockPos pos, BlockState state) {
+
+        if(!level.isClientSide() &&
+                getMachine(level, pos) instanceof BasicLivingMachine machine)
+        {
+            return machine.getMachineEntity();
+        }
+        return null;
+    }
 
     public LivingMetaMachineBlock(Properties properties, MachineDefinition definition) {
         super(properties, definition);
@@ -29,26 +40,15 @@ public class LivingMetaMachineBlock extends MetaMachineBlock {
     @Override
     public void attack(BlockState state, Level level, BlockPos pos, Player player) {
         super.attack(state, level, pos, player);
-        if(!level.isClientSide() &&
-                getMachine(level, pos) instanceof BasicLivingMachine machine &&
-                !player.getItemInHand(InteractionHand.MAIN_HAND).isCorrectToolForDrops(state))
-        {
-            player.attack(machine.getMachineEntity());
-        }
+        onBlockAttacked(state, level, pos, player);
     }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if(!level.isClientSide() &&
-                getMachine(level, pos) instanceof BasicLivingMachine machine)
+        InteractionResult result = onBlockUsed(state, level, pos, player);
+        if(result.consumesAction())
         {
-            InteractionResult result = machine.getMachineEntity().interact(player, hand);
-            if (!result.consumesAction()) {
-                result = player.getItemInHand(hand).interactLivingEntity(player, machine.getMachineEntity(), hand);
-            }
-            if (result.consumesAction()) {
-                return result;
-            }
+            return result;
         }
         return super.use(state, level, pos, player, hand, hit);
     }
@@ -59,20 +59,20 @@ public class LivingMetaMachineBlock extends MetaMachineBlock {
 
     }
 
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState pNewState, boolean pIsMoving) {
-
-
-        if(!level.isClientSide() &&
-                getMachine(level, pos) instanceof BasicLivingMachine machine)
-        {
-            LivingEntity entity =  machine.getMachineEntity();
-            if (entity != null && entity.isAlive()) {
-                entity.discard();
-            }
-        }
-        super.onRemove(state, level, pos, pNewState, pIsMoving);
-    }
+//    @Override
+//    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState pNewState, boolean pIsMoving) {
+//
+//
+//        if(!level.isClientSide() &&
+//                getMachine(level, pos) instanceof BasicLivingMachine machine)
+//        {
+//            LivingEntity entity =  machine.getMachineEntity();
+//            if (entity != null && entity.isAlive()) {
+//                entity.discard();
+//            }
+//        }
+//        super.onRemove(state, level, pos, pNewState, pIsMoving);
+//    }
 
     @Override
     public boolean propagatesSkylightDown(BlockState p_49928_, BlockGetter p_49929_, BlockPos p_49930_) {
@@ -105,4 +105,6 @@ public class LivingMetaMachineBlock extends MetaMachineBlock {
 //        }
         return super.getDescriptionId();
     }
+
+
 }

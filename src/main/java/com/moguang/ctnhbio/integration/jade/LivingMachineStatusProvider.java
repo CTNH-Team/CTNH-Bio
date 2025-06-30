@@ -1,4 +1,4 @@
-package com.moguang.ctnhbio.jade;
+package com.moguang.ctnhbio.integration.jade;
 
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.integration.jade.provider.CapabilityBlockProvider;

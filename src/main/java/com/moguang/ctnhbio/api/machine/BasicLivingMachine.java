@@ -44,12 +44,12 @@ public class BasicLivingMachine extends SimpleTieredMachine {
 
     public BasicLivingMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, Object... args) {
         super(holder, tier, tankScalingFunction, args);
-        getMachineEntity();
+        //getMachineEntity();
     }
 
     public LivingMetaMachineEntity getMachineEntity() {
         if(machineEntity == null) {
-            machineEntity = ((LivingMetaMachineBlockEntity) holder).getCachedEntity();
+            machineEntity = ((LivingMetaMachineBlockEntity) holder).getLivingMachine();
         }
         return machineEntity;
     }
@@ -76,31 +76,6 @@ public class BasicLivingMachine extends SimpleTieredMachine {
 
 
     }
-
-//    @Override
-//    public void onMachinePlaced(@Nullable LivingEntity player, ItemStack stack) {
-//        super.onMachinePlaced(player, stack);
-//        this.machineEntity = new LivingMetaMachineEntity(CBEntities.LIVING_META_MACHINE_ENTITY.get(), this.getLevel());
-//        machineEntity.setAnchor(this);
-//        Objects.requireNonNull(this.getLevel()).addFreshEntity(machineEntity);
-//        //System.out.println(this.holder.getDefinition().getId());
-////        Field field = null;
-////        try {
-////            field = NotifiableEnergyContainer.class.getDeclaredField("inputVoltage");
-////        } catch (NoSuchFieldException e) {
-////            throw new RuntimeException(e);
-////        }
-////        field.setAccessible(true); // 关闭 Java 的访问检查
-////
-////        try {
-////            field.setLong(this.energyContainer, 4 * field.getLong(this.energyContainer));
-////        } catch (IllegalAccessException e) {
-////            throw new RuntimeException(e);
-////        }
-//
-//        //energyContainer = createEnergyContainer(args);
-//    }
-
 
     @Override
     public int getMaxOverclockTier() {

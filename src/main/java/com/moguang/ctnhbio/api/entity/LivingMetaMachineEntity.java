@@ -3,6 +3,8 @@ package com.moguang.ctnhbio.api.entity;
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
+import com.moguang.ctnhbio.api.IHostAwareEntity;
+import com.moguang.ctnhbio.api.ILivingEntityHost;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import lombok.Setter;
@@ -25,119 +27,45 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.UUID;
 
-public class LivingMetaMachineEntity extends LivingEntity {
-    private BlockPos anchor;
-    private BasicLivingMachine livingMachine;
-    @Setter
-    private boolean initialized = false;
-    private int ageWithoutInit = 0;
+public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareEntity {
+
+    ILivingEntityHost<LivingMetaMachineEntity> holder;
 
     protected LivingMetaMachineEntity(EntityType<? extends LivingEntity> type, Level level) {
         super(type, level);
-        //this.anchor = BlockPos.ZERO;
-        //this.noPhysics = true;
 
-        //System.out.println("LivingMetaMachineEntity: " + this.getUUID() + level.isClientSide);
-        //machine.createUIWidget()
-        //this.setBoundingBox(new AABB(this.blockPosition()));
     }
-
-
 
     public static LivingMetaMachineEntity createLivingMetaMachineEntity(EntityType<? extends LivingEntity> type, Level level) {
         return new LivingMetaMachineEntity(type, level);
     }
 
-    public void bound(BlockPos pos, BasicLivingMachine machine) {
-        anchor = pos;
-        livingMachine = machine;
-        getPersistentData().putLong("anchor", anchor.asLong());
-        getPersistentData().putBoolean("initialized", true);
-
-        setPos(anchor.getX() + 0.5, anchor.getY(), anchor.getZ() + 0.5);
-        getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D * machine.getTier());
-        setHealth(getMaxHealth());
-        initialized = true;
-        System.out.println("bound: " + initialized);
-    }
-
-    public BlockPos getAnchor() {
-        if(anchor == null)
-        {
-            anchor = BlockPos.of(getPersistentData().getLong("anchor"));
-        }
-        return anchor;
-    }
-
-    public BasicLivingMachine getMachine() {
-
-        if(livingMachine == null &&
-                getAnchor() != null &&
-                this.level().getBlockEntity(this.anchor) instanceof MetaMachineBlockEntity blockEntity &&
-                blockEntity.getMetaMachine() instanceof BasicLivingMachine machine)
-        {
-            livingMachine = machine;
-            livingMachine.holder.notifyBlockUpdate();
-        }
-        return livingMachine;
+    @Override
+    public ILivingEntityHost<?> getHost() {
+        return holder;
     }
 
     @Override
-    public AABB getBoundingBoxForCulling() {
-        return this.getBoundingBox().inflate(5.0);
+    public void setHost(ILivingEntityHost<?> host) {
+        holder = (ILivingEntityHost<LivingMetaMachineEntity>) host;
     }
+
+//    @Override
+//    public void onRemovedFromWorld() {
+//        if (holder != null) {
+//            holder.onHostedEntityRemoved(this); // 通知宿主
+//        }
+//        super.onRemovedFromWorld();
+//    }
+
 
     @Override
-    public void setCustomName(@Nullable Component name) {
-        super.setCustomName(name);
-        if(level().getBlockState(blockPosition()).getBlock() instanceof LivingMetaMachineBlock block)
-        {
-            //block.setName(name);
+    public void die(DamageSource p_21014_) {
+        super.die(p_21014_);
+        if (holder != null) {
+            holder.onHostedEntityRemoved(this); // 通知宿主
         }
     }
-
-    @Override
-    public void tick() {
-        super.tick();
-
-        //System.out.println("tick " + getUUID() + " "+ level().isClientSide);
-        if(level().isClientSide) return;
-        initialized = getPersistentData().getBoolean("initialized");
-        //System.out.println("tick: " + initialized);
-        if(initialized)
-        {
-            ageWithoutInit = 0;
-            initialized = true;
-            if (!level().isClientSide) {
-                //getAnchor();
-                getMachine();
-            }
-//            double x = Math.floor(anchor.getX()) + 0.5;
-//            double y = Math.floor(anchor.getY());
-//            double z = Math.floor(anchor.getZ()) + 0.5;
-//
-//            this.setPos(x, y, z);
-            this.setDeltaMovement(Vec3.ZERO);
-        }
-        else {
-            ageWithoutInit++;
-            if (ageWithoutInit > 40) {  // 2秒后自我删除
-                this.discard();
-            }
-        }
-
-    }
-
-    @Override
-    public void onRemovedFromWorld() {
-        super.onRemovedFromWorld();
-        if(!level().isClientSide && getMachine() != null)
-        {
-            level().removeBlock(livingMachine.getPos(), false);
-        }
-
-    }
-
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
@@ -196,7 +124,6 @@ public class LivingMetaMachineEntity extends LivingEntity {
 
         //this.setDeltaMovement(0, 0, 0);
 
-
     }
 
     @Override
@@ -227,5 +154,4 @@ public class LivingMetaMachineEntity extends LivingEntity {
     public boolean isInWall() {
         return false;
     }
-
 }

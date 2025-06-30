@@ -11,5 +11,6 @@ public class CBRecipeTypes {
             .setMaxIOSize(6, 2, 3, 1)
             .setEUIO(IO.IN)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+    
     public static void init() {}
 }
