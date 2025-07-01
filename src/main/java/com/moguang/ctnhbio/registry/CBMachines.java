@@ -28,7 +28,7 @@ public class CBMachines {
             (tier,builder) -> builder
                     //.langValue("%s Digital Well of Suffer".formatted(VNF[tier]))
                     .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE)
-//                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE))
+                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE))
                     .rotationState(RotationState.NON_Y_AXIS)
                     .renderer(() -> InvisibleRenderer.INSTANCE)
                     //.recipeModifier(DigitalWosMachine::recipeModifier)

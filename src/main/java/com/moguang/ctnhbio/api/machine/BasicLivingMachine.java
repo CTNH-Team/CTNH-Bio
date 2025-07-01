@@ -28,6 +28,7 @@ import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.gui.CBGuiTextures;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
+import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
 import com.moguang.ctnhbio.registry.CBEntities;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
@@ -129,8 +130,7 @@ public class BasicLivingMachine extends SimpleTieredMachine {
 //            machineEntity = null;
 //        }
 //    }
-
-    //protected class EnergyBatteryTrait extends BatteryBufferMachine.EnergyBatteryTrait{
+    
 
     //////////////////////////////////////
     // ************ GUI ****************//
@@ -139,76 +139,49 @@ public class BasicLivingMachine extends SimpleTieredMachine {
 
     @Override
     public ModularUI createUI(Player entityPlayer) {
-        var storages = Tables.newCustomTable(new EnumMap<>(IO.class), LinkedHashMap<RecipeCapability<?>, Object>::new);
-        storages.put(IO.IN, ItemRecipeCapability.CAP, importItems.storage);
-        storages.put(IO.OUT, ItemRecipeCapability.CAP, exportItems.storage);
-
-        var group = new CBRecipeTypeUI(getRecipeType()).createUITemplate(recipeLogic::getProgressPercent,
-                storages,
-                new CompoundTag(),
-                Collections.emptyList(),
-                false,
-                false);
-        Position pos = new Position((Math.max(group.getSize().width + 4 + 8, 176) - 4 - group.getSize().width) / 2 + 4,
-                20);
-        group.setSelfPosition(pos);
-        var template = createNutrientSlot();
-        SlotWidget nutrientSlot = template.createDefault();
-        template.setupUI(group, this);
-        nutrientSlot.setSelfPosition(new Position(group.getSize().width / 2 - 9, 60));
-        return new ModularUI(176, 166, this, entityPlayer)
-                .background(CBGuiTextures.BACKGROUND_BIO)
-                .widget(group)
-                .widget(nutrientSlot)
-                .widget(new LabelWidget(5, 5, getBlockState().getBlock().getDescriptionId()))
-//                .widget(new PredicatedImageWidget(pos.x + group.getSize().width / 2 - 9,
-//                        pos.y + group.getSize().height / 2 - 9, 18, 18,
-//                        GuiTextures.INDICATOR_NO_STEAM.get(isHighPressure))
-//                        .setPredicate(recipeLogic::isWaiting))
-                .widget(UITemplate.bindPlayerInventory(entityPlayer.getInventory(),
-                        CBGuiTextures.SLOT_BIO, 7, 84, true));
+         return new ModularUI(176, 166, this, entityPlayer).widget(new LivingMachineUIWidget(this, 176, 166));
     }
 
-//    public static BiFunction<ResourceLocation, GTRecipeType, EditableMachineUI> EDITABLE_UI_CREATOR_BIO = Util
-//            .memoize((path, recipeType) -> new EditableMachineUI("bio", path, () -> {
-//                WidgetGroup template = new CBRecipeTypeUI(recipeType).createEditableUITemplate(false, false).createDefault();
-//                SlotWidget batterySlot = createBioBatterySlot().createDefault();
-//                WidgetGroup group = new WidgetGroup(0, 0, template.getSize().width,
-//                        Math.max(template.getSize().height, 78));
-//                template.setSelfPosition(new Position(0, (group.getSize().height - template.getSize().height) / 2));
-//                batterySlot.setSelfPosition(new Position(group.getSize().width / 2 - 9, group.getSize().height - 18));
-//                group.addWidget(batterySlot);
-//                group.addWidget(template);
-//
-//                // TODO fix this.
-//                // if (ConfigHolder.INSTANCE.machines.ghostCircuit) {
-//                // SlotWidget circuitSlot = createCircuitConfigurator().createDefault();
-//                // circuitSlot.setSelfPosition(new Position(120, 62));
-//                // group.addWidget(circuitSlot);
-//                // }
-//
-//                return group;
-//            }, (template, machine) -> {
-//                if (machine instanceof SimpleTieredMachine tieredMachine) {
-//                    var storages = Tables.newCustomTable(new EnumMap<>(IO.class),
-//                            LinkedHashMap<RecipeCapability<?>, Object>::new);
-//                    storages.put(IO.IN, ItemRecipeCapability.CAP, tieredMachine.importItems.storage);
-//                    storages.put(IO.OUT, ItemRecipeCapability.CAP, tieredMachine.exportItems.storage);
-//                    storages.put(IO.IN, FluidRecipeCapability.CAP, tieredMachine.importFluids);
-//                    storages.put(IO.OUT, FluidRecipeCapability.CAP, tieredMachine.exportFluids);
-//                    storages.put(IO.IN, CWURecipeCapability.CAP, tieredMachine.importComputation);
-//                    storages.put(IO.OUT, CWURecipeCapability.CAP, tieredMachine.exportComputation);
-//
-//                    tieredMachine.getRecipeType().getRecipeUI().createEditableUITemplate(false, false).setupUI(template,
-//                            new GTRecipeTypeUI.RecipeHolder(tieredMachine.recipeLogic::getProgressPercent,
-//                                    storages,
-//                                    new CompoundTag(),
-//                                    Collections.emptyList(),
-//                                    false, false));
-//                    createBatterySlot().setupUI(template, tieredMachine);
-//                    // createCircuitConfigurator().setupUI(template, tieredMachine);
-//                }
-//            }));
+    public static BiFunction<ResourceLocation, GTRecipeType, EditableMachineUI> EDITABLE_UI_CREATOR_BIO = Util
+            .memoize((path, recipeType) -> new EditableMachineUI("bio", path, () -> {
+                WidgetGroup template = new CBRecipeTypeUI(recipeType).createEditableUITemplate(false, false).createDefault();
+                SlotWidget batterySlot = createNutrientSlot().createDefault();
+                WidgetGroup group = new WidgetGroup(0, 0, template.getSize().width,
+                        Math.max(template.getSize().height, 78));
+                template.setSelfPosition(new Position(0, (group.getSize().height - template.getSize().height) / 2));
+                batterySlot.setSelfPosition(new Position(group.getSize().width / 2 - 9, group.getSize().height - 18));
+                group.addWidget(batterySlot);
+                group.addWidget(template);
+
+                // TODO fix this.
+                // if (ConfigHolder.INSTANCE.machines.ghostCircuit) {
+                // SlotWidget circuitSlot = createCircuitConfigurator().createDefault();
+                // circuitSlot.setSelfPosition(new Position(120, 62));
+                // group.addWidget(circuitSlot);
+                // }
+
+                return group;
+            }, (template, machine) -> {
+                if (machine instanceof SimpleTieredMachine tieredMachine) {
+                    var storages = Tables.newCustomTable(new EnumMap<>(IO.class),
+                            LinkedHashMap<RecipeCapability<?>, Object>::new);
+                    storages.put(IO.IN, ItemRecipeCapability.CAP, tieredMachine.importItems.storage);
+                    storages.put(IO.OUT, ItemRecipeCapability.CAP, tieredMachine.exportItems.storage);
+                    storages.put(IO.IN, FluidRecipeCapability.CAP, tieredMachine.importFluids);
+                    storages.put(IO.OUT, FluidRecipeCapability.CAP, tieredMachine.exportFluids);
+                    storages.put(IO.IN, CWURecipeCapability.CAP, tieredMachine.importComputation);
+                    storages.put(IO.OUT, CWURecipeCapability.CAP, tieredMachine.exportComputation);
+
+                    tieredMachine.getRecipeType().getRecipeUI().createEditableUITemplate(false, false).setupUI(template,
+                            new GTRecipeTypeUI.RecipeHolder(tieredMachine.recipeLogic::getProgressPercent,
+                                    storages,
+                                    new CompoundTag(),
+                                    Collections.emptyList(),
+                                    false, false));
+                    createBatterySlot().setupUI(template, tieredMachine);
+                    // createCircuitConfigurator().setupUI(template, tieredMachine);
+                }
+            }));
     protected static EditableUI<SlotWidget, BasicLivingMachine> createNutrientSlot() {
         return new EditableUI<>("nutrient_slot", SlotWidget.class, () -> {
             var slotWidget = new SlotWidget();
