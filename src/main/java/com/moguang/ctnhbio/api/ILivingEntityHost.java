@@ -56,6 +56,7 @@ public interface ILivingEntityHost<T extends LivingEntity> {
 
     @SuppressWarnings("unchecked")
     default void loadHostedEntityData(CompoundTag entityTag, Level level) {
+        if (entityTag == null) return;
         Entity entity = EntityType.loadEntityRecursive(entityTag, level, e -> e);
         if (entity != null && getEntityClass().isInstance(entity)) {
             setHostedEntity((T) entity);

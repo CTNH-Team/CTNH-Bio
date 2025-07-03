@@ -2,6 +2,7 @@ package com.moguang.ctnhbio.client;
 
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
+import com.moguang.ctnhbio.machine.braininavat.BrainModel;
 import com.moguang.ctnhbio.registry.CBEntities;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -24,4 +25,8 @@ public class ClientRegister {
 //        );
     }
 
+    @SubscribeEvent
+    public static void onLayerRegister(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(BrainModel.LAYER_LOCATION, BrainModel::createBodyLayer);
+    }
 }

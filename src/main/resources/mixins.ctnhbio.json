@@ -7,6 +7,9 @@
     "GTJadePluginMixin",
     "GTMaterialItemsMixin",
     "GTMixin",
+    "gtm.AutoOutputFluidConfigHandlerMixin",
+    "gtm.AutoOutputItemConfigHandlerMixin",
+    "gtm.CombinedDirectionalConfiguratorMixin",
     "jei.JeiBaseLootMixin",
     "jei.JeiGameplayLootMixin",
     "jei.LootTableMixin"

@@ -1,42 +1,34 @@
 package com.moguang.ctnhbio.api.entity;
 
-import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
-import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
-import com.gregtechceu.gtceu.common.data.GTDamageTypes;
 import com.moguang.ctnhbio.api.IHostAwareEntity;
 import com.moguang.ctnhbio.api.ILivingEntityHost;
-import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
-import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
-import java.util.UUID;
 
 public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareEntity {
 
     ILivingEntityHost<LivingMetaMachineEntity> holder;
+    public boolean ifInit = false;
 
-    protected LivingMetaMachineEntity(EntityType<? extends LivingEntity> type, Level level) {
+    public LivingMetaMachineEntity(EntityType<? extends LivingEntity> type, Level level) {
         super(type, level);
 
     }
 
-    public static LivingMetaMachineEntity createLivingMetaMachineEntity(EntityType<? extends LivingEntity> type, Level level) {
+    public static LivingMetaMachineEntity create(EntityType<? extends LivingEntity> type, Level level) {
         return new LivingMetaMachineEntity(type, level);
     }
 
@@ -50,14 +42,22 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
         holder = (ILivingEntityHost<LivingMetaMachineEntity>) host;
     }
 
-//    @Override
-//    public void onRemovedFromWorld() {
-//        if (holder != null) {
-//            holder.onHostedEntityRemoved(this); // 通知宿主
-//        }
-//        super.onRemovedFromWorld();
-//    }
 
+
+    public void setPos(BlockPos pos, Vec3 offset) {
+        super.setPos(pos.getX()+offset.x, pos.getY()+offset.y, pos.getZ()+offset.z);
+    }
+
+    @Override
+    public void setCustomName(@Nullable Component name) {
+        super.setCustomName(name);
+        if (holder instanceof LivingMetaMachineBlockEntity blockEntity &&
+                blockEntity.getMetaMachine() instanceof BasicLivingMachine machine)
+        {
+            assert name != null;
+            machine.setName(name.getString());
+        }
+    }
 
     @Override
     public void die(DamageSource p_21014_) {
@@ -70,8 +70,21 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.0D);
+                .add(Attributes.MOVEMENT_SPEED, 0.0D)
+                .add(Attributes.ARMOR, 0.0D);
     }
+
+    public void initAttributes(double maxHealth, double armor){
+        if(!ifInit)
+        {
+            ifInit = true;
+            getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
+            setHealth((float) maxHealth);
+            getAttribute(Attributes.ARMOR).setBaseValue(armor);
+        }
+
+    }
+
     @Override
     public boolean isAffectedByPotions() {
         return true;
@@ -128,7 +141,7 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
 
     @Override
     public boolean canBeCollidedWith() {
-        return false;
+        return true;
     }
 
     @Override
@@ -143,7 +156,7 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
 
     @Override
     public boolean isPickable() {
-        return true;
+        return false;
     }
 
     @Override

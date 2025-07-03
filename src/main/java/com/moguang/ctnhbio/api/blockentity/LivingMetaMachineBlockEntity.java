@@ -1,36 +1,45 @@
 package com.moguang.ctnhbio.api.blockentity;
 
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
+import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.moguang.ctnhbio.api.ILivingEntityHost;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
-import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
-import com.moguang.ctnhbio.registry.CBEntities;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
-import java.util.List;
-import java.util.UUID;
+import static com.lowdragmc.lowdraglib.LDLib.isRemote;
 
 @Getter
-public class LivingMetaMachineBlockEntity extends MetaMachineBlockEntity implements ILivingEntityHost<LivingMetaMachineEntity> {
+public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> extends MetaMachineBlockEntity implements ILivingEntityHost<T> {
 
+    private final EntityType<T> entityType;
     @Persisted
-    private LivingMetaMachineEntity livingMachine;
+    private T machineEntity;
     private CompoundTag entityTag;
     private boolean spawned;
+    public Vec3 entityOffset = new Vec3(0.5, 0, 0.5);
 
-    protected LivingMetaMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
+    protected LivingMetaMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, EntityType<T> entityType) {
         super(type, pos, blockState);
+        this.entityType = entityType;
     }
 
-    public static MetaMachineBlockEntity createLivingBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
-        return new LivingMetaMachineBlockEntity(type, pos, blockState);
+
+    public static <T extends LivingMetaMachineEntity> LivingMetaMachineBlockEntity<T> create(BlockEntityType<?> type, BlockPos pos, BlockState state, EntityType<T> entityType) {
+        return new LivingMetaMachineBlockEntity<>(type, pos, state, entityType);
+    }
+
+    public LivingMetaMachineBlockEntity setEntityOffset(double x, double y, double z){
+        entityOffset = new Vec3(x, y, z);
+        return this;
     }
 
     @Override
@@ -40,13 +49,13 @@ public class LivingMetaMachineBlockEntity extends MetaMachineBlockEntity impleme
     }
 
     @Override
-    public LivingMetaMachineEntity getHostedEntity() {
-        return livingMachine;
+    public T getHostedEntity() {
+        return machineEntity;
     }
 
     @Override
-    public void setHostedEntity(LivingMetaMachineEntity entity) {
-        livingMachine = entity;
+    public void setHostedEntity(T entity) {
+        machineEntity = entity;
     }
 
     @Override
@@ -60,15 +69,20 @@ public class LivingMetaMachineBlockEntity extends MetaMachineBlockEntity impleme
     }
 
     @Override
-    public LivingMetaMachineEntity createHostedEntity(Level level) {
-        LivingMetaMachineEntity entity = LivingMetaMachineEntity.createLivingMetaMachineEntity(CBEntities.LIVING_META_MACHINE_ENTITY.get(), level);
-        entity.setPos(getHostPos().getX() + 0.5, getHostPos().getY(), getHostPos().getZ() + 0.5);
+    public T createHostedEntity(Level level) {
+        T entity = entityType.create(level);
+        entity.setPos(getHostPos(), entityOffset);
+        if(getMetaMachine() instanceof SimpleTieredMachine tieredMachine)
+        {
+            var tier = tieredMachine.getTier();
+            entity.initAttributes(tier*20, tier*4);
+        }
         return entity;
     }
 
     @Override
-    public Class<LivingMetaMachineEntity> getEntityClass() {
-        return LivingMetaMachineEntity.class;
+    public Class<T> getEntityClass() {
+        return (Class<T>) LivingMetaMachineEntity.class;
     }
 
     @Override
@@ -91,13 +105,13 @@ public class LivingMetaMachineBlockEntity extends MetaMachineBlockEntity impleme
     public void onLoad() {
         super.onLoad();
         if(getLevel().isClientSide()) return;
-        if (livingMachine == null) {
+        if (machineEntity == null) {
             loadHostedEntityData(entityTag, level);
             spawnHostedEntity(this.getLevel());
         }
         if(!spawned)
         {
-            level.addFreshEntity(livingMachine);
+            level.addFreshEntity(machineEntity);
             spawned = true;
         }
     }
