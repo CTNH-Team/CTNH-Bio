@@ -16,6 +16,7 @@ import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
+import com.gregtechceu.gtceu.config.ConfigHolder;
 import com.gregtechceu.gtceu.data.lang.LangHandler;
 import com.gregtechceu.gtceu.utils.GTUtil;
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
@@ -31,10 +32,12 @@ import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
 import com.moguang.ctnhbio.registry.CBEntities;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import lombok.Setter;
+import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -59,7 +62,7 @@ public class BasicLivingMachine extends SimpleTieredMachine {
 
     public LivingMetaMachineEntity getMachineEntity() {
         if(machineEntity == null) {
-            machineEntity = ((LivingMetaMachineBlockEntity) holder).getCachedEntity();
+            machineEntity = ((LivingMetaMachineBlockEntity) holder).getHostedEntity();
         }
         return machineEntity;
     }
@@ -94,17 +97,6 @@ public class BasicLivingMachine extends SimpleTieredMachine {
 
     }
 
-//    @Override
-//    public void onMachineRemoved() {
-//        super.onMachineRemoved();
-//        //this.holder
-//        if (machineEntity != null) {
-//            machineEntity.discard();
-//
-//            machineEntity = null;
-//        }
-//    }
-
 
     //////////////////////////////////////
     // ************ GUI ****************//
@@ -128,11 +120,11 @@ public class BasicLivingMachine extends SimpleTieredMachine {
                 group.addWidget(template);
 
                 // TODO fix this.
-                // if (ConfigHolder.INSTANCE.machines.ghostCircuit) {
-                // SlotWidget circuitSlot = createCircuitConfigurator().createDefault();
-                // circuitSlot.setSelfPosition(new Position(120, 62));
-                // group.addWidget(circuitSlot);
-                // }
+//                 if (ConfigHolder.INSTANCE.machines.ghostCircuit) {
+//                 SlotWidget circuitSlot = createCircuitConfigurator().createDefault();
+//                 circuitSlot.setSelfPosition(new Position(120, 62));
+//                 group.addWidget(circuitSlot);
+//                 }
 
                 return group;
             }, (template, machine) -> {
