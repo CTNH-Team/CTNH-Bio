@@ -127,6 +127,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements INutrient
                         Math.max(template.getSize().height, 78));
                 template.setSelfPosition(new Position(0, (group.getSize().height - template.getSize().height) / 2));
                 nutrientBar.setSelfPosition(new Position(group.getSize().width / 2 - 20, template.getPositionY() + (template.getSizeHeight() - nutrientBar.getSizeHeight()) / 2));
+                nutrientBar.setHoverTooltips(Component.translatable("ctnhbio.nutrient_bar.info"));
                 group.addWidget(nutrientBar);
                 group.addWidget(template);
 

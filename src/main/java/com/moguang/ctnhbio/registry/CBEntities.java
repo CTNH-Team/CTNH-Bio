@@ -24,7 +24,7 @@ public class CBEntities {
             .entity("brain_in_a_vat_brain", Brain::new, MobCategory.CREATURE)
             .properties(props -> props.sized(0.25F, 0.2F))
             .attributes(Brain::createAttributes)
-            //.loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
+            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
             .renderer(() -> BrainRenderer::new)
             .lang("Brain")
             .register();

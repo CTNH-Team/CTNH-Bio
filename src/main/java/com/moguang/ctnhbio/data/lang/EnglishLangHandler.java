@@ -12,5 +12,6 @@ public class EnglishLangHandler {
         provider.add("item.gtceu.tool.boning_knife", "%s Boning Knife");
         //replace(provider, );
         provider.add("emi.category.ctnhbio.despoil_loot", "Despoil");
+        provider.add("ctnhbio.nutrient_bar.info", "Nutrient Slot");
     }
 }

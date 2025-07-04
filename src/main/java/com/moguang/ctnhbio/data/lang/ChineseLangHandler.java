@@ -12,10 +12,11 @@ import java.util.Map;
 
 public class ChineseLangHandler {
     public static void init(RegistrateCNLangProvider provider){
-        provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH] 活体机器属性");
+        provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH]活体机器属性");
         provider.add("ctnhbio.living_machine", "living machine");
-        replace(provider, "item.gtceu.tool.boning_knife", "%s 剔骨刀");
+//        replace(provider, "item.gtceu.tool.boning_knife", "%s 剔骨刀");
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
+        provider.add("ctnhbio.nutrient_bar.info", "营养槽");
     }
 
     public static void replace(@NotNull RegistrateCNLangProvider provider, @NotNull String key,

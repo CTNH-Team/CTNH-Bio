@@ -29,6 +29,9 @@ import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBMachines {
+    static {
+        REGISTRATE.creativeModeTab(() -> CBCreativeModeTabs.ITEM);
+    }
     public static void init() {}
 
     public static final MachineDefinition[] BASIC_LIVING_MACHINE = new MachineDefinition[GTValues.TIER_COUNT];
