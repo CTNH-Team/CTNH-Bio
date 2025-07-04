@@ -13,6 +13,7 @@ import com.gregtechceu.gtceu.api.gui.widget.PredicatedImageWidget;
 import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
+import com.gregtechceu.gtceu.api.machine.TieredEnergyMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
@@ -20,10 +21,13 @@ import com.gregtechceu.gtceu.config.ConfigHolder;
 import com.gregtechceu.gtceu.data.lang.LangHandler;
 import com.gregtechceu.gtceu.utils.GTUtil;
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
+import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
+import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 import com.lowdragmc.lowdraglib.gui.widget.*;
 import com.lowdragmc.lowdraglib.utils.BlockInfo;
 import com.lowdragmc.lowdraglib.utils.Position;
 import com.lowdragmc.lowdraglib.utils.TrackedDummyWorld;
+import com.moguang.ctnhbio.api.INutrientMachine;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.gui.CBGuiTextures;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
@@ -31,6 +35,7 @@ import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
 import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
 import com.moguang.ctnhbio.registry.CBEntities;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
+import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
@@ -49,7 +54,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.BiFunction;
 
-public class BasicLivingMachine extends SimpleTieredMachine {
+public class BasicLivingMachine extends SimpleTieredMachine implements INutrientMachine {
+    @Getter
+    private final int nutrientAmount;
+    @Getter
+    private final int nutrientCapacity;
 
     private LivingMetaMachineEntity machineEntity;
     @Setter
@@ -57,6 +66,8 @@ public class BasicLivingMachine extends SimpleTieredMachine {
 
     public BasicLivingMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, Object... args) {
         super(holder, tier, tankScalingFunction, args);
+        this.nutrientCapacity = 100;
+        this.nutrientAmount = 0;
         getMachineEntity();
     }
 
@@ -111,12 +122,12 @@ public class BasicLivingMachine extends SimpleTieredMachine {
     public static BiFunction<ResourceLocation, GTRecipeType, EditableMachineUI> EDITABLE_UI_CREATOR_BIO = Util
             .memoize((path, recipeType) -> new EditableMachineUI("bio", path, () -> {
                 WidgetGroup template = new CBRecipeTypeUI(recipeType).createEditableUITemplate(false, false).createDefault();
-                SlotWidget batterySlot = createNutrientSlot().createDefault();
+                ProgressWidget nutrientBar = createNutrientBar().createDefault();
                 WidgetGroup group = new WidgetGroup(0, 0, template.getSize().width,
                         Math.max(template.getSize().height, 78));
                 template.setSelfPosition(new Position(0, (group.getSize().height - template.getSize().height) / 2));
-                batterySlot.setSelfPosition(new Position(group.getSize().width / 2 - 9, group.getSize().height - 18));
-                group.addWidget(batterySlot);
+                nutrientBar.setSelfPosition(new Position(group.getSize().width / 2 - 20, template.getPositionY() + (template.getSizeHeight() - nutrientBar.getSizeHeight()) / 2));
+                group.addWidget(nutrientBar);
                 group.addWidget(template);
 
                 // TODO fix this.
@@ -128,24 +139,24 @@ public class BasicLivingMachine extends SimpleTieredMachine {
 
                 return group;
             }, (template, machine) -> {
-                if (machine instanceof SimpleTieredMachine tieredMachine) {
+                if (machine instanceof BasicLivingMachine livingMachine) {
                     var storages = Tables.newCustomTable(new EnumMap<>(IO.class),
                             LinkedHashMap<RecipeCapability<?>, Object>::new);
-                    storages.put(IO.IN, ItemRecipeCapability.CAP, tieredMachine.importItems.storage);
-                    storages.put(IO.OUT, ItemRecipeCapability.CAP, tieredMachine.exportItems.storage);
-                    storages.put(IO.IN, FluidRecipeCapability.CAP, tieredMachine.importFluids);
-                    storages.put(IO.OUT, FluidRecipeCapability.CAP, tieredMachine.exportFluids);
-                    storages.put(IO.IN, CWURecipeCapability.CAP, tieredMachine.importComputation);
-                    storages.put(IO.OUT, CWURecipeCapability.CAP, tieredMachine.exportComputation);
+                    storages.put(IO.IN, ItemRecipeCapability.CAP, livingMachine.importItems.storage);
+                    storages.put(IO.OUT, ItemRecipeCapability.CAP, livingMachine.exportItems.storage);
+                    storages.put(IO.IN, FluidRecipeCapability.CAP, livingMachine.importFluids);
+                    storages.put(IO.OUT, FluidRecipeCapability.CAP, livingMachine.exportFluids);
+                    storages.put(IO.IN, CWURecipeCapability.CAP, livingMachine.importComputation);
+                    storages.put(IO.OUT, CWURecipeCapability.CAP, livingMachine.exportComputation);
 
-                    tieredMachine.getRecipeType().getRecipeUI().createEditableUITemplate(false, false).setupUI(template,
-                            new GTRecipeTypeUI.RecipeHolder(tieredMachine.recipeLogic::getProgressPercent,
+                    livingMachine.getRecipeType().getRecipeUI().createEditableUITemplate(false, false).setupUI(template,
+                            new GTRecipeTypeUI.RecipeHolder(livingMachine.recipeLogic::getProgressPercent,
                                     storages,
                                     new CompoundTag(),
                                     Collections.emptyList(),
                                     false, false));
-                    createBatterySlot().setupUI(template, tieredMachine);
-                    // createCircuitConfigurator().setupUI(template, tieredMachine);
+                    createNutrientBar().setupUI(template, livingMachine);
+                    // createCircuitConfigurator().setupUI(template, livingMachine);
                 }
             }));
     protected static EditableUI<SlotWidget, BasicLivingMachine> createNutrientSlot() {
@@ -159,6 +170,18 @@ public class BasicLivingMachine extends SimpleTieredMachine {
             slotWidget.setCanTakeItems(true);
             slotWidget.setHoverTooltips(LangHandler.getMultiLang("gtceu.gui.charger_slot.tooltip",
                     GTValues.VNF[machine.getTier()], GTValues.VNF[machine.getTier()]).toArray(Component[]::new));
+        });
+    }
+    protected static EditableUI<ProgressWidget, BasicLivingMachine> createNutrientBar() {
+        return new EditableUI<>("nutrient_bar", ProgressWidget.class, () -> {
+            var progressBar = new ProgressWidget(ProgressWidget.JEIProgress, 0, 0, 9, 40,
+                    new ProgressTexture(IGuiTexture.EMPTY, CBGuiTextures.NUTRIENT_BAR_MAX));
+            progressBar.setFillDirection(ProgressTexture.FillDirection.DOWN_TO_UP);
+            progressBar.setBackground(CBGuiTextures.NUTRIENT_BAR);
+            return progressBar;
+        }, (progressBar, machine) -> {
+            progressBar.setProgressSupplier(
+                    () -> machine.getNutrientAmount() * 1d / machine.getNutrientCapacity());
         });
     }
 }
