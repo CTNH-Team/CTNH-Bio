@@ -9,8 +9,8 @@ import org.jetbrains.annotations.Nullable;
 public class BrainInAVat extends BasicLivingMachine {
     public BrainInAVat(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, Object... args) {
         super(holder, tier, tankScalingFunction, args);
-        this.outputFacingItems = Direction.DOWN;
-        this.outputFacingFluids = Direction.DOWN;
+        this.outputFacingItems = null;
+        this.outputFacingFluids = null;
     }
 
     @Override

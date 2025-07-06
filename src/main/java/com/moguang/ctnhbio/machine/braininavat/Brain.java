@@ -17,7 +17,7 @@ public class Brain extends LivingMetaMachineEntity {
     public boolean hurt(DamageSource source, float amount) {
 
         boolean result = super.hurt(source, amount);
-        if (result && source.is(GTDamageTypes.ELECTRIC.key) && getHealth()>1) {
+        if (result && !level().isClientSide && source.is(GTDamageTypes.ELECTRIC.key) && getHealth()>1) {
             float currentMaxHealth = getMaxHealth();
             float newMaxHealth = Math.max(0.0f, currentMaxHealth - amount);
             getAttribute(Attributes.MAX_HEALTH).setBaseValue(newMaxHealth);

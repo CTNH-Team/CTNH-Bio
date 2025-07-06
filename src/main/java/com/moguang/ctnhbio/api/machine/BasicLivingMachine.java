@@ -3,17 +3,23 @@ package com.moguang.ctnhbio.api.machine;
 import com.google.common.collect.Tables;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.api.capability.IControllable;
 import com.gregtechceu.gtceu.api.capability.recipe.*;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.gui.UITemplate;
 import com.gregtechceu.gtceu.api.gui.editor.EditableMachineUI;
 import com.gregtechceu.gtceu.api.gui.editor.EditableUI;
+import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
 import com.gregtechceu.gtceu.api.gui.fancy.FancyMachineUIWidget;
+import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
 import com.gregtechceu.gtceu.api.gui.widget.PredicatedImageWidget;
 import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
+import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
 import com.gregtechceu.gtceu.api.machine.TieredEnergyMachine;
+import com.gregtechceu.gtceu.api.machine.fancyconfigurator.OverclockFancyConfigurator;
+import com.gregtechceu.gtceu.api.machine.feature.IOverclockMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
@@ -40,12 +46,18 @@ import lombok.Setter;
 import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -56,7 +68,7 @@ import java.util.function.BiFunction;
 
 public class BasicLivingMachine extends SimpleTieredMachine implements INutrientMachine {
     @Getter
-    private final int nutrientAmount;
+    private int nutrientAmount;
     @Getter
     private final int nutrientCapacity;
 
@@ -79,9 +91,37 @@ public class BasicLivingMachine extends SimpleTieredMachine implements INutrient
     }
 
     @Override
+    public InteractionResult tryToOpenUI(Player player, InteractionHand hand, BlockHitResult hit) {
+
+        ItemStack stack = player.getItemInHand(hand);
+
+        // 判断是否是食物
+        if (stack.isEdible()) {
+            if (!getLevel().isClientSide) {
+                // 消耗一个物品
+                if (!player.getAbilities().instabuild) {
+                    stack.shrink(1);
+                }
+                //TODO: 营养逻辑
+                nutrientAmount = Math.min(nutrientAmount + 10, nutrientCapacity);
+
+                getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
+                        SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
+                        1.0f, 1.0f);
+            }
+
+            return InteractionResult.sidedSuccess(getLevel().isClientSide);
+        }
+
+        // 默认行为（打开 GUI）
+        return super.tryToOpenUI(player, hand, hit);
+    }
+
+    @Override
     public boolean shouldWeatherOrTerrainExplosion() {
         return false;
     }
+
 
     @Override
     public void doExplosion(float explosionPower) {
@@ -184,5 +224,24 @@ public class BasicLivingMachine extends SimpleTieredMachine implements INutrient
             progressBar.setProgressSupplier(
                     () -> machine.getNutrientAmount() * 1d / machine.getNutrientCapacity());
         });
+    }
+
+    @Override
+    public void attachConfigurators(ConfiguratorPanel configuratorPanel) {
+        configuratorPanel.attachConfigurators(new IFancyConfiguratorButton.Toggle(
+                CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0, 1, 0.5),
+                CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0.5, 1, 0.5),
+                this::isWorkingEnabled, (clickData, pressed) -> setWorkingEnabled(pressed))
+                .setTooltipsSupplier(pressed -> List.of(
+                        Component.translatable(
+                                pressed ? "behaviour.soft_hammer.enabled" : "behaviour.soft_hammer.disabled"))));
+        configuratorPanel.attachConfigurators(new OverclockFancyConfigurator(this));
+        for (var direction : Direction.values()) {
+            if (getCoverContainer().hasCover(direction)) {
+                var configurator = getCoverContainer().getCoverAtSide(direction).getConfigurator();
+                if (configurator != null)
+                    configuratorPanel.attachConfigurators(configurator);
+            }
+        }
     }
 }

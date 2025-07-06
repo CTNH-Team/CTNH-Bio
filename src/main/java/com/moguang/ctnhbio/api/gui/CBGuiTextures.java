@@ -14,4 +14,6 @@ public class CBGuiTextures {
     public static ResourceBorderTexture TITLE_BAR_BACKGROUND_BIO = new ResourceBorderTexture("ctnhbio:textures/gui/biobase/title_bar_background_bio.png", 16, 16, 4, 4);
     public static ResourceTexture TAB_LEFT_BIO = new ResourceTexture("ctnhbio:textures/gui/tab/tabs_left_bio.png");
     public static ResourceBorderTexture BACKGROUND_SMALL = new ResourceBorderTexture("ctnhbio:textures/gui/biobase/background_small.png", 16, 16, 4, 4);
+    public static final ResourceTexture BUTTON_POWER = new ResourceTexture(
+            "ctnhbio:textures/gui/biobase/button_power.png");
 }
