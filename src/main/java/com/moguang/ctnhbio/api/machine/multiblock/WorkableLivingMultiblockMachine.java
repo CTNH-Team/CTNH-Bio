@@ -2,6 +2,8 @@ package com.moguang.ctnhbio.api.machine.multiblock;
 
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
+import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
@@ -15,13 +17,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockMachine implements ILivingMachine {
+    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(WorkableLivingMultiblockMachine.class, WorkableElectricMultiblockMachine.MANAGED_FIELD_HOLDER);
     @Getter
-    private double nutrientAmount = 0;
+    @Persisted
+    private double nutrientAmount;
     @Getter
-    private double nutrientCapacity = 100;
+    @Persisted
+    private double nutrientCapacity;
     private LivingMetaMachineEntity machineEntity;
     public WorkableLivingMultiblockMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
+        this.nutrientAmount = 0;
+        this.nutrientCapacity = 100;
     }
     @Override
     public LivingMetaMachineEntity getMachineEntity() {
@@ -55,5 +62,10 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
         // 默认行为（打开 GUI）
         return super.tryToOpenUI(player, hand, hit);
+    }
+
+    @Override
+    public ManagedFieldHolder getFieldHolder() {
+        return MANAGED_FIELD_HOLDER;
     }
 }

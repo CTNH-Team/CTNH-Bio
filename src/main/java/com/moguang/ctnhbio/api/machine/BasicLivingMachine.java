@@ -20,6 +20,8 @@ import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 import com.lowdragmc.lowdraglib.gui.widget.*;
+import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import com.lowdragmc.lowdraglib.utils.Position;
 import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
@@ -47,9 +49,12 @@ import java.util.*;
 import java.util.function.BiFunction;
 
 public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMachine {
+    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(BasicLivingMachine.class, SimpleTieredMachine.MANAGED_FIELD_HOLDER);
     @Getter
+    @Persisted
     private double nutrientAmount;
     @Getter
+    @Persisted
     private final double nutrientCapacity;
 
     private LivingMetaMachineEntity machineEntity;
@@ -128,6 +133,10 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         //this.energyContainer.getInputVoltage()
         return GTUtil.getTierByVoltage(4 * Math.max(energyContainer.getInputVoltage(), energyContainer.getOutputVoltage()));
 
+    }
+    @Override
+    public ManagedFieldHolder getFieldHolder() {
+        return MANAGED_FIELD_HOLDER;
     }
 
 

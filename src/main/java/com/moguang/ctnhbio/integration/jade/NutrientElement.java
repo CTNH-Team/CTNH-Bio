@@ -22,6 +22,6 @@ public class NutrientElement extends Element {
 
     @Override
     public void render(GuiGraphics guiGraphics, float x, float y, float maxX, float maxY) {
-        DisplayHelper.INSTANCE.drawText(guiGraphics, Component.translatable("jade.nutrient.info").getString() + this.text, x + 8.0F, y, IThemeHelper.get().getNormalColor());
+        DisplayHelper.INSTANCE.drawText(guiGraphics, Component.translatable("jade.nutrient.info").getString() + this.text, x, y, IThemeHelper.get().getNormalColor());
     }
 }
