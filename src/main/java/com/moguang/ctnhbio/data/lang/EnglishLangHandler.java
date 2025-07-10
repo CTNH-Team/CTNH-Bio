@@ -13,5 +13,6 @@ public class EnglishLangHandler {
         //replace(provider, );
         provider.add("emi.category.ctnhbio.despoil_loot", "Despoil");
         provider.add("ctnhbio.nutrient_bar.info", "Nutrient Slot");
+        provider.add("jade.nutrient.info", "Nutrient：");
     }
 }

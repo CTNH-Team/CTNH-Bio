@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.registry;
 
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
+import com.moguang.ctnhbio.api.entity.LivingMultiMachineEntity;
 import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
 import com.moguang.ctnhbio.machine.braininavat.Brain;
 import com.moguang.ctnhbio.machine.braininavat.BrainRenderer;
@@ -27,6 +28,14 @@ public class CBEntities {
             .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
             .renderer(() -> BrainRenderer::new)
             .lang("Brain")
+            .register();
+    public static EntityEntry<LivingMultiMachineEntity> LIVING_MULTI_MACHINE_ENTITY = REGISTRATE
+            .entity("living_multi_machine", LivingMultiMachineEntity::create, MobCategory.CREATURE)
+            .properties(props -> props.sized(0.9F, 0.9F))
+            .attributes(LivingMultiMachineEntity::createAttributes)
+            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
+            .renderer(() -> BasicLivingMachineEntityRenderer::new)
+            .lang("Living Multi Machine")
             .register();
 
     public static void init() {}

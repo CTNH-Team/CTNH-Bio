@@ -1,7 +1,9 @@
 package com.moguang.ctnhbio.integration.jade;
 
 import com.gregtechceu.gtceu.GTCEu;
+import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.integration.jade.provider.CapabilityBlockProvider;
+import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
@@ -30,7 +32,7 @@ import java.util.Collection;
 
 import static snownee.jade.addon.vanilla.StatusEffectsProvider.getEffectName;
 
-public class LivingMachineStatusProvider extends CapabilityBlockProvider<BasicLivingMachine> {
+public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILivingMachine> {
 
 
     public LivingMachineStatusProvider() {
@@ -39,20 +41,25 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<BasicLi
 
     @Nullable
     @Override
-    protected BasicLivingMachine getCapability(Level level, BlockPos pos, @Nullable Direction side) {
+    protected ILivingMachine getCapability(Level level, BlockPos pos, @Nullable Direction side) {
         //return GTCapabilityHelper.getControllable(level, pos, side);
-        if(BasicLivingMachine.getMachine(level, pos) instanceof BasicLivingMachine machine)
+        if(BasicLivingMachine.getMachine(level, pos) instanceof ILivingMachine machine)
             return machine;
         else
             return null;
     }
 
     @Override
-    protected void write(CompoundTag data, BasicLivingMachine machine) {
+    protected void write(CompoundTag data, ILivingMachine machine) {
         var maxHealth = machine.getMachineEntity().getMaxHealth();
         var health = machine.getMachineEntity().getHealth();
         data.putFloat("MaxHealth", maxHealth);
         data.putFloat("Health", health);
+
+        var nutrientAmount = machine.getNutrientAmount();
+        var nutrientCapacity = machine.getNutrientCapacity();
+        data.putDouble("NutrientAmount", nutrientAmount);
+        data.putDouble("NutrientCapacity", nutrientCapacity);
 
         LivingEntity living = machine.getMachineEntity();
         Collection<MobEffectInstance> effects = living.getActiveEffects();
@@ -85,6 +92,11 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<BasicLi
             float health = capData.getFloat("Health");
             tooltip.add(new HealthElement(maxHealth, health));
         }
+        if (capData.contains("NutrientAmount") && capData.contains("NutrientCapacity")) {
+            double nutrientAmount = capData.getDouble("NutrientAmount");
+            double nutrientCapacity = capData.getDouble("NutrientCapacity");
+            tooltip.add(new NutrientElement(nutrientCapacity, nutrientAmount));
+        }
         if (capData.contains("StatusEffects")) {
             IElementHelper helper = IElementHelper.get();
             ITooltip box = helper.tooltip();
@@ -110,7 +122,7 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<BasicLi
 
             tooltip.add(helper.box(box, BoxStyle.DEFAULT));
         }
-        if(BasicLivingMachine.getMachine(blockEntity.getLevel(), block.getPosition()) instanceof BasicLivingMachine machine)
+        if(MetaMachine.getMachine(blockEntity.getLevel(), block.getPosition()) instanceof ILivingMachine machine)
         {
 
 

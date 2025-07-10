@@ -27,7 +27,7 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     private boolean spawned;
     public Vec3 entityOffset = new Vec3(0.5, 0, 0.5);
 
-    protected LivingMetaMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, EntityType<T> entityType) {
+    public LivingMetaMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, EntityType<T> entityType) {
         super(type, pos, blockState);
         this.entityType = entityType;
     }

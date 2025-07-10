@@ -1,51 +1,36 @@
 package com.moguang.ctnhbio.api.machine;
 
 import com.google.common.collect.Tables;
-import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
-import com.gregtechceu.gtceu.api.capability.IControllable;
 import com.gregtechceu.gtceu.api.capability.recipe.*;
-import com.gregtechceu.gtceu.api.gui.GuiTextures;
-import com.gregtechceu.gtceu.api.gui.UITemplate;
 import com.gregtechceu.gtceu.api.gui.editor.EditableMachineUI;
 import com.gregtechceu.gtceu.api.gui.editor.EditableUI;
 import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
-import com.gregtechceu.gtceu.api.gui.fancy.FancyMachineUIWidget;
 import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
-import com.gregtechceu.gtceu.api.gui.widget.PredicatedImageWidget;
 import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
-import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
-import com.gregtechceu.gtceu.api.machine.TieredEnergyMachine;
 import com.gregtechceu.gtceu.api.machine.fancyconfigurator.OverclockFancyConfigurator;
-import com.gregtechceu.gtceu.api.machine.feature.IOverclockMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
-import com.gregtechceu.gtceu.config.ConfigHolder;
 import com.gregtechceu.gtceu.data.lang.LangHandler;
 import com.gregtechceu.gtceu.utils.GTUtil;
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 import com.lowdragmc.lowdraglib.gui.widget.*;
-import com.lowdragmc.lowdraglib.utils.BlockInfo;
 import com.lowdragmc.lowdraglib.utils.Position;
-import com.lowdragmc.lowdraglib.utils.TrackedDummyWorld;
-import com.moguang.ctnhbio.api.INutrientMachine;
+import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.gui.CBGuiTextures;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
 import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
-import com.moguang.ctnhbio.registry.CBEntities;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.Util;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -54,23 +39,18 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.BiFunction;
 
-public class BasicLivingMachine extends SimpleTieredMachine implements INutrientMachine {
+public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMachine {
     @Getter
-    private int nutrientAmount;
+    private double nutrientAmount;
     @Getter
-    private final int nutrientCapacity;
+    private final double nutrientCapacity;
 
     private LivingMetaMachineEntity machineEntity;
     @Setter
@@ -83,6 +63,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements INutrient
         getMachineEntity();
     }
 
+    @Override
     public LivingMetaMachineEntity getMachineEntity() {
         if(machineEntity == null) {
             machineEntity = ((LivingMetaMachineBlockEntity) holder).getHostedEntity();
@@ -102,8 +83,9 @@ public class BasicLivingMachine extends SimpleTieredMachine implements INutrient
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                 }
-                //TODO: 营养逻辑
-                nutrientAmount = Math.min(nutrientAmount + 10, nutrientCapacity);
+                int nutrition = stack.getFoodProperties(null).getNutrition();
+                float saturation = stack.getFoodProperties(null).getSaturationModifier();
+                nutrientAmount = Math.min(nutrientAmount + nutrition + 0.5 * saturation, nutrientCapacity);
 
                 getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
                         SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
@@ -200,19 +182,6 @@ public class BasicLivingMachine extends SimpleTieredMachine implements INutrient
                     // createCircuitConfigurator().setupUI(template, livingMachine);
                 }
             }));
-    protected static EditableUI<SlotWidget, BasicLivingMachine> createNutrientSlot() {
-        return new EditableUI<>("nutrient_slot", SlotWidget.class, () -> {
-            var slotWidget = new SlotWidget();
-            slotWidget.setBackground(CBGuiTextures.SLOT_BIO, CBGuiTextures.NUTRIENT_SLOT_OVERLAY);
-            return slotWidget;
-        }, (slotWidget, machine) -> {
-            slotWidget.setHandlerSlot(machine.chargerInventory, 0);
-            slotWidget.setCanPutItems(true);
-            slotWidget.setCanTakeItems(true);
-            slotWidget.setHoverTooltips(LangHandler.getMultiLang("gtceu.gui.charger_slot.tooltip",
-                    GTValues.VNF[machine.getTier()], GTValues.VNF[machine.getTier()]).toArray(Component[]::new));
-        });
-    }
     protected static EditableUI<ProgressWidget, BasicLivingMachine> createNutrientBar() {
         return new EditableUI<>("nutrient_bar", ProgressWidget.class, () -> {
             var progressBar = new ProgressWidget(ProgressWidget.JEIProgress, 0, 0, 9, 40,

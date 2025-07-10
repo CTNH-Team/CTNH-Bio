@@ -3,6 +3,7 @@ package com.moguang.ctnhbio.api.block;
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.moguang.ctnhbio.api.ILivingEntityHostBlock;
+import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import net.minecraft.core.BlockPos;
@@ -26,7 +27,7 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
     public LivingMetaMachineEntity getHostedEntity(Level level, BlockPos pos, BlockState state) {
 
         if(!level.isClientSide() &&
-                getMachine(level, pos) instanceof BasicLivingMachine machine)
+                getMachine(level, pos) instanceof ILivingMachine machine)
         {
             return machine.getMachineEntity();
         }

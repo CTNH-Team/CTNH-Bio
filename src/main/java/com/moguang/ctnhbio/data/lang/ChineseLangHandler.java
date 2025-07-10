@@ -17,6 +17,7 @@ public class ChineseLangHandler {
 //        replace(provider, "item.gtceu.tool.boning_knife", "%s 剔骨刀");
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
         provider.add("ctnhbio.nutrient_bar.info", "营养槽");
+        provider.add("jade.nutrient.info", "营养值：");
     }
 
     public static void replace(@NotNull RegistrateCNLangProvider provider, @NotNull String key,

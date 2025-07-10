@@ -1,7 +1,16 @@
 package com.moguang.ctnhbio.registry;
 
+import com.gregtechceu.gtceu.api.item.MetaMachineItem;
+import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
+import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
+import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
+import com.gregtechceu.gtceu.api.registry.registrate.MultiblockMachineBuilder;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
+
+import java.util.function.Function;
 
 public class CBRegistrate extends GTRegistrate {
     protected CBRegistrate() {
@@ -9,5 +18,10 @@ public class CBRegistrate extends GTRegistrate {
     }
     public static CBRegistrate create() {
         return new CBRegistrate();
+    }
+    public MultiblockMachineBuilder biomultiblock(String name, Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine) {
+        return MultiblockMachineBuilder.createMulti(this, name, metaMachine,
+                LivingMetaMachineBlock::new, MetaMachineItem::new,
+                (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_MULTI_MACHINE_ENTITY.get()));
     }
 }

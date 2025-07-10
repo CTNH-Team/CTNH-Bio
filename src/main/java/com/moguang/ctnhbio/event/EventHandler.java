@@ -41,6 +41,7 @@ import static com.moguang.ctnhbio.registry.CBMaterialItems.CB_TOOL_ITEMS;
 public class EventHandler {
     public static void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
         CBMachines.init();
+        CBMultiblockMachines.init();
 
 //        CTNHItems.init();
 //        CTNHBlocks.init();
