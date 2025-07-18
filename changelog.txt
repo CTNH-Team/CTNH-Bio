@@ -14,7 +14,7 @@
  - 47.3.35 Add '#forge:chorus_additionally_grows_on' tag for similar mechanics to '#minecraft:azalea_grows_on' but for chorus (#10456)
  - 47.3.34 Fix cancelling ProjectileImpactEvent still firing onBlockHit (#10481)
  - 47.3.33 Honor attacker shield disabling status (#10321)
- - 47.3.32 Add fast graphics render type to block model jsons (#10393)
+ - 47.3.32 Add fast graphics render type to block BioReactorModel jsons (#10393)
            Make modded leaves behave like vanilla leaves by default (Fixes #10389)
  - 47.3.31 Fix invalidly symlinked worlds crashing on level select (#10439)
  - 47.3.30 Backport even more future ResourceLocation methods (#10428)
@@ -356,7 +356,7 @@
            * Replace blitOffset with PoseStack in IItemDecorator
            * Circumvent breaking changes
            * Fix blitOffset type
- - 45.0.21 Fix JSON model root transforms (#9410)
+ - 45.0.21 Fix JSON BioReactorModel root transforms (#9410)
  - 45.0.20 Fix tossed items not being able to be picked up by other players. Closes #9412 (#9404)
  - 45.0.19 Fix infinite BE render bounds failing frustum intersection test. Closes #9321 (#9407)
  - 45.0.18 Make ForgeSlider use the new vanilla texture (#9406)
@@ -518,7 +518,7 @@
  - 43.1.61 Fix fires spreading too/igniting custom portal frames. (#9142)
  - 43.1.60 Add supplier to FlowerBlock so it works with custom MobEffects (#9139)
  - 43.1.59 Fix some logical bugs related to the Grindstone Event (#9089)
- - 43.1.58 Call baked model's `getModelData` before `getRenderTypes` (#9163)
+ - 43.1.58 Call baked BioReactorModel's `getModelData` before `getRenderTypes` (#9163)
  - 43.1.57 Make Util.memoize thread-safe (#9155)
  - 43.1.56 Rendering tweaks and fixes: Part 4 (#9065)
  - 43.1.55 Fix `Transformation` loading `PoseStack` (#9083)
@@ -560,7 +560,7 @@
            Add IS_CAVE tag Closes #8885
            Add IS_DESERT tag Closes #8979
            Simplify Mangrove Swamp tags Closes #8980
- - 43.1.24 Allow faces of an "elements" model to have disabled ambient occlusion (#9019)
+ - 43.1.24 Allow faces of an "elements" BioReactorModel to have disabled ambient occlusion (#9019)
  - 43.1.23 [1.19.x] Recipe ID-based grouping between modded and vanilla recipes. (#8876)
  - 43.1.22 Update fence_gates/wooden (#8936)
  - 43.1.21 [1.19.x] Added event for growing fungus (#8981)
@@ -654,7 +654,7 @@
 
 41.0
 ====
- - 41.0.113 Allow faces of an "elements" model to be made emissive (#8890)
+ - 41.0.113 Allow faces of an "elements" BioReactorModel to be made emissive (#8890)
  - 41.0.112 Fix invalid channel names sent from the server causing the network thread to error. (#8902)
  - 41.0.111 Fix PlayerEvent.BreakSpeed using magic block position to signify invalid position. Closes #8906
  - 41.0.110 Fix cases where URIs would not work properly with JarInJar (#8900)
@@ -664,8 +664,8 @@
  - 41.0.106 Allow modded blocks overriding canStickTo prevent sticking to vanilla blocks/other modded blocks (#8837)
  - 41.0.105 Multiple tweaks and fixes to the recent changes in the client refactor PR: Part 3 (#8864)
             Fix weighted baked models not respecting children render types
-            Allow fluid container model to use base texture as particle
-            Fix inverted behavior in composite model building. Fixes #8871
+            Allow fluid container BioReactorModel to use base texture as particle
+            Fix inverted behavior in composite BioReactorModel building. Fixes #8871
  - 41.0.104 Fix crossbows not firing ArrowLooseEvent (#8887)
  - 41.0.103 Add User-Agent header to requests made by the update checker (#8881)
             Format: Java-http-client/<Java version> MinecraftForge/<ForgeVer> <ModId>/<ModVersion>
@@ -675,7 +675,7 @@
  - 41.0.99  add event to SugarCaneBlock (#8877)
  - 41.0.98  Fix Global Loot Modifiers not using Dispatch Codec (#8859)
  - 41.0.97  Allow block render types to be set in datagen (#8852)
- - 41.0.96  Fix renderBreakingTexture not using the target's model data (#8849)
+ - 41.0.96  Fix renderBreakingTexture not using the target's BioReactorModel data (#8849)
  - 41.0.95  Multiple tweaks and fixes to the recent changes in the client refactor PR: Part 2 (#8854)
             * Add getter for the component names in an unbaked geometry
             * Fix render type hint not being copied in BlockGeometryBakingContext
@@ -687,8 +687,8 @@
  - 41.0.91  Fixed `CompositeModel.Baked.Builder.build()` passing arguments in the wrong order (#8846)
  - 41.0.90  Make cutout mipmaps explicitly opt-in for item/entity rendering (#8845)
             * Make cutout mipmaps explicitly opt-in for item/entity rendering
-            * Default render type domain to "minecraft" in model datagens
- - 41.0.89  Fixed multipart block models not using the new model driven render type system. (#8844)
+            * Default render type domain to "minecraft" in BioReactorModel datagens
+ - 41.0.89  Fixed multipart block models not using the new BioReactorModel driven render type system. (#8844)
  - 41.0.88  Update to the latest JarJar to fix a collision issue where multiple jars could provide an exact match. (#8847)
  - 41.0.87  Add FML config to disable DFU optimizations client-side. (#8842)
             * Add client-side command line argument to disable DFU optimizations.
@@ -817,14 +817,14 @@
             * Model loader refactors
             - Rename IModelLoader to IGeometryLoader
             - Add loader manager and registration event
-            - Fold all model events into one
+            - Fold all BioReactorModel events into one
             - Move registration of additionally loaded models to an event
             - Remove ForgeModelBakery and related classes as they served no purpose anymore
             * Render properties refactors
             - Rename all render properties to client extensions and relocate accordingly
             - Move lookups to the respective interfaces
             * Model data refactors
-            - Convert model data to a final class backed by an immutable map and document mutability requirements. This addresses several thread-safety issues in the current implementation which could result in race conditions
+            - Convert BioReactorModel data to a final class backed by an immutable map and document mutability requirements. This addresses several thread-safety issues in the current implementation which could result in race conditions
             - Transfer ownership of the data manager to the client level. This addresses several issues that arise when multiple levels are used at once
             * GUI and widget refactors
             - Move all widgets to the correct package
@@ -850,16 +850,16 @@
             * General event refactors
             - Several renames to either match vanilla or improve clarity
             - Relocate client chat event dispatching out of common code
-            * Forge model type refactors
+            * Forge BioReactorModel type refactors
             - Rename SeparatePerspectiveModel to SeparateTransformsModel
             - Rename ItemModelMesherForge to ForgeItemModelShaper
             - Rename DynamicBucketModel to DynamicFluidContainerModel
             - Prefix all OBJ-related classes with "Obj" and decouple parsing from construction
-            - Extract ElementsModel from model loader registry
+            - Extract ElementsModel from BioReactorModel loader registry
             - Add EmptyModel (baked, unbaked and loader)
             - Refactor CompositeModel to take over ItemMultiLayerBakedModel
             - Remove FluidModel as it's not used and isn't compatible with the new fluid rendering in modern versions
-            - Move model loader registration to a proper event handler
+            - Move BioReactorModel loader registration to a proper event handler
             - Update names of several JSON fields (backwards-compatible)
             - Update datagens to match
             * Miscellaneous changes and overlapping patches
@@ -880,13 +880,13 @@
             - Remove MinecraftForgeClient and move members to Minecraft, IForgeMinecraft and StencilManager
             - Allow non-default elements to be passed into VertexConsumer and add support to derived classes
             - Move array instantiation out of quad processing in lighting pipeline
-            - Fix flipped fluid container model
+            - Fix flipped fluid container BioReactorModel
             - Set default UV1 to the correct values in the remapping pipeline
             - Minor documentation changes
             * Add/update EXC entries and fix AT comment
             * Add test mod as per Orion's request
             * Additional requested changes
-            * Allow custom model types to request the particle texture to be loaded
+            * Allow custom BioReactorModel types to request the particle texture to be loaded
             * Even more requested changes
             * Improve generics in ConcatenatedListView and add missing fallbacks
             * Fix fluid render types being bound to the fluid and not its holder

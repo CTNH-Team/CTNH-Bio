@@ -113,7 +113,7 @@ public class CBMachines {
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
-                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
+                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.BIOREACTOR_ENTITY.get())
                     )
                     .tier(tier)
                     .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
