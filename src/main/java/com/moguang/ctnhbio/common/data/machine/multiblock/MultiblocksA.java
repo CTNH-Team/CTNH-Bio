@@ -22,6 +22,6 @@ public class MultiblocksA {
                     .where("A", Predicates.blocks(ModBlocks.FLESH.get()))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
                     .build())
-            .workableCasingRenderer(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
+            .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
             .register();
 }

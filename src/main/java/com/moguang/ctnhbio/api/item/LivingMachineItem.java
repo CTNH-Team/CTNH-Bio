@@ -11,8 +11,4 @@ public class LivingMachineItem extends MetaMachineItem {
         super(block, properties);
     }
 
-    @Override
-    public @Nullable IRenderer getRenderer(ItemStack stack) {
-        return super.getRenderer(stack);
-    }
 }

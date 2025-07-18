@@ -18,6 +18,7 @@ public class ChineseLangHandler {
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
         provider.add("ctnhbio.nutrient_bar.info", "营养槽");
         provider.add("jade.nutrient.info", "营养值：");
+        provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
     }
 
     public static void replace(@NotNull RegistrateCNLangProvider provider, @NotNull String key,
