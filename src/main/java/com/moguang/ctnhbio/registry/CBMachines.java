@@ -13,6 +13,7 @@ import com.moguang.ctnhbio.client.Renderer.InvisibleRenderer;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVat;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 
@@ -42,7 +43,13 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .model((dataGenContext, gtBlockstateProvider, machineModelBuilder) -> machineModelBuilder.addDynamicRenderer(() -> InvisibleRenderer.INSTANCE))
+                    .blockProp(p -> p.noOcclusion())
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
+//                    .blockModel((ctx, prov) -> {
+//                        // 使用空模型（类似屏障方块）
+//                        prov.simpleBlock(ctx.get(), prov.models().getBuilder("air"));
+//                    })
+
                     .register();
         }
     }
@@ -62,6 +69,8 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
+
                     .register();
         }
     }
@@ -81,6 +90,7 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
                     //.editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
                     .register();
         }
     }
@@ -100,6 +110,7 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.DIGEST_RECIPES)
                     //.editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
                     .register();
         }
     }
@@ -119,6 +130,7 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
                     //.editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
                     .register();
         }
     }
