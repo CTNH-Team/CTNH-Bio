@@ -30,5 +30,10 @@ public class CBRecipeTypes {
             .setEUIO(IO.IN)
             .setProgressBar(GuiTextures.PROGRESS_BAR_BOILER_HEAT, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
+    public static final GTRecipeType GREAT_FLESH = GTRecipeTypes.register("great_flesh", GTRecipeTypes.ELECTRIC)
+            .setMaxIOSize(6, 0, 3, 0)
+            //.setEUIO(IO.IN)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+
     public static void init() {}
 }
