@@ -12,7 +12,7 @@ import static com.gregtechceu.gtceu.common.registry.GTRegistration.REGISTRATE;
 
 public class CBItems {
     public static void init() {
-        //CBMaterialItems.generateTools();
+        CBMaterialItems.generateTools();
     }
 
 }

@@ -8,6 +8,8 @@ import com.moguang.ctnhbio.registry.CBCreativeModeTabs;
 import com.moguang.ctnhbio.registry.CBEntities;
 import com.moguang.ctnhbio.registry.CBItems;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @SuppressWarnings("removal")
@@ -19,10 +21,19 @@ public class CommonProxy {
     }
     public static void init() {
         CBEntities.init();
+
         //Object unused = CBToolType.BONING_KNIFE;
         CBCreativeModeTabs.init();
         CBDatagen.init();
         CTNHBio.REGISTRATE.registerRegistrate();
 
     }
+
+    @SubscribeEvent
+    public void modConstruct(FMLConstructModEvent event) {
+        // this is done to delay initialization of content to be after KJS has set up.
+
+
+    }
+
 }

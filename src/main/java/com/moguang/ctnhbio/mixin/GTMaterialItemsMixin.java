@@ -22,22 +22,22 @@ public class GTMaterialItemsMixin {
     //@Invoker("generateTool")
     //private static void generateTool(Material material, GTToolType toolType, GTRegistrate registrate){}
 
-    @Inject(
-            method = "generateTools",
-            at = @At("TAIL"),
-            remap = false
-    )
-    private static void generateToolsMixin(CallbackInfo ci){
-
-        GTToolType toolType = CBToolType.BONING_KNIFE;
-        for (MaterialRegistry registry : GTCEuAPI.materialManager.getRegistries()) {
-            //GTRegistrate registrate = registry.getRegistrate();
-            for (Material material : registry.getAllMaterials()) {
-                if (material.hasProperty(PropertyKey.TOOL)) {
-                    generateTool(material, toolType);
-                }
-            }
-        }
-    }
+//    @Inject(
+//            method = "generateTools",
+//            at = @At("TAIL"),
+//            remap = false
+//    )
+//    private static void generateToolsMixin(CallbackInfo ci){
+//
+//        GTToolType toolType = CBToolType.BONING_KNIFE;
+//        for (MaterialRegistry registry : GTCEuAPI.materialManager.getRegistries()) {
+//            //GTRegistrate registrate = registry.getRegistrate();
+//            for (Material material : registry.getAllMaterials()) {
+//                if (material.hasProperty(PropertyKey.TOOL)) {
+//                    generateTool(material, toolType);
+//                }
+//            }
+//        }
+//    }
 
 }
