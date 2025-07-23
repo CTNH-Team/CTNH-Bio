@@ -8,13 +8,14 @@ import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
+import net.minecraft.resources.ResourceLocation;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class MultiblocksA {
     public static void init() {}
     public static MultiblockMachineDefinition BASIC_MULTI_LIVING_MACHINE = REGISTRATE.biomultiblock("basic_multi_living_machine", WorkableLivingMultiblockMachine::new)
-            .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+            .recipeType(CBRecipeTypes.GREAT_FLESH)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAA", "AAA", "AAA")
                     .aisle("AAA", "AAA", "AAA")
@@ -22,6 +23,7 @@ public class MultiblocksA {
                     .where("A", Predicates.blocks(ModBlocks.FLESH.get()))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
                     .build())
-            .workableCasingRenderer(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
+            .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
+            .simpleModel(new ResourceLocation("minecraft", "block/air"))
             .register();
 }

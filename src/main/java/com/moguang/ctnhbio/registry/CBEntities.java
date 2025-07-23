@@ -3,6 +3,8 @@ package com.moguang.ctnhbio.registry;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.api.entity.LivingMultiMachineEntity;
 import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
+import com.moguang.ctnhbio.machine.bioreactor.BioReactorEntity;
+import com.moguang.ctnhbio.machine.bioreactor.BioReactorRenderer;
 import com.moguang.ctnhbio.machine.braininavat.Brain;
 import com.moguang.ctnhbio.machine.braininavat.BrainRenderer;
 import com.tterrag.registrate.util.entry.EntityEntry;
@@ -20,6 +22,15 @@ public class CBEntities {
             .renderer(() -> BasicLivingMachineEntityRenderer::new)
             .lang("Living Machine")
             .register();
+    public static EntityEntry<BioReactorEntity> BIOREACTOR_ENTITY = REGISTRATE
+            .entity("bioreactor", BioReactorEntity::new, MobCategory.CREATURE)
+            .properties(props -> props.sized(0.9F, 0.9F))
+            .attributes(BioReactorEntity::createAttributes)
+            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
+            .renderer(() -> BioReactorRenderer::new)
+            .lang("Bioreactor")
+            .register();
+
 
     public static EntityEntry<Brain> BRAIN_IN_A_VAT_BRAIN = REGISTRATE
             .entity("brain_in_a_vat_brain", Brain::new, MobCategory.CREATURE)

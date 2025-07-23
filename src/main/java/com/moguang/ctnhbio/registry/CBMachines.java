@@ -6,12 +6,16 @@ import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 
+import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.client.Renderer.InvisibleRenderer;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVat;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 
 import java.util.Locale;
 
@@ -29,17 +33,23 @@ public class CBMachines {
         for (int tier : GTValues.tiersBetween(LV, UV)) {
             BASIC_LIVING_MACHINE[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_basic_living_machine",
-                            MachineDefinition::createDefinition,
+                            MachineDefinition::new,
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
-                    .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                    .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .renderer(() -> InvisibleRenderer.INSTANCE)
+                    .blockProp(p -> p.noOcclusion())
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
+//                    .blockModel((ctx, prov) -> {
+//                        // 使用空模型（类似屏障方块）
+//                        prov.simpleBlock(ctx.get(), prov.models().getBuilder("air"));
+//                    })
+
                     .register();
         }
     }
@@ -49,7 +59,7 @@ public class CBMachines {
         for (int tier : GTValues.tiersBetween(LV, EV)) {
             BIOELECTRIC_FORGE[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_bioeclectric_forge",
-                            MachineDefinition::createDefinition,
+                            MachineDefinition::new,
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
@@ -59,7 +69,8 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .renderer(() -> InvisibleRenderer.INSTANCE)
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
+
                     .register();
         }
     }
@@ -69,17 +80,17 @@ public class CBMachines {
         for (int tier : GTValues.tiersBetween(LV, EV)) {
             DECOMPOSER[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_decomposer",
-                            MachineDefinition::createDefinition,
+                            MachineDefinition::new,
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
-                    .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                    .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
                     //.editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .renderer(() -> InvisibleRenderer.INSTANCE)
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
                     .register();
         }
     }
@@ -89,17 +100,17 @@ public class CBMachines {
         for (int tier : GTValues.tiersBetween(LV, EV)) {
             DIGESTER[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_digester",
-                            MachineDefinition::createDefinition,
+                            MachineDefinition::new,
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
-                    .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                    .recipeType(CBRecipeTypes.DIGEST_RECIPES)
                     //.editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .renderer(() -> InvisibleRenderer.INSTANCE)
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
                     .register();
         }
     }
@@ -109,17 +120,17 @@ public class CBMachines {
         for (int tier : GTValues.tiersBetween(LV, EV)) {
             BIOREACTOR[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_bioreactor",
-                            MachineDefinition::createDefinition,
+                            MachineDefinition::new,
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
-                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
+                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.BIOREACTOR_ENTITY.get())
                     )
                     .tier(tier)
-                    .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                    .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
                     //.editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .renderer(() -> InvisibleRenderer.INSTANCE)
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
                     .register();
         }
     }
@@ -128,8 +139,8 @@ public class CBMachines {
     static {
         for (int tier : GTValues.tiersBetween(HV, LuV)) {
             BRAIN_IN_A_VAT[tier] = REGISTRATE
-                    .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_brain_in_a_vat",
-                            MachineDefinition::createDefinition,
+                    .machine(VN[tier].toLowerCase(Locale.ROOT) + "_brain_in_a_vat",
+                            MachineDefinition::new,
                             //holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
                             holder -> new BrainInAVat(holder, tier, (tiers) -> tiers * 32000),
                             LivingMetaMachineBlock::new,
@@ -145,7 +156,9 @@ public class CBMachines {
                             .lightLevel(state ->0)
                     )
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .modelRenderer(() -> new ResourceLocation("ctnhbio", "block/vat"))
+                    .model((dataGenContext, gtBlockstateProvider, machineModelBuilder) ->
+                            machineModelBuilder.addModels(machineModelBuilder.partialState(),
+                                    ConfiguredModel.builder().modelFile(new ModelFile.UncheckedModelFile(CTNHBio.id("block/vat"))).buildLast()))
                     .register();
         }
     }

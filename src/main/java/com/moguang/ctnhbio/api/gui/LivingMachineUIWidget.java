@@ -7,7 +7,7 @@ import com.lowdragmc.lowdraglib.gui.texture.ResourceBorderTexture;
 public class LivingMachineUIWidget extends FancyMachineUIWidget {
     public LivingMachineUIWidget(IFancyUIProvider mainPage, int width, int height) {
         super(mainPage, width, height);;
-        setBackground(CBGuiTextures.BACKGROUND_BIO);
+        setBackground(CBGuiTextures.BACKGROUND_SMALL);
         assert playerInventory != null;
         playerInventory.setSlotBackground(CBGuiTextures.SLOT_BIO);
         if (this.titleBar != null) {
