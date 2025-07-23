@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
+import com.moguang.ctnhbio.api.capability.NutrientRecipeCapability;
 import com.moguang.ctnhbio.common.condition.EffectCondition;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -33,6 +34,16 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
     @SuppressWarnings("all")
     public <T> CBRecipeBuilder output(RecipeCapability<T> capability, T... obj) {
         super.output(capability, obj);
+        return this;
+    }
+    public CBRecipeBuilder nutrient(double nutrient) {
+        this.addData("nutrient", (float) nutrient);
+        if (nutrient >= 0) {
+            input(NutrientRecipeCapability.CAP, nutrient);
+        }
+        else {
+            output(NutrientRecipeCapability.CAP, -nutrient);
+        }
         return this;
     }
 

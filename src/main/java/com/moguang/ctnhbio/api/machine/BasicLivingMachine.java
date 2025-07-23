@@ -9,6 +9,9 @@ import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
 import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
+import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
+import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
+import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
@@ -27,6 +30,8 @@ import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.api.gui.CBGuiTextures;
 import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
 import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
+import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
+import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,21 +47,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiFunction;
 
 public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMachine {
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(BasicLivingMachine.class, SimpleTieredMachine.MANAGED_FIELD_HOLDER);
-    @Getter
     @Persisted
-    private double nutrientAmount;
     @Getter
-    @Persisted
-    private final double nutrientCapacity;
+    private NotifiableNutrientTrait nutrientTrait;
 
     private LivingMetaMachineEntity machineEntity;
     @Setter
@@ -64,8 +65,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     public BasicLivingMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, Object... args) {
         super(holder, tier, tankScalingFunction, args);
-        this.nutrientCapacity = 100;
-        this.nutrientAmount = 0;
+        this.nutrientTrait = new NotifiableNutrientTrait(this, 100);
         getMachineEntity();
     }
 
@@ -75,6 +75,32 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             machineEntity = ((LivingMetaMachineBlockEntity) holder).getHostedEntity();
         }
         return machineEntity;
+    }
+
+    @Override
+    public boolean beforeWorking(@Nullable GTRecipe recipe) {
+//        if (recipe.data.contains("nutrient")) {
+//            nutrientAmount = Math.max(0, Math.min(nutrientCapacity, nutrientAmount + recipe.data.getDouble("nutrient")));
+//        }
+        return super.beforeWorking(recipe);
+    }
+
+    @Override
+    protected BasicLivingRecipeLogic createRecipeLogic(Object... args) {
+        return new BasicLivingRecipeLogic(this);
+    }
+
+    @Override
+    public BasicLivingRecipeLogic getRecipeLogic() {
+        return (BasicLivingRecipeLogic) super.getRecipeLogic();
+    }
+    @Override
+    public double getNutrientAmount() {
+        return nutrientTrait.nutrientAmount;
+    }
+    @Override
+    public double getNutrientCapacity() {
+        return nutrientTrait.nutrientCapacity;
     }
 
     @Override
@@ -91,7 +117,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                 }
                 int nutrition = stack.getFoodProperties(null).getNutrition();
                 float saturation = stack.getFoodProperties(null).getSaturationModifier();
-                nutrientAmount = Math.min(nutrientAmount + nutrition + 0.5 * saturation, nutrientCapacity);
+                nutrientTrait.setNutrientAmount(Math.min(getNutrientAmount() + nutrition + 0.5 * saturation, getNutrientCapacity()));
 
                 getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
                         SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
@@ -220,6 +246,21 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                 if (configurator != null)
                     configuratorPanel.attachConfigurators(configurator);
             }
+        }
+    }
+    public static class BasicLivingRecipeLogic extends RecipeLogic {
+
+        public BasicLivingRecipeLogic(IRecipeLogicMachine machine) {
+            super(machine);
+        }
+
+        @Override
+        public @NotNull Iterator<GTRecipe> searchRecipe() {
+            var recipes = CBRecipeTypes.BASIC_LIVING_RECIPES.searchRecipe(machine, r -> matchRecipe(r).isSuccess());
+            if (!recipes.equals(Collections.emptyIterator())) {
+                return recipes;
+            }
+            return super.searchRecipe();
         }
     }
 }

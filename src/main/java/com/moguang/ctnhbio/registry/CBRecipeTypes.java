@@ -29,6 +29,10 @@ public class CBRecipeTypes {
             .setMaxIOSize(1, 0, 1, 0)
             .setEUIO(IO.IN)
             .setProgressBar(GuiTextures.PROGRESS_BAR_BOILER_HEAT, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+    public static final GTRecipeType BASIC_LIVING_RECIPES = GTRecipeTypes.register("basic_living", BIOLOGY)
+            .setMaxIOSize(1, 0, 1, 0)
+            .setEUIO(IO.IN)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
     public static final GTRecipeType GREAT_FLESH = GTRecipeTypes.register("great_flesh", GTRecipeTypes.ELECTRIC)
             .setMaxIOSize(6, 0, 3, 0)

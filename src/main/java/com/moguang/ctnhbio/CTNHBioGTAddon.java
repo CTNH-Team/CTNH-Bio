@@ -2,7 +2,9 @@ package com.moguang.ctnhbio;
 
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
+import com.moguang.ctnhbio.registry.CBRecipeCapabilities;
 import com.moguang.ctnhbio.common.data.recipe.GreatFleshRecipes;
+import com.moguang.ctnhbio.registry.CBRecipes;
 import com.moguang.ctnhbio.registry.CBRegistrate;
 import net.minecraft.data.recipes.FinishedRecipe;
 
@@ -21,12 +23,17 @@ public class CTNHBioGTAddon implements IGTAddon {
     }
 
     @Override
+    public void registerRecipeCapabilities() {
+        CBRecipeCapabilities.init();
+    }
+
+    @Override
     public String addonModId() {
         return CTNHBio.MODID;
     }
 
     @Override
     public void addRecipes(Consumer<FinishedRecipe> provider) {
-        GreatFleshRecipes.init(provider);
+        CBRecipes.init(provider);
     }
 }

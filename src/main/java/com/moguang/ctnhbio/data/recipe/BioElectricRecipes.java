@@ -12,6 +12,7 @@ public class BioElectricRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
         CBRecipeBuilder.of(CTNHBio.id("test"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .effect(MobEffects.POISON)
+                .nutrient(-2)
                 .inputItems(ModItems.BILE.get().asItem().getDefaultInstance())
                 .outputItems(ModItems.TOXIN_GLAND.get().asItem().getDefaultInstance())
                 .EUt(32)

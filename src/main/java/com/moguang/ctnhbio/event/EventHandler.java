@@ -3,6 +3,7 @@ package com.moguang.ctnhbio.event;
 import com.github.elenterius.biomancy.init.ModEnchantments;
 import com.google.gson.Gson;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
+import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.data.DimensionMarker;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.MaterialProperties;
