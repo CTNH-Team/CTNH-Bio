@@ -11,19 +11,19 @@ public class BasicLivingRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
         CBRecipeBuilder.of(CTNHBio.id("nutrient"), CBRecipeTypes.BASIC_LIVING_RECIPES)
                 .inputItems(ModItems.NUTRIENT_PASTE.get().asItem().getDefaultInstance())
-                .nutrient(3)
+                .nutrient(-3)
                 .duration(1)
                 .EUt(32)
                 .save(provider);
         CBRecipeBuilder.of(CTNHBio.id("nutrient2"), CBRecipeTypes.BASIC_LIVING_RECIPES)
                 .inputItems(ModItems.NUTRIENT_BAR.get().asItem().getDefaultInstance())
-                .nutrient(27)
+                .nutrient(-27)
                 .duration(1)
                 .EUt(32)
                 .save(provider);
         CBRecipeBuilder.of(CTNHBio.id("nutrient3"), CBRecipeTypes.BASIC_LIVING_RECIPES)
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance())
-                .nutrient(1)
+                .nutrient(-1)
                 .duration(1)
                 .EUt(32)
                 .save(provider);

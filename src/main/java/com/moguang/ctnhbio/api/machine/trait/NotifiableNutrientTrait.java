@@ -16,26 +16,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class NotifiableNutrientTrait extends NotifiableRecipeHandlerTrait<Double> {
+    @Persisted
+    private final SynchronizedNutrientStorage sharedStorage;
     public static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
             NotifiableNutrientTrait.class, NotifiableRecipeHandlerTrait.MANAGED_FIELD_HOLDER);
-    @Persisted
-    public double nutrientCapacity;
-    @Setter
-    @Getter
-    @Persisted
-    public double nutrientAmount;
-    public NotifiableNutrientTrait(MetaMachine machine, double capacity) {
+    public IO io;
+    public NotifiableNutrientTrait(MetaMachine machine, SynchronizedNutrientStorage sharedStorage, IO io) {
         super(machine);
-        this.nutrientCapacity = capacity;
-        this.nutrientAmount = 0;
-    }
-    public double getLeft() {
-        return nutrientCapacity - nutrientAmount;
+        this.sharedStorage = sharedStorage;
+        this.io = io;
     }
 
     @Override
     public IO getHandlerIO() {
-        return IO.BOTH;
+        return io;
     }
     @Override
     public ManagedFieldHolder getFieldHolder() {
@@ -44,16 +38,16 @@ public class NotifiableNutrientTrait extends NotifiableRecipeHandlerTrait<Double
 
     @Override
     public List<Double> handleRecipeInner(IO io, GTRecipe gtRecipe, List<Double> list, boolean simulate) {
-        if (io == IO.IN) {
+        if (io == IO.OUT) {
             for (var it = list.listIterator(); it.hasNext();) { // 使用索引遍历
                 double trait = it.next();
                 if (trait == 0) {
                     it.remove();
                     continue;
                 }
-                double consume = Math.min(getLeft(), trait);
+                double consume = Math.min(sharedStorage.getLeft(), trait);
                 if (!simulate) {
-                    nutrientAmount += consume;
+                    sharedStorage.add(consume);
                 }
                 if (consume == trait) {
                     it.remove();
@@ -62,16 +56,16 @@ public class NotifiableNutrientTrait extends NotifiableRecipeHandlerTrait<Double
                 it.set(trait - consume);
             }
         }
-        else {
+        else if (io == IO.IN){
             for (var it = list.listIterator(); it.hasNext();) {
                 double trait = it.next();
                 if (trait == 0) {
                     it.remove();
                     continue;
                 }
-                double cost = Math.max(0, trait);
+                double cost = Math.min(sharedStorage.getAmount(), trait);
                 if (!simulate) {
-                    nutrientAmount -= cost;
+                    sharedStorage.extract(cost);
                 }
                 if (cost == trait) {
                     it.remove();
@@ -80,17 +74,17 @@ public class NotifiableNutrientTrait extends NotifiableRecipeHandlerTrait<Double
                 it.set(trait - cost);
             }
         }
-        return list;
+        return list.isEmpty()? null : list;
     }
 
     @Override
     public @NotNull List<Object> getContents() {
-        return List.of(nutrientAmount);
+        return List.of(sharedStorage.getAmount());
     }
 
     @Override
     public double getTotalContentAmount() {
-        return nutrientAmount;
+        return sharedStorage.getAmount();
     }
 
     @Override

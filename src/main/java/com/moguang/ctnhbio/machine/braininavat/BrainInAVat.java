@@ -7,8 +7,8 @@ import net.minecraft.core.Direction;
 import org.jetbrains.annotations.Nullable;
 
 public class BrainInAVat extends BasicLivingMachine {
-    public BrainInAVat(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, Object... args) {
-        super(holder, tier, tankScalingFunction, args);
+    public BrainInAVat(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, double capacity, Object... args) {
+        super(holder, tier, tankScalingFunction, capacity, args);
         this.outputFacingItems = null;
         this.outputFacingFluids = null;
     }

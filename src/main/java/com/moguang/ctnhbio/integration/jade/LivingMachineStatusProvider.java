@@ -5,6 +5,7 @@ import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.integration.jade.provider.CapabilityBlockProvider;
 import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+import net.minecraft.Util;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,6 +28,7 @@ import snownee.jade.api.theme.IThemeHelper;
 import snownee.jade.api.ui.BoxStyle;
 import snownee.jade.api.ui.IElementHelper;
 import snownee.jade.impl.ui.HealthElement;
+import snownee.jade.overlay.DisplayHelper;
 
 import java.util.Collection;
 
@@ -95,7 +97,15 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILiving
         if (capData.contains("NutrientAmount") && capData.contains("NutrientCapacity")) {
             double nutrientAmount = capData.getDouble("NutrientAmount");
             double nutrientCapacity = capData.getDouble("NutrientCapacity");
-            tooltip.add(new NutrientElement(nutrientCapacity, nutrientAmount));
+            var helper = tooltip.getElementHelper();
+            var progress = getProgress((long) nutrientAmount, (long) nutrientCapacity);
+            tooltip.add(
+                    helper.progress(
+                            progress,
+                            Component.translatable("ctnhbio.jade.nutrient_stored", DisplayHelper.dfCommas.format(nutrientAmount), DisplayHelper.dfCommas.format(nutrientCapacity)),
+                            helper.progressStyle().color(0xFF5fe04e, 0xFF5fe04e).textColor(-1),
+                            Util.make(BoxStyle.DEFAULT, style -> style.borderColor = 0xFF555555),
+                            true));
         }
         if (capData.contains("StatusEffects")) {
             IElementHelper helper = IElementHelper.get();

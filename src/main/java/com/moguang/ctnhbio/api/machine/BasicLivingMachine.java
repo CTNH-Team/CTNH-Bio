@@ -31,6 +31,7 @@ import com.moguang.ctnhbio.api.gui.CBGuiTextures;
 import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
 import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
 import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
+import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import lombok.Getter;
@@ -57,15 +58,24 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(BasicLivingMachine.class, SimpleTieredMachine.MANAGED_FIELD_HOLDER);
     @Persisted
     @Getter
-    private NotifiableNutrientTrait nutrientTrait;
+    private final NotifiableNutrientTrait inputTrait;
+    @Persisted
+    @Getter
+    private final NotifiableNutrientTrait outputTrait;
+    @Persisted
+    @Getter
+    private final SynchronizedNutrientStorage storage;
 
     private LivingMetaMachineEntity machineEntity;
     @Setter
     private String name = null;
 
-    public BasicLivingMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, Object... args) {
+    public BasicLivingMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, double capacity, Object... args) {
         super(holder, tier, tankScalingFunction, args);
-        this.nutrientTrait = new NotifiableNutrientTrait(this, 100);
+        this.storage = new SynchronizedNutrientStorage(capacity);
+        this.inputTrait = new NotifiableNutrientTrait(this, storage, IO.IN);
+        this.outputTrait = new NotifiableNutrientTrait(this, storage, IO.OUT);
+
         getMachineEntity();
     }
 
@@ -79,9 +89,6 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     @Override
     public boolean beforeWorking(@Nullable GTRecipe recipe) {
-//        if (recipe.data.contains("nutrient")) {
-//            nutrientAmount = Math.max(0, Math.min(nutrientCapacity, nutrientAmount + recipe.data.getDouble("nutrient")));
-//        }
         return super.beforeWorking(recipe);
     }
 
@@ -96,11 +103,11 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     }
     @Override
     public double getNutrientAmount() {
-        return nutrientTrait.nutrientAmount;
+        return storage.getAmount();
     }
     @Override
     public double getNutrientCapacity() {
-        return nutrientTrait.nutrientCapacity;
+        return storage.getCapacity();
     }
 
     @Override
@@ -117,7 +124,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                 }
                 int nutrition = stack.getFoodProperties(null).getNutrition();
                 float saturation = stack.getFoodProperties(null).getSaturationModifier();
-                nutrientTrait.setNutrientAmount(Math.min(getNutrientAmount() + nutrition + 0.5 * saturation, getNutrientCapacity()));
+                storage.add(nutrition + 0.5 * saturation);
 
                 getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
                         SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,

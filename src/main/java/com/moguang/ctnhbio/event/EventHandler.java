@@ -44,8 +44,7 @@ public class EventHandler {
     public static void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
         CBMachines.init();
         CBMultiblockMachines.init();
-
-//        CTNHItems.init();
+        CBItems.init();
 //        CTNHBlocks.init();
 //        CTNHMultiblockMachines.init();
     }
@@ -88,8 +87,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void registerMaterials(MaterialEvent event) {
-//        MaterialProperties.addBaseType(CTNHPropertyKeys.NUCLEAR);
-//        CTNHMaterials.init();
+        CBMaterials.init();
     }
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {

@@ -34,7 +34,7 @@ public class CBMachines {
             BASIC_LIVING_MACHINE[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_basic_living_machine",
                             MachineDefinition::new,
-                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
+                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 100),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
@@ -60,7 +60,7 @@ public class CBMachines {
             BIOELECTRIC_FORGE[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_bioeclectric_forge",
                             MachineDefinition::new,
-                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
+                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
@@ -81,7 +81,7 @@ public class CBMachines {
             DECOMPOSER[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_decomposer",
                             MachineDefinition::new,
-                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
+                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
@@ -101,7 +101,7 @@ public class CBMachines {
             DIGESTER[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_digester",
                             MachineDefinition::new,
-                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
+                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
@@ -121,7 +121,7 @@ public class CBMachines {
             BIOREACTOR[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_bioreactor",
                             MachineDefinition::new,
-                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
+                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.BIOREACTOR_ENTITY.get())
@@ -142,7 +142,7 @@ public class CBMachines {
                     .machine(VN[tier].toLowerCase(Locale.ROOT) + "_brain_in_a_vat",
                             MachineDefinition::new,
                             //holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
-                            holder -> new BrainInAVat(holder, tier, (tiers) -> tiers * 32000),
+                            holder -> new BrainInAVat(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
                             (type, pos, state) ->
