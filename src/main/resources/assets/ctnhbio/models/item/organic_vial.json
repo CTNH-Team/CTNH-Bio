@@ -1,0 +1,9 @@
+{
+  "loader": "forge:fluid_container",
+  "parent": "forge:item/default",
+  "textures": {
+    "base": "ctnhbio:item/organic_vial/base",
+    "fluid": "ctnhbio:item/organic_vial/overlay"
+  },
+  "fluid": "minecraft:empty"
+}

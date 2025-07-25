@@ -17,7 +17,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.player.Player;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -27,8 +26,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
 
 import static com.lowdragmc.lowdraglib.LDLib.random;
 import static net.minecraft.world.level.block.Block.UPDATE_CLIENTS;
@@ -37,14 +34,11 @@ public class GrowingBlockPattern extends BlockPattern {
 
     public static final TagKey<Block> GROWABLE_TAG = BlockTags.create(new ResourceLocation("ctnhbio", "growable"));
     public static final TagKey<Block> GROWING_REPLACEABLE_TAG = BlockTags.create(new ResourceLocation("ctnhbio", "growing_replaceable"));
-    private static final int BLOCKS_PER_TICK = 1; // 每tick放置的方块数量
+
 
     private final BuildContext context = new BuildContext();
-    @Getter
-    private final Queue<BuildTask> buildQueue = new ArrayDeque<>();
-    private final List<BuildTask> buildTaskList = new ArrayList<>();
-    @Getter
-    private boolean completed = false;
+
+    public final BuildPlan growPlan = new BuildPlan();
 
     static Direction[] FACINGS = { Direction.SOUTH, Direction.NORTH, Direction.WEST, Direction.EAST, Direction.UP,
             Direction.DOWN };
@@ -108,75 +102,10 @@ public class GrowingBlockPattern extends BlockPattern {
         return null;
     }
 
-    public void tick() {
-        if (completed || buildQueue.isEmpty()) return;
 
-        // 每tick处理一定数量的方块
-        try {
-            for (int i = 0; i < BLOCKS_PER_TICK && !buildQueue.isEmpty(); i++) {
-                BuildTask task = buildQueue.poll();
-                if (task != null) {
-                    task.execute();
-                }
-            }
-        } catch (Exception e) {
-            completed = true;
-            throw new RuntimeException(e);
-        }
 
-        if (buildQueue.isEmpty()) {
-            completed = true;
 
-        }
-    }
-
-    public void generateGrowthOrder(BlockPos startPos) {
-
-        Set<BlockPos> built = new HashSet<>();
-        Queue<BuildTask> activeFrontier = new LinkedList<>();
-        List<BuildTask> fluidTasks = new ArrayList<>();
-        // 3. 从基点开始生长
-        //growthOrder.add(startTask);
-        built.add(startPos);
-        addNeighborsToFrontier(startPos, activeFrontier, built);
-
-        // 4. 逐步扩展
-        while (!activeFrontier.isEmpty()) {
-            // 随机选择下一个生长点（增加随机性）
-            BuildTask next = selectRandomFromFrontier(activeFrontier);
-            if(!next.placeHolder){
-                buildQueue.add(next);
-            }
-            built.add(next.pos);
-            activeFrontier.remove(next);
-
-            // 添加新发现的相邻方块
-            addNeighborsToFrontier(next.pos, activeFrontier, built);
-        }
-    }
-
-    private void addNeighborsToFrontier(BlockPos center,
-                                        Queue<BuildTask> frontier,
-                                        Set<BlockPos> built) {
-        // 检查6个方向的相邻方块
-        for (Direction dir : Direction.values()) {
-            BlockPos neighborPos = center.relative(dir);
-            buildTaskList.stream()
-                    .filter(t -> t.pos.equals(neighborPos))
-                    .filter(t -> !built.contains(t.pos))
-                    .filter(t -> !frontier.contains(t))
-                    .findFirst()
-                    .ifPresent(frontier::add);
-        }
-    }
-
-    private BuildTask selectRandomFromFrontier(Queue<BuildTask> frontier) {
-        // 将队列转为List以便随机选择
-        List<BuildTask> candidates = new ArrayList<>(frontier);
-        return candidates.get(random.nextInt(candidates.size()));
-    }
-
-    public void startGrowing(Level level, MultiblockState worldState, GrowSetting setting) {
+    public void generateGrowPlan(Level level, MultiblockState worldState, GrowSetting setting) {
         // 初始化阶段
         initializeBuildContext(level, worldState, setting);
 
@@ -191,46 +120,147 @@ public class GrowingBlockPattern extends BlockPattern {
                 z++;
             }
         }
-        generateGrowthOrder(context.centerPos);
+
+        growPlan.generateGrowOrder(context.centerPos);
     }
     private void generateLayerTasks(int layerIndex, int z) {
         for (int b = 0, y = -centerOffset[1]; b < this.thumbLength; b++, y++) {
             for (int a = 0, x = -centerOffset[0]; a < this.palmLength; a++, x++) {
-                BlockPos pos = calculateBlockPosition(context, x, y, z);
+                BlockPos pos = calculateBlockPosition(x, y, z);
                 TraceabilityPredicate predicate = this.blockMatches[layerIndex][b][a];
 
-                buildTaskList.add(new BuildTask(context, pos, predicate,predicate.isAir() || predicate.isAny()));
+                growPlan.add(new BuildTask(pos, predicate));
             }
         }
 
     }
 
-    private class BuildTask {
-        private final BuildContext context;
+    public class BuildTask {
+
         public final BlockPos pos;
         private final TraceabilityPredicate predicate;
-        private final boolean placeHolder;
 
-        public BuildTask(BuildContext context, BlockPos pos, TraceabilityPredicate predicate, Boolean placeHolder) {
-            this.context = context;
+
+        public BuildTask(BlockPos pos, TraceabilityPredicate predicate) {
+
             this.pos = pos;
             this.predicate = predicate;
-            this.placeHolder = placeHolder;
         }
 
-        public void execute() {
+        public boolean execute() {
 
             updateWorldState(context.worldState, pos, predicate);
 
-            if (handleExistingBlock(context, pos, predicate)) return;
+            if (!canReplaceExistingBlock(pos, predicate))
+                return false;
 
+            BlockInfo[] infos = determineRequiredBlockInfo(predicate);
+            if (infos == null)
+                return false;
 
-            BlockInfo[] infos = determineRequiredBlockInfo(context, predicate);
-            if (infos == null) return;
-
-            placeBlock(context, pos, infos);
+            return placeBlock(pos, infos);
 
         }
+        public boolean isFluid()
+        {
+            BlockInfo[] infos = determineRequiredBlockInfo(predicate);
+            if(infos == null) return false;
+            return infos[0].getBlockState().liquid();
+        }
+
+
+    }
+
+    public class BuildPlan {
+        private static final int BLOCKS_PER_TICK = 1; // 每tick放置的方块数量
+
+        @Getter
+        private final Queue<BuildTask> buildQueue = new ArrayDeque<>();
+        private final List<BuildTask> buildTaskList = new ArrayList<>();
+        private int fluidTaskNum = 0;
+
+        public boolean isCompleted()
+        {
+            return buildQueue.isEmpty();
+        }
+
+        public void add(BuildTask task) {buildTaskList.add(task);}
+
+        public boolean tick() {
+            if (isCompleted()) return false;
+
+            // 每tick处理一定数量的方块
+            try {
+                for (int i = 0; i < BLOCKS_PER_TICK && !buildQueue.isEmpty(); i++) {
+                    BuildTask task = buildQueue.poll();
+                    while(task != null) {
+                        if(task.isFluid() && fluidTaskNum != buildQueue.size())
+                        {
+                            buildQueue.add(task);
+                            fluidTaskNum++;
+
+                        }
+                        else if(task.execute()) return true;
+                        task = buildQueue.poll();
+                    }
+                    return false;
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+
+            return false;
+        }
+
+        public void generateGrowOrder(BlockPos startPos) {
+            fluidTaskNum = 0;
+            Set<BlockPos> built = new HashSet<>();
+            Queue<BuildTask> activeFrontier = new LinkedList<>();
+
+            // 3. 从基点开始生长
+            //growthOrder.add(startTask);
+            built.add(startPos);
+            addNeighborsToFrontier(startPos, activeFrontier, built);
+
+            // 4. 逐步扩展
+            while (!activeFrontier.isEmpty()) {
+                // 随机选择下一个生长点（增加随机性）
+                BuildTask next = selectRandomFromFrontier(activeFrontier);
+
+                buildQueue.add(next);
+
+                built.add(next.pos);
+                activeFrontier.remove(next);
+
+                // 添加新发现的相邻方块
+                addNeighborsToFrontier(next.pos, activeFrontier, built);
+            }
+        }
+
+        private void addNeighborsToFrontier(BlockPos center,
+                                            Queue<BuildTask> frontier,
+                                            Set<BlockPos> built) {
+            // 检查6个方向的相邻方块
+            for (Direction dir : Direction.values()) {
+                BlockPos neighborPos = center.relative(dir);
+                buildTaskList.stream()
+                        .filter(t -> t.pos.equals(neighborPos))
+                        .filter(t -> !built.contains(t.pos))
+                        .filter(t -> !frontier.contains(t))
+                        .findFirst()
+                        .ifPresent(frontier::add);
+            }
+        }
+
+        private BuildTask selectRandomFromFrontier(Queue<BuildTask> frontier) {
+            // 将队列转为List以便随机选择
+            List<BuildTask> candidates = new ArrayList<>(frontier);
+            return candidates.get(random.nextInt(candidates.size()));
+        }
+
+
+
     }
 
     private void initializeBuildContext(Level level, MultiblockState worldState, GrowSetting setting) {
@@ -240,7 +270,7 @@ public class GrowingBlockPattern extends BlockPattern {
         context.world = level;
 
         context.worldState = worldState;
-
+        context.settings = setting;
         context.controller = controller;
         context.centerPos = controller.self().getPos();
         context.facing = controller.self().getFrontFacing();
@@ -266,12 +296,12 @@ public class GrowingBlockPattern extends BlockPattern {
     }
 
 
-    private BlockPos calculateBlockPosition(BuildContext context, int x, int y, int z) {
+    private BlockPos calculateBlockPosition(int x, int y, int z) {
         return setActualRelativeOffset(x, y, z, context.facing, context.upwardsFacing, context.isFlipped)
                 .offset(context.centerPos.getX(), context.centerPos.getY(), context.centerPos.getZ());
     }
 
-    private boolean handleExistingBlock(BuildContext context, BlockPos pos, TraceabilityPredicate predicate) {
+    private boolean canReplaceExistingBlock(BlockPos pos, TraceabilityPredicate predicate) {
 
         context.inFluid = false;
         if (!context.world.isEmptyBlock(pos)) {
@@ -283,28 +313,28 @@ public class GrowingBlockPattern extends BlockPattern {
 
             if(existingState.liquid()){
                 context.inFluid = true;
-                return false;
+                return true;
             }
 
             if(existingState.is(GROWING_REPLACEABLE_TAG))
-                return false;
+                return true;
 
 
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
-    private BlockInfo[] determineRequiredBlockInfo(BuildContext context, TraceabilityPredicate predicate) {
+    private BlockInfo[] determineRequiredBlockInfo(TraceabilityPredicate predicate) {
         // 有限谓词优先
-        BlockInfo[] infos = checkLimitedPredicates(context, predicate);
+        BlockInfo[] infos = checkLimitedPredicates(predicate);
         if (infos != null) return infos;
 
         // 无限制谓词
-        return checkCommonPredicates(context, predicate);
+        return checkCommonPredicates(predicate);
     }
 
-    private BlockInfo[] checkLimitedPredicates(BuildContext context, TraceabilityPredicate predicate) {
+    private BlockInfo[] checkLimitedPredicates(TraceabilityPredicate predicate) {
         Map<SimplePredicate, Integer> cacheLayer = context.worldState.getLayerCount();
         Map<SimplePredicate, Integer> cacheGlobal = context.worldState.getGlobalCount();
 
@@ -339,7 +369,7 @@ public class GrowingBlockPattern extends BlockPattern {
         return null;
     }
 
-    private BlockInfo[] checkCommonPredicates(BuildContext context, TraceabilityPredicate predicate) {
+    private BlockInfo[] checkCommonPredicates(TraceabilityPredicate predicate) {
         List<BlockInfo> infos = new ArrayList<>();
         Map<SimplePredicate, Integer> cacheLayer = context.worldState.getLayerCount();
         Map<SimplePredicate, Integer> cacheGlobal = context.worldState.getGlobalCount();
@@ -385,7 +415,7 @@ public class GrowingBlockPattern extends BlockPattern {
 
 
 
-    private void placeBlock(BuildContext context, BlockPos pos, BlockInfo[] infos) {
+    private boolean placeBlock(BlockPos pos, BlockInfo[] infos) {
 
         BlockInfo info = Arrays.stream(infos)
                 //.filter(i ->i.getBlockState().is(GROWABLE_TAG))
@@ -396,10 +426,15 @@ public class GrowingBlockPattern extends BlockPattern {
             var blockState = info.getBlockState();
             if(blockState.liquid())
             {
-                if(!context.inFluid) context.world.setBlock(pos, blockState, UPDATE_CLIENTS);
+                if(!context.inFluid)
+                    return context.world.setBlock(pos, blockState, UPDATE_CLIENTS);
+                else
+                    return true;
             }
-            else  context.world.setBlock(pos, blockState, UPDATE_CLIENTS);
+            else
+                return context.world.setBlock(pos, blockState, UPDATE_CLIENTS);
         }
+        return false;
     }
 
 
@@ -412,7 +447,6 @@ public class GrowingBlockPattern extends BlockPattern {
     // 用于保存构建过程中的上下文数据
     public static class BuildContext {
         Level world;
-        Player player;
         MultiblockState worldState;
         GrowSetting settings;
         IMultiController controller;

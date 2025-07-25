@@ -31,7 +31,7 @@ public class CBMaterialItems{
             List.of(CBToolType.BONING_KNIFE));
 
     public static void generateTools() {
-        System.out.println("CBMaterialItems.generateTools()");
+        //System.out.println("CBMaterialItems.generateTools()");
         //REGISTRATE.creativeModeTab(() -> ITEM);
         GTToolType toolType = CBToolType.BONING_KNIFE;
         for (MaterialRegistry registry : GTCEuAPI.materialManager.getRegistries()) {

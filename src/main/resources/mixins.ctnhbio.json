@@ -10,6 +10,7 @@
     "gtm.AutoOutputFluidConfigHandlerMixin",
     "gtm.AutoOutputItemConfigHandlerMixin",
     "gtm.CombinedDirectionalConfiguratorMixin",
+    "gtm.IThermalFluidHandlerItemStackMixin",
     "jei.JeiBaseLootMixin",
     "jei.JeiGameplayLootMixin",
     "jei.LootTableMixin"

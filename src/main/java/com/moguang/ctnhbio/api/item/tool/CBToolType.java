@@ -21,7 +21,7 @@ public class CBToolType {
                     //.defaultEnchantment(ModEnchantments.DESPOIL.get(), 3)
             )
             .constructor(GTSwordItem::create)
-            .toolClassNames("sword") // 可继承自 SWORD 类型
+            .toolClassNames("sword")
             .toolClasses(GTToolType.SWORD)
             .materialAmount(2 * GTValues.M)
             .build();

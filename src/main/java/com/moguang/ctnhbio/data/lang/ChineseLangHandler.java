@@ -13,17 +13,17 @@ import java.util.Map;
 
 public class ChineseLangHandler {
     public static void init(RegistrateCNLangProvider provider){
-//        provider.addItem(CBItems.BIO_CAPACITOR, "生物电容");
-//        provider.addItem(CBItems.BIO_DIODE, "生物二极管");
-//        provider.addItem(CBItems.BIO_INDUCTOR, "生物电感");
-//        provider.addItem(CBItems.BIO_RESISTOR, "生物电阻");
-//        provider.addItem(CBItems.BIO_TRANSISTOR, "生物晶体管");
-//        provider.addItem(CBItems.WETWARE_CIRCUIT_BOARD, "湿件电路基板");
-//        provider.addItem(CBItems.WETWARE_PRINTED_CIRCUIT_BOARD, "蚀刻湿件电路基板");
-
+        provider.addItem(CBItems.BIO_CAPACITOR, "生物电容");
+        provider.addItem(CBItems.BIO_DIODE, "生物二极管");
+        provider.addItem(CBItems.BIO_INDUCTOR, "生物电感");
+        provider.addItem(CBItems.BIO_RESISTOR, "生物电阻");
+        provider.addItem(CBItems.BIO_TRANSISTOR, "生物晶体管");
+        provider.addItem(CBItems.WETWARE_CIRCUIT_BOARD, "湿件电路基板");
+        provider.addItem(CBItems.WETWARE_PRINTED_CIRCUIT_BOARD, "蚀刻湿件电路基板");
+        provider.add("item.gtceu.tool.boning_knife", "%s剔骨刀");
         provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH]活体机器属性");
         provider.add("ctnhbio.living_machine", "living machine");
-//        replace(provider, "item.gtceu.tool.boning_knife", "%s 剔骨刀");
+
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
         provider.add("ctnhbio.nutrient_bar.info", "营养槽");
         provider.add("jade.nutrient.info", "营养值：");
