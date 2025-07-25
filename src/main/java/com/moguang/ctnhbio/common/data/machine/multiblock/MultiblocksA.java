@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Blocks;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
@@ -20,8 +21,11 @@ public class MultiblocksA {
                     .aisle("AAA", "AAA", "AAA")
                     .aisle("AAA", "AAA", "AAA")
                     .aisle("AAA", "A@A", "AAA")
-                    .where("A", Predicates.blocks(ModBlocks.FLESH.get()))
+                    .where("A", Predicates.blocks(ModBlocks.FLESH.get()).setMinGlobalLimited(10)
+                            .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+                            .or(Predicates.blocks(Blocks.AIR)))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
+
                     .build())
             .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
             .simpleModel(new ResourceLocation("minecraft", "block/air"))

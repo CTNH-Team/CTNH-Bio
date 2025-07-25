@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.api.machine.multiblock;
 
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
+import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
@@ -8,6 +9,7 @@ import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
+import com.moguang.ctnhbio.api.pattern.GrowingBlockPattern;
 import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -27,6 +29,10 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     @Getter
     @Persisted
     private double nutrientCapacity;
+
+    private static final double  NUTRIENT_NEEDED_FOR_GROWTH = 10;
+
+    private GrowingBlockPattern growingBlockPattern;
 
     @Persisted
     public ResourceLocation lastRecipeId;
@@ -93,4 +99,41 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        subscribeServerTick(this::checkGrow);
+        subscribeServerTick(this::tickGrow);
+    }
+
+    public void checkGrow(){
+
+        if(getOffsetTimer()%20 == 0 && !isFormed())
+        {
+            if(growingBlockPattern == null)
+                growingBlockPattern = GrowingBlockPattern.getGrowingBlockPattern(getPattern());
+            if(growingBlockPattern.getBuildQueue().isEmpty())
+                growingBlockPattern.startGrowing(getLevel(), getMultiblockState(), new GrowingBlockPattern.GrowSetting());
+        }
+    }
+
+    public void tickGrow()
+    {
+        if(nutrientAmount >= NUTRIENT_NEEDED_FOR_GROWTH && growingBlockPattern != null && !growingBlockPattern.getBuildQueue().isEmpty())
+        {
+            growingBlockPattern.tick();
+            nutrientAmount -= NUTRIENT_NEEDED_FOR_GROWTH;
+        }
+
+    }
+
+    public void consumeNutrient(double t)
+    {
+        nutrientAmount -= t;
+    }
+
+    @Override
+    public @Nullable TickableSubscription subscribeServerTick(Runnable runnable) {
+        return super.subscribeServerTick(runnable);
+    }
 }

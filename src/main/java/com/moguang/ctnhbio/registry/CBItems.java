@@ -7,7 +7,7 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBItems {
     public static void init() {
-        //CBMaterialItems.generateTools();
+        CBMaterialItems.generateTools();
     }
 //    public static final ItemEntry<Item> BIO_CAPACITOR = REGISTRATE.item("bio_capacitor", Item::new)
 //            .lang("Bio Capacitor")

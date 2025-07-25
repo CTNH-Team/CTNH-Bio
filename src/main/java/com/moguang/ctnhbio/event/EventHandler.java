@@ -43,6 +43,7 @@ import static com.moguang.ctnhbio.registry.CBMaterialItems.CB_TOOL_ITEMS;
 public class EventHandler {
     public static void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
         CBMachines.init();
+        CBItems.init();
         CBMultiblockMachines.init();
         CBItems.init();
         CBBlocks.init();
@@ -70,10 +71,10 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onLoadComplete(FMLLoadCompleteEvent event) {
-        for (ItemProviderEntry<IGTTool> entry : CB_TOOL_ITEMS.column(CBToolType.BONING_KNIFE).values()) {
-            ItemStack stack = new ItemStack(entry.get());
-            stack.enchant(ModEnchantments.DESPOIL.get(), 3);
-        }
+//        for (ItemProviderEntry<IGTTool> entry : CB_TOOL_ITEMS.column(CBToolType.BONING_KNIFE).values()) {
+//            ItemStack stack = new ItemStack(entry.get());
+//            stack.enchant(ModEnchantments.DESPOIL.get(), 3);
+//        }
     }
 
     @SubscribeEvent

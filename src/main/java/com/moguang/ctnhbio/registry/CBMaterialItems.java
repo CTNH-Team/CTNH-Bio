@@ -30,21 +30,21 @@ public class CBMaterialItems{
                     .toList(),
             List.of(CBToolType.BONING_KNIFE));
 
-//    public static void generateTools() {
-//        System.out.println("CBMaterialItems.generateTools()");
-//        REGISTRATE.creativeModeTab(() -> ITEM);
-//        GTToolType toolType = CBToolType.BONING_KNIFE;
-//        for (MaterialRegistry registry : GTCEuAPI.materialManager.getRegistries()) {
-//            for (Material material : registry.getAllMaterials()) {
-//                if (material.hasProperty(PropertyKey.TOOL)) {
-//                    var property = material.getProperty(PropertyKey.TOOL);
-//                    if (property.hasType(GTToolType.SWORD)) {
-//                        generateTool(material, toolType);
-//                    }
-//                }
-//            }
-//        }
-//    }
+    public static void generateTools() {
+        System.out.println("CBMaterialItems.generateTools()");
+        //REGISTRATE.creativeModeTab(() -> ITEM);
+        GTToolType toolType = CBToolType.BONING_KNIFE;
+        for (MaterialRegistry registry : GTCEuAPI.materialManager.getRegistries()) {
+            for (Material material : registry.getAllMaterials()) {
+                if (material.hasProperty(PropertyKey.TOOL)) {
+                    var property = material.getProperty(PropertyKey.TOOL);
+                    if (property.hasType(GTToolType.SWORD)) {
+                        generateTool(material, toolType);
+                    }
+                }
+            }
+        }
+    }
 
     public static void generateTool(Material material, GTToolType toolType) {
         var tier = material.getToolTier();
