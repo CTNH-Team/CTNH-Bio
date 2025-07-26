@@ -7,6 +7,7 @@ import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -109,5 +110,8 @@ LivingMetaMachineBlock extends MetaMachineBlock implements ILivingEntityHostBloc
         return super.getDescriptionId();
     }
 
-
+    @Override
+    public boolean skipRendering(BlockState p_60532_, BlockState p_60533_, Direction p_60534_) {
+        return super.skipRendering(p_60532_, p_60533_, p_60534_);
+    }
 }
