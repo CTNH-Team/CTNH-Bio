@@ -66,7 +66,7 @@ public class EffectCondition extends RecipeCondition {
             if (count != 0) {
                 name += ", ";
             }
-            name += effect.getDisplayName();
+            name += effect.getDisplayName().getString();
             count ++;
         }
         return name;
