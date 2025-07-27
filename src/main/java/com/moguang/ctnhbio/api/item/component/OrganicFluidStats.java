@@ -1,18 +1,40 @@
 package com.moguang.ctnhbio.api.item.component;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.properties.FluidPipeProperties;
 import com.gregtechceu.gtceu.api.item.component.ThermalFluidStats;
 import com.gregtechceu.gtceu.api.misc.forge.SimpleThermalFluidHandlerItemStack;
 import com.gregtechceu.gtceu.api.misc.forge.ThermalFluidHandlerItemStack;
+import com.gregtechceu.gtceu.utils.GTUtil;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class OrganicFluidStats extends ThermalFluidStats {
     protected OrganicFluidStats(int capacity, int maxFluidTemperature, boolean gasProof, boolean acidProof, boolean cryoProof, boolean plasmaProof, boolean allowPartialFill) {
         super(capacity, maxFluidTemperature, gasProof, acidProof, cryoProof, plasmaProof, allowPartialFill);
     }
+
+
+    public static OrganicFluidStats create(int capacity, int maxFluidTemperature, boolean gasProof, boolean acidProof,
+                                           boolean cryoProof, boolean plasmaProof, boolean allowPartialFill) {
+        return new OrganicFluidStats(capacity, maxFluidTemperature, gasProof, acidProof, cryoProof, plasmaProof,
+                allowPartialFill);
+    }
+
+    public static OrganicFluidStats create(int capacity, @NotNull FluidPipeProperties properties,
+                                           boolean allowPartialFill) {
+        return new OrganicFluidStats(capacity, properties.getMaxFluidTemperature(), properties.isGasProof(),
+                properties.isAcidProof(), properties.isCryoProof(), properties.isPlasmaProof(), allowPartialFill);
+    }
+
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(ItemStack itemStack, @NotNull Capability<T> cap) {
@@ -28,4 +50,5 @@ public class OrganicFluidStats extends ThermalFluidStats {
         }
         return LazyOptional.empty();
     }
+
 }

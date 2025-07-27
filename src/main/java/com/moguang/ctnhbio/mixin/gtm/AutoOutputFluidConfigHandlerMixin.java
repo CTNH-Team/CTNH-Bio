@@ -11,19 +11,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = AutoOutputFluidConfigHandler.class,  remap = false)
 public abstract class AutoOutputFluidConfigHandlerMixin {
-
-    @Shadow
-    private Direction side;
-
-    @Inject(
-            method = "handleClick",
-            at = @At("HEAD")
-
-    )
-    private void preHandleClick(ClickData cd, Direction direction, CallbackInfo ci) {
-
-        side = direction;
-
-    }
+//
+//    @Shadow
+//    private Direction side;
+//
+//    @Inject(
+//            method = "handleClick",
+//            at = @At("HEAD")
+//
+//    )
+//    private void preHandleClick(ClickData cd, Direction direction, CallbackInfo ci) {
+//
+//        side = direction;
+//
+//    }
 }
 

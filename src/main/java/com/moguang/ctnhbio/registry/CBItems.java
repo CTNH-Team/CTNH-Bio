@@ -30,23 +30,23 @@ public class CBItems {
         CBMaterialItems.generateTools();
     }
     public static final ItemEntry<StyleItem> BIO_CAPACITOR = REGISTRATE.item("bio_capacitor", StyleItem::new)
-            .lang("Bio Capacitor")
+            .lang("Bio-Capacitor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
     public static final ItemEntry<StyleItem> BIO_TRANSISTOR = REGISTRATE.item("bio_transistor", StyleItem::new)
-            .lang("Bio Transistor")
+            .lang("Bio-Transistor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
     public static final ItemEntry<StyleItem> BIO_RESISTOR = REGISTRATE.item("bio_resistor", StyleItem::new)
-            .lang("Bio Resistor")
+            .lang("Bio-Resistor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
     public static final ItemEntry<StyleItem> BIO_INDUCTOR = REGISTRATE.item("bio_inductor", StyleItem::new)
-            .lang("Bio Inductor")
+            .lang("Bio-Inductor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
     public static final ItemEntry<StyleItem> BIO_DIODE = REGISTRATE.item("bio_diode", StyleItem::new)
-            .lang("Bio Diode")
+            .lang("Bio-Diode")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
     public static final ItemEntry<StyleItem> WETWARE_CIRCUIT_BOARD = REGISTRATE.item("wetware_circuit_board", StyleItem::new)
@@ -63,10 +63,18 @@ public class CBItems {
             .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
             .color(() -> GTItems::cellColor)
             .onRegister(attach(
-                    OrganicFluidStats.create(FluidType.BUCKET_VOLUME, 310, false, false, false, false, false),
+                    OrganicFluidStats.create(FluidType.BUCKET_VOLUME / 2, 310, false, false, false, false, true),
                     new ItemFluidContainer(), cellName()))
             .register();
 
+    public static ItemEntry<ComponentItem> ORGANIC_BEAKER = REGISTRATE.item("organic_beaker", ComponentItem::create)
+            .lang("Organic %s Beaker")
+            .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
+            .color(() -> GTItems::cellColor)
+            .onRegister(attach(
+                    OrganicFluidStats.create(FluidType.BUCKET_VOLUME, 373, false, true, false, false, true),
+                    new ItemFluidContainer(), cellName()))
+            .register();
 
 
     public static <T extends IComponentItem> NonNullConsumer<T> attach(IItemComponent components) {

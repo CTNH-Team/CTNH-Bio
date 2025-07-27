@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.api.gui.editor.EditableMachineUI;
 import com.gregtechceu.gtceu.api.gui.editor.EditableUI;
 import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
 import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
+import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
@@ -151,16 +152,23 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             if(machineEntity != null && machineEntity.isAlive())
             {
                 machineEntity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()), machineEntity.getMaxHealth());
-                //machineEntity.;
             }
         }
         else {
             this.energyContainer.changeEnergy(GTValues.V[tier + 1]);
             this.machineEntity.hurt(GTDamageTypes.ELECTRIC.source(this.getLevel()), tier);
         }
-
-
     }
+
+//    @Override
+//    public int getTier() {
+//        return 4;
+//    }
+//
+//    @Override
+//    public int getOverclockTier() {
+//        return 1;
+//    }
 
     @Override
     public int getMaxOverclockTier() {

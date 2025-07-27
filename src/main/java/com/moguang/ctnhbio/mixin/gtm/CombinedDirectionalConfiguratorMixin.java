@@ -28,35 +28,35 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(value = CombinedDirectionalConfigurator.class, remap = false )
 public abstract class CombinedDirectionalConfiguratorMixin {
-
-    @Final
-    @Shadow
-    private MetaMachine machine;
-
-    @Shadow
-    protected @Nullable Direction selectedSide;
-
-    @Inject(method = "createSceneWidget", at = @At(value = "TAIL"))
-    @OnlyIn(Dist.CLIENT)
-    private void onCreateSceneWidgetHead(CallbackInfoReturnable<SceneWidget> cir) {
-
-        if(machine instanceof BasicLivingMachine)
-        {
-            var sceneWidget = cir.getReturnValue();
-            TrackedDummyWorld dummyWorld = sceneWidget.getDummyWorld();
-            var entityType = ((LivingMetaMachineBlockEntity<?>)machine.holder).getEntityType();
-            var pos = ((LivingMetaMachineBlockEntity<?>)machine.holder).getEntityOffset();
-            var demoEntity = entityType.create(dummyWorld);
-            demoEntity.setPos(machine.getPos(), pos);
-            //demoEntity.noPhysics = true;
-            demoEntity.setBoundingBox(new AABB(0, 0, 0, 0, 0, 0));
-
-            dummyWorld.addFreshEntity(demoEntity);
-
-
-
-        }
-    }
+//
+//    @Final
+//    @Shadow
+//    private MetaMachine machine;
+//
+//    @Shadow
+//    protected @Nullable Direction selectedSide;
+//
+//    @Inject(method = "createSceneWidget", at = @At(value = "TAIL"))
+//    @OnlyIn(Dist.CLIENT)
+//    private void onCreateSceneWidgetHead(CallbackInfoReturnable<SceneWidget> cir) {
+//
+//        if(machine instanceof BasicLivingMachine)
+//        {
+//            var sceneWidget = cir.getReturnValue();
+//            TrackedDummyWorld dummyWorld = sceneWidget.getDummyWorld();
+//            var entityType = ((LivingMetaMachineBlockEntity<?>)machine.holder).getEntityType();
+//            var pos = ((LivingMetaMachineBlockEntity<?>)machine.holder).getEntityOffset();
+//            var demoEntity = entityType.create(dummyWorld);
+//            demoEntity.setPos(machine.getPos(), pos);
+//            //demoEntity.noPhysics = true;
+//            demoEntity.setBoundingBox(new AABB(0, 0, 0, 0, 0, 0));
+//
+//            dummyWorld.addFreshEntity(demoEntity);
+//
+//
+//
+//        }
+//    }
 
 //    @Invoker("onSideSelected")
 //    abstract void invokeOnSideSelected(BlockPos pos, Direction side);

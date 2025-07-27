@@ -19,7 +19,10 @@ public class ChineseLangHandler {
         provider.addItem(CBItems.BIO_RESISTOR, "生物电阻");
         provider.addItem(CBItems.BIO_TRANSISTOR, "生物晶体管");
         provider.addItem(CBItems.WETWARE_CIRCUIT_BOARD, "湿件电路基板");
-        provider.addItem(CBItems.WETWARE_PRINTED_CIRCUIT_BOARD, "蚀刻湿件电路基板");
+        provider.addItem(CBItems.WETWARE_PRINTED_CIRCUIT_BOARD, "湿件印刷电路基板");
+        provider.addItem(CBItems.ORGANIC_VIAL, "有机%s试管");
+        provider.addItem(CBItems.ORGANIC_BEAKER, "有机%s烧杯");
+
         provider.add("item.gtceu.tool.boning_knife", "%s剔骨刀");
         provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH]活体机器属性");
         provider.add("ctnhbio.living_machine", "living machine");
@@ -30,6 +33,11 @@ public class ChineseLangHandler {
         provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
         provider.add("ctnhbio.recipe.nutrient", "营养消耗：%d");
         provider.add("ctnhbio.jade.nutrient_stored", "%s / %s");
+
+
+        provider.add("ctnhbio.fluid.type_organic.tooltip", "§a生物活性流体");
+        provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§a可传输生物活性流体");
+        provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4生物活性流体可能失活！");
     }
 
     public static void replace(@NotNull RegistrateCNLangProvider provider, @NotNull String key,

@@ -11,6 +11,7 @@
     "gtm.AutoOutputItemConfigHandlerMixin",
     "gtm.CombinedDirectionalConfiguratorMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
+    "gtm.ThermalFluidStatsMixin",
     "jei.JeiBaseLootMixin",
     "jei.JeiGameplayLootMixin",
     "jei.LootTableMixin"

@@ -23,9 +23,13 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     private final EntityType<T> entityType;
     @Persisted
     private T machineEntity;
+    @Persisted
+    @Getter
     private CompoundTag entityTag;
     private boolean spawned;
     public Vec3 entityOffset = new Vec3(0.5, 0, 0.5);
+
+
 
     public LivingMetaMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, EntityType<T> entityType) {
         super(type, pos, blockState);
@@ -91,14 +95,14 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
         saveHostedEntityData(tag);
     }
 
-    @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        if (tag.contains("HostedEntity")) {
-            this.entityTag = tag.getCompound("HostedEntity");
-        }
-        //loadHostedEntityData(tag, this.getLevel());
-    }
+//    @Override
+//    public void load(CompoundTag tag) {
+//        super.load(tag);
+//        if (tag.contains("HostedEntity")) {
+//            this.entityTag = tag.getCompound("HostedEntity");
+//        }
+//        //loadHostedEntityData(tag, this.getLevel());
+//    }
 
     // 生命周期挂钩
     @Override

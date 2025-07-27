@@ -40,24 +40,24 @@ public class BasicLivingMachineEntityRenderer extends EntityRenderer<LivingMetaM
     public void render(LivingMetaMachineEntity entity, float entityYaw, float partialTicks,
                        PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 
-        poseStack.pushPose();
-        float scale = 2.5f; // 缩小史莱姆模型
-        poseStack.translate(0, -scale, 0);
-        poseStack.scale(scale, scale, scale);
-        int overlay = entity.hurtTime > 0 ?
-                LivingEntityRenderer.getOverlayCoords(entity, partialTicks) :
-                OverlayTexture.NO_OVERLAY;
-
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(LOG_TEXTURE));
-        this.model.renderToBuffer(
-                poseStack,
-                vertexConsumer,
-                packedLight,
-                overlay,
-                1.0f, 1.0f, 1.0f, 1.0f
-        );
-        poseStack.popPose();
-        super.render(entity, entityYaw, partialTicks, poseStack, bufferSource, packedLight);
+//        poseStack.pushPose();
+//        float scale = 2.5f; // 缩小史莱姆模型
+//        poseStack.translate(0, -scale, 0);
+//        poseStack.scale(scale, scale, scale);
+//        int overlay = entity.hurtTime > 0 ?
+//                LivingEntityRenderer.getOverlayCoords(entity, partialTicks) :
+//                OverlayTexture.NO_OVERLAY;
+//
+//        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(LOG_TEXTURE));
+//        this.model.renderToBuffer(
+//                poseStack,
+//                vertexConsumer,
+//                packedLight,
+//                overlay,
+//                1.0f, 1.0f, 1.0f, 1.0f
+//        );
+//        poseStack.popPose();
+//        super.render(entity, entityYaw, partialTicks, poseStack, bufferSource, packedLight);
     }
 
 //    @Override
