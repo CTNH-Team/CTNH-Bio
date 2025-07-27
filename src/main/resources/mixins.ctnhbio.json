@@ -12,6 +12,7 @@
     "gtm.CombinedDirectionalConfiguratorMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
     "gtm.ThermalFluidStatsMixin",
+    "gtm.NotifiableFluidTankMixin",
     "jei.JeiBaseLootMixin",
     "jei.JeiGameplayLootMixin",
     "jei.LootTableMixin"

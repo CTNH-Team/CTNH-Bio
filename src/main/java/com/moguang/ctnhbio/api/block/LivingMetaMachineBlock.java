@@ -138,5 +138,8 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
         return super.getDescriptionId();
     }
 
-
+    @Override
+    public boolean skipRendering(BlockState p_60532_, BlockState p_60533_, Direction p_60534_) {
+        return super.skipRendering(p_60532_, p_60533_, p_60534_);
+    }
 }
