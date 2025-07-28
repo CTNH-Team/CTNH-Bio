@@ -1220,7 +1220,7 @@ public class BioElectricRecipes {
                 .nutrient(1)
                 .inputItems(Items.GLOW_BERRIES.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.BIO_LUMENS.get()), UniformInt.of(0, 1))
-                .outputItemsRanged(new ItemStack(ModItems.ORGANIC_MATTER.get()), UniformInt.of(-1, 1))
+                .outputItemsRanged(new ItemStack(ModItems.ORGANIC_MATTER.get()), UniformInt.of(0, 1))
                 .EUt(32)
                 .duration(60)
                 .save(provider);
@@ -1408,7 +1408,7 @@ public class BioElectricRecipes {
         CBRecipeBuilder.of(CTNHBio.id("sniffer_egg"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(1)
                 .inputItems(Items.SNIFFER_EGG.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(0, 4))
+                .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 4))
                 .outputFluidsRanged(new FluidStack(Endocrine_Hormone.getFluid(), 1), UniformInt.of(100, 400))
                 .outputItemsRanged(new ItemStack(ModItems.ORGANIC_MATTER.get()), UniformInt.of(1, 4))
                 .outputItemsRanged(new ItemStack(ModItems.EXOTIC_DUST.get()), UniformInt.of(2, 6))
