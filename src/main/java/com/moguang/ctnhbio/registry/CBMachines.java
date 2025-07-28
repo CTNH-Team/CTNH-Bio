@@ -92,7 +92,7 @@ public class CBMachines {
                     )
                     .tier(tier)
                     .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
-                    //.editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
+                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("decompose"),CBRecipeTypes.DECOMPOSER_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
                     .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
                     .register();
