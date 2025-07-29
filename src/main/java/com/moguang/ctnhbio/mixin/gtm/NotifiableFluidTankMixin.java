@@ -23,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 
 import java.util.Iterator;
 import java.util.List;
@@ -39,8 +38,8 @@ public abstract class NotifiableFluidTankMixin extends NotifiableRecipeHandlerTr
             locals = LocalCapture.CAPTURE_FAILHARD,
             remap = false)
     public void handlerRecipeInner(IO io, GTRecipe recipe, List<FluidIngredient> left, boolean simulate, CallbackInfoReturnable<List<FluidIngredient>> cir, Runnable[] listeners, boolean changed, IFluidHandler.FluidAction action, FluidStack[] visited, Iterator it, FluidIngredient ingredient, FluidStack[] fluids, int amount, int tank, FluidStack current, int count) {
-        if (getMachine() instanceof ILivingMachine livingMachine && !simulate) {
-            if (recipe.data.getBoolean("potion")) {
+        if (recipe.data.getBoolean("potion") && !simulate) {
+            if (getMachine() instanceof ILivingMachine livingMachine) {
                 if (current.hasTag()) {
                     ListTag effects = current.getOrCreateTag().getList("CustomPotionEffects", 9);
                     for (var effect : effects) {
