@@ -1,12 +1,20 @@
 package com.moguang.ctnhbio.event;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+import com.moguang.ctnhbio.common.recipe.MobCrushingRecipeManager;
 import com.yanny.ali.registries.LootCategories;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -18,79 +26,26 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = CTNHBio.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEventHandler {
-    //public static final Map<UUID, Boolean> isHoldingLeftClick = new HashMap<>();
-
-//    @SubscribeEvent(priority = EventPriority.HIGHEST)
-//    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-//
-//        Level level = event.getLevel();
-//        BlockPos pos = event.getPos();
-//        BlockState state = level.getBlockState(pos);
-//        Player player = event.getEntity();
-//        ItemStack stack = event.getItemStack();
-//        if (level.isClientSide) {
-//            return;
-//        }
-//
-//        if (state.getBlock() instanceof MetaMachineBlock block &&
-//                block.getDefinition().getId().getNamespace().equals(CTNHBio.MODID) &&
-//                block.getMachine(level, pos) instanceof BasicLivingMachine machine
-//        ) {
-//            InteractionResult result = machine.machineEntity.interact(player, event.getHand());
-//            if (!result.consumesAction()) {
-//                result = stack.interactLivingEntity(player, machine.machineEntity, event.getHand());
-//            }
-//
-//            //System.out.println("111");
-//            if (result.consumesAction()) {
-//                event.setCanceled(true);
-//            }
-//        }
-//    }
-//
-//    @SubscribeEvent
-//    public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-//        Level level = event.getLevel();
-//        BlockPos pos = event.getPos();
-//        Player player = event.getEntity();
-//        UUID id = player.getUUID();
-//        BlockState state = level.getBlockState(pos);
-//        ItemStack stack = event.getItemStack();
-//        Minecraft mc = Minecraft.getInstance();
-
-        //boolean previouslyHolding = isHoldingLeftClick.getOrDefault(id, false);
-        //boolean cooledDown = ;
-
-
-//        if (!player.isCreative() &&
-//                state.getBlock() instanceof MetaMachineBlock block &&
-//                block.getDefinition().getId().getNamespace().equals(CTNHBio.MODID) &&
-//                block.getMachine(level, pos) instanceof BasicLivingMachine machine &&
-//                !stack.isCorrectToolForDrops(state)
-//        ) {
-//            if(player.getAttackStrengthScale(0.5f) >= 1.0f){
-//                if(!level.isClientSide) player.attack(machine.machineEntity);
-//                player.resetAttackStrengthTicker();
-//            }
-//            else {
-//                player.swinging = false;
-//            }
-//            //isHoldingLeftClick.put(id, true);
-//            //Minecraft.getInstance().gameMode.attack(player, machine.machineEntity);
-//            mc.gameMode.stopDestroyBlock();
-//            event.setCanceled(true);
-//
-//        }
-
-//    }
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @SubscribeEvent
     public static void onDataReload(AddReloadListenerEvent event) {
         event.addListener(LootCategories.getReloadListener(new Gson(), "loot_categories"));
+        event.addListener(new SimpleJsonResourceReloadListener(GSON, "mob_crushing_recipes") {
+            @Override
+            protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager, ProfilerFiller profiler) {
+                JsonArray recipesJson = new JsonArray();
+                jsonMap.values().forEach(recipesJson::add);
+                MobCrushingRecipeManager.loadFromJson(recipesJson);
+            }
+        });
     }
+
+
 
 }

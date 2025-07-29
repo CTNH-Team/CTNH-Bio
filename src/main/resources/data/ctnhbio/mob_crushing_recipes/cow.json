@@ -1,0 +1,7 @@
+{
+  "entity": "minecraft:cow",
+  "item": "ctnhbio:bio_transistor",
+  "chance": 0.8,
+  "min_amount": 1,
+  "max_amount": 3
+}

@@ -2,6 +2,8 @@ package com.moguang.ctnhbio.api.gui;
 
 import com.lowdragmc.lowdraglib.gui.texture.ResourceBorderTexture;
 import com.lowdragmc.lowdraglib.gui.texture.ResourceTexture;
+import com.simibubi.create.Create;
+import net.minecraft.resources.ResourceLocation;
 
 public class CBGuiTextures {
     public static ResourceTexture SLOT_BIO = new ResourceTexture("ctnhbio:textures/gui/biobase/slot_bio.png");
@@ -14,6 +16,7 @@ public class CBGuiTextures {
     public static ResourceBorderTexture TITLE_BAR_BACKGROUND_BIO = new ResourceBorderTexture("ctnhbio:textures/gui/biobase/title_bar_background_bio.png", 16, 16, 4, 4);
     public static ResourceTexture TAB_LEFT_BIO = new ResourceTexture("ctnhbio:textures/gui/tab/tabs_left_bio.png");
     public static ResourceBorderTexture BACKGROUND_SMALL = new ResourceBorderTexture("ctnhbio:textures/gui/biobase/background_small.png", 16, 16, 4, 4);
-    public static final ResourceTexture BUTTON_POWER = new ResourceTexture(
-            "ctnhbio:textures/gui/biobase/button_power.png");
+    public static ResourceTexture BUTTON_POWER = new ResourceTexture("ctnhbio:textures/gui/biobase/button_power.png");
+
+
 }

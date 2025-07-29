@@ -29,10 +29,16 @@ public class ChineseLangHandler {
 
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
         provider.add("ctnhbio.nutrient_bar.info", "营养槽");
+        provider.add("recipe.capability.nutrient.name", "营养");
         provider.add("jade.nutrient.info", "营养值：");
+
         provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
         provider.add("ctnhbio.recipe.nutrient", "营养消耗：%d");
         provider.add("ctnhbio.jade.nutrient_stored", "%s / %s");
+
+        provider.add("jei.ctnhbio.mob_crushing", "生物粉碎");
+        provider.add("jei.ctnhbio.tooltip.chance", "概率：");
+        provider.add("jei.ctnhbio.tooltip.amount_range", "数量：%d-%d");
 
 
         provider.add("ctnhbio.fluid.type_organic.tooltip", "§a生物活性流体");

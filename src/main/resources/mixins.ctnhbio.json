@@ -5,18 +5,18 @@
   "refmap": "mixins.ctnhbio.refmap.json",
   "mixins": [
     "GTJadePluginMixin",
-    "GTMaterialItemsMixin",
     "GTMixin",
-    "gtm.AutoOutputFluidConfigHandlerMixin",
-    "gtm.AutoOutputItemConfigHandlerMixin",
-    "gtm.CombinedDirectionalConfiguratorMixin",
+    "create.CrushingWheelControllerBlockEntityMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
-    "gtm.ThermalFluidStatsMixin",
     "gtm.NotifiableFluidTankMixin",
+    "gtm.ThermalFluidStatsMixin",
     "jei.JeiBaseLootMixin",
     "jei.JeiGameplayLootMixin",
-    "jei.LootTableMixin"
+    "jei.LootTableMixin",
+    "jei.RecipeGuiLogicMixin"
   ],
-  "client": [],
+  "client": [
+    "jei.RecipesGuiMixin"
+  ],
   "minVersion": "0.8"
 }

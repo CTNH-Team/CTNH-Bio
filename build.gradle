@@ -83,6 +83,12 @@ repositories {
         url = "https://maven.architectury.dev"
     }
     maven {
+        url = "https://maven.saps.dev/minecraft"
+    }
+    maven {
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
         url = "https://maven.blamejared.com/"
     }
     maven {
@@ -95,13 +101,22 @@ repositories {
         url = "https://maven.tterrag.com/"
     }
     maven {
+        url = "https://maven.resourcefulbees.com/repository/maven-public/"
+    }
+    maven {
+        url = "https://maven.teamresourceful.com/repository/maven-public/"
+    }
+    maven {
+        url = "https://maven.firstdarkdev.xyz/snapshots"
+    }
+    maven {
         url = "https://maven.gtceu.com"
     }
     maven {
         url = "https://maven.rover656.dev/releases"
     }
     maven {
-        url = "https://maven.firstdarkdev.xyz/snapshots"
+        url = "https://maven.theillusivec4.top/"
     }
     maven {
         maven {
@@ -125,6 +140,7 @@ repositories {
             includeGroup "com.github.rtyley"
         }
     }
+    maven { url = "https://maven.createmod.net" }
     maven {
         name = 'Geckolib'
         url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
@@ -154,10 +170,17 @@ dependencies {
     implementation fg.deobf("dev.toma.configuration:configuration-forge-${minecraft_version}:${configuration_version}")
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 
+    implementation fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    implementation fg.deobf("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
+    implementation fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
+    implementation fg.deobf("curse.maven:createmetallurgy-1007404:6741785")
+
+
     // KubeJS
     implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
     implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
     implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
+
 
     // Biomancy
     implementation fg.deobf("curse.maven:biomancy-492939:5886758")
