@@ -7,10 +7,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.OreProperty;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.moguang.ctnhbio.CTNHBio;
-import com.moguang.ctnhbio.data.materials.OrganicMaterials;
-import com.moguang.ctnhbio.registry.CBMaterials;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import it.unimi.dsi.fastutil.objects.ObjectIntPair;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -23,12 +20,10 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
 
-import static com.gregtechceu.gtceu.common.data.GTMaterials.SulfuricCopperSolution;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.Water;
-import static com.lowdragmc.lowdraglib.LDLib.random;
+import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
 
-public class BioElectricRecipes {
+public class DecomposerRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
         CBRecipeBuilder.of(CTNHBio.id("test"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .effect(MobEffects.POISON)
@@ -1496,17 +1491,17 @@ public class BioElectricRecipes {
                 .inputFluids(new FluidStack(Fluids.WATER, 1500))
                 .outputItems(finalDust)
                 .chancedOutput(
-                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(0, material)), // 改为 dust
+                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(0, material)),
                         1400,
                         0
                 )
                 .chancedOutput(
-                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(1, material)), // 改为 dust
+                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(1, material)),
                         3300,
                         0
                 )
                 .chancedOutput(
-                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(2, material)), // 改为 dust
+                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(2, material)),
                         1700,
                         0
                 )
@@ -1521,7 +1516,7 @@ public class BioElectricRecipes {
                         CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(2)
                 .inputItems(TagPrefix.crushed, material)
-                .inputFluids(new FluidStack(Fluids.WATER, 1500))
+                .inputFluids(new FluidStack(DistilledWater.getFluid(), 1500))
                 .outputItems(Dust)
                 .chancedOutput(
                         ChemicalHelper.get(TagPrefix.dust, one.getOreByProduct(0, material)),

@@ -43,8 +43,7 @@ public class OrganicMaterials {
     public static Material Frenzy_Serum;
     public static Material Insomnia_Cure;
 
-    public static final HashMap<Fluid, Supplier<? extends Serum>> SERUM_FLUID_MAP = new HashMap<>();
-
+    
 
     public static void register() {
 // 1. 凋零软泥
@@ -172,15 +171,7 @@ public class OrganicMaterials {
                 .color(0xD1001C)
                 .buildAndRegister();
 
-        SERUM_FLUID_MAP.put(Ageing_Serum.getFluid(), ModSerums.AGEING_SERUM);
-        SERUM_FLUID_MAP.put(Enlargement_Serum.getFluid(), ModSerums.ENLARGEMENT_SERUM);
-        SERUM_FLUID_MAP.put(Shrinking_Serum.getFluid(), ModSerums.SHRINKING_SERUM);
-        SERUM_FLUID_MAP.put(Rejuvenation_Serum.getFluid(), ModSerums.REJUVENATION_SERUM);
-        SERUM_FLUID_MAP.put(Breeding_Stimulant.getFluid(), ModSerums.BREEDING_STIMULANT);
-        SERUM_FLUID_MAP.put(Absorption_Boost.getFluid(), ModSerums.ABSORPTION_BOOST);
-        SERUM_FLUID_MAP.put(Insomnia_Cure.getFluid(), ModSerums.INSOMNIA_CURE);
-        SERUM_FLUID_MAP.put(Cleansing_Serum.getFluid(), ModSerums.CLEANSING_SERUM);
-        SERUM_FLUID_MAP.put(Frenzy_Serum.getFluid(), ModSerums.FRENZY_SERUM);
+
 
     }
 
