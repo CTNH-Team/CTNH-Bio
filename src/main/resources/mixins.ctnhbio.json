@@ -6,6 +6,8 @@
   "mixins": [
     "GTJadePluginMixin",
     "GTMixin",
+    "biomancy.InjectorItemMixin",
+    "biomancy.VialHolderBlockEntityMixin",
     "create.CrushingWheelControllerBlockEntityMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
     "gtm.NotifiableFluidTankMixin",
@@ -16,6 +18,7 @@
     "jei.RecipeGuiLogicMixin"
   ],
   "client": [
+    "biomancy.InjectorScreenMixin",
     "jei.RecipesGuiMixin"
   ],
   "minVersion": "0.8"

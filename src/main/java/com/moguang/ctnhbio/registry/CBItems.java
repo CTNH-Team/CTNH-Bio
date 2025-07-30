@@ -5,6 +5,7 @@ import com.gregtechceu.gtceu.api.item.ComponentItem;
 import com.gregtechceu.gtceu.api.item.IComponentItem;
 import com.gregtechceu.gtceu.api.item.component.ICustomDescriptionId;
 import com.gregtechceu.gtceu.api.item.component.IItemComponent;
+import com.gregtechceu.gtceu.api.item.component.IRecipeRemainder;
 import com.gregtechceu.gtceu.api.item.component.ThermalFluidStats;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.ItemFluidContainer;
@@ -12,6 +13,7 @@ import com.gregtechceu.gtceu.common.registry.GTRegistration;
 import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
 import com.moguang.ctnhbio.api.item.component.StyleItem;
 import com.moguang.ctnhbio.common.item.OrganicVialItem;
+import com.moguang.ctnhbio.utils.VialCraftingRemainingItem;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
@@ -65,7 +67,9 @@ public class CBItems {
             .color(() -> GTItems::cellColor)
             .onRegister(attach(
                     OrganicFluidStats.create(FluidType.BUCKET_VOLUME / 10, 310, false, false, false, false, false),
-                    new ItemFluidContainer(), cellName()))
+                    new VialCraftingRemainingItem(),
+                    cellName()
+                    ))
             .register();
 
     public static ItemEntry<ComponentItem> ORGANIC_BEAKER = REGISTRATE.item("organic_beaker", ComponentItem::create)
@@ -74,7 +78,8 @@ public class CBItems {
             .color(() -> GTItems::cellColor)
             .onRegister(attach(
                     OrganicFluidStats.create(FluidType.BUCKET_VOLUME / 2, 373, false, true, false, false, true),
-                    new ItemFluidContainer(), cellName()))
+
+                    cellName()))
             .register();
 
 
