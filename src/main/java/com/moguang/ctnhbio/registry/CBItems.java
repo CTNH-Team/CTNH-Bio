@@ -11,6 +11,7 @@ import com.gregtechceu.gtceu.common.item.ItemFluidContainer;
 import com.gregtechceu.gtceu.common.registry.GTRegistration;
 import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
 import com.moguang.ctnhbio.api.item.component.StyleItem;
+import com.moguang.ctnhbio.common.item.OrganicVialItem;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
@@ -58,12 +59,12 @@ public class CBItems {
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
 
-    public static ItemEntry<ComponentItem> ORGANIC_VIAL = REGISTRATE.item("organic_vial", ComponentItem::create)
+    public static ItemEntry<OrganicVialItem> ORGANIC_VIAL = REGISTRATE.item("organic_vial", OrganicVialItem::new)
             .lang("Organic %s Vial")
             .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
             .color(() -> GTItems::cellColor)
             .onRegister(attach(
-                    OrganicFluidStats.create(FluidType.BUCKET_VOLUME / 2, 310, false, false, false, false, true),
+                    OrganicFluidStats.create(FluidType.BUCKET_VOLUME / 10, 310, false, false, false, false, false),
                     new ItemFluidContainer(), cellName()))
             .register();
 
@@ -72,7 +73,7 @@ public class CBItems {
             .setData(ProviderType.ITEM_MODEL, NonNullBiConsumer.noop())
             .color(() -> GTItems::cellColor)
             .onRegister(attach(
-                    OrganicFluidStats.create(FluidType.BUCKET_VOLUME, 373, false, true, false, false, true),
+                    OrganicFluidStats.create(FluidType.BUCKET_VOLUME / 2, 373, false, true, false, false, true),
                     new ItemFluidContainer(), cellName()))
             .register();
 

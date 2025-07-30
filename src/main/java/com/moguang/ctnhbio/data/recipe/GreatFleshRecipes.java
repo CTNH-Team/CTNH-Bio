@@ -1,14 +1,10 @@
-package com.moguang.ctnhbio.common.data.recipe;
+package com.moguang.ctnhbio.data.recipe;
 
-import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
-import net.minecraft.client.Minecraft;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.WaterFluid;
-import net.minecraftforge.client.model.obj.ObjMaterialLibrary;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;

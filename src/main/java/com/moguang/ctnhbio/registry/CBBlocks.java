@@ -32,6 +32,12 @@ public class CBBlocks {
     public static final BlockEntry<Block> BIO_ACID_CASING = createCasingBlock("bio_acid_casing",
             CTNHBio.id("block/casings/bio_acid_casing"));
 
+//    //联体桥
+//    public static final BlockEntry<Block> PARABIOTIC_BRIDGE = REGISTRATE.block("parabiotic_bridge", Block::new)
+//            .item(BlockItem::new)
+//            .build()
+//            .register();
+
     public static BlockEntry<Block> createCasingBlock(String name, ResourceLocation texture) {
         return createCasingBlock(name, Block::new, texture, () -> Blocks.IRON_BLOCK,
                 () -> RenderType::cutoutMipped);
@@ -52,7 +58,7 @@ public class CBBlocks {
                 .blockstate((ctx, prov) -> {
                     prov.simpleBlock(ctx.getEntry(), prov.models().cubeAll(name, texture));
                 })
-                .tag(TagKey.create(BuiltInRegistries.BLOCK.key(), new ResourceLocation("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
+                //.tag(TagKey.create(BuiltInRegistries.BLOCK.key(), new ResourceLocation("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
                 .item(BlockItem::new)
                 .build()
                 .register();

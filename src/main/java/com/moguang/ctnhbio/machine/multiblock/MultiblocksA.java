@@ -1,4 +1,4 @@
-package com.moguang.ctnhbio.common.data.machine.multiblock;
+package com.moguang.ctnhbio.machine.multiblock;
 
 import com.github.elenterius.biomancy.BiomancyMod;
 import com.github.elenterius.biomancy.init.ModBlocks;

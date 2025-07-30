@@ -44,7 +44,7 @@ public class OrganicFluidStats extends ThermalFluidStats {
                     return new OrganicFluidHandlerItemStack(itemStack, capacity, maxFluidTemperature, gasProof,
                             acidProof, cryoProof, plasmaProof);
                 }
-                return new SimpleThermalFluidHandlerItemStack(itemStack, capacity, maxFluidTemperature, gasProof,
+                return new OrganicFluidHandlerItemStackSimple(itemStack, capacity, maxFluidTemperature, gasProof,
                         acidProof, cryoProof, plasmaProof);
             }));
         }

@@ -1,13 +1,17 @@
 package com.moguang.ctnhbio.data.materials;
 
+import com.github.elenterius.biomancy.api.serum.Serum;
+import com.github.elenterius.biomancy.init.ModSerums;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.fluids.FluidBuilder;
 import com.gregtechceu.gtceu.api.fluids.attribute.FluidAttribute;
-import com.gregtechceu.gtceu.api.fluids.attribute.FluidAttributes;
 import com.moguang.ctnhbio.CTNHBio;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
+
+import java.util.HashMap;
+import java.util.function.Supplier;
 
 public class OrganicMaterials {
     public static FluidAttribute ORGANIC = new FluidAttribute(
@@ -29,14 +33,17 @@ public class OrganicMaterials {
     public static Material Heterogeneous_Compound;
     public static Material Healing_Compound;
     public static Material Decay_Essence;
-    public static Material Vitality_Serum;
-    public static Material Growth_Serum;
-    public static Material Gigantism_Serum;
+    public static Material Rejuvenation_Serum;
+    public static Material Ageing_Serum;
+    public static Material Enlargement_Serum;
     public static Material Shrinking_Serum;
     public static Material Breeding_Stimulant;
-    public static Material PainResponse_Agent;
-    public static Material Purification_Serum;
-    public static Material Berserk_Serum;
+    public static Material Absorption_Boost;
+    public static Material Cleansing_Serum;
+    public static Material Frenzy_Serum;
+    public static Material Insomnia_Cure;
+
+    public static final HashMap<Fluid, Supplier<? extends Serum>> SERUM_FLUID_MAP = new HashMap<>();
 
 
     public static void register() {
@@ -112,19 +119,19 @@ public class OrganicMaterials {
                 .buildAndRegister();
 
 // 12. 活力血清
-        Vitality_Serum = new Material.Builder(GTCEu.id("vitality_serum"))
+        Rejuvenation_Serum = new Material.Builder(GTCEu.id("rejuvenation_serum"))
                 .liquid(new FluidBuilder().attribute(ORGANIC))
                 .color(0x20B2AA)
                 .buildAndRegister();
 
 // 13. 成长血清
-        Growth_Serum = new Material.Builder(GTCEu.id("growth_serum"))
+        Ageing_Serum = new Material.Builder(GTCEu.id("ageing_serum"))
                 .liquid(new FluidBuilder().attribute(ORGANIC))
                 .color(0x9ACD32)
                 .buildAndRegister();
 
 // 14. 巨化血清
-        Gigantism_Serum = new Material.Builder(GTCEu.id("gigantism_serum"))
+        Enlargement_Serum = new Material.Builder(GTCEu.id("enlargement_serum"))
                 .liquid(new FluidBuilder().attribute(ORGANIC))
                 .color(0xFFA500)
                 .buildAndRegister();
@@ -142,22 +149,39 @@ public class OrganicMaterials {
                 .buildAndRegister();
 
 // 17. 伤痛反应剂
-        PainResponse_Agent = new Material.Builder(GTCEu.id("pain_response_agent"))
+        Absorption_Boost = new Material.Builder(GTCEu.id("absorption_boost"))
                 .liquid(new FluidBuilder().attribute(ORGANIC))
                 .color(0xFFFF00)
                 .buildAndRegister();
 
 // 18. 净化血清
-        Purification_Serum = new Material.Builder(GTCEu.id("purification_serum"))
+        Cleansing_Serum = new Material.Builder(GTCEu.id("cleansing_serum"))
                 .liquid(new FluidBuilder().attribute(ORGANIC))
                 .color(0x800080)
                 .buildAndRegister();
 
 // 19. 狂化血清
-        Berserk_Serum = new Material.Builder(GTCEu.id("berserk_serum"))
+        Frenzy_Serum = new Material.Builder(GTCEu.id("frenzy_serum"))
                 .liquid(new FluidBuilder().attribute(ORGANIC))
                 .color(0x8B0000)
                 .buildAndRegister();
+
+//20.  失眠抑制剂
+        Insomnia_Cure = new Material.Builder(GTCEu.id("insomnia_cure"))
+                .liquid(new FluidBuilder().attribute(ORGANIC))
+                .color(0xD1001C)
+                .buildAndRegister();
+
+        SERUM_FLUID_MAP.put(Ageing_Serum.getFluid(), ModSerums.AGEING_SERUM);
+        SERUM_FLUID_MAP.put(Enlargement_Serum.getFluid(), ModSerums.ENLARGEMENT_SERUM);
+        SERUM_FLUID_MAP.put(Shrinking_Serum.getFluid(), ModSerums.SHRINKING_SERUM);
+        SERUM_FLUID_MAP.put(Rejuvenation_Serum.getFluid(), ModSerums.REJUVENATION_SERUM);
+        SERUM_FLUID_MAP.put(Breeding_Stimulant.getFluid(), ModSerums.BREEDING_STIMULANT);
+        SERUM_FLUID_MAP.put(Absorption_Boost.getFluid(), ModSerums.ABSORPTION_BOOST);
+        SERUM_FLUID_MAP.put(Insomnia_Cure.getFluid(), ModSerums.INSOMNIA_CURE);
+        SERUM_FLUID_MAP.put(Cleansing_Serum.getFluid(), ModSerums.CLEANSING_SERUM);
+        SERUM_FLUID_MAP.put(Frenzy_Serum.getFluid(), ModSerums.FRENZY_SERUM);
+
     }
 
 
