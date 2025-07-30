@@ -1,10 +1,18 @@
 package com.moguang.ctnhbio.data.recipe;
 
 import com.github.elenterius.biomancy.init.ModItems;
+import com.gregtechceu.gtceu.api.GTCEuAPI;
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.data.chemical.material.properties.OreProperty;
+import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.materials.OrganicMaterials;
 import com.moguang.ctnhbio.registry.CBMaterials;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
+import it.unimi.dsi.fastutil.objects.ObjectIntPair;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
@@ -16,6 +24,7 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.common.data.GTMaterials.SulfuricCopperSolution;
+import static com.gregtechceu.gtceu.common.data.GTMaterials.Water;
 import static com.lowdragmc.lowdraglib.LDLib.random;
 import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
 
@@ -1461,5 +1470,110 @@ public class BioElectricRecipes {
                 .EUt(32)
                 .duration(120)
                 .save(provider);
+
+        registerRawOreDecompositionRecipes(provider);
+
+    }
+
+    private static void registerRawOreDecompositionRecipes(Consumer<FinishedRecipe> provider) {
+        for (Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+            if (material.hasProperty(PropertyKey.ORE) &&
+                    !ChemicalHelper.get(TagPrefix.rawOre, material).isEmpty()) {
+                addRawOreRecipe(provider, material);
+            }
+        }
+    }
+
+    private static void addRawOreRecipe(Consumer<FinishedRecipe> provider, Material material) {
+        //洗矿-热离-粉碎
+        OreProperty property = material.getProperty(PropertyKey.ORE);
+        ItemStack finalDust = ChemicalHelper.get(TagPrefix.dust, material);
+        if (finalDust.isEmpty()) return;
+        CBRecipeBuilder.of(CTNHBio.id("decompose_raw_" + material.getName()),
+                        CBRecipeTypes.DECOMPOSER_RECIPES)
+                .nutrient(3)
+                .inputItems(TagPrefix.crushed, material)
+                .inputFluids(new FluidStack(Fluids.WATER, 1500))
+                .outputItems(finalDust)
+                .chancedOutput(
+                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(0, material)), // 改为 dust
+                        1400,
+                        0
+                )
+                .chancedOutput(
+                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(1, material)), // 改为 dust
+                        3300,
+                        0
+                )
+                .chancedOutput(
+                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(2, material)), // 改为 dust
+                        1700,
+                        0
+                )
+                .EUt(90)
+                .duration(1000)
+                .save(provider);
+        //洗矿-粉碎-离心
+        OreProperty one = material.getProperty(PropertyKey.ORE);
+        ItemStack Dust = ChemicalHelper.get(TagPrefix.dust, material);
+        if (Dust.isEmpty()) return;
+        CBRecipeBuilder.of(CTNHBio.id("wash_grind_centrifuge_" + material.getName()),
+                        CBRecipeTypes.DECOMPOSER_RECIPES)
+                .nutrient(2)
+                .inputItems(TagPrefix.crushed, material)
+                .inputFluids(new FluidStack(Fluids.WATER, 1500))
+                .outputItems(Dust)
+                .chancedOutput(
+                        ChemicalHelper.get(TagPrefix.dust, one.getOreByProduct(0, material)),
+                        1400,
+                        0
+                )
+                .chancedOutput(
+                        ChemicalHelper.get(TagPrefix.dust, one.getOreByProduct(1, material)),
+                        1500,
+                        0
+                )
+                .chancedOutput(
+                        ChemicalHelper.get(TagPrefix.dust, one.getOreByProduct(1, material)),
+                        1700,
+                        0
+                )
+                .EUt(24)
+                .duration(1500)
+                .save(provider);
+        //酸洗-粉碎-离心
+        if (!property.getWashedIn().first().isNull()) {
+            Material washingByproduct = property.getOreByProduct(3, material);
+            ObjectIntPair<Material> washedInTuple = property.getWashedIn();
+            CBRecipeBuilder.of(CTNHBio.id("acid_grind_centrifuge_" + material.getName()),
+                            CBRecipeTypes.DECOMPOSER_RECIPES)
+                    .nutrient(3)
+                    .inputItems(TagPrefix.crushed, material)
+                    .inputFluids(new FluidStack(
+                            washedInTuple.first().getFluid(),
+                            washedInTuple.secondInt() * 2
+                    ))
+                    .outputItems(ChemicalHelper.get(TagPrefix.dust, material))
+                    .chancedOutput(
+                            ChemicalHelper.get(TagPrefix.dust, washingByproduct),
+                            7000,
+                            0
+                    )
+                    .chancedOutput(
+                            ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(1, material)),
+                            1700,
+                            0
+                    )
+                    .chancedOutput(
+                            ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(1, material)),
+                            1300,
+                            0
+                    )
+                    .EUt(64)
+                    .duration(800)
+                    .save(provider);
+        }
     }
 }
+
+
