@@ -112,7 +112,7 @@ public class CBMachines {
                     )
                     .tier(tier)
                     .recipeType(CBRecipeTypes.DIGEST_RECIPES)
-                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("decomposer"),CBRecipeTypes.DECOMPOSER_RECIPES))
+                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("digester"),CBRecipeTypes.DIGEST_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
                     .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
                     .register();
