@@ -3,21 +3,30 @@ package com.moguang.ctnhbio.data.recipe;
 import com.github.elenterius.biomancy.crafting.EssenceIngredient;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.registry.CBMachines;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
 
 import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
 
+@SuppressWarnings("all")
 public class BioelectrlcForgeRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
         //生物锻炉
         //组件类
 // 创造者混合物
+
+
+
         CBRecipeBuilder.of(CTNHBio.id("creator_mix"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(1)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 4)
@@ -122,6 +131,7 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(ModItems.MINERAL_FRAGMENT.get().getDefaultInstance(), 11)
                 .inputItems(ModItems.TOUGH_FIBERS.get().getDefaultInstance(), 8)
                 .inputItems(ModItems.STONE_POWDER.get().getDefaultInstance(), 1)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ctnhbio:xxx")),1)
                 .outputItems(Items.NAUTILUS_SHELL.getDefaultInstance())
                 .EUt(24)
                 .duration(100)
@@ -443,16 +453,6 @@ public class BioelectrlcForgeRecipes {
                 .EUt(24)
                 .duration(150)
                 .save(provider);
-
-
-
-
-
-
-
-
-
-
 
 
     }

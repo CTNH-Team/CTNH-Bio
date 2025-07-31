@@ -10,9 +10,11 @@ import com.moguang.ctnhbio.event.EventHandler;
 import com.moguang.ctnhbio.registry.CBRegistrate;
 import com.moguang.ctnhbio.registry.CBSerums;
 import com.mojang.logging.LogUtils;
+import com.simibubi.create.infrastructure.data.CreateDatagen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -36,7 +38,6 @@ public class CTNHBio
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addCreative);
         modEventBus.addListener(this::onRegisterEntityRenderers);
-
 
         modEventBus.addGenericListener(MachineDefinition.class, EventHandler::registerMachines);
         modEventBus.addGenericListener(GTRecipeType.class, EventHandler::registerRecipeTypes);
