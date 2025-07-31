@@ -10,6 +10,7 @@ import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
 import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
+import com.gregtechceu.gtceu.api.machine.fancyconfigurator.CircuitFancyConfigurator;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
@@ -261,6 +262,9 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                 if (configurator != null)
                     configuratorPanel.attachConfigurators(configurator);
             }
+        }
+        if (isCircuitSlotEnabled()) {
+            configuratorPanel.attachConfigurators(new BioCircuitFancyConfigurator(circuitInventory.storage));
         }
     }
     public static class BasicLivingRecipeLogic extends RecipeLogic {
