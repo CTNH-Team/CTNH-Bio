@@ -8,6 +8,7 @@ import com.moguang.ctnhbio.data.materials.OrganicMaterials;
 import com.moguang.ctnhbio.registry.CBCreativeModeTabs;
 import com.moguang.ctnhbio.registry.CBEntities;
 import com.moguang.ctnhbio.registry.CBItems;
+import com.moguang.ctnhbio.registry.CBSerums;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
@@ -19,13 +20,16 @@ public class CommonProxy {
         init();
         IEventBus modEventBus = FMLJavaModLoadingContext
                 .get().getModEventBus();
+        CBSerums.SERUMS.register(modEventBus);
     }
     public static void init() {
         CBEntities.init();
 
         //Object unused = CBToolType.BONING_KNIFE;
+
         CBCreativeModeTabs.init();
         CBDatagen.init();
+
         CTNHBio.REGISTRATE.registerRegistrate();
 
     }

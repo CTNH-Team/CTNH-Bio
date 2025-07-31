@@ -4,6 +4,7 @@ import com.github.elenterius.biomancy.api.serum.Serum;
 import com.github.elenterius.biomancy.api.serum.SerumContainer;
 import com.github.elenterius.biomancy.init.ModSerums;
 import com.gregtechceu.gtceu.api.item.ComponentItem;
+import com.moguang.ctnhbio.registry.CBSerums;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -31,6 +32,7 @@ public class OrganicVialItem extends ComponentItem implements SerumContainer {
         SERUM_FLUID_MAP.put(Insomnia_Cure.getFluid(), ModSerums.INSOMNIA_CURE);
         SERUM_FLUID_MAP.put(Cleansing_Serum.getFluid(), ModSerums.CLEANSING_SERUM);
         SERUM_FLUID_MAP.put(Frenzy_Serum.getFluid(), ModSerums.FRENZY_SERUM);
+        SERUM_FLUID_MAP.put(PrimordiaL_Serum.getFluid(), CBSerums.PRIMORDIAL_SERUM);
     }
 
 
