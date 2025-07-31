@@ -141,7 +141,7 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
 
     @Override
     public boolean canBeCollidedWith() {
-        return true;
+        return false;
     }
 
     @Override

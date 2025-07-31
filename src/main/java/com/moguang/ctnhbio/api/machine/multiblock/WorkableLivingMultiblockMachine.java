@@ -50,6 +50,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
         this.nutrientStorage = new SynchronizedNutrientStorage(capacity);
         this.inputTrait = new NotifiableNutrientTrait(this, nutrientStorage, IO.IN);
         this.outputTrait = new NotifiableNutrientTrait(this, nutrientStorage, IO.OUT);
+        nutrientStorage.add(capacity/2);
     }
     @Override
     public LivingMetaMachineEntity getMachineEntity() {
@@ -145,14 +146,14 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     public void tickGrow()
     {
         if(shouldTick(5) &&
-                getNutrientAmount() >= NUTRIENT_NEEDED_FOR_GROWTH && growingBlockPattern.growPlan.tick())
+                getNutrientAmount() >= NUTRIENT_NEEDED_FOR_GROWTH &&
+                growingBlockPattern != null &&
+                growingBlockPattern.growPlan.tick())
         {
             nutrientStorage.extract(NUTRIENT_NEEDED_FOR_GROWTH);
         }
 
     }
-
-
 
     @Override
     public @Nullable TickableSubscription subscribeServerTick(Runnable runnable) {

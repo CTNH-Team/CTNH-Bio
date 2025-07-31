@@ -8,6 +8,7 @@ import com.moguang.ctnhbio.client.ClientProxy;
 import com.moguang.ctnhbio.common.CommonProxy;
 import com.moguang.ctnhbio.event.EventHandler;
 import com.moguang.ctnhbio.registry.CBRegistrate;
+import com.moguang.ctnhbio.registry.CBSerums;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -43,6 +44,7 @@ public class CTNHBio
         modEventBus.addGenericListener(ChanceLogic.class,EventHandler::registerChanceLogic);
 
         DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+
 
     }
 

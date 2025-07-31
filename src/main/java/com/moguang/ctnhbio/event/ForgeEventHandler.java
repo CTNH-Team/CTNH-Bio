@@ -16,18 +16,25 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.moguang.ctnhbio.machine.multiblock.MultiblocksA.BASIC_MULTI_LIVING_MACHINE;
 
 @Mod.EventBusSubscriber(modid = CTNHBio.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEventHandler {
@@ -46,6 +53,27 @@ public class ForgeEventHandler {
         });
     }
 
+    @SubscribeEvent
+    public static void onServerTick(TickEvent.ServerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            Iterator<LivingEntity> iterator = TransformManager.FLESH_BLOB_LIST.iterator();
+            while (iterator.hasNext()) {
+                LivingEntity entity = iterator.next();
+                Level level = entity.level();
+                BlockPos pos = entity.getOnPos();
+                if (level.getBlockState(pos).canBeReplaced() && level.getBlockState(pos.below()).canBeReplaced()) {
+                    iterator.remove();
+                    entity.discard();
+                    level.setBlock(
+                            pos,
+                            BASIC_MULTI_LIVING_MACHINE.get().getDefinition().defaultBlockState(),
+                            3
+                    );
+
+                }
+            }
+        }
+    }
 
 
 }
