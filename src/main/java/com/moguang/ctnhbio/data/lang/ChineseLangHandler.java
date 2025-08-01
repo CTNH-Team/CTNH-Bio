@@ -45,26 +45,26 @@ public class ChineseLangHandler {
         provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§a可传输生物活性流体");
         provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4生物活性流体可能失活！");
 
-        provider.add("material.gtceu.wither_slime", "凋灵软泥");
-        provider.add("material.gtceu.endocrine_hormone", "内分泌激素");
-        provider.add("material.gtceu.toxin_extract", "毒素提取物");
-        provider.add("material.gtceu.bile", "胆汁");
-        provider.add("material.gtceu.mutagenic_secretion", "激变分泌液");
-        provider.add("material.gtceu.regenerate_fluid", "再生粘液");
-        provider.add("material.gtceu.organic_compound", "有机化合物");
-        provider.add("material.gtceu.unstable_compound", "不稳定化合物");
-        provider.add("material.gtceu.genetic_compound", "遗传化合物");
-        provider.add("material.gtceu.heterogeneous_compound", "异质化合物");
-        provider.add("material.gtceu.healing_compound", "治愈化合物");
-        provider.add("material.gtceu.decay_essence", "衰败原液");
-        provider.add("material.gtceu.vitality_serum", "活力血清");
-        provider.add("material.gtceu.growth_serum", "成长血清");
-        provider.add("material.gtceu.gigantism_serum", "巨化血清");
-        provider.add("material.gtceu.shrinking_serum", "缩小血清");
-        provider.add("material.gtceu.breeding_stimulant", "配种兴奋剂");
-        provider.add("material.gtceu.pain_response_agent", "伤痛反应剂");
-        provider.add("material.gtceu.purification_serum", "净化血清");
-        provider.add("material.gtceu.berserk_serum", "狂化血清");
+        provider.add("material.ctnhbio.wither_slime", "凋灵软泥");
+        provider.add("material.ctnhbio.endocrine_hormone", "内分泌激素");
+        provider.add("material.ctnhbio.toxin_extract", "毒素提取物");
+        provider.add("material.ctnhbio.bile", "胆汁");
+        provider.add("material.ctnhbio.mutagenic_secretion", "激变分泌液");
+        provider.add("material.ctnhbio.regenerate_fluid", "再生粘液");
+        provider.add("material.ctnhbio.organic_compound", "有机化合物");
+        provider.add("material.ctnhbio.unstable_compound", "不稳定化合物");
+        provider.add("material.ctnhbio.genetic_compound", "遗传化合物");
+        provider.add("material.ctnhbio.heterogeneous_compound", "异质化合物");
+        provider.add("material.ctnhbio.healing_compound", "治愈化合物");
+        provider.add("material.ctnhbio.decay_essence", "衰败原液");
+        provider.add("material.ctnhbio.rejuvenation_serum", "活力血清");
+        provider.add("material.ctnhbio.ageing_serum", "成长血清");
+        provider.add("material.ctnhbio.enlargement_serum", "巨化血清");
+        provider.add("material.ctnhbio.shrinking_serum", "缩小血清");
+        provider.add("material.ctnhbio.breeding_stimulant", "配种兴奋剂");
+        provider.add("material.ctnhbio.absorption_boost", "伤痛反应剂");
+        provider.add("material.ctnhbio.cleansing_serum", "净化血清");
+        provider.add("material.ctnhbio.frenzy_serum", "狂化血清");
     }
 
     public static void replace(@NotNull RegistrateCNLangProvider provider, @NotNull String key,

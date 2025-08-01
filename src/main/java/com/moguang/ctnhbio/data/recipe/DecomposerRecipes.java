@@ -25,14 +25,6 @@ import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
 
 public class DecomposerRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
-        CBRecipeBuilder.of(CTNHBio.id("test"), CBRecipeTypes.BIO_REACTOR_RECIPES)
-                .effect(MobEffects.POISON)
-                .nutrient(2)
-                .inputItems(ModItems.BILE.get().asItem().getDefaultInstance())
-                .outputItems(ModItems.TOXIN_GLAND.get().asItem().getDefaultInstance())
-                .EUt(32)
-                .duration(100)
-                .save(provider);
         //分解者
         CBRecipeBuilder.of(CTNHBio.id("grass_block"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(1)
