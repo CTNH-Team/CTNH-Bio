@@ -185,5 +185,33 @@ public class BioReactorRecipes {
                 .EUt(32)
                 .duration(8 * 20)
                 .save(provider);
+
+        //鲜肉增殖-初级配方
+        CBRecipeBuilder.of(CTNHBio.id("living_flesh_recipe_one"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(8)
+                .notConsumable(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance())
+                .inputFluids(new FluidStack(Regenerate_Fluid.getFluid(), 300))
+                .outputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),2)
+                .chancedOutput(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(), 3000, 0)
+                .chancedOutput(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(), 1000, 0)
+                .EUt(30)
+                .duration(8 * 20)
+                .save(provider);
+
+        //怪异肉循环-初级配方
+        CBRecipeBuilder.of(CTNHBio.id("creator_mix_recipe_one"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(5)
+                .notConsumable(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance(),5)
+                .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 200))
+                .outputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(),1)
+                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 4000, 0)
+                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 2000, 0)
+                .EUt(120)
+                .duration(4 * 20)
+                .save(provider);
     }
 }
