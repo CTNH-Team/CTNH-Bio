@@ -70,6 +70,16 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     }
 
     @Override
+    public void extractNutrient(double amount) {
+        nutrientStorage.extract(amount);
+    }
+
+    @Override
+    public void addNutrient(double amount) {
+        nutrientStorage.add(amount);
+    }
+
+    @Override
     public InteractionResult tryToOpenUI(Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack stack = player.getItemInHand(hand);
 

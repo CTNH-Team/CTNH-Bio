@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.api.blockentity;
 
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
+import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.moguang.ctnhbio.api.ILivingEntityHost;
@@ -65,6 +66,11 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     @Override
     public BlockPos getHostPos() {
         return getBlockPos();
+    }
+
+    @Override
+    public MetaMachine getHostMachine() {
+        return this.metaMachine;
     }
 
     @Override

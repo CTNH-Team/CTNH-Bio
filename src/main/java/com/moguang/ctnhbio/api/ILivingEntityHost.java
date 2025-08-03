@@ -1,5 +1,6 @@
 package com.moguang.ctnhbio.api;
 
+import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,6 +15,7 @@ public interface ILivingEntityHost<T extends LivingEntity> {
     T getHostedEntity();
     void setHostedEntity(T entity);
     BlockPos getHostPos();
+    MetaMachine getHostMachine();
 
     default boolean isEntityHostAware(T entity) {
         return entity instanceof IHostAwareEntity;

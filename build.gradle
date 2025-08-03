@@ -175,6 +175,9 @@ dependencies {
     implementation fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
     implementation fg.deobf("curse.maven:createmetallurgy-1007404:6741785")
 
+    //Hostile Neural NetWork
+    implementation fg.deobf("curse.maven:hostile_neural_network-552574:5895036")
+    implementation fg.deobf("curse.maven:placebo-283644:6274231")
 
     // KubeJS
     implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
