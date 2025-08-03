@@ -24,9 +24,6 @@ public class BioelectrlcForgeRecipes {
         //生物锻炉
         //组件类
 // 创造者混合物
-
-
-
         CBRecipeBuilder.of(CTNHBio.id("creator_mix"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(1)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 4)
@@ -454,6 +451,46 @@ public class BioelectrlcForgeRecipes {
                 .duration(150)
                 .save(provider);
 
+//电力分解者-LV
+        CBRecipeBuilder.of(CTNHBio.id("lv_decomposer"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(50)
+                .inputItems(ModItems.DECOMPOSER.get().getDefaultInstance())
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_macerator")))
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance(), 2)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:tin_single_cable")),2)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_fluid_regulator")),2)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_electric_pump")),2)
+                .outputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ctnhbio:lv_decomposer")))
+                .EUt(24)
+                .duration(300)
+                .save(provider);
 
+//电力生物反应腔-LV
+        CBRecipeBuilder.of(CTNHBio.id("lv_bioreactor"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(50)
+                .inputItems(ModItems.BIO_LAB.get().getDefaultInstance())
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_chemical_reactor")))
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance(), 2)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:tin_single_cable")),2)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_fluid_regulator")),2)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_electric_pump")),2)
+                .outputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ctnhbio:lv_bioreactor")))
+                .EUt(24)
+                .duration(300)
+                .save(provider);
+
+//电力生物消化器-LV
+        CBRecipeBuilder.of(CTNHBio.id("lv_bioreactor"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(50)
+                .inputItems(ModItems.DIGESTER.get().getDefaultInstance())
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_brewery")))
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance(), 2)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:tin_single_cable")),2)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_fluid_regulator")),2)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_electric_pump")),2)
+                .outputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ctnhbio:lv_digester")))
+                .EUt(24)
+                .duration(300)
+                .save(provider);
     }
 }
