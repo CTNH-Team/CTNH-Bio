@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
+import com.moguang.ctnhbio.registry.CBBlocks;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -29,5 +30,21 @@ public class MultiblocksA {
                     .build())
             .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
             .simpleModel(new ResourceLocation("minecraft", "block/air"))
+            .register();
+
+    public static MultiblockMachineDefinition COGNITIVE_ASSEMBLER = REGISTRATE.biomultiblock("cognitive_assembler", WorkableLivingMultiblockMachine::new)
+            .recipeType(CBRecipeTypes.GREAT_FLESH)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("AAA", "AAA", "AAA")
+                    .aisle("AAA", "AAA", "AAA")
+                    .aisle("AAA", "A@A", "AAA")
+                    .where("A", Predicates.blocks(ModBlocks.FLESH.get()).setMinGlobalLimited(10)
+                            .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+                            .or(Predicates.blocks(Blocks.AIR)))
+                    .where("@", Predicates.controller(Predicates.blocks(definition.get())))
+
+                    .build())
+            .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
+            .appearanceBlock(CBBlocks.FLESH_CASING)
             .register();
 }

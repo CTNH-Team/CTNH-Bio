@@ -1,14 +1,11 @@
 package com.moguang.ctnhbio.registry;
 
-import com.github.elenterius.biomancy.client.render.entity.mob.fleshblob.PrimordialFleshBlobRenderer;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
-import com.moguang.ctnhbio.api.entity.LivingMultiMachineEntity;
 import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
-import com.moguang.ctnhbio.machine.bioreactor.BioReactorEntity;
-import com.moguang.ctnhbio.machine.bioreactor.BioReactorRenderer;
+
 import com.moguang.ctnhbio.machine.braininavat.Brain;
 import com.moguang.ctnhbio.machine.braininavat.BrainRenderer;
-import com.moguang.ctnhbio.machine.greatflesh.GreatFleshEntity;
+import com.moguang.ctnhbio.machine.greatflesh.GreatFleshBlockEntity;
 import com.moguang.ctnhbio.machine.greatflesh.GreatFleshRenderer;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import net.minecraft.world.entity.MobCategory;
@@ -25,14 +22,24 @@ public class CBEntities {
             .renderer(() -> BasicLivingMachineEntityRenderer::new)
             .lang("Living Machine")
             .register();
-    public static EntityEntry<BioReactorEntity> BIOREACTOR_ENTITY = REGISTRATE
-            .entity("bioreactor", BioReactorEntity::new, MobCategory.CREATURE)
+
+    public static EntityEntry<LivingMetaMachineEntity> BIOELECTRIC_FORGE_ENTITY = REGISTRATE
+            .entity("bioelectric_forge", LivingMetaMachineEntity::new, MobCategory.CREATURE)
             .properties(props -> props.sized(0.9F, 0.9F))
-            .attributes(BioReactorEntity::createAttributes)
+            .attributes(LivingMetaMachineEntity::createAttributes)
             .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
-            .renderer(() -> BioReactorRenderer::new)
-            .lang("Bioreactor")
+            .renderer(() -> BasicLivingMachineEntityRenderer::new)
+            .lang("Bioelectric Forge")
             .register();
+
+//    public static EntityEntry<BioReactorBlockEntity> BIOREACTOR_ENTITY = REGISTRATE
+//            .entity("bioreactor", BioReactorBlockEntity::new, MobCategory.CREATURE)
+//            .properties(props -> props.sized(0.9F, 0.9F))
+//            .attributes(BioReactorBlockEntity::createAttributes)
+//            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
+//            .renderer(() -> BioReactorRenderer::new)
+//            .lang("Bioreactor")
+//            .register();
 
 
     public static EntityEntry<Brain> BRAIN_IN_A_VAT_BRAIN = REGISTRATE
@@ -43,14 +50,16 @@ public class CBEntities {
             .renderer(() -> BrainRenderer::new)
             .lang("Brain")
             .register();
-    public static EntityEntry<GreatFleshEntity> GREAT_FLESH_ENTITY = REGISTRATE
-            .entity("living_multi_machine", GreatFleshEntity::new, MobCategory.CREATURE)
-            .properties(props -> props.sized(0.9F, 0.9F))
-            .attributes(GreatFleshEntity::createAttributes)
-            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
-            .renderer(() -> GreatFleshRenderer::new)
-            .lang("Living Multi Machine")
-            .register();
+//    public static EntityEntry<GreatFleshBlockEntity> GREAT_FLESH_ENTITY = REGISTRATE
+//            .entity("living_multi_machine", GreatFleshBlockEntity::new, MobCategory.CREATURE)
+//            .properties(props -> props.sized(0.9F, 0.9F))
+//            .attributes(GreatFleshBlockEntity::createAttributes)
+//            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
+//            .renderer(() -> GreatFleshRenderer::new)
+//            .lang("Living Multi Machine")
+//            .register();
+
+
 
     public static void init() {}
 }

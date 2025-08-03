@@ -11,12 +11,16 @@ import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBlockEntityRenderer;
+import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeBlockEntity;
+import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeBlockEntityRenderer;
+import com.moguang.ctnhbio.machine.bioreactor.BioReactorBlockEntity;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVat;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeMachineBlock;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -65,16 +69,18 @@ public class CBMachines {
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             BioelectricForgeMachineBlock::new,
                             MetaMachineItem::new,
-                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
+                            (type, pos, state) -> new BioelectricForgeBlockEntity(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
                     .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
+
                     .model((dataGenContext, gtBlockstateProvider, machineModelBuilder) ->
                             machineModelBuilder.addModels(machineModelBuilder.partialState(),
                                     ConfiguredModel.builder().modelFile(new ModelFile.UncheckedModelFile(CTNHBio.id("block/bioelectric_forge"))).buildLast()))
-
+//                    .onBlockEntityRegister( blockEntityBlockEntityType ->
+//                            BlockEntityRenderers.register((BlockEntityType<BioelectricForgeBlockEntity>)blockEntityBlockEntityType, BioelectricForgeBlockEntityRenderer::new))
                     .register();
         }
     }
@@ -128,7 +134,7 @@ public class CBMachines {
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
                             MetaMachineItem::new,
-                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.BIOREACTOR_ENTITY.get())
+                            (type, pos, state) -> new BioReactorBlockEntity(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
                     .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)

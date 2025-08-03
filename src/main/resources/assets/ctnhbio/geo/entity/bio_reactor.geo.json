@@ -1,0 +1,49 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.bio_reactor",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 7,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 4, 0],
+					"cubes": [
+						{"origin": [6.25, 0, 6.25], "size": [2, 15, 2], "uv": [56, 34]},
+						{"origin": [6.25, 14.75, 6.25], "size": [2, 7, 2], "pivot": [7.25, 14.75, 7.25], "rotation": [20.94102, 8.42106, -20.94102], "uv": [64, 34]},
+						{"origin": [-8.25, 0, -8.25], "size": [2, 9, 2], "uv": [64, 0]},
+						{"origin": [-8, 8, -8], "size": [3, 2, 3], "uv": [64, 11]},
+						{"origin": [3.25, 20, 3.25], "size": [2, 2, 2], "uv": [56, 51]},
+						{"origin": [3.25, 16, 3.25], "size": [2, 4, 2], "uv": [64, 43]},
+						{"origin": [-1, 0, -61], "size": [2, 2, 2], "uv": [64, 49]}
+					]
+				},
+				{
+					"name": "bone",
+					"parent": "root",
+					"pivot": [0, 4, 0],
+					"cubes": [
+						{"origin": [-7, 5.35, -7], "size": [14, 5, 14], "uv": [0, 18]},
+						{"origin": [-6.5, 3.25, -6.5], "size": [13, 3, 13], "uv": [0, 55]},
+						{"origin": [0, 2, 0], "size": [6, 16, 6], "pivot": [3, 11, 3], "rotation": [0, 90, 0], "uv": [52, 55]}
+					]
+				},
+				{
+					"name": "colorable",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [2, 2, -7], "size": [5, 11, 5], "pivot": [4, 11, -4], "rotation": [-180, 0, 180], "uv": [56, 18]},
+						{"origin": [-7, 0, -7], "size": [14, 4, 14], "uv": [0, 37]},
+						{"origin": [-8, 4, -8], "size": [16, 2, 16], "uv": [0, 0]}
+					]
+				}
+			]
+		}
+	]
+}

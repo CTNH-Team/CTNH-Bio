@@ -8,6 +8,7 @@ import com.gregtechceu.gtceu.api.registry.registrate.MultiblockMachineBuilder;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
+import com.moguang.ctnhbio.machine.greatflesh.GreatFleshBlockEntity;
 
 import java.util.function.Function;
 
@@ -21,6 +22,6 @@ public class CBRegistrate extends GTRegistrate {
     public MultiblockMachineBuilder biomultiblock(String name, Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine) {
         return new MultiblockMachineBuilder(this, name, metaMachine,
                 LivingMetaMachineBlock::new, MetaMachineItem::new,
-                (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.GREAT_FLESH_ENTITY.get()));
+                (type, pos, state) -> new GreatFleshBlockEntity(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get()));
     }
 }
