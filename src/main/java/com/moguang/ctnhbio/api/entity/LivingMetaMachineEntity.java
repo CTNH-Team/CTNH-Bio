@@ -96,6 +96,9 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     }
 
     @Override
+    protected boolean updateInWaterStateAndDoFluidPushing() {return false;}
+
+    @Override
     public boolean isCustomNameVisible() {return true;}
 
     @Override

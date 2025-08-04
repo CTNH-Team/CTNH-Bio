@@ -160,11 +160,12 @@ public class CBMachines {
                                             .setEntityOffset(0.5, 0.6, 0.5)
                     )
                     .tier(tier)
-                    .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                    .recipeType(CBRecipeTypes.BRAIN_IN_A_VAT_RECIPES)
                     .blockProp(prop -> prop
                             .noOcclusion()
                             .lightLevel(state ->0)
                     )
+
                     .rotationState(RotationState.NON_Y_AXIS)
                     .model((dataGenContext, gtBlockstateProvider, machineModelBuilder) ->
                             machineModelBuilder.addModels(machineModelBuilder.partialState(),

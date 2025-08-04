@@ -3,22 +3,14 @@ package com.moguang.ctnhbio.machine.bioreactor;// Made with Blockbench 4.12.5
 // Paste this class into your mod and generate all required imports
 
 
-import com.github.elenterius.biomancy.BiomancyMod;
 import com.moguang.ctnhbio.CTNHBio;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.*;
+import com.moguang.ctnhbio.api.CBValues;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import software.bernie.geckolib.model.GeoModel;
 
 public class BioReactorBlockEntityModel extends GeoModel<BioReactorBlockEntity> {
 
-	public static final ResourceLocation MODEL = CTNHBio.id("geo/entity/bio_reactor.geo.json");
+	public static final ResourceLocation MODEL = CTNHBio.id("geo/entity/bio_reactor_2.geo.json");
 	protected static final ResourceLocation TEXTURE = CTNHBio.id("textures/entity/bioreactor.png");
 
 	@Override
@@ -33,6 +25,6 @@ public class BioReactorBlockEntityModel extends GeoModel<BioReactorBlockEntity> 
 
 	@Override
 	public ResourceLocation getAnimationResource(BioReactorBlockEntity bioReactorBlockEntity) {
-		return BiomancyMod.createRL("animations/entity/mob/flesh_blob.animation.json");
+		return CBValues.EMPTY_ANIMATION;
 	}
 }

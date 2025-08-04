@@ -1,7 +1,7 @@
 package com.moguang.ctnhbio.machine.greatflesh;
 
 import com.github.elenterius.biomancy.BiomancyMod;
-import net.minecraft.client.renderer.RenderType;
+import com.moguang.ctnhbio.api.CBValues;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
@@ -18,6 +18,6 @@ public class GreatFleshBlockEntityModel extends GeoModel<GreatFleshBlockEntity> 
     }
 
     public ResourceLocation getAnimationResource(GreatFleshBlockEntity fleshBlob) {
-        return BiomancyMod.createRL("animations/entity/mob/flesh_blob.animation.json");
+        return CBValues.EMPTY_ANIMATION;
     }
 }

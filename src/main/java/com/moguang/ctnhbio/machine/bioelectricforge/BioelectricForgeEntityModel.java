@@ -1,7 +1,7 @@
 package com.moguang.ctnhbio.machine.bioelectricforge;
 
-import com.github.elenterius.biomancy.BiomancyMod;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.api.CBValues;
 import net.minecraft.resources.ResourceLocation;
 
 import software.bernie.geckolib.model.GeoModel;
@@ -25,7 +25,7 @@ public class BioelectricForgeEntityModel extends GeoModel<BioelectricForgeBlockE
 
     @Override
     public ResourceLocation getAnimationResource(BioelectricForgeBlockEntity bioelectricForgeBlockEntity) {
-        return BiomancyMod.createRL("animations/entity/mob/flesh_blob.animation.json");
+        return CBValues.EMPTY_ANIMATION;
     }
 
 }

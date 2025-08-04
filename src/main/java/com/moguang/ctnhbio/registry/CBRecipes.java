@@ -12,5 +12,6 @@ public class CBRecipes {
         GreatFleshRecipes.init(provider);
         BioelectrlcForgeRecipes.init(provider);
         BioReactorRecipes.init(provider);
+        ThinkingRecipes.init(provider);
     }
 }
