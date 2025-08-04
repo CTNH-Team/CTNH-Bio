@@ -2,7 +2,11 @@ package com.moguang.ctnhbio.data.recipe;
 
 import com.github.elenterius.biomancy.crafting.EssenceIngredient;
 import com.github.elenterius.biomancy.init.ModItems;
+import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.common.data.GTItems;
+import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBMachines;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -10,6 +14,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -492,5 +497,51 @@ public class BioelectrlcForgeRecipes {
                 .EUt(24)
                 .duration(300)
                 .save(provider);
+//脉络核心
+        CBRecipeBuilder.of(CTNHBio.id("synet_core_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(50)
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance())
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:aluminium_frame")),1)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:copper_ring")),1)
+                .inputItems(CustomTags.HV_CIRCUITS,2)
+                .inputItems(Items.GLOW_INK_SAC.getDefaultInstance(),2)
+                .inputItems(ModItems.TOUGH_FIBERS.get().getDefaultInstance(),4)
+                .inputFluids(new FluidStack(Regenerate_Fluid.getFluid(), 1000))
+                .chancedOutput(new ItemStack(CBItems.SYNET_CORE),5000,0)
+                .EUt(96)
+                .duration(500)
+                .save(provider);
+//拓扑核心
+        CBRecipeBuilder.of(CTNHBio.id("meta_core_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(50)
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance())
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:stainless_steel_frame")),1)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:electrum_ring")),1)
+                .inputItems(CustomTags.EV_CIRCUITS,2)
+                .inputItems(GTItems.QUANTUM_EYE.get(),2)
+                .inputItems(ModItems.EXOTIC_DUST.get().getDefaultInstance(),20)
+                .inputFluids(new FluidStack(Unstable_Compound.getFluid(), 1000))
+                .inputFluids(new FluidStack(Organic_Compound.getFluid(), 1000))
+                .chancedOutput(new ItemStack(CBItems.META_CORE),4000,0)
+                .EUt(384)
+                .duration(500)
+                .save(provider);
+//灵蜕核心
+        CBRecipeBuilder.of(CTNHBio.id("nova_core_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(50)
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance())
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:titanium_frame")),1)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:black_steel_gear")),1)
+                .inputItems(CustomTags.IV_CIRCUITS,2)
+                .inputItems(GTItems.QUANTUM_STAR.get(),2)
+                .inputItems(ModItems.GEM_FRAGMENTS.get().getDefaultInstance(),30)
+                .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 1000))
+                .inputFluids(new FluidStack(Healing_Compound.getFluid(), 1000))
+                .inputFluids(new FluidStack(Endocrine_Hormone.getFluid(), 1000))
+                .chancedOutput(new ItemStack(CBItems.NOVA_CORE),3000,0)
+                .EUt(1960)
+                .duration(500)
+                .save(provider);
+
     }
 }

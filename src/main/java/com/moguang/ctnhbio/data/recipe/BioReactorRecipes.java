@@ -4,6 +4,7 @@ import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.ItemTags;
@@ -23,7 +24,7 @@ public class BioReactorRecipes {
                 .inputItems(ModItems.ORGANIC_MATTER.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance())
                 .outputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
-                .EUt(32)
+                .EUt(96)
                 .duration(2 * 20)
                 .save(provider);
 
@@ -34,7 +35,7 @@ public class BioReactorRecipes {
                 .inputItems(ModItems.MINERAL_FRAGMENT.get().asItem().getDefaultInstance())
                 .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 100))
-                .EUt(32)
+                .EUt(96)
                 .duration(4 * 20)
                 .save(provider);
 
@@ -45,7 +46,7 @@ public class BioReactorRecipes {
                 .inputItems(ModItems.NUTRIENT_PASTE.get().asItem().getDefaultInstance())
                 .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
-                .EUt(32)
+                .EUt(96)
                 .duration(4 * 20)
                 .save(provider);
 
@@ -55,7 +56,7 @@ public class BioReactorRecipes {
                 .inputFluids(new FluidStack(Mutagenic_Secretion.getFluid(), 100))
                 .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Unstable_Compound.getFluid(), 100))
-                .EUt(32)
+                .EUt(96)
                 .duration(4 * 20)
                 .save(provider);
 
@@ -65,8 +66,8 @@ public class BioReactorRecipes {
                 .inputFluids(new FluidStack(Regenerate_Fluid.getFluid(), 200))
                 .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Healing_Compound.getFluid(), 100))
-                .EUt(32)
-                .duration(2 * 20)
+                .EUt(96)
+                .duration(4 * 20)
                 .save(provider);
 
         // DECAYING_ADDITIVE
@@ -75,8 +76,8 @@ public class BioReactorRecipes {
                 .inputFluids(new FluidStack(Wither_Slime.getFluid(), 200))
                 .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Decay_Essence.getFluid(), 100))
-                .EUt(32)
-                .duration(2 * 20)
+                .EUt(96)
+                .duration(4 * 20)
                 .save(provider);
 
         // INSOMNIA_CURE
@@ -86,7 +87,7 @@ public class BioReactorRecipes {
                 .inputFluids(new FluidStack(Bile.getFluid(), 100))
                 .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Insomnia_Cure.getFluid(), 100))
-                .EUt(32)
+                .EUt(384)
                 .duration(8 * 20)
                 .save(provider);
 
@@ -98,7 +99,7 @@ public class BioReactorRecipes {
                 .inputFluids(new FluidStack(Healing_Compound.getFluid(), 100))
                 .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Absorption_Boost.getFluid(), 100))
-                .EUt(32)
+                .EUt(384)
                 .duration(8 * 20)
                 .save(provider);
 
@@ -109,7 +110,7 @@ public class BioReactorRecipes {
                 .inputFluids(new FluidStack(Healing_Compound.getFluid(), 100))
                 .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Cleansing_Serum.getFluid(), 100))
-                .EUt(32)
+                .EUt(384)
                 .duration(8 * 20)
                 .save(provider);
 
@@ -120,7 +121,7 @@ public class BioReactorRecipes {
                 .inputFluids(new FluidStack(Endocrine_Hormone.getFluid(), 100))
                 .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Frenzy_Serum.getFluid(), 100))
-                .EUt(32)
+                .EUt(384)
                 .duration(8 * 20)
                 .save(provider);
 
@@ -133,7 +134,7 @@ public class BioReactorRecipes {
                 .inputItems(Items.COCOA_BEANS.getDefaultInstance())
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Breeding_Stimulant.getFluid(), 100))
-                .EUt(32)
+                .EUt(384)
                 .duration(6 * 20)
                 .save(provider);
 
@@ -145,7 +146,7 @@ public class BioReactorRecipes {
                 .inputFluids(new FluidStack(Decay_Essence.getFluid(), 100))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Rejuvenation_Serum.getFluid(), 100))
-                .EUt(32)
+                .EUt(384)
                 .duration(8 * 20)
                 .save(provider);
 
@@ -157,7 +158,7 @@ public class BioReactorRecipes {
                 .inputFluids(new FluidStack(Decay_Essence.getFluid(), 100))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Ageing_Serum.getFluid(), 100))
-                .EUt(32)
+                .EUt(384)
                 .duration(6 * 20)
                 .save(provider);
 
@@ -170,7 +171,7 @@ public class BioReactorRecipes {
                 .inputItems(ModItems.MINERAL_FRAGMENT.get().asItem().getDefaultInstance())
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Enlargement_Serum.getFluid(), 100))
-                .EUt(32)
+                .EUt(384)
                 .duration(6 * 20)
                 .save(provider);
 
@@ -182,7 +183,7 @@ public class BioReactorRecipes {
                 .inputFluids(new FluidStack(Decay_Essence.getFluid(), 200))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Shrinking_Serum.getFluid(), 100))
-                .EUt(32)
+                .EUt(384)
                 .duration(8 * 20)
                 .save(provider);
 
@@ -199,6 +200,32 @@ public class BioReactorRecipes {
                 .EUt(30)
                 .duration(8 * 20)
                 .save(provider);
+        //鲜肉增殖-中级配方
+        CBRecipeBuilder.of(CTNHBio.id("living_flesh_recipe_two"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(8)
+                .notConsumable(CBItems.SYNET_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance())
+                .inputFluids(new FluidStack(Regenerate_Fluid.getFluid(), 400))
+                .outputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),2)
+                .chancedOutput(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(), 7000, 0)
+                .chancedOutput(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(), 4000, 0)
+                .EUt(120)
+                .duration(8 * 20)
+                .save(provider);
+        //鲜肉增殖-高级配方
+        CBRecipeBuilder.of(CTNHBio.id("living_flesh_recipe_three"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(8)
+                .notConsumable(CBItems.META_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance())
+                .inputFluids(new FluidStack(Regenerate_Fluid.getFluid(), 500))
+                .outputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),4)
+                .chancedOutput(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(), 6000, 0)
+                .chancedOutput(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(), 4000, 0)
+                .EUt(384)
+                .duration(8 * 20)
+                .save(provider);
 
         //怪异肉循环-初级配方
         CBRecipeBuilder.of(CTNHBio.id("creator_mix_recipe_one"), CBRecipeTypes.BIO_REACTOR_RECIPES)
@@ -213,5 +240,77 @@ public class BioReactorRecipes {
                 .EUt(120)
                 .duration(4 * 20)
                 .save(provider);
+        //怪异肉循环-中级配方
+        CBRecipeBuilder.of(CTNHBio.id("creator_mix_recipe_two"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(5)
+                .notConsumable(CBItems.SYNET_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance(),10)
+                .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 300))
+                .outputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(),1)
+                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 8000, 0)
+                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 5000, 0)
+                .EUt(384)
+                .duration(4 * 20)
+                .save(provider);
+        //怪异肉循环-高级配方
+        CBRecipeBuilder.of(CTNHBio.id("creator_mix_recipe_three"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(5)
+                .notConsumable(CBItems.META_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance(),10)
+                .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 400))
+                .outputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(),2)
+                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 8000, 0)
+                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 6000, 0)
+                .EUt(1960)
+                .duration(4 * 20)
+                .save(provider);
+        //原初核心循环-脉络核心
+        CBRecipeBuilder.of(CTNHBio.id("primordial_core_synet"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(10)
+                .notConsumable(CBItems.SYNET_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),1)
+                .inputFluids(new FluidStack(Healing_Compound.getFluid(), 50))
+                .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 50))
+                .inputFluids(new FluidStack(Unstable_Compound.getFluid(), 50))
+                .outputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(),1)
+                .chancedOutput(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(), 6000, 0)
+                .chancedOutput(CBItems.SYNET_CORE.get().asItem().getDefaultInstance(), 1000, 0)
+                .EUt(384)
+                .duration(10 * 20)
+                .save(provider);
+        //原初核心循环-拓扑核心
+        CBRecipeBuilder.of(CTNHBio.id("primordial_core_meta"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(10)
+                .notConsumable(CBItems.META_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),1)
+                .inputFluids(new FluidStack(Healing_Compound.getFluid(), 100))
+                .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
+                .inputFluids(new FluidStack(Unstable_Compound.getFluid(), 100))
+                .outputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(),1)
+                .chancedOutput(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(), 9500, 0)
+                .chancedOutput(CBItems.META_CORE.get().asItem().getDefaultInstance(), 1200, 0)
+                .EUt(1960)
+                .duration(10 * 20)
+                .save(provider);
+        //原初核心循环-灵蜕核心
+        CBRecipeBuilder.of(CTNHBio.id("primordial_core_nova"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(10)
+                .notConsumable(CBItems.NOVA_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),1)
+                .inputFluids(new FluidStack(Healing_Compound.getFluid(), 150))
+                .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 150))
+                .inputFluids(new FluidStack(Unstable_Compound.getFluid(), 150))
+                .outputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(),2)
+                .chancedOutput(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(), 7000, 0)
+                .chancedOutput(CBItems.NOVA_CORE.get().asItem().getDefaultInstance(), 1400, 0)
+                .EUt(1960)
+                .duration(10 * 20)
+                .save(provider);
+
     }
 }

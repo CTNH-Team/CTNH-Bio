@@ -25,5 +25,10 @@ public class EnglishLangHandler {
         provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§aCan handle Bioactive Fluid");
         provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4Bioactive Fluid may be inactivated");
 
+        provider.add("ctnh.synet_core.tooltip", "A metal skeleton intricate as vascular circuits, with every groove pulsing rhythmically, as if transporting some invisible life energy.");
+        provider.add("ctnh.meta_core.tooltip", "A geometric structure perpetually folding upon itself, its surface revealing angles that defy Euclidean laws, continuously performing impossible spatial transformations in stillness.");
+        provider.add("ctnh.nova_core.tooltip", "Beneath its semi-transparent shell float countless crystal fragments, constantly shedding and regenerating, each fracture refracting different light spectra.");
+        provider.add("ctnh.omni_core.tooltip", "Within the mirror-smooth sphere, nebular matter slowly rotates - the longer you gaze, the clearer your own silhouette emerges within it.");
+
     }
 }

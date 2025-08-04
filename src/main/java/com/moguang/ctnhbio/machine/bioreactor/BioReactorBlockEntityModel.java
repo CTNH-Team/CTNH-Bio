@@ -10,7 +10,7 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class BioReactorBlockEntityModel extends GeoModel<BioReactorBlockEntity> {
 
-	public static final ResourceLocation MODEL = CTNHBio.id("geo/entity/bio_reactor_2.geo.json");
+	public static final ResourceLocation MODEL = CTNHBio.id("geo/entity/bio_reactor.geo.json");
 	protected static final ResourceLocation TEXTURE = CTNHBio.id("textures/entity/bioreactor.png");
 
 	@Override

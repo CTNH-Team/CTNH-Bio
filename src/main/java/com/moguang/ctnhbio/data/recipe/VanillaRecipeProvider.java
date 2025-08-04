@@ -30,7 +30,7 @@ public class VanillaRecipeProvider extends RecipeProvider {
         // 第一个配方：LIVING_FLESH
         VanillaRecipeHelper.addShapedRecipe(provider, false, true,
                 CTNHBio.id("living_flesh_recipe"),
-                new ItemStack(ModItems.LIVING_FLESH.get(), 8),
+                new ItemStack(ModItems.LIVING_FLESH.get(), 4),
                 "ABC",
                 "HIH",
                 "DFG",
@@ -47,7 +47,7 @@ public class VanillaRecipeProvider extends RecipeProvider {
 // 第二个配方：PRIMORDIAL_CORE
         VanillaRecipeHelper.addShapedRecipe(provider, false, true,
                 CTNHBio.id("primordial_core_recipe"),
-                new ItemStack(ModItems.PRIMORDIAL_CORE.get(), 2),
+                new ItemStack(ModItems.PRIMORDIAL_CORE.get(), 1),
                 "ABA",
                 "BIB",
                 "ABA",

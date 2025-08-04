@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.data.lang;
 
 import com.moguang.ctnhbio.registry.CBItems;
+import com.moguang.ctnhbio.registry.CBMaterials;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 import net.minecraftforge.common.data.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +14,11 @@ import java.util.Map;
 
 public class ChineseLangHandler {
     public static void init(RegistrateCNLangProvider provider){
+        provider.addItem(CBItems.SYNET_CORE, "脉络核心");
+        provider.addItem(CBItems.META_CORE, "拓扑核心");
+        provider.addItem(CBItems.NOVA_CORE, "灵蜕核心");
+        provider.addItem(CBItems.OMNI_CORE, "终观核心");
+
         provider.addItem(CBItems.BIO_CAPACITOR, "生物电容");
         provider.addItem(CBItems.BIO_DIODE, "生物二极管");
         provider.addItem(CBItems.BIO_INDUCTOR, "生物电感");
@@ -40,6 +46,10 @@ public class ChineseLangHandler {
         provider.add("jei.ctnhbio.tooltip.chance", "概率：");
         provider.add("jei.ctnhbio.tooltip.amount_range", "数量：%d-%d");
 
+        provider.add("ctnh.synet_core.tooltip", "精密如血管回路的金属骨架，每一道凹槽都在规律脉动，仿佛在输送某种不可见的生命能量。");
+        provider.add("ctnh.meta_core.tooltip", "不断自我折叠的几何结构，表面浮现出违反欧几里得定律的棱角，在静止中持续完成着不可能的空间变换。");
+        provider.add("ctnh.nova_core.tooltip", "半透明外壳下悬浮着无数晶体碎片，它们持续剥落又再生，每次破碎都折射出不同的光谱。");
+        provider.add("ctnh.omni_core.tooltip", "光滑如镜面的球体内部，有星云状物质在缓慢旋转，凝视越久越能看见其中浮现出观测者自身的轮廓。");
 
         provider.add("ctnhbio.fluid.type_organic.tooltip", "§a生物活性流体");
         provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§a可传输生物活性流体");
@@ -65,6 +75,10 @@ public class ChineseLangHandler {
         provider.add("material.ctnhbio.absorption_boost", "伤痛反应剂");
         provider.add("material.ctnhbio.cleansing_serum", "净化血清");
         provider.add("material.ctnhbio.frenzy_serum", "狂化血清");
+        provider.add("material.ctnhbio.pyrrole", "吡咯");
+        provider.add("material.ctnhbio.polypyrrole", "聚吡咯");
+        provider.add("material.ctnhbio.blue_titanium_alloy", "蓝钛");
+        provider.add("material.ctnhbio.fentons_reagent", "芬顿试剂");
     }
 
     public static void replace(@NotNull RegistrateCNLangProvider provider, @NotNull String key,

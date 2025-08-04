@@ -9,7 +9,9 @@ import com.gregtechceu.gtceu.api.item.component.IRecipeRemainder;
 import com.gregtechceu.gtceu.api.item.component.ThermalFluidStats;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.ItemFluidContainer;
+import com.gregtechceu.gtceu.common.item.TooltipBehavior;
 import com.gregtechceu.gtceu.common.registry.GTRegistration;
+import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
 import com.moguang.ctnhbio.api.item.component.StyleItem;
 import com.moguang.ctnhbio.common.item.OrganicVialItem;
@@ -19,6 +21,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +29,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
 
+import static com.gregtechceu.gtceu.common.data.GTItems.attach;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBItems {
@@ -59,6 +63,43 @@ public class CBItems {
     public static final ItemEntry<StyleItem> WETWARE_PRINTED_CIRCUIT_BOARD = REGISTRATE.item("wetware_printed_circuit_board", StyleItem::new)
             .lang("Wet Printed Circuit Board")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
+            .register();
+
+    public static ItemEntry<ComponentItem> SYNET_CORE = REGISTRATE
+            .item("synet_core", ComponentItem::create)
+            .lang("Synet Core")
+            .tag(CustomTags.HV_CIRCUITS)
+            .properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
+            .onRegister(attach(new TooltipBehavior(list -> {
+                list.add(Component.translatable("ctnh.synet_core.tooltip").withStyle(ChatFormatting.GRAY));
+            })))
+            .register();
+    public static ItemEntry<ComponentItem> META_CORE = REGISTRATE
+            .item("meta_core", ComponentItem::create)
+            .lang("Meta Core")
+            .tag(CustomTags.EV_CIRCUITS)
+            .properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
+            .onRegister(attach(new TooltipBehavior(list -> {
+                list.add(Component.translatable("ctnh.meta_core.tooltip").withStyle(ChatFormatting.GRAY));
+            })))
+            .register();
+    public static ItemEntry<ComponentItem> NOVA_CORE = REGISTRATE
+            .item("nova_core", ComponentItem::create)
+            .lang("Nova Core")
+            .tag(CustomTags.IV_CIRCUITS)
+            .properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
+            .onRegister(attach(new TooltipBehavior(list -> {
+                list.add(Component.translatable("ctnh.nova_core.tooltip").withStyle(ChatFormatting.GRAY));
+            })))
+            .register();
+    public static ItemEntry<ComponentItem> OMNI_CORE = REGISTRATE
+            .item("omni_core", ComponentItem::create)
+            .lang("Omni Core")
+            .tag(CustomTags.LuV_CIRCUITS)
+            .properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
+            .onRegister(attach(new TooltipBehavior(list -> {
+                list.add(Component.translatable("ctnh.omni_core.tooltip").withStyle(ChatFormatting.GRAY));
+            })))
             .register();
 
     public static ItemEntry<OrganicVialItem> ORGANIC_VIAL = REGISTRATE.item("organic_vial", OrganicVialItem::new)
