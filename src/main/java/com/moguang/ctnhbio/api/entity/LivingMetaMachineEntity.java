@@ -2,9 +2,12 @@ package com.moguang.ctnhbio.api.entity;
 
 import com.moguang.ctnhbio.api.IHostAwareEntity;
 import com.moguang.ctnhbio.api.ILivingEntityHost;
+import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -164,6 +167,27 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
 
     @Override
     public void checkInsideBlocks() {
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (tickCount % 40 == 0)
+        if (getHealth() < getMaxHealth()) {
+            if (getHost() != null && getHost().getHostMachine() instanceof ILivingMachine livingMachine) {
+                if (livingMachine.getNutrientAmount() >= 2) {
+                    livingMachine.extractNutrient(2);
+                    heal(1);
+                    var pos = getHost().getHostPos().getCenter();
+                    Vec3 v = pos.add(0, 1f, 0)
+                            .add(VecHelper.offsetRandomly(Vec3.ZERO, level().random, 1)
+                                    .multiply(1, 0.2f, 1)
+                                    .normalize()
+                                    .scale(1f));
+                    level().addParticle(ParticleTypes.HEART, v.x, v.y, v.z, 0, 0.1f, 0);
+                }
+            }
+        }
     }
 
     @Override

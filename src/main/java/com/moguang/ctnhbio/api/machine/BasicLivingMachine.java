@@ -113,6 +113,16 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     }
 
     @Override
+    public void extractNutrient(double amount) {
+        storage.extract(amount);
+    }
+
+    @Override
+    public void addNutrient(double amount) {
+        storage.add(amount);
+    }
+
+    @Override
     public InteractionResult tryToOpenUI(Player player, InteractionHand hand, BlockHitResult hit) {
 
         ItemStack stack = player.getItemInHand(hand);
@@ -224,8 +234,8 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                     storages.put(IO.IN, CWURecipeCapability.CAP, livingMachine.importComputation);
                     storages.put(IO.OUT, CWURecipeCapability.CAP, livingMachine.exportComputation);
 
-                    livingMachine.getRecipeType().getRecipeUI().createEditableUITemplate(false, false).setupUI(template,
-                            new GTRecipeTypeUI.RecipeHolder(livingMachine.recipeLogic::getProgressPercent,
+                    new CBRecipeTypeUI(recipeType).createEditableUITemplate(false, false).setupUI(template,
+                            new CBRecipeTypeUI.RecipeHolder(livingMachine.recipeLogic::getProgressPercent,
                                     storages,
                                     new CompoundTag(),
                                     Collections.emptyList(),
