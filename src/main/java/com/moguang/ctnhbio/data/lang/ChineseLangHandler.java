@@ -79,6 +79,7 @@ public class ChineseLangHandler {
         provider.add("material.ctnhbio.polypyrrole", "聚吡咯");
         provider.add("material.ctnhbio.blue_titanium_alloy", "蓝钛");
         provider.add("material.ctnhbio.fentons_reagent", "芬顿试剂");
+        provider.add("material.ctnhbio.bio_flexible", "生物柔性");
     }
 
     public static void replace(@NotNull RegistrateCNLangProvider provider, @NotNull String key,

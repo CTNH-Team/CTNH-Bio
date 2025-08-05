@@ -66,4 +66,13 @@ public class CBMaterials {
                     .vacuumStats(VA[LuV]))
             .cableProperties(2048, 8, 16)
             .buildAndRegister();
-}
+    public static final Material BIO_FLEXIBLE = new Material.Builder(CTNHBio.id("bio_flexible"))
+            .color(0x8AFF70)
+            .components(POLYPYRROLE, 1, BLUE_TITANIUM_ALLOY, 1)
+            .flags(
+                    NO_SMELTING,
+                    FLAMMABLE,
+                    STICKY
+            )
+            .cableProperties(32768, 8, 1)
+            .buildAndRegister();}
