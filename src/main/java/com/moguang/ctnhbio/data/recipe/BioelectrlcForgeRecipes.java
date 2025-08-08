@@ -13,6 +13,8 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -187,6 +189,7 @@ public class BioelectrlcForgeRecipes {
 // 贪婪之爪
         CBRecipeBuilder.of(CTNHBio.id("ravenous_claws"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(250)
+                .effect(MobEffects.CONFUSION)
                 .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
                 .inputItems(ModItems.MOB_CLAW.get().getDefaultInstance(), 3)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 16)
@@ -200,6 +203,7 @@ public class BioelectrlcForgeRecipes {
 // 荆棘盾牌
         CBRecipeBuilder.of(CTNHBio.id("thorn_shield"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(250)
+                .effect(MobEffects.CONFUSION)
                 .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
                 .inputItems(ModItems.MOB_FANG.get().getDefaultInstance(), 8)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 10)
@@ -213,6 +217,7 @@ public class BioelectrlcForgeRecipes {
 // 腐蚀枪刃
         CBRecipeBuilder.of(CTNHBio.id("caustic_gunblade"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(250)
+                .effect(MobEffects.CONFUSION)
                 .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 16)
                 .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 8)
@@ -226,6 +231,7 @@ public class BioelectrlcForgeRecipes {
 // 注射器
         CBRecipeBuilder.of(CTNHBio.id("injector"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(5)
+                .effect(MobEffects.CONFUSION)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 20)
                 .inputItems(ModItems.MINERAL_FRAGMENT.get().getDefaultInstance(), 10)
                 .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 3)
@@ -319,37 +325,6 @@ public class BioelectrlcForgeRecipes {
                 .duration(120)
                 .save(provider);
 //建筑方块类
-// 肌腱链条
-        CBRecipeBuilder.of(CTNHBio.id("tendon_chain"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                .nutrient(1)
-                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 8)
-                .outputItems(ModItems.TENDON_CHAIN.get().getDefaultInstance())
-                .EUt(8)
-                .duration(40)
-                .save(provider);
-// 黄色生物灯笼
-        CBRecipeBuilder.of(CTNHBio.id("yellow_bio_lantern"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                .nutrient(1)
-                .inputItems(ModItems.BIO_LUMENS.get().getDefaultInstance(), 10)
-                .inputItems(Items.YELLOW_DYE.getDefaultInstance(), 1)
-                .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 2)
-                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 4)
-                .outputItems(ModItems.YELLOW_BIO_LANTERN.get().getDefaultInstance())
-                .EUt(16)
-                .duration(80)
-                .save(provider);
-
-// 蓝色生物灯笼
-        CBRecipeBuilder.of(CTNHBio.id("blue_bio_lantern"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                .nutrient(1)
-                .inputItems(ModItems.BIO_LUMENS.get().getDefaultInstance(), 10)
-                .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 2)
-                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 4)
-                .outputItems(ModItems.BLUE_BIO_LANTERN.get().getDefaultInstance())
-                .EUt(16)
-                .duration(80)
-                .save(provider);
-
 // 菌光体（原版）
         CBRecipeBuilder.of(CTNHBio.id("shroomlight"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(1)
@@ -369,20 +344,10 @@ public class BioelectrlcForgeRecipes {
                 .EUt(8)
                 .duration(40)
                 .save(provider);
-
-// 吉祥物旗帜图案
-        CBRecipeBuilder.of(CTNHBio.id("mascot_banner_patterns"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                .nutrient(1)
-                .inputItems(ModItems.ORGANIC_MATTER.get().getDefaultInstance(), 8)
-                .inputItems(Items.SPIDER_EYE.getDefaultInstance(), 1)
-                .inputFluids(new FluidStack(Bile.getFluid(), 400))
-                .outputItems(ModItems.MASCOT_BANNER_PATTERNS.get().getDefaultInstance())
-                .EUt(12)
-                .duration(60)
-                .save(provider);
 // 分解器
         CBRecipeBuilder.of(CTNHBio.id("decomposer"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(1)
+                .effect(MobEffects.SATURATION)
                 .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 8)
                 .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 5)
@@ -396,6 +361,7 @@ public class BioelectrlcForgeRecipes {
 // 消化器
         CBRecipeBuilder.of(CTNHBio.id("digester"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(1)
+                .effect(MobEffects.SATURATION)
                 .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 10)
                 .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 3)
@@ -409,6 +375,7 @@ public class BioelectrlcForgeRecipes {
 // 生物实验室
         CBRecipeBuilder.of(CTNHBio.id("bio_lab"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(1)
+                .effect(MobEffects.SATURATION)
                 .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 5)
                 .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 8)
@@ -422,6 +389,7 @@ public class BioelectrlcForgeRecipes {
 // 生物锻造台
         CBRecipeBuilder.of(CTNHBio.id("bio_forge"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(1)
+                .effect(MobEffects.SATURATION)
                 .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 5)
                 .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 8)
@@ -459,6 +427,7 @@ public class BioelectrlcForgeRecipes {
 //电力分解者-LV
         CBRecipeBuilder.of(CTNHBio.id("lv_decomposer"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
+                .effect(MobEffects.SATURATION)
                 .inputItems(ModItems.DECOMPOSER.get().getDefaultInstance())
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_macerator")))
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance(), 2)
@@ -473,6 +442,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物反应腔-LV
         CBRecipeBuilder.of(CTNHBio.id("lv_bioreactor"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
+                .effect(MobEffects.SATURATION)
                 .inputItems(ModItems.BIO_LAB.get().getDefaultInstance())
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_chemical_reactor")))
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance(), 2)
@@ -487,6 +457,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物消化器-LV
         CBRecipeBuilder.of(CTNHBio.id("lv_bioreactor"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
+                .effect(MobEffects.SATURATION)
                 .inputItems(ModItems.DIGESTER.get().getDefaultInstance())
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_brewery")))
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance(), 2)
@@ -500,6 +471,7 @@ public class BioelectrlcForgeRecipes {
 //脉络核心
         CBRecipeBuilder.of(CTNHBio.id("synet_core_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance())
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:aluminium_frame")),1)
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:copper_ring")),1)
@@ -514,6 +486,7 @@ public class BioelectrlcForgeRecipes {
 //拓扑核心
         CBRecipeBuilder.of(CTNHBio.id("meta_core_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance())
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:stainless_steel_frame")),1)
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:electrum_ring")),1)
@@ -529,6 +502,7 @@ public class BioelectrlcForgeRecipes {
 //灵蜕核心
         CBRecipeBuilder.of(CTNHBio.id("nova_core_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance())
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:titanium_frame")),1)
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:black_steel_gear")),1)

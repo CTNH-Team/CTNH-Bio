@@ -8,6 +8,7 @@ import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -190,6 +191,7 @@ public class BioReactorRecipes {
         //鲜肉增殖-初级配方
         CBRecipeBuilder.of(CTNHBio.id("living_flesh_recipe_one"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(8)
+                .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance())
@@ -203,6 +205,7 @@ public class BioReactorRecipes {
         //鲜肉增殖-中级配方
         CBRecipeBuilder.of(CTNHBio.id("living_flesh_recipe_two"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(8)
+                .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(CBItems.SYNET_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance())
@@ -216,6 +219,7 @@ public class BioReactorRecipes {
         //鲜肉增殖-高级配方
         CBRecipeBuilder.of(CTNHBio.id("living_flesh_recipe_three"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(8)
+                .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(CBItems.META_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance())
@@ -230,6 +234,7 @@ public class BioReactorRecipes {
         //怪异肉循环-初级配方
         CBRecipeBuilder.of(CTNHBio.id("creator_mix_recipe_one"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(5)
+                .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance(),5)
@@ -243,6 +248,7 @@ public class BioReactorRecipes {
         //怪异肉循环-中级配方
         CBRecipeBuilder.of(CTNHBio.id("creator_mix_recipe_two"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(5)
+                .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(CBItems.SYNET_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance(),10)
@@ -256,6 +262,7 @@ public class BioReactorRecipes {
         //怪异肉循环-高级配方
         CBRecipeBuilder.of(CTNHBio.id("creator_mix_recipe_three"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(5)
+                .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(CBItems.META_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance(),10)
@@ -269,6 +276,7 @@ public class BioReactorRecipes {
         //原初核心循环-脉络核心
         CBRecipeBuilder.of(CTNHBio.id("primordial_core_synet"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(10)
+                .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(CBItems.SYNET_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),1)
@@ -284,6 +292,7 @@ public class BioReactorRecipes {
         //原初核心循环-拓扑核心
         CBRecipeBuilder.of(CTNHBio.id("primordial_core_meta"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(10)
+                .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(CBItems.META_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),1)
@@ -299,6 +308,7 @@ public class BioReactorRecipes {
         //原初核心循环-灵蜕核心
         CBRecipeBuilder.of(CTNHBio.id("primordial_core_nova"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(10)
+                .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(CBItems.NOVA_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),1)

@@ -68,37 +68,37 @@ public class CBItems {
     public static ItemEntry<ComponentItem> SYNET_CORE = REGISTRATE
             .item("synet_core", ComponentItem::create)
             .lang("Synet Core")
-            .tag(CustomTags.HV_CIRCUITS)
             .properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
             .onRegister(attach(new TooltipBehavior(list -> {
-                list.add(Component.translatable("ctnh.synet_core.tooltip").withStyle(ChatFormatting.GRAY));
+                list.add(Component.translatable("ctnhbio.mv_machine.tooltip").withStyle(ChatFormatting.AQUA));
+                list.add(Component.translatable("ctnhbio.synet_core.tooltip").withStyle(ChatFormatting.GRAY));
             })))
             .register();
     public static ItemEntry<ComponentItem> META_CORE = REGISTRATE
             .item("meta_core", ComponentItem::create)
             .lang("Meta Core")
-            .tag(CustomTags.EV_CIRCUITS)
             .properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
             .onRegister(attach(new TooltipBehavior(list -> {
-                list.add(Component.translatable("ctnh.meta_core.tooltip").withStyle(ChatFormatting.GRAY));
+                list.add(Component.translatable("ctnhbio.hv_machine.tooltip").withStyle(ChatFormatting.GOLD));
+                list.add(Component.translatable("ctnhbio.meta_core.tooltip").withStyle(ChatFormatting.GRAY));
             })))
             .register();
     public static ItemEntry<ComponentItem> NOVA_CORE = REGISTRATE
             .item("nova_core", ComponentItem::create)
             .lang("Nova Core")
-            .tag(CustomTags.IV_CIRCUITS)
             .properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
             .onRegister(attach(new TooltipBehavior(list -> {
-                list.add(Component.translatable("ctnh.nova_core.tooltip").withStyle(ChatFormatting.GRAY));
+                list.add(Component.translatable("ctnhbio.ev_machine.tooltip").withStyle(ChatFormatting.LIGHT_PURPLE));
+                list.add(Component.translatable("ctnhbio.nova_core.tooltip").withStyle(ChatFormatting.GRAY));
             })))
             .register();
     public static ItemEntry<ComponentItem> OMNI_CORE = REGISTRATE
             .item("omni_core", ComponentItem::create)
             .lang("Omni Core")
-            .tag(CustomTags.LuV_CIRCUITS)
             .properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
             .onRegister(attach(new TooltipBehavior(list -> {
-                list.add(Component.translatable("ctnh.omni_core.tooltip").withStyle(ChatFormatting.GRAY));
+                list.add(Component.translatable("ctnhbio.iv_machine.tooltip").withStyle(ChatFormatting.DARK_BLUE));
+                list.add(Component.translatable("ctnhbio.omni_core.tooltip").withStyle(ChatFormatting.GRAY));
             })))
             .register();
 

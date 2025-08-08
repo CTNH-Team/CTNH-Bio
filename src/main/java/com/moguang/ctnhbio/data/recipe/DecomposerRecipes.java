@@ -1478,6 +1478,7 @@ public class DecomposerRecipes {
         if (finalDust.isEmpty()) return;
         CBRecipeBuilder.of(CTNHBio.id("decompose_raw_" + material.getName()),
                         CBRecipeTypes.DECOMPOSER_RECIPES)
+                .effect(MobEffects.DAMAGE_BOOST)
                 .nutrient(3)
                 .inputItems(TagPrefix.crushed, material)
                 .inputFluids(new FluidStack(Fluids.WATER, 1500))
@@ -1506,6 +1507,7 @@ public class DecomposerRecipes {
         if (Dust.isEmpty()) return;
         CBRecipeBuilder.of(CTNHBio.id("wash_grind_centrifuge_" + material.getName()),
                         CBRecipeTypes.DECOMPOSER_RECIPES)
+                .effect(MobEffects.DAMAGE_BOOST)
                 .nutrient(2)
                 .inputItems(TagPrefix.crushed, material)
                 .inputFluids(new FluidStack(DistilledWater.getFluid(), 1500))
@@ -1534,6 +1536,7 @@ public class DecomposerRecipes {
             ObjectIntPair<Material> washedInTuple = property.getWashedIn();
             CBRecipeBuilder.of(CTNHBio.id("acid_grind_centrifuge_" + material.getName()),
                             CBRecipeTypes.DECOMPOSER_RECIPES)
+                    .effect(MobEffects.DAMAGE_BOOST)
                     .nutrient(3)
                     .inputItems(TagPrefix.crushed, material)
                     .inputFluids(new FluidStack(
