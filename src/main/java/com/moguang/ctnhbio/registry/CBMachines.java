@@ -12,16 +12,15 @@ import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBlockEntityRenderer;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeBlockEntity;
-import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeBlockEntityRenderer;
 import com.moguang.ctnhbio.machine.bioreactor.BioReactorBlockEntity;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVat;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeMachineBlock;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import com.moguang.ctnhbio.machine.digester.DigesterBlockEntity;
+import com.moguang.ctnhbio.machine.digester.DigesterBlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 
@@ -79,8 +78,7 @@ public class CBMachines {
                     .model((dataGenContext, gtBlockstateProvider, machineModelBuilder) ->
                             machineModelBuilder.addModels(machineModelBuilder.partialState(),
                                     ConfiguredModel.builder().modelFile(new ModelFile.UncheckedModelFile(CTNHBio.id("block/bioelectric_forge"))).buildLast()))
-//                    .onBlockEntityRegister( blockEntityBlockEntityType ->
-//                            BlockEntityRenderers.register((BlockEntityType<BioelectricForgeBlockEntity>)blockEntityBlockEntityType, BioelectricForgeBlockEntityRenderer::new))
+                    .hasBER(false)
                     .register();
         }
     }
@@ -101,6 +99,7 @@ public class CBMachines {
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("decompose"),CBRecipeTypes.DECOMPOSER_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
                     .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
+                    .hasBER(false)
                     .register();
         }
     }
@@ -117,9 +116,16 @@ public class CBMachines {
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
+
                     .recipeType(CBRecipeTypes.DIGEST_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("digester"),CBRecipeTypes.DIGEST_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
+                    .hasBER(false)//fuck gtm
+                    .onBlockEntityRegister(beType -> {
+                        @SuppressWarnings("unchecked")
+                        BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
+                        BlockEntityRenderers.register(typed, ctx -> new DigesterBlockEntityRenderer(ctx));
+                    })
                     .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
                     .register();
         }
@@ -141,6 +147,7 @@ public class CBMachines {
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
                     .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
+                    .hasBER(false)
                     .register();
         }
     }
@@ -170,6 +177,7 @@ public class CBMachines {
                     .model((dataGenContext, gtBlockstateProvider, machineModelBuilder) ->
                             machineModelBuilder.addModels(machineModelBuilder.partialState(),
                                     ConfiguredModel.builder().modelFile(new ModelFile.UncheckedModelFile(CTNHBio.id("block/vat"))).buildLast()))
+                    .hasBER(false)
                     .register();
         }
     }

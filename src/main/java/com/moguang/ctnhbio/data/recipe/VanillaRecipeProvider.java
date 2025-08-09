@@ -25,7 +25,8 @@ public class VanillaRecipeProvider extends RecipeProvider {
         super(output);
     }
 
-    @Override    @SuppressWarnings("all")
+    @Override
+    @SuppressWarnings("all")
     protected void buildRecipes(Consumer<FinishedRecipe> provider) {
         // 第一个配方：LIVING_FLESH
         VanillaRecipeHelper.addShapedRecipe(provider, false, true,

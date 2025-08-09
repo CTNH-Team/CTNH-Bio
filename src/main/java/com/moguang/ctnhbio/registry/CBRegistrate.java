@@ -22,6 +22,6 @@ public class CBRegistrate extends GTRegistrate {
     public MultiblockMachineBuilder biomultiblock(String name, Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine) {
         return new MultiblockMachineBuilder(this, name, metaMachine,
                 LivingMetaMachineBlock::new, MetaMachineItem::new,
-                (type, pos, state) -> new GreatFleshBlockEntity(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get()));
+                (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get()));
     }
 }

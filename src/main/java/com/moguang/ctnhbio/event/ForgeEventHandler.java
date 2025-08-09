@@ -34,7 +34,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.moguang.ctnhbio.machine.multiblock.MultiblocksA.BASIC_MULTI_LIVING_MACHINE;
+import static com.moguang.ctnhbio.machine.multiblock.MultiblocksA.GREAT_FLESH;
 
 @Mod.EventBusSubscriber(modid = CTNHBio.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEventHandler {
@@ -66,7 +66,7 @@ public class ForgeEventHandler {
                     entity.discard();
                     level.setBlock(
                             pos,
-                            BASIC_MULTI_LIVING_MACHINE.get().getDefinition().defaultBlockState(),
+                            GREAT_FLESH.get().getDefinition().defaultBlockState(),
                             3
                     );
 

@@ -28,23 +28,23 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(WorkableLivingMultiblockMachine.class, WorkableElectricMultiblockMachine.MANAGED_FIELD_HOLDER);
     @Persisted
     @Getter
-    private final NotifiableNutrientTrait inputTrait;
+    protected final NotifiableNutrientTrait inputTrait;
     @Persisted
     @Getter
-    private final NotifiableNutrientTrait outputTrait;
+    protected final NotifiableNutrientTrait outputTrait;
     @Persisted
     @Getter
-    private final SynchronizedNutrientStorage nutrientStorage;
+    protected final SynchronizedNutrientStorage nutrientStorage;
 
-    private static final double capacity = 100;
-    private static final double  NUTRIENT_NEEDED_FOR_GROWTH = 1;
+    protected static final double capacity = 100;
+    protected static final double  NUTRIENT_NEEDED_FOR_GROWTH = 1;
 
-    private GrowingBlockPattern growingBlockPattern;
+    protected GrowingBlockPattern growingBlockPattern;
 
     @Persisted
-    public ResourceLocation lastRecipeId;
+    protected ResourceLocation lastRecipeId;
 
-    private LivingMetaMachineEntity machineEntity;
+    protected LivingMetaMachineEntity machineEntity;
     public WorkableLivingMultiblockMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
         this.nutrientStorage = new SynchronizedNutrientStorage(capacity);
@@ -111,22 +111,9 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
         return MANAGED_FIELD_HOLDER;
     }
 
-    @Override
-    public boolean beforeWorking(@Nullable GTRecipe recipe) {
-        if(recipe != null) lastRecipeId = recipe.id;
 
-        return super.beforeWorking(recipe);
-    }
 
-    @Override
-    public void afterWorking() {
-        tryDifferentiate();
-        super.afterWorking();
-    }
 
-    public void tryDifferentiate(){
-
-    }
 
     @Override
     public void onLoad() {

@@ -9,6 +9,7 @@
     "biomancy.InjectorItemMixin",
     "biomancy.VialHolderBlockEntityMixin",
     "create.CrushingWheelControllerBlockEntityMixin",
+    "gtm.FluidBuilderMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
     "gtm.NotifiableFluidTankMixin",
     "gtm.ThermalFluidStatsMixin",

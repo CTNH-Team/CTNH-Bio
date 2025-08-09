@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -45,6 +46,10 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
         registerDefaultState(getStateDefinition().any().setValue(WATERLOGGED, Boolean.FALSE));
     }
 
+    @Override
+    public @Nullable PushReaction getPistonPushReaction(BlockState state) {
+        return PushReaction.NORMAL;
+    }
 
     //private LivingMetaMachineEntity machineEntity = null;
     @Override

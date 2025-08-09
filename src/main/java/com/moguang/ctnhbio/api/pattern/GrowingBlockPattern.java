@@ -176,12 +176,13 @@ public class GrowingBlockPattern extends BlockPattern {
 
         @Getter
         private final Queue<BuildTask> buildQueue = new ArrayDeque<>();
+        private final Queue<BuildTask> fluidQueue = new ArrayDeque<>();
         private final List<BuildTask> buildTaskList = new ArrayList<>();
-        private int fluidTaskNum = 0;
+
 
         public boolean isCompleted()
         {
-            return buildQueue.isEmpty();
+            return buildQueue.isEmpty() && fluidQueue.isEmpty();
         }
 
         public void add(BuildTask task) {buildTaskList.add(task);}
@@ -191,30 +192,30 @@ public class GrowingBlockPattern extends BlockPattern {
 
             // 每tick处理一定数量的方块
             try {
-                for (int i = 0; i < BLOCKS_PER_TICK && !buildQueue.isEmpty(); i++) {
+                for (int i = 0; i < BLOCKS_PER_TICK && !isCompleted(); i++) {
                     BuildTask task = buildQueue.poll();
                     while(task != null) {
-                        if(task.isFluid() && fluidTaskNum != buildQueue.size())
+                        if(task.isFluid())
                         {
-                            buildQueue.add(task);
-                            fluidTaskNum++;
-
+                            fluidQueue.add(task);
                         }
                         else if(task.execute()) return true;
                         task = buildQueue.poll();
                     }
-                    return false;
+                    task = fluidQueue.poll();
+                    if(task != null) {
+                        return task.execute();
+                    }
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
-
             return false;
         }
 
         public void generateGrowOrder(BlockPos startPos) {
-            fluidTaskNum = 0;
+
             Set<BlockPos> built = new HashSet<>();
             Queue<BuildTask> activeFrontier = new LinkedList<>();
 
@@ -429,7 +430,7 @@ public class GrowingBlockPattern extends BlockPattern {
                 if(!context.inFluid)
                     return context.world.setBlock(pos, blockState, UPDATE_CLIENTS);
                 else
-                    return true;
+                    return false;
             }
             else
                 return context.world.setBlock(pos, blockState, UPDATE_CLIENTS);

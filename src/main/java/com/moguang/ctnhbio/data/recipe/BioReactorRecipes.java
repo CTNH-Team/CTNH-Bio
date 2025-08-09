@@ -21,6 +21,7 @@ public class BioReactorRecipes {
 // ORGANIC_COMPOUND
         CBRecipeBuilder.of(CTNHBio.id("organic_compound"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(2)
+                .effect()
                 .inputFluids(new FluidStack(Bile.getFluid(), 200))
                 .inputItems(ModItems.ORGANIC_MATTER.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance())
