@@ -97,7 +97,9 @@ public class MultiblocksA {
                     .aisle("ADDDA", "CEEEC", "C###C", "C###C", "ADDDA")
                     .aisle("AAAAA", "BC@CB", "BCCCB", "BCCCB", "AAAAA")
                     .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:acid_fluid_block"))))
-                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:impermeable_membrane"))))
+                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:impermeable_membrane")))
+                           .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+                    )
                     .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:primal_flesh_casing"))))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
                     .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:nichrome_coil_block"))))
@@ -108,7 +110,7 @@ public class MultiblocksA {
                     .build())
 
             .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
-            .simpleModel(new ResourceLocation("minecraft", "block/air"))
+            .simpleModel(new ResourceLocation("minecraft", "block/acacia_log"))
             .additionalDisplay((controller, components) -> {
                 if(controller instanceof WorkableLivingMultiblockMachine machine){
                     components.add(Component.translatable("jade.nutrient.info",

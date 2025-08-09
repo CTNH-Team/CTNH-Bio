@@ -3,6 +3,7 @@ package com.moguang.ctnhbio.data;
 import com.moguang.ctnhbio.data.lang.ChineseLangHandler;
 import com.moguang.ctnhbio.data.lang.EnglishLangHandler;
 import com.moguang.ctnhbio.data.lang.RegistrateCNLangProvider;
+import com.moguang.ctnhbio.data.tags.BlockTags;
 import com.tterrag.registrate.providers.ProviderType;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
@@ -13,5 +14,6 @@ public class CBDatagen {
     public static void init() {
         REGISTRATE.addDataGenerator(ProviderType.LANG, EnglishLangHandler::init);
         REGISTRATE.addDataGenerator(CNLANG, ChineseLangHandler::init);
+        REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, BlockTags::init);
     }
 }

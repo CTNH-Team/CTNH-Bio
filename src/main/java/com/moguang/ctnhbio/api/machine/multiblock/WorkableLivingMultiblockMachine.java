@@ -36,7 +36,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     @Getter
     protected final SynchronizedNutrientStorage nutrientStorage;
 
-    protected static final double capacity = 100;
+    protected static final double capacity = 1000;
     protected static final double  NUTRIENT_NEEDED_FOR_GROWTH = 1;
 
     protected GrowingBlockPattern growingBlockPattern;

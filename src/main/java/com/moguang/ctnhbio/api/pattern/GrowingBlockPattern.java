@@ -10,6 +10,8 @@ import com.gregtechceu.gtceu.api.pattern.util.RelativeDirection;
 
 import com.lowdragmc.lowdraglib.utils.BlockInfo;
 
+import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
+import com.moguang.ctnhbio.registry.CBTags;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,7 +21,9 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 
@@ -31,9 +35,6 @@ import static com.lowdragmc.lowdraglib.LDLib.random;
 import static net.minecraft.world.level.block.Block.UPDATE_CLIENTS;
 
 public class GrowingBlockPattern extends BlockPattern {
-
-    public static final TagKey<Block> GROWABLE_TAG = BlockTags.create(new ResourceLocation("ctnhbio", "growable"));
-    public static final TagKey<Block> GROWING_REPLACEABLE_TAG = BlockTags.create(new ResourceLocation("ctnhbio", "growing_replaceable"));
 
 
     private final BuildContext context = new BuildContext();
@@ -256,7 +257,9 @@ public class GrowingBlockPattern extends BlockPattern {
 
         private BuildTask selectRandomFromFrontier(Queue<BuildTask> frontier) {
             // 将队列转为List以便随机选择
-            List<BuildTask> candidates = new ArrayList<>(frontier);
+            List<BuildTask> candidates = frontier.stream()
+                    .filter(b -> !(b.predicate.isAny() || b.predicate.isAir()))
+                    .toList();
             return candidates.get(random.nextInt(candidates.size()));
         }
 
@@ -317,8 +320,12 @@ public class GrowingBlockPattern extends BlockPattern {
                 return true;
             }
 
-            if(existingState.is(GROWING_REPLACEABLE_TAG))
+            if(!(context.controller instanceof GreatFleshMachine) && existingState.is(CBTags.GROWING_REPLACEABLE_TAG))
+            {
+                context.world.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
                 return true;
+            }
+
 
 
             return false;
@@ -335,13 +342,20 @@ public class GrowingBlockPattern extends BlockPattern {
         return checkCommonPredicates(predicate);
     }
 
+    public boolean isPlaceHatch(BlockInfo[] blockInfos) {
+        if (blockInfos != null && blockInfos.length > 0) {
+            return Arrays.stream(blockInfos).noneMatch(b -> b.getBlockState().is(CBTags.HATCH_TAG));
+        }
+        return true;
+    }
+
     private BlockInfo[] checkLimitedPredicates(TraceabilityPredicate predicate) {
         Map<SimplePredicate, Integer> cacheLayer = context.worldState.getLayerCount();
         Map<SimplePredicate, Integer> cacheGlobal = context.worldState.getGlobalCount();
 
         // 检查层级限制
         for (SimplePredicate limit : predicate.limited) {
-            if (limit.minLayerCount > 0 ) {
+            if (limit.minLayerCount > 0 && isPlaceHatch(limit.candidates.get())) {
                 if (!cacheLayer.containsKey(limit)) {
                     cacheLayer.put(limit, 1);
                     return limit.candidates.get();
@@ -355,7 +369,7 @@ public class GrowingBlockPattern extends BlockPattern {
 
         // 检查全局限制
         for (SimplePredicate limit : predicate.limited) {
-            if (limit.minCount > 0) {
+            if (limit.minCount > 0 && isPlaceHatch(limit.candidates.get())) {
                 if (!cacheGlobal.containsKey(limit)) {
                     cacheGlobal.put(limit, 1);
                     return limit.candidates.get();
@@ -377,6 +391,7 @@ public class GrowingBlockPattern extends BlockPattern {
 
         // 无限制谓词处理
         for (SimplePredicate limit : predicate.limited) {
+            if(!isPlaceHatch(limit.candidates.get())) continue;
 
             if (limit.maxLayerCount != -1 &&
                     cacheLayer.getOrDefault(limit, Integer.MAX_VALUE) == limit.maxLayerCount) continue;
@@ -403,7 +418,8 @@ public class GrowingBlockPattern extends BlockPattern {
 
         // 通用谓词
         for (SimplePredicate common : predicate.common) {
-            if (common.candidates != null && predicate.common.size() > 1) {
+            if (common.candidates != null && predicate.common.size() > 1 &&
+                    !isPlaceHatch(common.candidates.get())) {
                 continue;
             }
             if (common.candidates != null) {
