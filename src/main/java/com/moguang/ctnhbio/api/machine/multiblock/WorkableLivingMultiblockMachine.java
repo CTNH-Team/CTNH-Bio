@@ -142,7 +142,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
     public void tickGrow()
     {
-        if(shouldTick(5) &&
+        if(shouldTick(2) &&
                 getNutrientAmount() >= NUTRIENT_NEEDED_FOR_GROWTH &&
                 growingBlockPattern != null &&
                 growingBlockPattern.growPlan.tick())

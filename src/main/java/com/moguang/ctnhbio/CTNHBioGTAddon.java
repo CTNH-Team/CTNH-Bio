@@ -2,10 +2,12 @@ package com.moguang.ctnhbio;
 
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
+import com.moguang.ctnhbio.data.recipe.RecipeRemoval;
 import com.moguang.ctnhbio.registry.CBRecipeCapabilities;
 import com.moguang.ctnhbio.registry.CBRecipes;
 import com.moguang.ctnhbio.registry.CBRegistrate;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
 
@@ -34,5 +36,10 @@ public class CTNHBioGTAddon implements IGTAddon {
     @Override
     public void addRecipes(Consumer<FinishedRecipe> provider) {
         CBRecipes.init(provider);
+    }
+
+    @Override
+    public void removeRecipes(Consumer<ResourceLocation> consumer) {
+        RecipeRemoval.init(consumer);
     }
 }

@@ -173,7 +173,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
 //    @Override
 //    public int getTier() {
-//        return 4;
+//        return tier + 1;
 //    }
 //
 //    @Override

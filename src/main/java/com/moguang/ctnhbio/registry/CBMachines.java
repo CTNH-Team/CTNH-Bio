@@ -47,7 +47,7 @@ public class CBMachines {
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
-                    .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
+                    .recipeType(CBRecipeTypes.BASIC_LIVING_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
                     .onBlockEntityRegister( blockEntityBlockEntityType ->
@@ -144,7 +144,7 @@ public class CBMachines {
                     )
                     .tier(tier)
                     .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
-                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
+                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIO_REACTOR_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
                     .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
                     .hasBER(false)

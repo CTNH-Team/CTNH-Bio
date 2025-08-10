@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.lowdragmc.lowdraglib.LDLib.random;
 import static net.minecraft.world.level.block.Block.UPDATE_CLIENTS;
@@ -140,7 +141,7 @@ public class GrowingBlockPattern extends BlockPattern {
 
         public final BlockPos pos;
         private final TraceabilityPredicate predicate;
-
+        public int generation = 0;
 
         public BuildTask(BlockPos pos, TraceabilityPredicate predicate) {
 
@@ -216,51 +217,70 @@ public class GrowingBlockPattern extends BlockPattern {
         }
 
         public void generateGrowOrder(BlockPos startPos) {
-
+            Map<BlockPos, BuildTask> taskMap = buildTaskList.stream()
+                    .collect(Collectors.toMap(t -> t.pos, t -> t));
+            buildTaskList.clear();
             Set<BlockPos> built = new HashSet<>();
-            Queue<BuildTask> activeFrontier = new LinkedList<>();
+            PriorityQueue<BuildTask> frontier = new PriorityQueue<>(
+                    Comparator.comparingInt(t -> t.generation) // 按代数排序
+            );
 
-            // 3. 从基点开始生长
-            //growthOrder.add(startTask);
+            BuildTask startTask = taskMap.get(startPos);
+            startTask.generation = 0;
             built.add(startPos);
-            addNeighborsToFrontier(startPos, activeFrontier, built);
+            addNeighborsToFrontier(startPos, frontier, built, taskMap, 1);
 
-            // 4. 逐步扩展
-            while (!activeFrontier.isEmpty()) {
-                // 随机选择下一个生长点（增加随机性）
-                BuildTask next = selectRandomFromFrontier(activeFrontier);
+            while (!frontier.isEmpty()) {
+                // 取出最小 generation 的一批任务
+                int currentGen = frontier.peek().generation;
+                List<BuildTask> sameGenTasks = new ArrayList<>();
+                while (!frontier.isEmpty() && frontier.peek().generation == currentGen) {
+                    sameGenTasks.add(frontier.poll());
+                }
 
+                // 在同一代中随机选一个执行
+                BuildTask next = weightedRandomPick(sameGenTasks);
                 buildQueue.add(next);
-
                 built.add(next.pos);
-                activeFrontier.remove(next);
 
-                // 添加新发现的相邻方块
-                addNeighborsToFrontier(next.pos, activeFrontier, built);
+                // 这一代没选中的任务放回 frontier
+                for (BuildTask t : sameGenTasks) {
+                    if (!built.contains(t.pos)) frontier.add(t);
+                }
+
+                addNeighborsToFrontier(next.pos, frontier, built, taskMap, currentGen + 1);
             }
         }
 
         private void addNeighborsToFrontier(BlockPos center,
-                                            Queue<BuildTask> frontier,
-                                            Set<BlockPos> built) {
-            // 检查6个方向的相邻方块
+                                            PriorityQueue<BuildTask> frontier,
+                                            Set<BlockPos> built,
+                                            Map<BlockPos, BuildTask> taskMap,
+                                            int generation) {
             for (Direction dir : Direction.values()) {
                 BlockPos neighborPos = center.relative(dir);
-                buildTaskList.stream()
-                        .filter(t -> t.pos.equals(neighborPos))
-                        .filter(t -> !built.contains(t.pos))
-                        .filter(t -> !frontier.contains(t))
-                        .findFirst()
-                        .ifPresent(frontier::add);
+                if (!built.contains(neighborPos)) {
+                    BuildTask task = taskMap.get(neighborPos);
+                    if (task != null && !frontier.contains(task)) {
+                        task.generation = generation;
+                        frontier.add(task);
+                    }
+                }
             }
         }
 
-        private BuildTask selectRandomFromFrontier(Queue<BuildTask> frontier) {
-            // 将队列转为List以便随机选择
-            List<BuildTask> candidates = frontier.stream()
-                    .filter(b -> !(b.predicate.isAny() || b.predicate.isAir()))
-                    .toList();
-            return candidates.get(random.nextInt(candidates.size()));
+        private BuildTask weightedRandomPick(List<BuildTask> tasks) {
+            // 假设实心方块权重 3，空方块权重 1
+            int totalWeight = 0;
+            for (BuildTask t : tasks) {
+                totalWeight += (t.predicate.isAir() ? 1 : 3);
+            }
+            int r = random.nextInt(totalWeight);
+            for (BuildTask t : tasks) {
+                r -= (t.predicate.isAir() ? 1 : 3);
+                if (r < 0) return t;
+            }
+            return tasks.get(0); // 理论上不会到这里
         }
 
 

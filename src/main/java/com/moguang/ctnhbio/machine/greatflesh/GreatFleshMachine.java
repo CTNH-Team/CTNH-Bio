@@ -25,11 +25,11 @@ public class GreatFleshMachine extends WorkableLivingMultiblockMachine {
 
     @Override
     public void afterWorking() {
+        super.afterWorking();
         if(!isRemote())
         {
             tryDifferentiate();
         }
-        super.afterWorking();
     }
 
     public void tryDifferentiate(){
