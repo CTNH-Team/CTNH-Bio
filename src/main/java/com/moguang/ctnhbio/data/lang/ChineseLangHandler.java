@@ -18,12 +18,14 @@ public class ChineseLangHandler {
         provider.addItem(CBItems.META_CORE, "拓扑核心");
         provider.addItem(CBItems.NOVA_CORE, "灵蜕核心");
         provider.addItem(CBItems.OMNI_CORE, "终观核心");
+        provider.addItem(CBItems.ADVANCED_RAM_WAFER, "进阶RAM晶圆");
+        provider.addItem(CBItems.ADVANCED_RAM_CHIP, "进阶RAM芯片");
 
-        provider.addItem(CBItems.BIO_CAPACITOR, "生物电容");
-        provider.addItem(CBItems.BIO_DIODE, "生物二极管");
-        provider.addItem(CBItems.BIO_INDUCTOR, "生物电感");
-        provider.addItem(CBItems.BIO_RESISTOR, "生物电阻");
-        provider.addItem(CBItems.BIO_TRANSISTOR, "生物晶体管");
+        provider.addItem(CBItems.WETWARE_CAPACITOR, "湿件电容");
+        provider.addItem(CBItems.WETWARE_DIODE, "湿件二极管");
+        provider.addItem(CBItems.WETWARE_INDUCTOR, "湿件电感");
+        provider.addItem(CBItems.WETWARE_RESISTOR, "湿件电阻");
+        provider.addItem(CBItems.WETWARE_TRANSISTOR, "湿件晶体管");
         provider.addItem(CBItems.WETWARE_CIRCUIT_BOARD, "湿件电路基板");
         provider.addItem(CBItems.WETWARE_PRINTED_CIRCUIT_BOARD, "湿件印刷电路基板");
         provider.addItem(CBItems.ORGANIC_VIAL, "有机%s试管");
@@ -50,6 +52,8 @@ public class ChineseLangHandler {
         provider.add("ctnhbio.hv_machine.tooltip", "HV生物芯片");
         provider.add("ctnhbio.ev_machine.tooltip", "EV生物芯片");
         provider.add("ctnhbio.iv_machine.tooltip", "IV生物芯片");
+        provider.add("ctnhbio.advanced_ram_wafer.tooltip", "更好的内存原料");
+        provider.add("ctnhbio.advanced_ram_chip.tooltip", "更好的随机存取存储器");
 
         provider.add("ctnhbio.synet_core.tooltip", "精密如血管回路的金属骨架，每一道凹槽都在规律脉动，仿佛在输送某种不可见的生命能量。");
         provider.add("ctnhbio.meta_core.tooltip", "不断自我折叠的几何结构，表面浮现出违反欧几里得定律的棱角，在静止中持续完成着不可能的空间变换。");

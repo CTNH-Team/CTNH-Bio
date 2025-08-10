@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.data.recipe;
 
 import com.github.elenterius.biomancy.init.ModItems;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 
 import com.moguang.ctnhbio.CTNHBio;
@@ -8,12 +9,16 @@ import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
 
+import static com.gregtechceu.gtceu.common.data.GTMaterials.Iron3Chloride;
+import static com.gregtechceu.gtceu.common.data.GTMaterials.VanadiumGallium;
 import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
 
 public class BioReactorRecipes {
@@ -321,6 +326,32 @@ public class BioReactorRecipes {
                 .chancedOutput(CBItems.NOVA_CORE.get().asItem().getDefaultInstance(), 1400, 0)
                 .EUt(1960)
                 .duration(10 * 20)
+                .save(provider);
+        //原初核心循环-终观核心
+        CBRecipeBuilder.of(CTNHBio.id("primordial_core_omni"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(10)
+                .effect(MobEffects.MOVEMENT_SPEED)
+                .notConsumable(CBItems.OMNI_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
+                .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),1)
+                .inputFluids(new FluidStack(Healing_Compound.getFluid(), 200))
+                .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 200))
+                .inputFluids(new FluidStack(Unstable_Compound.getFluid(), 200))
+                .outputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(),3)
+                .chancedOutput(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(), 9000, 0)
+                .chancedOutput(CBItems.OMNI_CORE.get().asItem().getDefaultInstance(), 1700, 0)
+                .EUt(6144)
+                .duration(10 * 20)
+                .save(provider);
+        //印刷湿件电路基板
+        CBRecipeBuilder.of(CTNHBio.id("primordial_core_omni"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(10)
+                .inputItems(CBItems.WETWARE_CIRCUIT_BOARD.get().asItem().getDefaultInstance(),4)
+                .inputItems(TagPrefix.foil,VanadiumGallium,32)
+                .inputFluids(new FluidStack(Iron3Chloride.getFluid(), 5000))
+                .outputItemsRanged(new ItemStack(CBItems.WETWARE_PRINTED_CIRCUIT_BOARD.get()), UniformInt.of(4, 6))
+                .EUt(6144)
+                .duration(2 * 20)
                 .save(provider);
 
     }

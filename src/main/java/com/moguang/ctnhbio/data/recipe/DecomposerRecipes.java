@@ -29,7 +29,6 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("grass_block"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(1)
                 .effect(MobEffects.POISON)
-
                 .inputItems(Items.GRASS_BLOCK.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.ORGANIC_MATTER.get()), UniformInt.of(1, 1))
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 1))

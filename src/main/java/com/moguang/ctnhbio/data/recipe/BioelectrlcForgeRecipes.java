@@ -3,16 +3,20 @@ package com.moguang.ctnhbio.data.recipe;
 import com.github.elenterius.biomancy.crafting.EssenceIngredient;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.data.materials.CommonMaterials;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBMachines;
+import com.moguang.ctnhbio.registry.CBMaterials;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -23,6 +27,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
 
+import static com.gregtechceu.gtceu.common.data.GTItems.QUBIT_CENTRAL_PROCESSING_UNIT;
+import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static com.moguang.ctnhbio.data.materials.CommonMaterials.*;
 import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
 
 @SuppressWarnings("all")
@@ -516,6 +523,120 @@ public class BioelectrlcForgeRecipes {
                 .EUt(1960)
                 .duration(500)
                 .save(provider);
-
+//湿件配件
+        CBRecipeBuilder.of(CTNHBio.id("wetware_resistor_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(3)
+                .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
+                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance())
+                .inputItems(TagPrefix.dust,Graphene)
+                .inputItems(TagPrefix.wireFine,Platinum,8)
+                .inputItems(TagPrefix.wireFine,Tantalum,8)
+                .inputFluids(new FluidStack(POLYPYRROLE.getFluid(), 144))
+                .outputItemsRanged(new ItemStack(CBItems.WETWARE_RESISTOR.get()), UniformInt.of(24, 36))
+                .EUt(6144)
+                .duration(100)
+                .save(provider);
+        CBRecipeBuilder.of(CTNHBio.id("wetware_capacitor_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(3)
+                .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
+                .inputItems(CBItems.SYNET_CORE.get().getDefaultInstance())
+                .inputItems(TagPrefix.foil,Polybenzimidazole,2)
+                .inputItems(TagPrefix.foil,Polycaprolactam,1)
+                .inputItems(TagPrefix.foil,UraniumRhodiumDinaquadide,1)
+                .inputFluids(new FluidStack(POLYPYRROLE.getFluid(), 144))
+                .outputItemsRanged(new ItemStack(CBItems.WETWARE_CAPACITOR.get()), UniformInt.of(16, 24))
+                .EUt(6144)
+                .duration(100)
+                .save(provider);
+        CBRecipeBuilder.of(CTNHBio.id("wetware_inductor_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(3)
+                .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
+                .inputItems(CBItems.META_CORE.get().getDefaultInstance())
+                .inputItems(TagPrefix.ring,NaquadahAlloy,1)
+                .inputItems(TagPrefix.ring,NickelZincFerrite,1)
+                .inputItems(TagPrefix.wireFine,Platinum,4)
+                .inputItems(TagPrefix.wireFine,Tantalum,4)
+                .inputFluids(new FluidStack(POLYPYRROLE.getFluid(), 144))
+                .outputItemsRanged(new ItemStack(CBItems.WETWARE_INDUCTOR.get()), UniformInt.of(16, 24))
+                .EUt(6144)
+                .duration(100)
+                .save(provider);
+        CBRecipeBuilder.of(CTNHBio.id("wetware_diode_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(3)
+                .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
+                .inputItems(CBItems.NOVA_CORE.get().getDefaultInstance())
+                .inputItems(TagPrefix.dust,IndiumGalliumPhosphide,1)
+                .inputItems(TagPrefix.wireFine,YttriumBariumCuprate,8)
+                .inputFluids(new FluidStack(POLYPYRROLE.getFluid(), 144))
+                .outputItemsRanged(new ItemStack(CBItems.WETWARE_DIODE.get()), UniformInt.of(16, 24))
+                .EUt(6144)
+                .duration(100)
+                .save(provider);
+        CBRecipeBuilder.of(CTNHBio.id("wetware_transistor_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(3)
+                .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
+                .inputItems(CBItems.OMNI_CORE.get().getDefaultInstance())
+                .inputItems(TagPrefix.foil,Graphene,1)
+                .inputItems(TagPrefix.foil,Osmiridium,1)
+                .inputItems(TagPrefix.wireFine,Tantalum,8)
+                .inputFluids(new FluidStack(POLYPYRROLE.getFluid(), 144))
+                .outputItemsRanged(new ItemStack(CBItems.WETWARE_TRANSISTOR.get()), UniformInt.of(8, 16))
+                .EUt(6144)
+                .duration(100)
+                .save(provider);
+        CBRecipeBuilder.of(CTNHBio.id("wetware_circuit_board_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(10)
+                .inputItems(GTItems.MULTILAYER_FIBER_BOARD.get().getDefaultInstance(),8)
+                .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
+                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(),4)
+                .inputFluids(new FluidStack(Frenzy_Serum.getFluid(), 50))
+                .inputFluids(new FluidStack(Healing_Compound.getFluid(), 50))
+                .inputFluids(new FluidStack(Unstable_Compound.getFluid(), 50))
+                .outputItemsRanged(new ItemStack(CBItems.WETWARE_CIRCUIT_BOARD.get()), UniformInt.of(4, 12))
+                .EUt(1960)
+                .duration(60)
+                .save(provider);
+        //神经元CPU-低效
+        CBRecipeBuilder.of(CTNHBio.id("neuro_processor_low_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(20)
+                .inputItems(CBItems.WETWARE_PRINTED_CIRCUIT_BOARD.get().getDefaultInstance())
+                .inputItems(QUBIT_CENTRAL_PROCESSING_UNIT,2)
+                .inputItems(ModItems.CREATOR_MIX.get().getDefaultInstance(),4)
+                .inputFluids(new FluidStack(Bile.getFluid(), 100))
+                .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 100))
+                .inputFluids(new FluidStack(Healing_Compound.getFluid(), 100))
+                .outputItemsRanged(new ItemStack(GTItems.NEURO_PROCESSOR.get()), UniformInt.of(1, 2))
+                .EUt(6144)
+                .duration(200)
+                .save(provider);
+        //湿件电路板Luv-ZPM
+        CBRecipeBuilder.of(CTNHBio.id("wetware_processor_luv_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(10)
+                .inputItems(GTItems.NEURO_PROCESSOR.get().getDefaultInstance(),1)
+                .inputItems(GTItems.CRYSTAL_CENTRAL_PROCESSING_UNIT.get().getDefaultInstance(),1)
+                .inputItems(GTItems.NANO_CENTRAL_PROCESSING_UNIT.get().getDefaultInstance(),1)
+                .inputItems(CBItems.WETWARE_CAPACITOR.get().getDefaultInstance(),2)
+                .inputItems(CBItems.WETWARE_TRANSISTOR.get().getDefaultInstance(),2)
+                .inputItems(TagPrefix.wireGtSingle,BIO_FLEXIBLE,4)
+                .inputFluids(new FluidStack(Ageing_Serum.getFluid(), 150))
+                .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 150))
+                .outputItemsRanged(new ItemStack(GTItems.WETWARE_PROCESSOR_LuV.get()), UniformInt.of(2, 4))
+                .EUt(6144)
+                .duration(200)
+                .save(provider);
+        CBRecipeBuilder.of(CTNHBio.id("wetware_processor_zpm_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(10)
+                .inputItems(CBItems.WETWARE_PRINTED_CIRCUIT_BOARD.get().getDefaultInstance(),1)
+                .inputItems(GTItems.WETWARE_PROCESSOR_LuV.get().getDefaultInstance(),2)
+                .inputItems(CBItems.WETWARE_INDUCTOR.get().getDefaultInstance(),2)
+                .inputItems(CBItems.WETWARE_CAPACITOR.get().getDefaultInstance(),2)
+                .inputItems(CBItems.ADVANCED_RAM_CHIP.get().getDefaultInstance(),4)
+                .inputItems(TagPrefix.wireGtSingle,BIO_FLEXIBLE,16)
+                .inputFluids(new FluidStack(Ageing_Serum.getFluid(), 100))
+                .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
+                .outputItemsRanged(new ItemStack(GTItems.WETWARE_PROCESSOR_ASSEMBLY_ZPM.get()), UniformInt.of(1, 3))
+                .EUt(6144)
+                .duration(400)
+                .save(provider);
     }
 }

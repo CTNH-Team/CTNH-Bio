@@ -36,24 +36,24 @@ public class CBItems {
     public static void init() {
         CBMaterialItems.generateTools();
     }
-    public static final ItemEntry<StyleItem> BIO_CAPACITOR = REGISTRATE.item("bio_capacitor", StyleItem::new)
-            .lang("Bio-Capacitor")
+    public static final ItemEntry<StyleItem> WETWARE_CAPACITOR = REGISTRATE.item("wetware_capacitor", StyleItem::new)
+            .lang("Wetware-Capacitor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
-    public static final ItemEntry<StyleItem> BIO_TRANSISTOR = REGISTRATE.item("bio_transistor", StyleItem::new)
-            .lang("Bio-Transistor")
+    public static final ItemEntry<StyleItem> WETWARE_TRANSISTOR = REGISTRATE.item("wetware_transistor", StyleItem::new)
+            .lang("Wetware-Transistor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
-    public static final ItemEntry<StyleItem> BIO_RESISTOR = REGISTRATE.item("bio_resistor", StyleItem::new)
-            .lang("Bio-Resistor")
+    public static final ItemEntry<StyleItem> WETWARE_RESISTOR = REGISTRATE.item("wetware_resistor", StyleItem::new)
+            .lang("Wetware-Resistor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
-    public static final ItemEntry<StyleItem> BIO_INDUCTOR = REGISTRATE.item("bio_inductor", StyleItem::new)
-            .lang("Bio-Inductor")
+    public static final ItemEntry<StyleItem> WETWARE_INDUCTOR = REGISTRATE.item("wetware_inductor", StyleItem::new)
+            .lang("Wetware-Inductor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
-    public static final ItemEntry<StyleItem> BIO_DIODE = REGISTRATE.item("bio_diode", StyleItem::new)
-            .lang("Bio-Diode")
+    public static final ItemEntry<StyleItem> WETWARE_DIODE = REGISTRATE.item("wetware_diode", StyleItem::new)
+            .lang("Wetware-Diode")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
     public static final ItemEntry<StyleItem> WETWARE_CIRCUIT_BOARD = REGISTRATE.item("wetware_circuit_board", StyleItem::new)
@@ -65,6 +65,22 @@ public class CBItems {
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
 
+    public static ItemEntry<ComponentItem> ADVANCED_RAM_WAFER = REGISTRATE
+            .item("advanced_ram_wafer", ComponentItem::create)
+            .lang("Advanced Ram Wafer")
+            .properties(p -> new Item.Properties().rarity(ModRarities.UNCOMMON))
+            .onRegister(attach(new TooltipBehavior(list -> {
+                list.add(Component.translatable("ctnhbio.advanced_ram_wafer.tooltip").withStyle(ChatFormatting.YELLOW));
+            })))
+            .register();
+    public static ItemEntry<ComponentItem> ADVANCED_RAM_CHIP = REGISTRATE
+            .item("advanced_ram_chip", ComponentItem::create)
+            .lang("Advanced Ram Chip")
+            .properties(p -> new Item.Properties().rarity(ModRarities.UNCOMMON))
+            .onRegister(attach(new TooltipBehavior(list -> {
+                list.add(Component.translatable("ctnhbio.advanced_ram_chip.tooltip").withStyle(ChatFormatting.YELLOW));
+            })))
+            .register();
     public static ItemEntry<ComponentItem> SYNET_CORE = REGISTRATE
             .item("synet_core", ComponentItem::create)
             .lang("Synet Core")
