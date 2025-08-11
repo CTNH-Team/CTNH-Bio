@@ -29,23 +29,15 @@ public class SynchronizedNutrientStorage implements IManaged {
     }
 
     public double add(double toAdd) {
-        double newValue = amount + toAdd;
-        if (newValue > capacity) {
-            amount = capacity;
-            return newValue - capacity;
-        }
-        amount = newValue;
-        return 0;
+        toAdd = Math.min(toAdd, capacity - amount);
+        amount += toAdd;
+        return toAdd;
     }
 
     public double extract(double toExtract) {
-        double newValue = amount - toExtract;
-        if (newValue < 0) {
-            amount = 0;
-            return -newValue;
-        }
-        amount = newValue;
-        return 0;
+        toExtract = Math.min(toExtract, amount);
+        amount -= toExtract;
+        return toExtract;
     }
 
     @Override
