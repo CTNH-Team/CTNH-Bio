@@ -179,6 +179,13 @@ public class CommonRecipes {
                 .stationResearch(b -> b.researchStack(WETWARE_SUPER_COMPUTER_UV.asStack()).CWUt(96).EUt(VA[UV]))
                 .EUt(300000).duration(800)
                 .save(provider);
+        //研磨
+        CBRecipeBuilder.of(CTNHBio.id("wetware_mainframe_uhv_cb"), GTRecipeTypes.ASSEMBLY_LINE_RECIPES)
+                .inputItems(ModItems.NUTRIENTS,1)
+                .outputItemsRanged(dust,WEIRD_PIXEL_DUST, UniformInt.of(1, 2))
+                .EUt(24)
+                .duration(100)
+                .save(provider);
         //对于进阶RAM适配原版电路的配方
         CIRCUIT_ASSEMBLER_RECIPES.recipeBuilder("mainframe_iv_asmd_cb")
                 .inputItems(frameGt, Aluminium, 2)

@@ -17,8 +17,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
 
-import static com.gregtechceu.gtceu.common.data.GTMaterials.Iron3Chloride;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.VanadiumGallium;
+import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static com.moguang.ctnhbio.data.materials.CommonMaterials.WEIRD_PIXEL_DUST;
 import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
 
 public class BioReactorRecipes {
@@ -39,7 +39,7 @@ public class BioReactorRecipes {
         CBRecipeBuilder.of(CTNHBio.id("exotic_compound"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(4)
                 .inputItems(ModItems.EXOTIC_DUST.get().asItem().getDefaultInstance(), 2)
-                .inputItems(ModItems.MINERAL_FRAGMENT.get().asItem().getDefaultInstance())
+                .inputItems(TagPrefix.dust,Steel)
                 .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 100))
                 .EUt(96)
@@ -50,7 +50,7 @@ public class BioReactorRecipes {
         CBRecipeBuilder.of(CTNHBio.id("genetic_compound"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(4)
                 .inputFluids(new FluidStack(Endocrine_Hormone.getFluid(), 100))
-                .inputItems(ModItems.NUTRIENT_PASTE.get().asItem().getDefaultInstance())
+                .inputItems(TagPrefix.dust,WEIRD_PIXEL_DUST)
                 .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .EUt(96)
@@ -102,7 +102,7 @@ public class BioReactorRecipes {
         CBRecipeBuilder.of(CTNHBio.id("absorption_boost"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(8)
                 .inputItems(ModItems.EXOTIC_DUST.get().asItem().getDefaultInstance())
-                .inputItems(ModItems.MINERAL_FRAGMENT.get().asItem().getDefaultInstance())
+                .inputItems(TagPrefix.dust,Steel)
                 .inputFluids(new FluidStack(Healing_Compound.getFluid(), 100))
                 .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Absorption_Boost.getFluid(), 100))
@@ -135,7 +135,7 @@ public class BioReactorRecipes {
         // BREEDING_STIMULANT
         CBRecipeBuilder.of(CTNHBio.id("breeding_stimulant"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(6)
-                .inputItems(ModItems.NUTRIENT_PASTE.get().asItem().getDefaultInstance())
+                .inputItems(TagPrefix.dust,WEIRD_PIXEL_DUST)
                 .inputItems(ItemTags.FLOWERS)
                 .inputFluids(new FluidStack(Endocrine_Hormone.getFluid(), 100))
                 .inputItems(Items.COCOA_BEANS.getDefaultInstance())
@@ -148,7 +148,7 @@ public class BioReactorRecipes {
         // REJUVENATION_SERUM
         CBRecipeBuilder.of(CTNHBio.id("rejuvenation_serum"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(8)
-                .inputItems(ModItems.NUTRIENT_PASTE.get().asItem().getDefaultInstance())
+                .inputItems(TagPrefix.dust,WEIRD_PIXEL_DUST)
                 .inputFluids(new FluidStack(Healing_Compound.getFluid(), 100))
                 .inputFluids(new FluidStack(Decay_Essence.getFluid(), 100))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
@@ -160,8 +160,8 @@ public class BioReactorRecipes {
         // AGEING_SERUM
         CBRecipeBuilder.of(CTNHBio.id("ageing_serum"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(6)
-                .inputItems(ModItems.NUTRIENT_PASTE.get().asItem().getDefaultInstance())
-                .inputItems(ModItems.MINERAL_FRAGMENT.get().asItem().getDefaultInstance())
+                .inputItems(TagPrefix.dust,WEIRD_PIXEL_DUST)
+                .inputItems(TagPrefix.dust,Steel)
                 .inputFluids(new FluidStack(Decay_Essence.getFluid(), 100))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Ageing_Serum.getFluid(), 100))
@@ -172,10 +172,10 @@ public class BioReactorRecipes {
         // ENLARGEMENT_SERUM
         CBRecipeBuilder.of(CTNHBio.id("enlargement_serum"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(6)
-                .inputItems(ModItems.NUTRIENT_PASTE.get().asItem().getDefaultInstance())
+                .inputItems(TagPrefix.dust,WEIRD_PIXEL_DUST)
                 .inputFluids(new FluidStack(Endocrine_Hormone.getFluid(), 100))
                 .inputFluids(new FluidStack(Healing_Compound.getFluid(), 100))
-                .inputItems(ModItems.MINERAL_FRAGMENT.get().asItem().getDefaultInstance())
+                .inputItems(TagPrefix.dust,Steel)
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .outputFluids(new FluidStack(Enlargement_Serum.getFluid(), 100))
                 .EUt(384)
