@@ -1,0 +1,7 @@
+{
+  "entity": "minecraft:skeleton",
+  "item": "biomancy:mob_marrow",
+  "chance": 1.0,
+  "min_amount": 2,
+  "max_amount": 6
+}

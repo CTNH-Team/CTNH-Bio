@@ -57,20 +57,5 @@ public class VanillaRecipeProvider extends RecipeProvider {
                 'I', GTItems.SILICON_WAFER
         );
 
-// 第三个配方：BIOELECTRIC_FORGE
-        VanillaRecipeHelper.addShapedRecipe(provider, false, true,
-                CTNHBio.id("bioelectric_forge_lv_recipe"),
-                new ItemStack(CBMachines.BIOELECTRIC_FORGE[GTValues.LV].getItem(), 1),
-                "ABA",
-                "CGD",
-                "EFE",
-                'A', ModItems.PRIMORDIAL_CORE.get(),
-                'B', ModItems.BIO_FORGE.get(),
-                'C', GTItems.ELECTRIC_PUMP_LV,
-                'D', GTItems.FLUID_REGULATOR_LV,
-                'E', ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:tin_single_cable")),
-                'F', ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:good_electronic_circuit")),
-                'G', ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:lv_assembler"))
-        );
     }
 }

@@ -4,6 +4,7 @@ import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 
+import com.gregtechceu.gtceu.common.data.GTItems;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
@@ -237,7 +238,7 @@ public class BioReactorRecipes {
                 .duration(8 * 20)
                 .save(provider);
 
-        //怪异肉循环-初级配方
+        //生物糠循环-初级配方
         CBRecipeBuilder.of(CTNHBio.id("creator_mix_recipe_one"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(5)
                 .effect(MobEffects.MOVEMENT_SPEED)
@@ -245,13 +246,13 @@ public class BioReactorRecipes {
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance(),5)
                 .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 200))
-                .outputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(),1)
-                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 4000, 0)
-                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 2000, 0)
+                .outputItems(GTItems.BIO_CHAFF.get().asItem().getDefaultInstance(),10)
+                .chancedOutput(new ItemStack(GTItems.BIO_CHAFF.get(),8), 4000, 0)
+                .chancedOutput(new ItemStack(GTItems.BIO_CHAFF.get(),4), 2000, 0)
                 .EUt(120)
                 .duration(4 * 20)
                 .save(provider);
-        //怪异肉循环-中级配方
+        //生物糠循环-中级配方
         CBRecipeBuilder.of(CTNHBio.id("creator_mix_recipe_two"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(5)
                 .effect(MobEffects.MOVEMENT_SPEED)
@@ -259,13 +260,13 @@ public class BioReactorRecipes {
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance(),10)
                 .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 300))
-                .outputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(),1)
-                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 8000, 0)
-                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 5000, 0)
+                .outputItems(GTItems.BIO_CHAFF.get().asItem().getDefaultInstance(),15)
+                .chancedOutput(new ItemStack(GTItems.BIO_CHAFF.get(),10), 8000, 0)
+                .chancedOutput(new ItemStack(GTItems.BIO_CHAFF.get(),7), 5000, 0)
                 .EUt(384)
                 .duration(4 * 20)
                 .save(provider);
-        //怪异肉循环-高级配方
+        //生物糠循环-高级配方
         CBRecipeBuilder.of(CTNHBio.id("creator_mix_recipe_three"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(5)
                 .effect(MobEffects.MOVEMENT_SPEED)
@@ -273,9 +274,9 @@ public class BioReactorRecipes {
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance(),10)
                 .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 400))
-                .outputItems(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(),2)
-                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 8000, 0)
-                .chancedOutput(ModItems.CREATOR_MIX.get().asItem().getDefaultInstance(), 6000, 0)
+                .outputItems(GTItems.BIO_CHAFF.get().asItem().getDefaultInstance(),20)
+                .chancedOutput(new ItemStack(GTItems.BIO_CHAFF.get(),15), 8000, 0)
+                .chancedOutput(new ItemStack(GTItems.BIO_CHAFF.get(),10), 6000, 0)
                 .EUt(1960)
                 .duration(4 * 20)
                 .save(provider);

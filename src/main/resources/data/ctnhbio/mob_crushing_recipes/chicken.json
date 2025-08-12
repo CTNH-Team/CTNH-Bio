@@ -1,0 +1,7 @@
+{
+  "entity": "minecraft:chicken",
+  "item": "minecraft:feather",
+  "chance": 1.0,
+  "min_amount": 6,
+  "max_amount": 7
+}

@@ -79,7 +79,7 @@ public class CommonMaterials {
                 .color(0xC0D848)
                 .secondaryColor(0x789C38)
                 .iconSet(ROUGH)
-                .components(Silicon, 1, Oxygen, 2)
+                .components(Carbon, 1, Hydrogen, 4, Oxygen, 3)
                 .flags(NO_SMASHING)
                 .buildAndRegister();
     }

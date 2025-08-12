@@ -1,7 +1,7 @@
 {
   "entity": "minecraft:sheep",
-  "item": "ctnhbio:bio_transistor",
-  "chance": 0.8,
-  "min_amount": 1,
-  "max_amount": 3
+  "item": "minecraft:mutton",
+  "chance": 1.0,
+  "min_amount": 5,
+  "max_amount": 15
 }
