@@ -5,6 +5,7 @@ import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
+import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.gregtechceu.gtceu.api.registry.registrate.MachineBuilder;
@@ -33,11 +34,22 @@ public class CBRegistrate extends GTRegistrate {
     public static CBRegistrate create() {
         return new CBRegistrate();
     }
-    public MultiblockMachineBuilder biomultiblock(String name, Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine) {
+    public MultiblockMachineBuilder biomultiblock(String name, Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine
+    ) {
         return new MultiblockMachineBuilder(this, name, metaMachine,
                 LivingMetaMachineBlock::new, MetaMachineItem::new,
                 (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get()));
     }
+
+    public MultiblockMachineBuilder biomultiblock(String name,
+                                               Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine,
+                                               BiFunction<BlockBehaviour.Properties, MultiblockMachineDefinition, IMachineBlock> blockFactory,
+                                               BiFunction<IMachineBlock, Item.Properties, MetaMachineItem> itemFactory) {
+        return new MultiblockMachineBuilder(this, name, metaMachine,
+                blockFactory, itemFactory,
+                (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get()));
+    }
+
 
     @Override @NotNull @ParametersAreNonnullByDefault
     public <DEFINITION extends MachineDefinition> MachineBuilder<DEFINITION> machine(String name, Function<ResourceLocation, DEFINITION> definitionFactory, Function<IMachineBlockEntity, MetaMachine> metaMachine, BiFunction<BlockBehaviour.Properties, DEFINITION, IMachineBlock> blockFactory, BiFunction<IMachineBlock, Item.Properties, MetaMachineItem> itemFactory, TriFunction<BlockEntityType<?>, BlockPos, BlockState, IMachineBlockEntity> blockEntityFactory) {

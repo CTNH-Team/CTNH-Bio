@@ -174,7 +174,7 @@ public class RecipeRemoval {
     }
     public static void ctnhbioRemovals(Consumer<ResourceLocation> registry){
         var recipes = new String[]{
-
+                "minecraft:tnt"
         };
 
         registry.accept(new ResourceLocation("gtceu:circuit_assembler/wetware_processor_luv"));

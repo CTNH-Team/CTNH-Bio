@@ -3,11 +3,14 @@ package com.moguang.ctnhbio.machine.multiblock;
 import com.github.elenterius.biomancy.BiomancyMod;
 import com.github.elenterius.biomancy.init.ModBlocks;
 import com.gregtechceu.gtceu.GTCEu;
+import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
+import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
+import com.moguang.ctnhbio.api.block.LivingMultiMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
 import com.moguang.ctnhbio.machine.digester.DigesterBlockEntityRenderer;
@@ -57,7 +60,9 @@ public class MultiblocksA {
 //            })
             .register();
 
-    public static MultiblockMachineDefinition GREAT_FLESH = REGISTRATE.biomultiblock("great_flesh", GreatFleshMachine::new)
+    public static MultiblockMachineDefinition GREAT_FLESH = REGISTRATE
+            .biomultiblock("great_flesh",
+                    GreatFleshMachine::new)
             .recipeType(CBRecipeTypes.GREAT_FLESH)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAA", "AAA", "AAA")
@@ -71,7 +76,7 @@ public class MultiblocksA {
                     .build())
 
             .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
-            .simpleModel(new ResourceLocation("minecraft", "block/air"))
+            //.simpleModel(new ResourceLocation("minecraft", "block/air"))
             .additionalDisplay((controller, components) -> {
                 if(controller instanceof WorkableLivingMultiblockMachine machine){
                     components.add(Component.translatable("jade.nutrient.info",
@@ -88,7 +93,12 @@ public class MultiblocksA {
 
 
 
-    public static MultiblockMachineDefinition CIRCULATORY_SYSTEM = REGISTRATE.biomultiblock("circulatory_system", WorkableLivingMultiblockMachine::new)
+    public static MultiblockMachineDefinition CIRCULATORY_SYSTEM = REGISTRATE
+            .biomultiblock("circulatory_system",
+                    WorkableLivingMultiblockMachine::new,
+                    LivingMultiMetaMachineBlock::new,
+                    MetaMachineItem::new
+            )
             .recipeType(CBRecipeTypes.GREAT_FLESH)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCCCB", "BCCCB", "BCCCB", "AAAAA")
@@ -97,7 +107,7 @@ public class MultiblocksA {
                     .aisle("ADDDA", "CEEEC", "C###C", "C###C", "ADDDA")
                     .aisle("AAAAA", "BC@CB", "BCCCB", "BCCCB", "AAAAA")
                     .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:acid_fluid_block"))))
-                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:impermeable_membrane")))
+                    .where("C", Predicates.blocks(CBBlocks.IMPERMEABLE_MEMBRANE.get())
                            .or(Predicates.autoAbilities(definition.getRecipeTypes()))
                     )
                     .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:primal_flesh_casing"))))
@@ -109,8 +119,9 @@ public class MultiblocksA {
                     .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:flesh_casing"))))
                     .build())
 
-            .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
-            .simpleModel(new ResourceLocation("minecraft", "block/acacia_log"))
+            .workableCasingModel(CTNHBio.id("block/casings/ornate_flesh_casing"),
+                    CTNHBio.id("block/multiblock/red"))
+            //.simpleModel(new ResourceLocation("minecraft", "block/acacia_log"))
             .additionalDisplay((controller, components) -> {
                 if(controller instanceof WorkableLivingMultiblockMachine machine){
                     components.add(Component.translatable("jade.nutrient.info",

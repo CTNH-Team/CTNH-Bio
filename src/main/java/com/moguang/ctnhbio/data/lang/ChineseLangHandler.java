@@ -103,17 +103,17 @@ public class ChineseLangHandler {
             map.put(key, value);
 
             // upside-down lang mappings
-            Field upsideDownField = RegistrateLangProvider.class.getDeclaredField("upsideDown");
-            upsideDownField.setAccessible(true);
-            // noinspection unchecked
-            map = (Map<String, String>) field.get(upsideDownField.get(provider));
-
-            Method toUpsideDown = RegistrateLangProvider.class.getDeclaredMethod("toUpsideDown",
-                    String.class);
-            toUpsideDown.setAccessible(true);
-
-            map.put(key, (String) toUpsideDown.invoke(provider, value));
-        } catch (NoSuchFieldException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+//            Field upsideDownField = RegistrateLangProvider.class.getDeclaredField("upsideDown");
+//            upsideDownField.setAccessible(true);
+//            // noinspection unchecked
+//            map = (Map<String, String>) field.get(upsideDownField.get(provider));
+//
+//            Method toUpsideDown = RegistrateLangProvider.class.getDeclaredMethod("toUpsideDown",
+//                    String.class);
+//            toUpsideDown.setAccessible(true);
+//
+//            map.put(key, (String) toUpsideDown.invoke(provider, value));
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException("Error replacing entry in datagen.", e);
         }
     }
