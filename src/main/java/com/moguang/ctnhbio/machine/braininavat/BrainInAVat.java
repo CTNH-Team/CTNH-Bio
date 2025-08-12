@@ -5,47 +5,74 @@ import com.gregtechceu.gtceu.api.capability.IOpticalComputationProvider;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
-import net.minecraft.core.Direction;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
+import static com.gregtechceu.gtceu.api.GTValues.RNG;
+
 public class BrainInAVat extends BasicLivingMachine implements IOpticalComputationProvider {
 
-    int CWUtToProduce;
+    public static record Quad(int CWUt,
+            double NUt,
+            long EUt,
+            byte chanceToDoubt //自我怀疑的概率,0~128
+    ){
+        public static Quad tier(int tier){
+            int CWUt = (tier>= GTValues.HV?1<<(tier-GTValues.HV):0);
+            double NUt = CWUt / 20.0;
+            long EUt = GTValues.VA[tier];
+            byte chanceToDoubt = (byte) (tier>=GTValues.IV?(tier-GTValues.IV+1):0);
+            return new Quad(CWUt,NUt,EUt,chanceToDoubt);
+        }
+    }
+
+    final Quad q;
+    long lastWorkingTime = -1;
+    boolean isDoubted = false;
 
     public BrainInAVat(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, double capacity, Object... args) {
         super(holder, tier, tankScalingFunction, capacity, args);
-//        this.outputFacingItems = null;
-//        this.outputFacingFluids = null;
-        CWUtToProduce = (tier>= GTValues.HV?1<<(tier-GTValues.HV):0);
+        q = Quad.tier(tier);
     }
-
-//    @Override
-//    public void setOutputFacingItems(@Nullable Direction outputFacing) {}
-//
-//    @Override
-//    public void setOutputFacingFluids(@Nullable Direction outputFacing) {}
 
     @Override
     public int requestCWUt(int cwut, boolean simulate, @NotNull Collection<IOpticalComputationProvider> seen) {
         seen.add(this);
-        if (isActive()) {
-            return Math.min(cwut, CWUtToProduce);
+        var ret = isWorkingEnabled() && consume(simulate);
+        if(ret&&!simulate){
+            if(getLevel()!=null) lastWorkingTime = getLevel().getGameTime();
+            if(!isDoubted && q.chanceToDoubt > 0 && RNG.nextInt(Byte.MAX_VALUE) <= q.chanceToDoubt) isDoubted = true;
         }
-        return 0;
+        return (ret? q.CWUt : 0) / (isDoubted? 2 : 1);
     }
 
     @Override
     public int getMaxCWUt(@NotNull Collection<IOpticalComputationProvider> seen) {
         seen.add(this);
-        return isActive() ? CWUtToProduce : 0;
+        return isWorkingEnabled() ? q.CWUt : 0;
     }
 
     @Override
     public boolean canBridge(@NotNull Collection<IOpticalComputationProvider> seen) {
         seen.add(this);
         return true;
+    }
+
+    @Override
+    public boolean isActive() {
+        return getLevel()!=null && lastWorkingTime >= getLevel().getGameTime();
+    }
+
+    @Override
+    public void setWorkingEnabled(boolean isWorkingAllowed) {
+        super.setWorkingEnabled(isWorkingAllowed);
+        isDoubted = false;
+    }
+
+    //Utils
+    private boolean consume(boolean simulate){
+        return simulate ? getStorage().getAmount() >= q.NUt && energyContainer.getEnergyStored() >= q.EUt :
+                getStorage().extract(q.NUt) >= q.NUt && energyContainer.removeEnergy(q.EUt) >= q.EUt;
     }
 }

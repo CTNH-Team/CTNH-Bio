@@ -1,0 +1,5 @@
+{
+    "ldlib": {
+        "connection": "ctnhbio:block/membrane/impermeable_membrane_ctm"
+    }
+}
