@@ -121,6 +121,7 @@ public class MultiblocksA {
 
             .workableCasingModel(CTNHBio.id("block/casings/ornate_flesh_casing"),
                     CTNHBio.id("block/multiblock/red"))
+            .appearanceBlock(CBBlocks.ORNATE_FLESH_CASING)
             //.simpleModel(new ResourceLocation("minecraft", "block/acacia_log"))
             .additionalDisplay((controller, components) -> {
                 if(controller instanceof WorkableLivingMultiblockMachine machine){
@@ -128,6 +129,79 @@ public class MultiblocksA {
                             Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
                 }
             })
-            .hasBER(false)
+            .register();
+
+    public static MultiblockMachineDefinition COGNI_ASSEMBLER = REGISTRATE
+            .biomultiblock("cogni_assembler",
+                    WorkableLivingMultiblockMachine::new,
+                    LivingMultiMetaMachineBlock::new,
+                    MetaMachineItem::new
+            )
+            .recipeType(CBRecipeTypes.GREAT_FLESH)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("AAAAA", "BCACB", "BDADB", "BCACB", "AAAAA")
+                    .aisle("AEEEA", "CFGFC", "DFGFD", "CFGFC", "AEEEA")
+                    .aisle("AEEEA", "AGGGA", "HGGGH", "AGGGA", "AEEEA")
+                    .aisle("AEEEA", "CE@EC", "DEIED", "CEEEC", "AEEEA")
+                    .aisle("AAAAA", "B###B", "B###B", "B###B", "AAAAA")
+                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("kubejs:flesh_casing_fence"))))
+                    .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:opv_machine_casing"))))
+                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:primal_flesh_casing"))))
+                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:ornate_flesh_casing"))))
+                    .where("@", Predicates.controller(Predicates.blocks(definition.get())))
+                    .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:ornate_flesh_casing"))))
+                    .where("#", Predicates.any())
+                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:acid_flesh_casing"))))
+                    .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:flesh_fence"))))
+                    .where("I", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:primal_flesh_casing"))))
+                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:smooth_primal_flesh"))))
+                    .build())
+
+            .workableCasingModel(CTNHBio.id("block/casings/primal_flesh_casing"),
+                    CTNHBio.id("block/multiblock/red"))
+            .appearanceBlock(CBBlocks.PRIMAL_FLESH_CASING)
+            .additionalDisplay((controller, components) -> {
+                if(controller instanceof WorkableLivingMultiblockMachine machine){
+                    components.add(Component.translatable("jade.nutrient.info",
+                            Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
+                }
+            })
+            .register();
+
+    public static MultiblockMachineDefinition WEATHERER = REGISTRATE
+            .biomultiblock("weatherer",
+                    WorkableLivingMultiblockMachine::new,
+                    LivingMultiMetaMachineBlock::new,
+                    MetaMachineItem::new
+            )
+            .recipeType(CBRecipeTypes.GREAT_FLESH)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("#BBBBB#", "#######", "#######", "#######", "#######", "#######", "#######", "#######")
+                    .aisle("BCCCCCB", "#CDDDC#", "#C###C#", "#E###E#", "#E###E#", "#E###E#", "#EE#EE#", "#######")
+                    .aisle("BCFGFCB", "#DFFFD#", "##F#F##", "##F#F##", "##F#F##", "##F#F##", "#EF#FE#", "##H#H##")
+                    .aisle("BCGGGCB", "#DFGFD#", "###G###", "###E###", "###E###", "###E###", "###B###", "#######")
+                    .aisle("BCFGFCB", "#DFFFD#", "##F#F##", "##F#F##", "##F#F##", "##F#F##", "#EF#FE#", "##H#H##")
+                    .aisle("BCCCCCB", "#CD@DC#", "#C###C#", "#E###E#", "#E###E#", "#E###E#", "#EE#EE#", "#######")
+                    .aisle("#BBBBB#", "#######", "#######", "#######", "#######", "#######", "#######", "#######")
+                    .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:ornate_flesh_slab"))))
+                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:flesh_spike"))))
+                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:primal_flesh_casing"))))
+                    .where("@", Predicates.controller(Predicates.blocks(definition.get())))
+                    .where("#", Predicates.any())
+                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:ornate_flesh_casing"))))
+                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:acid_flesh_casing"))))
+                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:flesh_fence"))))
+                    .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:flesh_casing"))))
+                    .build())
+
+            .workableCasingModel(CTNHBio.id("block/casings/flesh_casing"),
+                    CTNHBio.id("block/multiblock/red"))
+            .appearanceBlock(CBBlocks.FLESH_CASING)
+            .additionalDisplay((controller, components) -> {
+                if(controller instanceof WorkableLivingMultiblockMachine machine){
+                    components.add(Component.translatable("jade.nutrient.info",
+                            Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
+                }
+            })
             .register();
 }

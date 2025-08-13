@@ -35,7 +35,7 @@ public class ClientRegister {
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         for (int tier : GTValues.tiersBetween(LV, EV)){
             event.registerBlockEntityRenderer((BlockEntityType<BioelectricForgeBlockEntity>)CBMachines.BIOELECTRIC_FORGE[tier].getBlockEntityType(), BioelectricForgeBlockEntityRenderer::new);
-            event.registerBlockEntityRenderer((BlockEntityType<BioReactorBlockEntity>)CBMachines.BIOREACTOR[tier].getBlockEntityType(), BioReactorBlockEntityRenderer::new);
+            //event.registerBlockEntityRenderer((BlockEntityType<BioReactorBlockEntity>)CBMachines.BIOREACTOR[tier].getBlockEntityType(), BioReactorBlockEntityRenderer::new);
             //event.registerBlockEntityRenderer((BlockEntityType<DigesterBlockEntity>)DIGESTER[tier].getBlockEntityType(), DigesterBlockEntityRenderer::new);
         }
     }

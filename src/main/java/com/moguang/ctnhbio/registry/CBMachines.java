@@ -9,10 +9,16 @@ import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
+import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+import com.moguang.ctnhbio.client.Renderer.ColorableMachineBlockEntityRenderer;
+import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBlockEntityRenderer;
+import com.moguang.ctnhbio.client.model.BioReactorModel;
+import com.moguang.ctnhbio.client.model.DigesterModel;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeBlockEntity;
 import com.moguang.ctnhbio.machine.bioreactor.BioReactorBlockEntity;
+import com.moguang.ctnhbio.machine.bioreactor.BioReactorBlockEntityRenderer;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVat;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeMachineBlock;
 import com.moguang.ctnhbio.machine.digester.DigesterBlockEntity;
@@ -72,13 +78,13 @@ public class CBMachines {
                     )
                     .tier(tier)
                     .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
+                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("bioelectric_forge"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
 
                     .model((dataGenContext, gtBlockstateProvider, machineModelBuilder) ->
                             machineModelBuilder.addModels(machineModelBuilder.partialState(),
                                     ConfiguredModel.builder().modelFile(new ModelFile.UncheckedModelFile(CTNHBio.id("block/bioelectric_forge"))).buildLast()))
-                    .hasBER(false)
+
                     .register();
         }
     }
@@ -96,10 +102,10 @@ public class CBMachines {
                     )
                     .tier(tier)
                     .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
-                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("decompose"),CBRecipeTypes.DECOMPOSER_RECIPES))
+                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("decompose"),CBRecipeTypes.DECOMPOSER_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
                     .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
-                    .hasBER(false)
+
                     .register();
         }
     }
@@ -112,19 +118,19 @@ public class CBMachines {
                             MachineDefinition::new,
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
-                            MetaMachineItem::new,
+                            (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new DigesterModel())),
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
 
                     .recipeType(CBRecipeTypes.DIGEST_RECIPES)
-                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("digester"),CBRecipeTypes.DIGEST_RECIPES))
+                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("digester"),CBRecipeTypes.DIGEST_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .hasBER(false)//fuck gtm
+
                     .onBlockEntityRegister(beType -> {
                         @SuppressWarnings("unchecked")
                         BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
-                        BlockEntityRenderers.register(typed, ctx -> new DigesterBlockEntityRenderer(ctx));
+                        BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new DigesterModel()));
                     })
                     .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
                     .register();
@@ -139,15 +145,19 @@ public class CBMachines {
                             MachineDefinition::new,
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
-                            MetaMachineItem::new,
+                            (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new BioReactorModel())),
                             (type, pos, state) -> new BioReactorBlockEntity(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
                     .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
-                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIO_REACTOR_RECIPES))
+                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("bioreactor"),CBRecipeTypes.BIO_REACTOR_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
                     .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
-                    .hasBER(false)
+                    .onBlockEntityRegister(beType -> {
+                        @SuppressWarnings("unchecked")
+                        BlockEntityType<BioReactorBlockEntity> typed = (BlockEntityType<BioReactorBlockEntity>) (BlockEntityType<?>)beType;
+                        BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new BioReactorModel(), true));
+                    })
                     .register();
         }
     }
@@ -177,7 +187,7 @@ public class CBMachines {
                     .model((dataGenContext, gtBlockstateProvider, machineModelBuilder) ->
                             machineModelBuilder.addModels(machineModelBuilder.partialState(),
                                     ConfiguredModel.builder().modelFile(new ModelFile.UncheckedModelFile(CTNHBio.id("block/vat"))).buildLast()))
-                    .hasBER(false)
+
                     .register();
         }
     }

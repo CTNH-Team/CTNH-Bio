@@ -30,6 +30,7 @@ public class BioReactorBlockEntityRenderer extends GeoBlockRenderer<BioReactorBl
 
     @Override
     public RenderType getRenderType(BioReactorBlockEntity animatable, ResourceLocation texture, @Nullable MultiBufferSource bufferSource, float partialTick) {
+
         return RenderType.entityTranslucent(getTextureLocation(animatable));
 
     }
