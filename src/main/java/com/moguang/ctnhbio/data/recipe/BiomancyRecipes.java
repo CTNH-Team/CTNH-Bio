@@ -9,7 +9,9 @@ import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBMachines;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.data.CreateBlockEntityBuilder;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,8 +24,13 @@ import static com.gregtechceu.gtceu.api.GTValues.MV;
 import static com.gregtechceu.gtceu.common.data.GTItems.*;
 
 
-public class BiomancyRecipes {
-    public static void init(Consumer<FinishedRecipe> consumer) {
+public class BiomancyRecipes extends RecipeProvider {
+    public BiomancyRecipes(PackOutput p_248933_) {
+        super(p_248933_);
+    }
+
+    @Override
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         BioForgingRecipeBuilder.create(CBMachines.DECOMPOSER[LV].getItem())
                 .addIngredient(ModItems.PRIMORDIAL_CORE.get(), 2)
                 .addIngredient(ModItems.DECOMPOSER.get(), 1)

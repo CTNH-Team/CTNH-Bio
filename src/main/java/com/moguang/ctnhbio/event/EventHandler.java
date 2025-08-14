@@ -14,7 +14,7 @@ import com.gregtechceu.gtceu.api.recipe.chance.logic.ChanceLogic;
 import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
-import com.moguang.ctnhbio.data.recipe.VanillaRecipeProvider;
+import com.moguang.ctnhbio.data.recipe.BiomancyRecipes;
 import com.moguang.ctnhbio.registry.*;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.yanny.ali.registries.LootCategories;
@@ -100,6 +100,7 @@ public class EventHandler {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         var registries = event.getLookupProvider();
 
-        generator.addProvider(event.includeServer(), new VanillaRecipeProvider(packOutput));
+        //generator.addProvider(event.includeServer(), new VanillaRecipeProvider(packOutput));
+        generator.addProvider(event.includeServer(), new BiomancyRecipes(packOutput));
     }
 }

@@ -20,14 +20,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.function.Consumer;
 
 
-public class VanillaRecipeProvider extends RecipeProvider {
-    public VanillaRecipeProvider(PackOutput output) {
-        super(output);
-    }
+public class VanillaRecipeProvider {
 
-    @Override
+
     @SuppressWarnings("all")
-    protected void buildRecipes(Consumer<FinishedRecipe> provider) {
+    public static void init(Consumer<FinishedRecipe> provider) {
         // 第一个配方：LIVING_FLESH
         VanillaRecipeHelper.addShapedRecipe(provider, false, true,
                 CTNHBio.id("living_flesh_recipe"),

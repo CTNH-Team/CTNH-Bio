@@ -24,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
+
 public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockMachine implements ILivingMachine {
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(WorkableLivingMultiblockMachine.class, WorkableElectricMultiblockMachine.MANAGED_FIELD_HOLDER);
     @Persisted
@@ -142,7 +143,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
     public void tickGrow()
     {
-        if(shouldTick(2) &&
+        if(shouldTick(20) &&
                 getNutrientAmount() >= NUTRIENT_NEEDED_FOR_GROWTH &&
                 growingBlockPattern != null &&
                 growingBlockPattern.growPlan.tick())

@@ -38,6 +38,10 @@ public class CBBlocks {
     public static final BlockEntry<Block> BIO_ACID_CASING = createCasingBlock("bio_acid_casing",
             CTNHBio.id("block/casings/bio_acid_casing"));
 
+    public static final BlockEntry<Block> HAEMOSTEEL_CASING = createCasingBlock("haemosteel_casing",
+            CTNHBio.id("block/casings/opv/opv_casing"));
+
+
     public static final BlockEntry<MembraneBlock> IMPERMEABLE_MEMBRANE = createMembraneBlock("impermeable_membrane",
             CTNHBio.id("block/membrane/impermeable_membrane"), () -> RenderType::translucent);
 

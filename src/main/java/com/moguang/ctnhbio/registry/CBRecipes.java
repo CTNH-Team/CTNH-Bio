@@ -22,6 +22,7 @@ public class CBRecipes {
         BioReactorRecipes.init(provider);
         DigesterRecipes.init(provider);
         CommonRecipes.init(provider);
-        BiomancyRecipes.init(provider);
+        //BiomancyRecipes.init(provider);
+        VanillaRecipeProvider.init(provider);
     }
 }
