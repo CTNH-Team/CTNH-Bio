@@ -104,13 +104,17 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        if(tag.contains("HostedEntity")) entityTag = tag.getCompound("HostedEntity");
+
+        if(getPersistentData().contains("HostedEntity"))
+            entityTag = getPersistentData().getCompound("HostedEntity");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
+        saveHostedEntityData(getPersistentData());
+        onChanged();
         super.saveAdditional(tag);
-        saveHostedEntityData(tag);
+
     }
 
 
@@ -132,8 +136,10 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
 
     @Override
     public void setRemoved() {
-        super.setRemoved();
+        saveHostedEntityData(getPersistentData());
         despawnHostedEntity();
+        onChanged();
+        super.setRemoved();
     }
 
 
