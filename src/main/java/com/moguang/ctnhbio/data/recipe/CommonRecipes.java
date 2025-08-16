@@ -125,9 +125,9 @@ public class CommonRecipes {
                 .inputFluids(OrganicMaterials.Ageing_Serum, 500)
                 .outputItems(ModItems.CREATOR_MIX,32)
                 .scannerResearch(b -> b
-                        .researchStack(BIO_CHAFF.asStack(1))
-                        .duration(1200)
-                        .EUt(VA[IV]))
+                        .researchId("flesh_bits_ccb")
+                        .researchStack(new ItemStack(ModItems.FLESH_BITS.get()))
+                        .EUt(VA[EV]))
                 .duration(1000)
                 .EUt(24000)
                 .save(provider);
