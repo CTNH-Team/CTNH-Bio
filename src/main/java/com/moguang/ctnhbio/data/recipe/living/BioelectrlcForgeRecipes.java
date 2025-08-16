@@ -1,4 +1,4 @@
-package com.moguang.ctnhbio.data.recipe;
+package com.moguang.ctnhbio.data.recipe.living;
 
 import com.github.elenterius.biomancy.crafting.EssenceIngredient;
 import com.github.elenterius.biomancy.init.ModItems;
@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.data.GTMachines;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBMachines;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;

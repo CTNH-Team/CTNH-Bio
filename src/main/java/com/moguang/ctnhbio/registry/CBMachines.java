@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 
+import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
@@ -20,15 +21,13 @@ import com.moguang.ctnhbio.client.model.DigesterModel;
 import com.moguang.ctnhbio.client.model.VatModel;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeBlockEntity;
 import com.moguang.ctnhbio.machine.bioreactor.BioReactorBlockEntity;
-import com.moguang.ctnhbio.machine.braininavat.BrainInAVat;
+import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeMachineBlock;
 
+import com.moguang.ctnhbio.machine.digester.DigesterMachine;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.material.PushReaction;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
 
 import java.util.Locale;
 
@@ -117,13 +116,13 @@ public class CBMachines {
             DIGESTER[tier] = REGISTRATE
                     .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_digester",
                             MachineDefinition::new,
-                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
+                            holder -> new DigesterMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
                             (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new DigesterModel())),
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
-
+                    .recipeModifiers(DigesterMachine::recipeModifier, GTRecipeModifiers.OC_NON_PERFECT)
                     .recipeType(CBRecipeTypes.DIGEST_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("digester"),CBRecipeTypes.DIGEST_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
@@ -170,7 +169,7 @@ public class CBMachines {
                     .machine(VN[tier].toLowerCase(Locale.ROOT) + "_brain_in_a_vat",
                             MachineDefinition::new,
                             //holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
-                            holder -> new BrainInAVat(holder, tier, (tiers) -> tiers * 32000, 200),
+                            holder -> new BrainInAVatMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
                             (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new VatModel())),
                             (type, pos, state) ->

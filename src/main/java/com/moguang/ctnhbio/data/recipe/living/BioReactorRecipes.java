@@ -1,11 +1,11 @@
-package com.moguang.ctnhbio.data.recipe;
+package com.moguang.ctnhbio.data.recipe.living;
 
 import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.data.recipes.FinishedRecipe;

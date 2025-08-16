@@ -1,7 +1,7 @@
-package com.moguang.ctnhbio.data.recipe;
+package com.moguang.ctnhbio.data.recipe.multi;
 
-import com.github.elenterius.biomancy.init.ModItems;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.data.recipes.FinishedRecipe;

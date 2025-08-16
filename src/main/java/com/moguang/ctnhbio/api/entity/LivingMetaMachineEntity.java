@@ -46,7 +46,6 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     }
 
 
-
     public void setPos(BlockPos pos, Vec3 offset) {
         super.setPos(pos.getX()+offset.x, pos.getY()+offset.y, pos.getZ()+offset.z);
     }

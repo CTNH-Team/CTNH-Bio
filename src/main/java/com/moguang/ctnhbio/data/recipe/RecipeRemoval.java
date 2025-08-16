@@ -204,7 +204,9 @@ public class RecipeRemoval {
                 "biomancy:decomposing/torchflower_seeds",
                 "biomancy:decomposing/chorus_flower",
                 "biomancy:decomposing/forge_seeds",
-                "biomancy:decomposing/cocoa_beans"
+                "biomancy:decomposing/cocoa_beans",
+
+
         };
         for(var recipe: recipes) {
             registry.accept(new ResourceLocation(recipe));

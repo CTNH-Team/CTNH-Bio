@@ -74,7 +74,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     public BasicLivingMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, double capacity, Object... args) {
         super(holder, tier, tankScalingFunction, args);
-        this.storage = new SynchronizedNutrientStorage(capacity);
+        this.storage = new SynchronizedNutrientStorage(GTValues.V[tier] * 64);
         this.inputTrait = new NotifiableNutrientTrait(this, storage, IO.IN);
         this.outputTrait = new NotifiableNutrientTrait(this, storage, IO.OUT);
 

@@ -26,9 +26,9 @@ import static com.lowdragmc.lowdraglib.LDLib.isRemote;
 public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> extends MetaMachineBlockEntity implements ILivingEntityHost<T>, GeoBlockEntity {
 
     private final EntityType<T> entityType;
-    @Persisted
+
     private T machineEntity;
-    @Persisted
+
     @Getter
     private CompoundTag entityTag;
     private boolean spawned;
@@ -79,7 +79,9 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
 
     @Override
     public void onHostedEntityRemoved(LivingMetaMachineEntity entity) {
-        level.removeBlock(getBlockPos(), false);
+        level.getServer().submit(() ->
+                level.destroyBlock(getBlockPos(), true)
+        );
     }
 
     @Override
@@ -100,19 +102,17 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     }
 
     @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        if(tag.contains("HostedEntity")) entityTag = tag.getCompound("HostedEntity");
+    }
+
+    @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         saveHostedEntityData(tag);
     }
 
-//    @Override
-//    public void load(CompoundTag tag) {
-//        super.load(tag);
-//        if (tag.contains("HostedEntity")) {
-//            this.entityTag = tag.getCompound("HostedEntity");
-//        }
-//        //loadHostedEntityData(tag, this.getLevel());
-//    }
 
     // 生命周期挂钩
     @Override

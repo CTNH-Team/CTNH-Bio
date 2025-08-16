@@ -98,6 +98,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
                 getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
                         SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
                         1.0f, 1.0f);
+                if(!isFormed()) checkGrow();
             }
 
             return InteractionResult.sidedSuccess(getLevel().isClientSide);
@@ -119,7 +120,8 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     @Override
     public void onLoad() {
         super.onLoad();
-        subscribeServerTick(this::checkGrow);
+        //subscribeServerTick(this::checkGrow);
+        checkGrow();
         subscribeServerTick(this::tickGrow);
     }
 
@@ -130,7 +132,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
     public void checkGrow(){
 
-        if(shouldTick(20))
+        if(true || shouldTick(20))
         {
             if(growingBlockPattern == null)
                 growingBlockPattern = GrowingBlockPattern.getGrowingBlockPattern(getPattern());
@@ -143,12 +145,13 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
     public void tickGrow()
     {
-        if(shouldTick(20) &&
+        if(shouldTick(2) &&
                 getNutrientAmount() >= NUTRIENT_NEEDED_FOR_GROWTH &&
                 growingBlockPattern != null &&
                 growingBlockPattern.growPlan.tick())
         {
             nutrientStorage.extract(NUTRIENT_NEEDED_FOR_GROWTH);
+            if(growingBlockPattern.growPlan.isCompleted()) checkPattern();
         }
 
     }

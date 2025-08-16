@@ -11,12 +11,12 @@ import java.util.Collection;
 
 import static com.gregtechceu.gtceu.api.GTValues.RNG;
 
-public class BrainInAVat extends BasicLivingMachine implements IOpticalComputationProvider {
+public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalComputationProvider {
 
-    public static record Quad(int CWUt,
-            double NUt,
-            long EUt,
-            byte chanceToDoubt //自我怀疑的概率,0~128
+    public record Quad(int CWUt,
+                       double NUt,
+                       long EUt,
+                       byte chanceToDoubt //自我怀疑的概率,0~128
     ){
         public static Quad tier(int tier){
             int CWUt = (tier>= GTValues.HV?1<<(tier-GTValues.HV):0);
@@ -31,7 +31,7 @@ public class BrainInAVat extends BasicLivingMachine implements IOpticalComputati
     long lastWorkingTime = -1;
     boolean isDoubted = false;
 
-    public BrainInAVat(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, double capacity, Object... args) {
+    public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, double capacity, Object... args) {
         super(holder, tier, tankScalingFunction, capacity, args);
         q = Quad.tier(tier);
     }
