@@ -5,8 +5,7 @@ import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
 
 import com.moguang.ctnhbio.machine.braininavat.Brain;
 import com.moguang.ctnhbio.machine.braininavat.BrainRenderer;
-import com.moguang.ctnhbio.machine.greatflesh.GreatFleshBlockEntity;
-import com.moguang.ctnhbio.machine.greatflesh.GreatFleshRenderer;
+
 import com.tterrag.registrate.util.entry.EntityEntry;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.storage.loot.LootTable;

@@ -15,14 +15,14 @@ import com.moguang.ctnhbio.client.Renderer.ColorableMachineBlockEntityRenderer;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBlockEntityRenderer;
 import com.moguang.ctnhbio.client.model.BioReactorModel;
+import com.moguang.ctnhbio.client.model.BioelectricForgeModel;
 import com.moguang.ctnhbio.client.model.DigesterModel;
+import com.moguang.ctnhbio.client.model.VatModel;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeBlockEntity;
 import com.moguang.ctnhbio.machine.bioreactor.BioReactorBlockEntity;
-import com.moguang.ctnhbio.machine.bioreactor.BioReactorBlockEntityRenderer;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVat;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeMachineBlock;
-import com.moguang.ctnhbio.machine.digester.DigesterBlockEntity;
-import com.moguang.ctnhbio.machine.digester.DigesterBlockEntityRenderer;
+
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -73,18 +73,19 @@ public class CBMachines {
                             MachineDefinition::new,
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             BioelectricForgeMachineBlock::new,
-                            MetaMachineItem::new,
+                            (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new BioelectricForgeModel())),
                             (type, pos, state) -> new BioelectricForgeBlockEntity(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
                     .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("bioelectric_forge"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-
-                    .model((dataGenContext, gtBlockstateProvider, machineModelBuilder) ->
-                            machineModelBuilder.addModels(machineModelBuilder.partialState(),
-                                    ConfiguredModel.builder().modelFile(new ModelFile.UncheckedModelFile(CTNHBio.id("block/bioelectric_forge"))).buildLast()))
-
+                    .simpleModel(new ResourceLocation("biomancy", "block/flesh"))
+                    .onBlockEntityRegister(beType -> {
+                        @SuppressWarnings("unchecked")
+                        BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
+                        BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new BioelectricForgeModel(), true));
+                    })
                     .register();
         }
     }
@@ -104,7 +105,7 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("decompose"),CBRecipeTypes.DECOMPOSER_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
+                    .simpleModel(new ResourceLocation("biomancy", "block/flesh"))
 
                     .register();
         }
@@ -132,7 +133,7 @@ public class CBMachines {
                         BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
                         BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new DigesterModel()));
                     })
-                    .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
+                    .simpleModel(new ResourceLocation("biomancy", "block/flesh"))
                     .register();
         }
     }
@@ -152,7 +153,7 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("bioreactor"),CBRecipeTypes.BIO_REACTOR_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
+                    .simpleModel(new ResourceLocation("biomancy", "block/flesh"))
                     .onBlockEntityRegister(beType -> {
                         @SuppressWarnings("unchecked")
                         BlockEntityType<BioReactorBlockEntity> typed = (BlockEntityType<BioReactorBlockEntity>) (BlockEntityType<?>)beType;
@@ -171,7 +172,7 @@ public class CBMachines {
                             //holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
                             holder -> new BrainInAVat(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
-                            MetaMachineItem::new,
+                            (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new VatModel())),
                             (type, pos, state) ->
                                     LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.BRAIN_IN_A_VAT_BRAIN.get())
                                             .setEntityOffset(0.5, 0.6, 0.5)
@@ -184,10 +185,12 @@ public class CBMachines {
                     )
 
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .model((dataGenContext, gtBlockstateProvider, machineModelBuilder) ->
-                            machineModelBuilder.addModels(machineModelBuilder.partialState(),
-                                    ConfiguredModel.builder().modelFile(new ModelFile.UncheckedModelFile(CTNHBio.id("block/vat"))).buildLast()))
-
+                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
+                    .onBlockEntityRegister(beType -> {
+                        @SuppressWarnings("unchecked")
+                        BlockEntityType<BioReactorBlockEntity> typed = (BlockEntityType<BioReactorBlockEntity>) (BlockEntityType<?>)beType;
+                        BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new VatModel(), true));
+                    })
                     .register();
         }
     }

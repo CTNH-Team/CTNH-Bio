@@ -13,7 +13,7 @@ import com.gregtechceu.gtceu.api.registry.registrate.MultiblockMachineBuilder;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
-import com.moguang.ctnhbio.machine.greatflesh.GreatFleshBlockEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
