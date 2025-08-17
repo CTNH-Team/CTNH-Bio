@@ -13,6 +13,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Consumer;
 
 public class DespoilLootHelper {
@@ -25,19 +26,32 @@ public class DespoilLootHelper {
         LootTable lootTable = level.getServer().getLootData().getLootTable(lootTableId);
 
         if (lootTable != LootTable.EMPTY) {
+            // 1. 创建战利品参数
             LootParams lootParams = new LootParams.Builder(level)
                     .withParameter(LootContextParams.THIS_ENTITY, entity)
                     .withParameter(LootContextParams.ORIGIN, entity.position())
                     .withParameter(LootContextParams.DAMAGE_SOURCE, source)
                     .create(LootContextParamSets.ENTITY);
 
+            // 2. 生成基础战利品（仅一次）
+            List<ItemStack> baseLoot = new ArrayList<>();
             Consumer<ItemStack> lootConsumer = stack -> {
-                if (!stack.isEmpty()) loot.add(stack);
+                if (!stack.isEmpty()) baseLoot.add(stack.copy());
             };
+            lootTable.getRandomItemsRaw(lootParams, lootConsumer);
 
-            for (int i = 0; i < despoilLevel; i++) {
-                if (level.getRandom().nextFloat() <= despoilChance) {
-                    lootTable.getRandomItemsRaw(lootParams, lootConsumer);
+            // 3. 直接乘以 despoilLevel
+            for (ItemStack stack : baseLoot) {
+                if (stack.hasTag()) {
+                    // 特殊 NBT 物品：生成 despoilLevel 个独立堆叠
+                    for (int i = 0; i < despoilLevel; i++) {
+                        loot.add(stack.copy());
+                    }
+                } else {
+                    // 普通物品：合并数量
+                    ItemStack finalStack = stack.copy();
+                    finalStack.setCount(stack.getCount() * despoilLevel);
+                    loot.add(finalStack);
                 }
             }
         }

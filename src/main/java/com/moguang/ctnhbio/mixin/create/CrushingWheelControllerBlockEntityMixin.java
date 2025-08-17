@@ -46,7 +46,12 @@ public abstract class CrushingWheelControllerBlockEntityMixin extends SmartBlock
             )
     )
     public boolean hurt(Entity entity, DamageSource source, float originalDamage) {
-        float damage = 1;//10 * self.crushingspeed;
+        float damage = 10*self.crushingspeed;
+        if(entity instanceof LivingEntity livingEntity)
+        {
+            damage = Math.min(damage, livingEntity.getMaxHealth()/4);
+        }
+
         if (entity.hurt(CreateDamageSources.crush(level), damage) && !entity.isAlive()) {
             // 1. 尝试获取 MobCrushingRecipe 的掉落物
             Optional<ItemStack> recipeResult = MobCrushingRecipeManager.findRecipe(entity)
@@ -55,7 +60,7 @@ public abstract class CrushingWheelControllerBlockEntityMixin extends SmartBlock
             // 2. 生成掠夺战利品（仅对生物实体且服务端生效）
             List<ItemStack> despoilLoot = new ArrayList<>();
             if (entity instanceof LivingEntity && level instanceof ServerLevel serverLevel) {
-                int despoilLevel = Math.min((int)(2 * self.crushingspeed), 1);
+                int despoilLevel = Math.max((int)(self.crushingspeed), 1);
                 float despoilChance = 1.0f;
                 despoilLoot = DespoilLootHelper.generateDespsoilLoot(
                         despoilLevel, entity, source,serverLevel, despoilChance
