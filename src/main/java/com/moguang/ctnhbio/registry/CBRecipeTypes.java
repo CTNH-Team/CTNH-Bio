@@ -9,6 +9,7 @@ import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 public class CBRecipeTypes {
     public static String NUTRIENT = "nutrient";
     public static final GTRecipeType BIOELECTRIC_FORGE_RECIPES = GTRecipeTypes.register("bioelectric_forge", NUTRIENT)
+
             .setMaxIOSize(6, 2, 3, 1)
             .setEUIO(IO.IN)
             .setMaxTooltips(5)
@@ -45,7 +46,7 @@ public class CBRecipeTypes {
 
     public static final GTRecipeType GREAT_FLESH = GTRecipeTypes.register("great_flesh", GTRecipeTypes.ELECTRIC)
             .setMaxIOSize(6, 0, 3, 0)
-            //.setEUIO(IO.IN)
+            .setEUIO(IO.IN)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
     public static void init() {}

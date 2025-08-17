@@ -61,27 +61,27 @@ public class CTNHBioJeiPlugin implements IModPlugin {
 
     @Override
     public void onRuntimeAvailable(@NotNull IJeiRuntime jeiRuntime) {
-//        IRecipeManager recipeManager = jeiRuntime.getRecipeManager();
-//        RecipeType<GameplayLootType> aliGameplayType = new RecipeType<>(new ResourceLocation("ctnhbio", "despoil_loot"), GameplayLootType.class);
-//
-//
-//        var allRecipes = recipeManager.createRecipeLookup(aliGameplayType).get();
-//
-//        List<GameplayLootType> toHide = allRecipes
-//                .filter(recipe -> {
-//                    ResourceLocation seq = ((LootTableAccess)recipe.entry()).getRandomSequence();
-//                    if (seq == null) return true;
-//
-//                    String[] parts = seq.getPath().split("/");
-//                    if (parts.length < 3) return true;
-//
-//                    ResourceLocation id = new ResourceLocation(seq.getNamespace(), parts[2]);
-//                    return !BuiltInRegistries.ENTITY_TYPE.containsKey(id);
-//                })
-//                .toList();
-//
-//        // 隐藏所有无效实体对应的配方
-//        recipeManager.hideRecipes(aliGameplayType, toHide);
+        IRecipeManager recipeManager = jeiRuntime.getRecipeManager();
+        RecipeType<GameplayLootType> aliGameplayType = new RecipeType<>(new ResourceLocation("ctnhbio", "despoil_loot"), GameplayLootType.class);
+
+
+        var allRecipes = recipeManager.createRecipeLookup(aliGameplayType).get();
+
+        List<GameplayLootType> toHide = allRecipes
+                .filter(recipe -> {
+                    ResourceLocation seq = ((LootTableAccess)recipe.entry()).getRandomSequence();
+                    if (seq == null) return true;
+
+                    String[] parts = seq.getPath().split("/");
+                    if (parts.length < 3) return true;
+
+                    ResourceLocation id = new ResourceLocation(seq.getNamespace(), parts[2]);
+                    return !BuiltInRegistries.ENTITY_TYPE.containsKey(id);
+                })
+                .toList();
+
+        // 隐藏所有无效实体对应的配方
+        recipeManager.hideRecipes(aliGameplayType, toHide);
     }
 
     @Override

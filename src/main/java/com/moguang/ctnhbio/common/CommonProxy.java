@@ -5,10 +5,9 @@ import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.data.CBDatagen;
 import com.moguang.ctnhbio.data.materials.OrganicMaterials;
-import com.moguang.ctnhbio.registry.CBCreativeModeTabs;
-import com.moguang.ctnhbio.registry.CBEntities;
-import com.moguang.ctnhbio.registry.CBItems;
-import com.moguang.ctnhbio.registry.CBSerums;
+import com.moguang.ctnhbio.registry.*;
+import net.minecraft.server.packs.PackType;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
@@ -37,8 +36,13 @@ public class CommonProxy {
     @SubscribeEvent
     public void modConstruct(FMLConstructModEvent event) {
         // this is done to delay initialization of content to be after KJS has set up.
-
-
     }
 
+    @SubscribeEvent
+    public void registerPackFinders(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA)
+        {
+            //CBRecipes.recipeAddition();
+        }
+    }
 }

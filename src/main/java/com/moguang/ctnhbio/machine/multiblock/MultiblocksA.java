@@ -30,34 +30,34 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class MultiblocksA {
     public static void init() {}
-    public static MultiblockMachineDefinition BASIC_MULTI_LIVING_MACHINE = REGISTRATE.biomultiblock("basic_multi_living_machine", WorkableLivingMultiblockMachine::new)
-            .recipeType(CBRecipeTypes.GREAT_FLESH)
-            .pattern(definition -> FactoryBlockPattern.start()
-                    .aisle("AAA", "AAA", "AAA")
-                    .aisle("AAA", "AAA", "AAA")
-                    .aisle("AAA", "A@A", "AAA")
-                    .where("A", Predicates.blocks(ModBlocks.FLESH.get()).setMinGlobalLimited(10)
-                            .or(Predicates.autoAbilities(definition.getRecipeTypes()))
-                            .or(Predicates.blocks(Blocks.AIR)))
-                    .where("@", Predicates.controller(Predicates.blocks(definition.get())))
-
-                    .build())
-
-            .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
-            .simpleModel(new ResourceLocation("minecraft", "block/air"))
-            .additionalDisplay((controller, components) -> {
-                if(controller instanceof WorkableLivingMultiblockMachine machine){
-                    components.add(Component.translatable("jade.nutrient.info",
-                            Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
-                }
-            })
-            .hasBER(false)
-//            .onBlockEntityRegister(beType -> {
-//                @SuppressWarnings("unchecked")
-//                BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
-//                BlockEntityRenderers.register(typed, ctx -> new GreatFleshRenderer(ctx));
+//    public static MultiblockMachineDefinition BASIC_MULTI_LIVING_MACHINE = REGISTRATE.biomultiblock("basic_multi_living_machine", WorkableLivingMultiblockMachine::new)
+//            .recipeType(CBRecipeTypes.GREAT_FLESH)
+//            .pattern(definition -> FactoryBlockPattern.start()
+//                    .aisle("AAA", "AAA", "AAA")
+//                    .aisle("AAA", "AAA", "AAA")
+//                    .aisle("AAA", "A@A", "AAA")
+//                    .where("A", Predicates.blocks(ModBlocks.FLESH.get()).setMinGlobalLimited(10)
+//                            .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+//                            .or(Predicates.blocks(Blocks.AIR)))
+//                    .where("@", Predicates.controller(Predicates.blocks(definition.get())))
+//
+//                    .build())
+//
+//            .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
+//            .simpleModel(new ResourceLocation("minecraft", "block/air"))
+//            .additionalDisplay((controller, components) -> {
+//                if(controller instanceof WorkableLivingMultiblockMachine machine){
+//                    components.add(Component.translatable("jade.nutrient.info",
+//                            Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
+//                }
 //            })
-            .register();
+//            .hasBER(false)
+////            .onBlockEntityRegister(beType -> {
+////                @SuppressWarnings("unchecked")
+////                BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
+////                BlockEntityRenderers.register(typed, ctx -> new GreatFleshRenderer(ctx));
+////            })
+//            .register();
 
     public static MultiblockMachineDefinition GREAT_FLESH = REGISTRATE
             .biomultiblock("great_flesh",
@@ -69,7 +69,10 @@ public class MultiblocksA {
                     .aisle("AAA", "A@A", "AAA")
                     .where("A", Predicates.blocks(ModBlocks.FLESH.get()).setMinGlobalLimited(10)
                             .or(Predicates.autoAbilities(definition.getRecipeTypes()))
-                            .or(Predicates.blocks(Blocks.AIR)))
+                            //.or(Predicates.blocks(Blocks.AIR))
+
+
+                    )
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
 
                     .build())
@@ -98,7 +101,7 @@ public class MultiblocksA {
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
-            .recipeType(CBRecipeTypes.GREAT_FLESH)
+            .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCCCB", "BCCCB", "BCCCB", "AAAAA")
                     .aisle("ADDDA", "CEEEC", "C###C", "C###C", "ADDDA")
@@ -136,7 +139,7 @@ public class MultiblocksA {
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
-            .recipeType(CBRecipeTypes.GREAT_FLESH)
+            .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCACB", "BDADB", "BCACB", "AAAAA")
                     .aisle("AEEEA", "CFGFC", "DFGFD", "CFGFC", "AEEEA")
@@ -173,7 +176,7 @@ public class MultiblocksA {
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
-            .recipeType(CBRecipeTypes.GREAT_FLESH)
+            .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("#BBBBB#", "#######", "#######", "#######", "#######", "#######", "#######", "#######")
                     .aisle("BCCCCCB", "#CDDDC#", "#C###C#", "#E###E#", "#E###E#", "#E###E#", "#EE#EE#", "#######")

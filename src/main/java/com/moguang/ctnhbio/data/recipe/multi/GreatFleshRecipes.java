@@ -1,5 +1,6 @@
 package com.moguang.ctnhbio.data.recipe.multi;
 
+import com.gregtechceu.gtceu.api.GTValues;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBItems;
@@ -15,11 +16,11 @@ import java.util.function.Consumer;
 
 public class GreatFleshRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
-        CBRecipeTypes.GREAT_FLESH.recipeBuilder("great_bioelectric_forge")
-                .inputFluids(new FluidStack(Fluids.WATER, 100))
-                .inputItems(new ItemStack(Items.ACACIA_LOG, 10))
-                //.EUt(200)
-                .duration(50)
+        CBRecipeBuilder.of(CTNHBio.id("cogni_assembler"), CBRecipeTypes.GREAT_FLESH)
+                .nutrient(1)
+                .inputItems(Ingredient.of(CBItems.META_CORE))
+                .duration(100)
+                //.EUt(GTValues.)
                 .save(provider);
 
         CBRecipeBuilder.of(CTNHBio.id("circulatory_system"), CBRecipeTypes.GREAT_FLESH)
@@ -27,5 +28,12 @@ public class GreatFleshRecipes {
                 .inputItems(Ingredient.of(CBItems.OMNI_CORE))
                 .duration(100)
                 .save(provider);
+
+        CBRecipeBuilder.of(CTNHBio.id("weatherer"), CBRecipeTypes.GREAT_FLESH)
+                .nutrient(1)
+                .inputItems(Ingredient.of(CBItems.NOVA_CORE))
+                .duration(100)
+                .save(provider);
+
     }
 }

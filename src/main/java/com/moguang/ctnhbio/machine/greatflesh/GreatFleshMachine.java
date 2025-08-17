@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.machine.greatflesh;
 
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
+import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.moguang.ctnhbio.CTNHBio;
@@ -40,6 +41,15 @@ public class GreatFleshMachine extends WorkableLivingMultiblockMachine {
         var facing =  getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
         if(definition != null && level!= null)
         {
+            for(var part:getParts())
+            {
+                if(part instanceof MetaMachine machine)
+                {
+                    level.getServer().submit(()->
+                            level.destroyBlock(machine.getPos(), true)
+                            );
+                }
+            }
             level.getServer().submit(()->
                     level.setBlock(getPos(), definition.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING , facing), Block.UPDATE_ALL)
                     );
