@@ -3,9 +3,13 @@ package com.moguang.ctnhbio.api.machine.trait;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
+import com.gregtechceu.gtceu.api.machine.TickableSubscription;
+import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.trait.ICapabilityTrait;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
+import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.lowdragmc.lowdraglib.syncdata.ISubscription;
 import com.moguang.ctnhbio.api.capability.IEntityContainer;
 import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.EntityIngredient;
@@ -30,10 +34,16 @@ public class NotifiableEntityContainer extends NotifiableRecipeHandlerTrait<Enti
     @Getter
     public final AABB boundingBox;
 
-    public NotifiableEntityContainer(MetaMachine machine, AABB boundingBox, IO io) {
+    protected boolean shouldNotify;
+
+    public NotifiableEntityContainer(MetaMachine machine, AABB boundingBox, IO io, boolean shouldNotify) {
         super(machine);
         this.boundingBox = boundingBox;
         this.handlerIO = io;
+        this.shouldNotify = shouldNotify;
+    }
+    public NotifiableEntityContainer(MetaMachine machine, AABB boundingBox, IO io) {
+        this(machine, boundingBox, io, io==IO.IN);
     }
 
     @Override @Nullable
@@ -78,6 +88,67 @@ public class NotifiableEntityContainer extends NotifiableRecipeHandlerTrait<Enti
             }
         }
         return ret.isEmpty() ? null : ret; //差点忘了要null才跑配方
+    }
+
+    //Notify
+    protected TickableSubscription subscription;
+
+    private ISubscription rlSubscription;
+    @Override
+    public void onMachineLoad() {
+        updateTickSubscription();
+        if(machine instanceof IRecipeLogicMachine rlm){
+            rlSubscription = addChangedListener(rlm.getRecipeLogic()::updateTickSubscription);
+        }
+    }
+
+    @Override
+    public void onMachineUnLoad() {
+        unsubscribe();
+        if(rlSubscription != null){
+            rlSubscription.unsubscribe();
+            rlSubscription = null;
+        }
+    }
+
+    private void unsubscribe() {
+        if(subscription!= null){
+            subscription.unsubscribe();
+            subscription = null;
+        }
+    }
+
+    //配方机器自动处理,非配方机器需要手动处理shouldNotify
+    public void updateTickSubscription() {
+        if(!shouldNotify ||
+                (machine instanceof IRecipeLogicMachine rlm && !rlm.isWorkingEnabled())){
+            unsubscribe();
+        }
+        else{
+            subscription = getMachine().subscribeServerTick(subscription, this::serverTick);
+        }
+    }
+    private int lastHashCode;
+    private int lastCount = -1;
+    public void serverTick() {
+        Level level = getLevel();
+        if (level == null || level.getGameTime() % 20 != 0) return;
+        var entities = getAllEntities();
+        if(lastCount != entities.size()){
+            notifyListeners();
+            lastCount = entities.size();
+        } else if(lastHashCode != entities.hashCode()){
+            notifyListeners();
+            lastHashCode = entities.hashCode();
+        }
+    }
+    public void startNotify() {
+        shouldNotify = true;
+        updateTickSubscription();
+    }
+    public void stopNotify() {
+        shouldNotify = false;
+        unsubscribe();
     }
 
     @Override
