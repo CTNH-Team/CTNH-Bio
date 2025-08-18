@@ -2,10 +2,14 @@ package com.moguang.ctnhbio.data.recipe;
 
 import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTItems;
+import com.gregtechceu.gtceu.common.data.GTMachines;
+import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.registry.CBMachines;
+import dev.architectury.platform.Mod;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -18,6 +22,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
+
+import static com.gregtechceu.gtceu.api.GTValues.LV;
 
 
 public class VanillaRecipeProvider {
@@ -54,5 +60,19 @@ public class VanillaRecipeProvider {
                 'I', GTItems.SILICON_WAFER
         );
 
+// 第三个配方：BIO_FORGE
+        VanillaRecipeHelper.addShapedRecipe(provider, false, true,
+                CTNHBio.id("bio_forge_recipe"),
+                new ItemStack(ModItems.BIO_FORGE.get(), 1),
+                "AEA",
+                "BIB",
+                "CDC",
+                'A', ModItems.MOB_CLAW.get(),
+                'B', CustomTags.LV_CIRCUITS,
+                'C', GTItems.FLUID_CELL_LARGE_TUNGSTEN_STEEL.get(),
+                'D', ModItems.LIVING_FLESH,
+                'E', ModItems.PRIMORDIAL_CORE,
+                'I', GTMachines.HULL[LV]
+        );
     }
 }
