@@ -1,14 +1,13 @@
 package com.moguang.ctnhbio.data.lang;
 
+import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
+import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
+import com.moguang.ctnhbio.data.lang.utils.*;
 import com.moguang.ctnhbio.registry.CBItems;
-import com.moguang.ctnhbio.registry.CBMaterials;
-import com.tterrag.registrate.providers.RegistrateLangProvider;
 import net.minecraftforge.common.data.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 
@@ -90,6 +89,35 @@ public class ChineseLangHandler {
         provider.add("material.ctnhbio.fentons_reagent", "芬顿试剂");
         provider.add("material.ctnhbio.bio_flexible", "生物柔性材质");
         provider.add("material.ctnhbio.weird_pixel_dust", "营养");
+
+        //Entity Properties
+        EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"实体输入","实体输出");
+        epu.add(EntityProperties.FALL_DISTANCE, "落地距离");
+        epu.add(EntityProperties.REMAINING_FIRE_TICKS, "剩余火焰");
+        epu.add(EntityProperties.AIR_SUPPLY, "空气供应");
+        epu.add(EntityProperties.ON_GROUND, "是否在地上");
+        epu.add(EntityProperties.INVULNERABLE, "是否无敌");
+        epu.add(EntityProperties.PORTAL_COOLDOWN, "传送门冷却时间");
+        epu.add(EntityProperties.CUSTOM_NAME, "自定义名称");
+        epu.add(EntityProperties.CUSTOM_NAME_VISIBLE, "自定义名称可见性");
+        epu.add(EntityProperties.SILENT, "是否静默");
+        epu.add(EntityProperties.NO_GRAVITY, "是否无重力");
+        epu.add(EntityProperties.GLOWING, "是否闪烁");
+        epu.add(EntityProperties.TICKS_FROZEN, "冻结时间");
+        epu.add(EntityProperties.HAS_VISUAL_FIRE, "是否有可视火焰");
+        epu.add(EntityProperties.CAN_UPDATE, "是否可更新");
+        epu.add(EntityProperties.HEALTH, "生命值");
+        epu.add(EntityProperties.HURT_TIME, "受伤时间");
+        epu.add(EntityProperties.HURT_BY_TIMESTAMP, "受伤时间戳");
+        epu.add(EntityProperties.DEATH_TIME, "死亡时间");
+        epu.add(EntityProperties.ABSORPTION_AMOUNT, "吸收量");
+        epu.add(EntityProperties.FALL_FLYING, "是否在飞行中");
+
+        epu.add(PropertyOperators.EQUAL, "等于");
+        epu.add(PropertyOperators.GREATER, "大于");
+        epu.add(PropertyOperators.LESSER, "小于");
+        epu.add(PropertyOperators.CONTAIN, "包含");
+
     }
 
     public static void replace(@NotNull RegistrateCNLangProvider provider, @NotNull String key,
