@@ -1,5 +1,6 @@
 package com.moguang.ctnhbio.data.recipe.living;
 
+import com.github.elenterius.biomancy.init.ModFluids;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
@@ -1492,7 +1493,7 @@ public class DecomposerRecipes {
                 .effect(MobEffects.DAMAGE_BOOST)
                 .nutrient(3)
                 .inputItems(TagPrefix.crushed, material)
-                .inputFluids(new FluidStack(Fluids.WATER, 1500))
+                .inputFluids(new FluidStack(DistilledWater.getFluid(), 5000))
                 .outputItems(finalDust)
                 .chancedOutput(
                         ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(0, material)),
@@ -1509,8 +1510,8 @@ public class DecomposerRecipes {
                         1700,
                         0
                 )
-                .EUt(90)
-                .duration(1000)
+                .EUt(8000)
+                .duration(500)
                 .save(provider);
         //洗矿-粉碎-离心
         OreProperty one = material.getProperty(PropertyKey.ORE);
@@ -1521,7 +1522,7 @@ public class DecomposerRecipes {
                 .effect(MobEffects.DAMAGE_BOOST)
                 .nutrient(2)
                 .inputItems(TagPrefix.crushed, material)
-                .inputFluids(new FluidStack(DistilledWater.getFluid(), 1500))
+                .inputFluids(new FluidStack(Fluids.WATER, 1500))
                 .outputItems(Dust)
                 .chancedOutput(
                         ChemicalHelper.get(TagPrefix.dust, one.getOreByProduct(0, material)),
@@ -1539,21 +1540,18 @@ public class DecomposerRecipes {
                         0
                 )
                 .EUt(24)
-                .duration(1500)
+                .duration(200)
                 .save(provider);
         //酸洗-粉碎-离心
         if (!property.getWashedIn().first().isNull()) {
             Material washingByproduct = property.getOreByProduct(3, material);
-            ObjectIntPair<Material> washedInTuple = property.getWashedIn();
+            //ObjectIntPair<Material> washedInTuple = property.getWashedIn();
             CBRecipeBuilder.of(CTNHBio.id("acid_grind_centrifuge_" + material.getName()),
                             CBRecipeTypes.DECOMPOSER_RECIPES)
                     .effect(MobEffects.DAMAGE_BOOST)
                     .nutrient(3)
                     .inputItems(TagPrefix.crushed, material)
-                    .inputFluids(new FluidStack(
-                            washedInTuple.first().getFluid(),
-                            washedInTuple.secondInt() * 2
-                    ))
+                    .inputFluids(new FluidStack(ModFluids.ACID.get(), 200))
                     .outputItems(ChemicalHelper.get(TagPrefix.dust, material))
                     .chancedOutput(
                             ChemicalHelper.get(TagPrefix.dust, washingByproduct),

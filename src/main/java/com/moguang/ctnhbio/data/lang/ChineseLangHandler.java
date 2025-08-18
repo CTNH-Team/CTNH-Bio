@@ -98,13 +98,13 @@ public class ChineseLangHandler {
         provider.add("jei.category.gtceu.great_flesh", "巨型肉块-分化");
 
 
-        provider.add("ctnhbio.nutrient_bar.info", "营养槽");
+        provider.add("ctnhbio.nutrient_bar.info", "营养:");
         provider.add("recipe.capability.nutrient.name", "营养");
         provider.add("jade.nutrient.info", "营养值：");
 
         provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
         provider.add("ctnhbio.recipe.nutrient", "营养消耗：%d");
-        provider.add("ctnhbio.jade.nutrient_stored", "%s / %s");
+        provider.add("ctnhbio.jade.nutrient_stored", "%s / %s u");
 
         provider.add("jei.ctnhbio.mob_crushing", "生物粉碎");
         provider.add("jei.ctnhbio.tooltip.chance", "概率：");

@@ -12,6 +12,7 @@ import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineBlockEntityRenderer;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBlockEntityRenderer;
@@ -124,7 +125,7 @@ public class CBMachines {
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
-                    .recipeModifiers(DigesterMachine::recipeModifier, GTRecipeModifiers.OC_NON_PERFECT)
+                    .recipeModifiers(DigesterMachine::recipeModifier, GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
                     .recipeType(CBRecipeTypes.DIGEST_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("digester"),CBRecipeTypes.DIGEST_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)

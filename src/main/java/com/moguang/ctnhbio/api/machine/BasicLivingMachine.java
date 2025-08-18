@@ -211,7 +211,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                         Math.max(template.getSize().height, 78));
                 template.setSelfPosition(new Position(0, (group.getSize().height - template.getSize().height) / 2));
                 nutrientBar.setSelfPosition(new Position(group.getSize().width / 2 - 20, template.getPositionY() + (template.getSizeHeight() - nutrientBar.getSizeHeight()) / 2));
-                nutrientBar.setHoverTooltips(Component.translatable("ctnhbio.nutrient_bar.info"));
+                //nutrientBar.setHoverTooltips(Component.translatable("ctnhbio.nutrient_bar.info"));
                 group.addWidget(nutrientBar);
                 group.addWidget(template);
 
@@ -252,8 +252,19 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             progressBar.setBackground(CBGuiTextures.NUTRIENT_BAR);
             return progressBar;
         }, (progressBar, machine) -> {
+
             progressBar.setProgressSupplier(
                     () -> machine.getNutrientAmount() * 1d / machine.getNutrientCapacity());
+            progressBar.setHoverTooltips(
+                    Component.translatable("ctnhbio.nutrient_bar.info"));
+            progressBar.setDynamicHoverTips(progress -> {
+                    double current = progress * machine.getNutrientCapacity();
+                    double max = machine.getNutrientCapacity();
+                    return String.format("%.0f / %.0f u", current, max);
+
+            });
+
+
         });
     }
 

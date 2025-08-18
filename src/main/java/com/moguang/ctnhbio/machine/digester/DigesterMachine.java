@@ -34,7 +34,10 @@ public class DigesterMachine extends BasicLivingMachine {
     }
 
     public static ModifierFunction recipeModifier(MetaMachine machine, GTRecipe recipe) {
-        if(machine instanceof DigesterMachine digester && recipe.recipeType == CBRecipeTypes.DIGEST_RECIPES) {
+        if(machine instanceof DigesterMachine digester &&
+                recipe.recipeType == CBRecipeTypes.DIGEST_RECIPES &&
+                recipe.data.getInt("circuit") != 0
+        ) {
             return original -> {
                 // 计算输入食物总营养值(乘以2)
 
@@ -57,13 +60,16 @@ public class DigesterMachine extends BasicLivingMachine {
                         foods.add(stack);
                     }
                 }
+                if (foods.isEmpty()) {
+                    return null;
+                }
 
                 for (ItemStack stack : foods) {
                     totalNutrition += getFoodNutritionValue(stack) * stack.getCount() * 2; // 营养值乘以2
                 }
 
 
-                if(original.data.getInt("circuit") == 0)
+                if(original.data.getInt("circuit") == 1)
                 {
                     int totalPaste = Math.round(totalNutrition / 3);
                     int barCount = totalPaste / 9;
@@ -78,9 +84,7 @@ public class DigesterMachine extends BasicLivingMachine {
                         newOutputs.add(new ItemStack(ModItems.NUTRIENT_PASTE.get(), remainingPaste));
                     }
 
-                    if (newOutputs.isEmpty()) {
-                        return null;
-                    }
+
 
                     return GTRecipeBuilder.ofRaw()
                             .inputItems(foods.toArray(new ItemStack[0]))
@@ -89,7 +93,7 @@ public class DigesterMachine extends BasicLivingMachine {
                             .EUt(32)
                             .buildRawRecipe();
                 }
-                else {
+                else{
                     int fluidAmount = Math.round(totalNutrition); // 1营养值 = 1mB流体
 
                     return GTRecipeBuilder.ofRaw()

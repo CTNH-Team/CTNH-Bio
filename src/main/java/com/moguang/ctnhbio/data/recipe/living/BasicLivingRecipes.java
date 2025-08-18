@@ -29,8 +29,8 @@ public class BasicLivingRecipes {
                 .EUt(32)
                 .save(provider);
         CBRecipeBuilder.of(CTNHBio.id("nutrient3"), CBRecipeTypes.BASIC_LIVING_RECIPES)
-                .nutrient(-1)
-                .inputFluids(FluidIngredient.of(CBTags.NUTRIENT_FLUIDS, 1))
+                .nutrient(-10)
+                .inputFluids(FluidIngredient.of(CBTags.NUTRIENT_FLUIDS, 10))
                 .duration(1)
                 .EUt(32)
                 .save(provider);
@@ -40,10 +40,10 @@ public class BasicLivingRecipes {
                 .EUt(32)
                 .addData("potion", true)
                 .save(provider);
-        CBRecipeBuilder.of(CTNHBio.id("potion_test"), CBRecipeTypes.BASIC_LIVING_RECIPES)
-                .inputFluids(FluidIngredient.of(Fluids.WATER, 250))
-                .duration(10)
-                .EUt(32)
-                .save(provider);
+//        CBRecipeBuilder.of(CTNHBio.id("potion_test"), CBRecipeTypes.BASIC_LIVING_RECIPES)
+//                .inputFluids(FluidIngredient.of(Fluids.WATER, 250))
+//                .duration(10)
+//                .EUt(32)
+//                .save(provider);
     }
 }

@@ -208,26 +208,28 @@ public class RecipeRemoval {
                 "biomancy:decomposing/forge_seeds",
                 "biomancy:decomposing/cocoa_beans",
 
+                "biomancy:crafting/primordial_core",
+                "biomancy:bio_brewing"
 
         };
         for(var recipe: recipes) {
             registry.accept(new ResourceLocation(recipe));
         }
 
-        registry.accept(new ResourceLocation("biomancy:crafting/primordial_core"));
-        registry.accept(new ResourceLocation("biomancy:bio_brewing"));
-
     }
     public static void ctnhbioRemovals(Consumer<ResourceLocation> registry){
         var recipes = new String[]{
-                "minecraft:tnt"
+                "biofactory:mixing/nutrients_fluid_from_paste",
+                "gtceu:circuit_assembler/wetware_processor_luv",
+                "gtceu:circuit_assembler/wetware_processor_luv_soldering_alloy",
+                "gtceu:circuit_assembler/wetware_processor_assembly_zpm",
+                "gtceu:circuit_assembler/wetware_processor_assembly_zpm_soldering_alloy",
+                "gtceu:assembly_line/wetware_super_computer_uv"
         };
 
-        registry.accept(new ResourceLocation("gtceu:circuit_assembler/wetware_processor_luv"));
-        registry.accept(new ResourceLocation("gtceu:circuit_assembler/wetware_processor_luv_soldering_alloy"));
-        registry.accept(new ResourceLocation("gtceu:circuit_assembler/wetware_processor_assembly_zpm"));
-        registry.accept(new ResourceLocation("gtceu:circuit_assembler/wetware_processor_assembly_zpm_soldering_alloy"));
-        registry.accept(new ResourceLocation("gtceu:assembly_line/wetware_super_computer_uv"));
+        for(var recipe: recipes) {
+            registry.accept(new ResourceLocation(recipe));
+        }
     }
 
 
