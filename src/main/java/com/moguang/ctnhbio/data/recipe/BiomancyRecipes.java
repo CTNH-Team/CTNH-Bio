@@ -102,7 +102,7 @@ public class BiomancyRecipes extends RecipeProvider {
                 .addIngredient(ModItems.PRIMORDIAL_CORE.get(), 2)
                 .addIngredient(Items.SLIME_BLOCK, 1)
                 .addIngredient(CustomTags.MV_CIRCUITS,2)
-                .addIngredient(GTMachines.MACERATOR[LV].getItem(), 1)
+                .addIngredient(GTMachines.CHEMICAL_REACTOR[LV].getItem(), 1)
                 .addIngredient(ROBOT_ARM_LV, 2)
                 .setCraftingCost(2)
                 .setCategory(ModBioForgeTabs.MACHINES)
