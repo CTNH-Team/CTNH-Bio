@@ -44,12 +44,7 @@ import static com.moguang.ctnhbio.registry.CBMaterialItems.CB_TOOL_ITEMS;
 public class EventHandler {
     public static void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
         CBMachines.init();
-        CBItems.init();
         CBMultiblockMachines.init();
-
-        CBBlocks.init();
-//        CTNHBlocks.init();
-//        CTNHMultiblockMachines.init();
     }
 
     public static void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {
@@ -76,13 +71,6 @@ public class EventHandler {
 //            ItemStack stack = new ItemStack(entry.get());
 //            stack.enchant(ModEnchantments.DESPOIL.get(), 3);
 //        }
-    }
-
-    @SubscribeEvent
-    public static void onRegisterItems(RegisterEvent event) {
-//        event.register(ForgeRegistries.ITEMS.getRegistryKey(), helper -> {
-//            CBItems.init();
-//        });
     }
 
 
