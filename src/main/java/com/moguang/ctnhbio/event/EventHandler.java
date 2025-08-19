@@ -46,7 +46,7 @@ public class EventHandler {
         CBMachines.init();
         CBItems.init();
         CBMultiblockMachines.init();
-        CBItems.init();
+
         CBBlocks.init();
 //        CTNHBlocks.init();
 //        CTNHMultiblockMachines.init();

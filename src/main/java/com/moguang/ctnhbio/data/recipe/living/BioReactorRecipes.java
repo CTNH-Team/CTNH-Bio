@@ -4,6 +4,7 @@ import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 
 import com.gregtechceu.gtceu.common.data.GTItems;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBItems;
@@ -29,19 +30,19 @@ public class BioReactorRecipes {
                 .nutrient(12)
                 .effect()
                 .inputFluids(new FluidStack(Bile.getFluid(), 200))
-                .inputItems(ModItems.ORGANIC_MATTER.get().asItem().getDefaultInstance())
+                .inputItems(GTItems.BIO_CHAFF)
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance())
                 .outputFluidsRanged(new FluidStack(Organic_Compound.getFluid(), 100), UniformInt.of(75, 125))
                 .EUt(96)
                 .duration(2 * 20)
                 .save(provider);
 
-// EXOTIC_COMPOUND
+// HETEROGENEOUS_COMPOUND
         CBRecipeBuilder.of(CTNHBio.id("exotic_compound"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(16)
                 .inputItems(ModItems.EXOTIC_DUST.get().asItem().getDefaultInstance(), 2)
                 .inputItems(TagPrefix.dust,Steel)
-                .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
+                .inputFluids(SiliconeRubber.getFluid(100))
                 .outputFluidsRanged(new FluidStack(Heterogeneous_Compound.getFluid(), 100), UniformInt.of(75, 125))
                 .EUt(96)
                 .duration(4 * 20)
@@ -52,7 +53,7 @@ public class BioReactorRecipes {
                 .nutrient(16)
                 .inputFluids(new FluidStack(Endocrine_Hormone.getFluid(), 100))
                 .inputItems(TagPrefix.dust,WEIRD_PIXEL_DUST)
-                .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
+                .inputItems(TagPrefix.dust,Meat)
                 .outputFluidsRanged(new FluidStack(Genetic_Compound.getFluid(), 100), UniformInt.of(75, 125))
                 .EUt(96)
                 .duration(4 * 20)
@@ -62,16 +63,16 @@ public class BioReactorRecipes {
         CBRecipeBuilder.of(CTNHBio.id("unstable_compound"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(16)
                 .inputFluids(new FluidStack(Mutagenic_Secretion.getFluid(), 100))
-                .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
+                .inputItems(TagPrefix.dustSmall, Blaze)
                 .outputFluidsRanged(new FluidStack(Unstable_Compound.getFluid(), 100), UniformInt.of(75, 125))
                 .EUt(96)
                 .duration(4 * 20)
                 .save(provider);
 
-// HEALING_ADDITIVE
+// HEALING_COMPOUND
         CBRecipeBuilder.of(CTNHBio.id("healing_additive"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(12)
-                .inputFluids(new FluidStack(Regenerate_Fluid.getFluid(), 200))
+                .inputItems(TagPrefix.dust, MagnesiumChloride)
                 .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
                 .outputFluidsRanged(new FluidStack(Healing_Compound.getFluid(), 100), UniformInt.of(75, 125))
                 .EUt(96)
@@ -82,7 +83,7 @@ public class BioReactorRecipes {
         CBRecipeBuilder.of(CTNHBio.id("decaying_additive"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(12)
                 .inputFluids(new FluidStack(Wither_Slime.getFluid(), 200))
-                .inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
+                .inputFluids(FormicAcid.getFluid(100))
                 .outputFluidsRanged(new FluidStack(Decay_Essence.getFluid(), 100), UniformInt.of(75, 125))
                 .EUt(96)
                 .duration(4 * 20)
@@ -194,6 +195,7 @@ public class BioReactorRecipes {
                 .EUt(384)
                 .duration(8 * 20)
                 .save(provider);
+
         //鲜肉增殖-初级配方
         CBRecipeBuilder.of(CTNHBio.id("living_flesh_recipe_one"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(16)

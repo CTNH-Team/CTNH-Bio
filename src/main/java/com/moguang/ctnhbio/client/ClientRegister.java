@@ -17,15 +17,6 @@ import static com.gregtechceu.gtceu.api.GTValues.LV;
 
 @Mod.EventBusSubscriber(modid = CTNHBio.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegister {
-    @Deprecated
-    @SubscribeEvent
-    public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-
-    }
-
-    @SubscribeEvent
-    public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    }
 
     @SubscribeEvent
     public static void onLayerRegister(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -33,7 +24,4 @@ public class ClientRegister {
         //event.registerLayerDefinition(BioReactorModel.LAYER_LOCATION, BioReactorModel::createBodyLayer);
     }
 
-    @SubscribeEvent
-    public static void registerModels(ModelEvent.RegisterAdditional event) {
-    }
 }

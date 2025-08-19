@@ -136,7 +136,7 @@ public class ChineseLangHandler {
         provider.add("material.ctnhbio.unstable_compound", "不稳定化合物");
         provider.add("material.ctnhbio.genetic_compound", "遗传化合物");
         provider.add("material.ctnhbio.heterogeneous_compound", "异质化合物");
-        provider.add("material.ctnhbio.healing_compound", "治愈化合物");
+        provider.add("material.ctnhbio.healing_compound", "治愈性原液");
         provider.add("material.ctnhbio.decay_essence", "衰败原液");
         provider.add("material.ctnhbio.rejuvenation_serum", "活力血清");
         provider.add("material.ctnhbio.ageing_serum", "成长血清");
@@ -146,6 +146,7 @@ public class ChineseLangHandler {
         provider.add("material.ctnhbio.absorption_boost", "伤痛反应剂");
         provider.add("material.ctnhbio.cleansing_serum", "净化血清");
         provider.add("material.ctnhbio.frenzy_serum", "狂化血清");
+        provider.add("material.ctnhbio.primordial_serum", "原初血清");
         provider.add("material.ctnhbio.pyrrole", "吡咯");
         provider.add("material.ctnhbio.polypyrrole", "聚吡咯");
         provider.add("material.ctnhbio.blue_titanium_alloy", "蓝钛");

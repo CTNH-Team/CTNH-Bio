@@ -161,7 +161,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:jade-324717:5640610")
 
-    runtimeOnly  fg.deobf("curse.maven:probejs-585406:5227399")
+    //runtimeOnly  fg.deobf("curse.maven:probejs-585406:5227399")
     implementation  fg.deobf("maven.modrinth:advanced-loot-info:nrGWQ7rF")
     //runtimeOnly  fg.deobf("curse.maven:JustEnoughResources-240630:5057220")
 
