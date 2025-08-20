@@ -115,7 +115,7 @@ public class EffectCondition extends RecipeCondition {
             effectStrings.add(element.getAsString());
         }
         this.effects = effectStrings.stream()
-                .map(ResourceLocation::new)
+                .map(ResourceLocation::parse)
                 .filter(BuiltInRegistries.MOB_EFFECT::containsKey)
                 .map(BuiltInRegistries.MOB_EFFECT::get)
                 .toArray(MobEffect[]::new);
