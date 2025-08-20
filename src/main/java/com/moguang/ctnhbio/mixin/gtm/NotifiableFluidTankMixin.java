@@ -47,7 +47,7 @@ public abstract class NotifiableFluidTankMixin extends NotifiableRecipeHandlerTr
                         appendEffect(livingMachine.getMachineEntity(), mobEffectInstance);
                     }
                     var potion = current.getOrCreateTag().getString("Potion");
-                    Potion potion1 = BuiltInRegistries.POTION.get(new ResourceLocation(potion));
+                    Potion potion1 = BuiltInRegistries.POTION.get(ResourceLocation.parse(potion));
                     var mobEffects = potion1.getEffects();
                     for (var mobEffect: mobEffects) {
                         appendEffect(livingMachine.getMachineEntity(), mobEffect);

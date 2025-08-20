@@ -60,7 +60,7 @@ public class CBMachines {
 //                    .rotationState(RotationState.NON_Y_AXIS)
 //                    .onBlockEntityRegister( blockEntityBlockEntityType ->
 //                            BlockEntityRenderers.register(blockEntityBlockEntityType, LivingMetaMachineBlockEntityRenderer::new))
-//                    .simpleModel(new ResourceLocation("minecraft", "block/oak_log"))
+//                    .simpleModel(ResourceLocation.tryBuild("minecraft", "block/oak_log"))
 //                    .blockProp(p -> p.noOcclusion()
 //                            .isViewBlocking((state, level, pos) -> false))
 //                    .register();
@@ -82,7 +82,7 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("bioelectric_forge"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(new ResourceLocation("biomancy", "block/flesh"))
+                    .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
                     .onBlockEntityRegister(beType -> {
                         @SuppressWarnings("unchecked")
                         BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
@@ -107,7 +107,7 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("decompose"),CBRecipeTypes.DECOMPOSER_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(new ResourceLocation("biomancy", "block/flesh"))
+                    .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
 
                     .register();
         }
@@ -135,7 +135,7 @@ public class CBMachines {
                         BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
                         BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new DigesterModel()));
                     })
-                    .simpleModel(new ResourceLocation("biomancy", "block/flesh"))
+                    .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
                     .register();
         }
     }
@@ -155,7 +155,7 @@ public class CBMachines {
                     .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("bioreactor"),CBRecipeTypes.BIO_REACTOR_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(new ResourceLocation("biomancy", "block/flesh"))
+                    .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
                     .onBlockEntityRegister(beType -> {
                         @SuppressWarnings("unchecked")
                         BlockEntityType<BioReactorBlockEntity> typed = (BlockEntityType<BioReactorBlockEntity>) (BlockEntityType<?>)beType;
@@ -188,7 +188,7 @@ public class CBMachines {
                     )
                     .tooltips(Component.translatable("ctnhbio.machine." + VN[tier].toLowerCase(Locale.ROOT) +"_brain_in_a_vat.tooltip.0").withStyle(ChatFormatting.GRAY))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(new ResourceLocation("minecraft", "block/air"))
+                    .simpleModel(ResourceLocation.tryBuild("minecraft", "block/air"))
                     .onBlockEntityRegister(beType -> {
                         @SuppressWarnings("unchecked")
                         BlockEntityType<BioReactorBlockEntity> typed = (BlockEntityType<BioReactorBlockEntity>) (BlockEntityType<?>)beType;

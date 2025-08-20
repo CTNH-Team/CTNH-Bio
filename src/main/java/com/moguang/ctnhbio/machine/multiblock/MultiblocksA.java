@@ -44,7 +44,7 @@ public class MultiblocksA {
 //                    .build())
 //
 //            .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
-//            .simpleModel(new ResourceLocation("minecraft", "block/air"))
+//            .simpleModel(ResourceLocation.tryBuild("minecraft", "block/air"))
 //            .additionalDisplay((controller, components) -> {
 //                if(controller instanceof WorkableLivingMultiblockMachine machine){
 //                    components.add(Component.translatable("jade.nutrient.info",
@@ -78,7 +78,7 @@ public class MultiblocksA {
                     .build())
 
             .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
-            //.simpleModel(new ResourceLocation("minecraft", "block/air"))
+            //.simpleModel(ResourceLocation.tryBuild("minecraft", "block/air"))
             .additionalDisplay((controller, components) -> {
                 if(controller instanceof WorkableLivingMultiblockMachine machine){
                     components.add(Component.translatable("jade.nutrient.info",
@@ -108,23 +108,23 @@ public class MultiblocksA {
                     .aisle("ADDDA", "CEFEC", "C#G#C", "C#F#C", "ADDDA")
                     .aisle("ADDDA", "CEEEC", "C###C", "C###C", "ADDDA")
                     .aisle("AAAAA", "BC@CB", "BCCCB", "BCCCB", "AAAAA")
-                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:acid_fluid_block"))))
+                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:acid_fluid_block"))))
                     .where("C", Predicates.blocks(CBBlocks.IMPERMEABLE_MEMBRANE.get())
                            .or(Predicates.autoAbilities(definition.getRecipeTypes()))
                     )
-                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:primal_flesh_casing"))))
+                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
-                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:nichrome_coil_block"))))
-                    .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:bio_acid_casing"))))
-                    .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:ornate_flesh_casing"))))
+                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:nichrome_coil_block"))))
+                    .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:bio_acid_casing"))))
+                    .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing"))))
                     .where("#", Predicates.any())
-                    .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:flesh_casing"))))
+                    .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:flesh_casing"))))
                     .build())
 
             .workableCasingModel(CTNHBio.id("block/casings/ornate_flesh_casing"),
                     CTNHBio.id("block/multiblock/red"))
             .appearanceBlock(CBBlocks.ORNATE_FLESH_CASING)
-            //.simpleModel(new ResourceLocation("minecraft", "block/acacia_log"))
+            //.simpleModel(ResourceLocation.tryBuild("minecraft", "block/acacia_log"))
             .additionalDisplay((controller, components) -> {
                 if(controller instanceof WorkableLivingMultiblockMachine machine){
                     components.add(Component.translatable("jade.nutrient.info",
@@ -146,17 +146,17 @@ public class MultiblocksA {
                     .aisle("AEEEA", "AGGGA", "HGGGH", "AGGGA", "AEEEA")
                     .aisle("AEEEA", "CE@EC", "DEIED", "CEEEC", "AEEEA")
                     .aisle("AAAAA", "B###B", "B###B", "B###B", "AAAAA")
-                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("kubejs:flesh_casing_fence"))))
+                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("kubejs:flesh_casing_fence"))))
                     .where("B", Predicates.blocks(CBBlocks.HAEMOSTEEL_CASING.get()))
-                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:primal_flesh_casing"))))
-                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:ornate_flesh_casing"))))
+                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
+                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing"))))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
-                    .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:ornate_flesh_casing"))))
+                    .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing"))))
                     .where("#", Predicates.any())
-                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:acid_flesh_casing"))))
-                    .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:flesh_fence"))))
-                    .where("I", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:primal_flesh_casing"))))
-                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:smooth_primal_flesh"))))
+                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:acid_flesh_casing"))))
+                    .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:flesh_fence"))))
+                    .where("I", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
+                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:smooth_primal_flesh"))))
                     .build())
 
             .workableCasingModel(CTNHBio.id("block/casings/primal_flesh_casing"),
@@ -185,15 +185,15 @@ public class MultiblocksA {
                     .aisle("BCFGFCB", "#DFFFD#", "##F#F##", "##F#F##", "##F#F##", "##F#F##", "#EF#FE#", "##H#H##")
                     .aisle("BCCCCCB", "#CD@DC#", "#C###C#", "#E###E#", "#E###E#", "#E###E#", "#EE#EE#", "#######")
                     .aisle("#BBBBB#", "#######", "#######", "#######", "#######", "#######", "#######", "#######")
-                    .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:ornate_flesh_slab"))))
-                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:flesh_spike"))))
-                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:primal_flesh_casing"))))
+                    .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:ornate_flesh_slab"))))
+                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:flesh_spike"))))
+                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
                     .where("#", Predicates.any())
-                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:ornate_flesh_casing"))))
-                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:acid_flesh_casing"))))
-                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("biomancy:flesh_fence"))))
-                    .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ctnhbio:flesh_casing"))))
+                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing"))))
+                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:acid_flesh_casing"))))
+                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:flesh_fence"))))
+                    .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:flesh_casing"))))
                     .build())
 
             .workableCasingModel(CTNHBio.id("block/casings/flesh_casing"),
@@ -224,18 +224,18 @@ public class MultiblocksA {
                     .aisle("AAAAAAAAAAAAAAA", "###############", "###############", "###############", "###############", "###############")
                     .aisle("C#####CAAAAAAAA", "###############", "###############", "###############", "###############", "###############")
                     .aisle("#######AAAAAAAA", "##############A", "##############A", "##############A", "##############A", "##############A")
-                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:stainless_steel_frame"))))
-                    .where("J", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:computer_heat_vent"))))
+                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:stainless_steel_frame"))))
+                    .where("J", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:computer_heat_vent"))))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
-                    .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:computation_receiver_hatch"))))
+                    .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:computation_receiver_hatch"))))
                     .where("#", Predicates.any())
-                    .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:computer_heat_vent"))))
-                    .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:high_power_casing"))))
-                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:advanced_computer_casing"))))
-                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:computer_casing"))))
-                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:fusion_glass"))))
-                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:computer_heat_vent"))))
-                    .where("I", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu:nonconducting_casing"))))
+                    .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:computer_heat_vent"))))
+                    .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:high_power_casing"))))
+                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:advanced_computer_casing"))))
+                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:computer_casing"))))
+                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:fusion_glass"))))
+                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:computer_heat_vent"))))
+                    .where("I", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:nonconducting_casing"))))
                     .build())
 
             .workableCasingModel(CTNHBio.id("block/casings/flesh_casing"),

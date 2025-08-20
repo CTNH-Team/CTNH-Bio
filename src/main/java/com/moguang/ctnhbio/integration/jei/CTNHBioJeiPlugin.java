@@ -36,7 +36,7 @@ import static com.moguang.ctnhbio.registry.CBMaterialItems.CB_TOOL_ITEMS;
 @JeiPlugin
 public class CTNHBioJeiPlugin implements IModPlugin {
 
-    //private static final ResourceLocation ID = new ResourceLocation(CTNHBio.MODID, "jei_plugin");
+    //private static final ResourceLocation ID = ResourceLocation.tryBuild(CTNHBio.MODID, "jei_plugin");
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -62,7 +62,7 @@ public class CTNHBioJeiPlugin implements IModPlugin {
     @Override
     public void onRuntimeAvailable(@NotNull IJeiRuntime jeiRuntime) {
         IRecipeManager recipeManager = jeiRuntime.getRecipeManager();
-        RecipeType<GameplayLootType> aliGameplayType = new RecipeType<>(new ResourceLocation("ctnhbio", "despoil_loot"), GameplayLootType.class);
+        RecipeType<GameplayLootType> aliGameplayType = new RecipeType<>(ResourceLocation.tryBuild("ctnhbio", "despoil_loot"), GameplayLootType.class);
 
 
         var allRecipes = recipeManager.createRecipeLookup(aliGameplayType).get();
@@ -75,7 +75,7 @@ public class CTNHBioJeiPlugin implements IModPlugin {
                     String[] parts = seq.getPath().split("/");
                     if (parts.length < 3) return true;
 
-                    ResourceLocation id = new ResourceLocation(seq.getNamespace(), parts[2]);
+                    ResourceLocation id = ResourceLocation.tryBuild(seq.getNamespace(), parts[2]);
                     return !BuiltInRegistries.ENTITY_TYPE.containsKey(id);
                 })
                 .toList();
@@ -88,7 +88,7 @@ public class CTNHBioJeiPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         System.out.println("催化剂 ");
         registration.addRecipeCatalyst(AllBlocks.CRUSHING_WHEEL.asStack(), CBRecipeType.MOB_CRUSHING);
-        RecipeType<GameplayLootType> type = new RecipeType<>(new ResourceLocation("ctnhbio", "despoil_loot"), GameplayLootType.class);
+        RecipeType<GameplayLootType> type = new RecipeType<>(ResourceLocation.tryBuild("ctnhbio", "despoil_loot"), GameplayLootType.class);
 
         registration.addRecipeCatalyst(new ItemStack(DESPOIL_SICKLE.get()), type);
 

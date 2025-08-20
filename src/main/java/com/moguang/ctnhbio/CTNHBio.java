@@ -49,7 +49,7 @@ public class CTNHBio
 
     }
 
-    public static ResourceLocation id(String name) {return new ResourceLocation(MODID, name); }
+    public static ResourceLocation id(String name) {return ResourceLocation.tryBuild(MODID, name); }
     private void commonSetup(final FMLCommonSetupEvent event)
     {
     }

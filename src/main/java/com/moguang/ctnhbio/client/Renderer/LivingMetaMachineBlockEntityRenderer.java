@@ -28,7 +28,7 @@ public class LivingMetaMachineBlockEntityRenderer<T extends BlockEntity> impleme
 
     private BlockEntityRendererProvider.Context pcontext;
     private final EntityModel<LivingMetaMachineEntity> model;
-    private final ResourceLocation LOG_TEXTURE = new ResourceLocation("textures/block/oak_log.png");
+    private final ResourceLocation LOG_TEXTURE = ResourceLocation.tryBuild("minecraft","textures/block/oak_log.png");
 
     public LivingMetaMachineBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
         pcontext = context;
