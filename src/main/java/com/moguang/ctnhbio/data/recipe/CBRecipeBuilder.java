@@ -5,9 +5,13 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.moguang.ctnhbio.api.capability.NutrientRecipeCapability;
+import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
+import com.moguang.ctnhbio.api.recipe.ingredient.entity.EntityIngredient;
 import com.moguang.ctnhbio.common.condition.EffectCondition;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -46,6 +50,36 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
         }
         return this;
     }
+    /*Entity Recipe*/
+    //basics
+    public CBRecipeBuilder inputEntity(EntityIngredient entity){
+        input(EntityRecipeCapability.CAP, entity);
+        return this;
+    }
+    public CBRecipeBuilder outputEntity(EntityIngredient entity){
+        output(EntityRecipeCapability.CAP, entity);
+        return this;
+    }
+    //forward EntityIngredient constructors
+    public CBRecipeBuilder inputEntity(EntityType<?> type){
+        return inputEntity(EntityIngredient.of(type));
+    }
+    public CBRecipeBuilder inputEntity(TagKey<EntityType<?>> tag){
+        return inputEntity(EntityIngredient.of(tag));
+    }
+    public CBRecipeBuilder inputEntity(String id){
+        return inputEntity(EntityIngredient.of(id));
+    }
+    public CBRecipeBuilder outputEntity(EntityType<?> type){
+        return outputEntity(EntityIngredient.of(type));
+    }
+    public CBRecipeBuilder outputEntity(TagKey<EntityType<?>> tag){
+        return outputEntity(EntityIngredient.of(tag));
+    }
+    public CBRecipeBuilder outputEntity(String id){
+        return outputEntity(EntityIngredient.of(id));
+    }
+
 
     @Override
     @SuppressWarnings("all")
