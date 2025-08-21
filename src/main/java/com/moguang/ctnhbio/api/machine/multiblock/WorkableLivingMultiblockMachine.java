@@ -134,11 +134,17 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
         if(true || shouldTick(20))
         {
-            if(growingBlockPattern == null)
-                growingBlockPattern = GrowingBlockPattern.getGrowingBlockPattern(getPattern());
+            isFormed = false;
+            checkPattern();
+            if(!isFormed())
+            {
+                if(growingBlockPattern == null)
+                    growingBlockPattern = GrowingBlockPattern.getGrowingBlockPattern(getPattern());
 
-            if(growingBlockPattern.growPlan.isCompleted())
-                growingBlockPattern.generateGrowPlan(getLevel(), getMultiblockState(), new GrowingBlockPattern.GrowSetting());
+                if(growingBlockPattern.growPlan.isCompleted())
+                    growingBlockPattern.generateGrowPlan(this, new GrowingBlockPattern.GrowSetting());
+            }
+
         }
 
     }
@@ -153,7 +159,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
             nutrientStorage.extract(NUTRIENT_NEEDED_FOR_GROWTH);
             if(growingBlockPattern.growPlan.isCompleted()) checkPattern();
         }
-
+        //updatePartPositions();
     }
 
     @Override
