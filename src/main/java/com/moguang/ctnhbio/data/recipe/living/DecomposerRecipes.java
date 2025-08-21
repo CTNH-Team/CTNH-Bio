@@ -8,10 +8,12 @@ import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.OreProperty;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
+import com.moguang.ctnhbio.registry.CBTags;
 import it.unimi.dsi.fastutil.objects.ObjectIntPair;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -1551,7 +1553,7 @@ public class DecomposerRecipes {
                     .effect(MobEffects.DAMAGE_BOOST)
                     .nutrient(10)
                     .inputItems(TagPrefix.crushed, material)
-                    .inputFluids(new FluidStack(ModFluids.ACID.get(), 200))
+                    .inputFluids(FluidIngredient.of(CBTags.ACID_FLUIDS_TAG, 200))
                     .outputItems(ChemicalHelper.get(TagPrefix.dust, material))
                     .chancedOutput(
                             ChemicalHelper.get(TagPrefix.dust, washingByproduct),

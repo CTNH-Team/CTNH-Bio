@@ -20,7 +20,7 @@ public class GreatFleshRecipes {
                 .nutrient(1)
                 .inputItems(Ingredient.of(CBItems.META_CORE))
                 .duration(100)
-                //.EUt(GTValues.)
+                .EUt(32)
                 .save(provider);
 
         CBRecipeBuilder.of(CTNHBio.id("circulatory_system"), CBRecipeTypes.GREAT_FLESH)
