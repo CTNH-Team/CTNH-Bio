@@ -16,6 +16,7 @@ import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachin
 import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
 import com.moguang.ctnhbio.machine.greatflesh.GreatFleshRenderer;
 import com.moguang.ctnhbio.registry.CBBlocks;
+import com.moguang.ctnhbio.registry.CBMachines;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -137,11 +138,11 @@ public class MultiblocksA {
 
     public static MultiblockMachineDefinition COGNI_ASSEMBLER = REGISTRATE
             .biomultiblock("cogni_assembler",
-                    WorkableLivingMultiblockMachine::new,
+                    CogniAssemblerMachine::new,
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
-            .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+            .recipeType(CBRecipeTypes.COGNI_ASSEMBLE_STEP)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCACB", "BDADB", "BCACB", "AAAAA")
                     .aisle("AEEEA", "CFGFC", "DFGFD", "CFGFC", "AEEEA")
@@ -153,7 +154,9 @@ public class MultiblocksA {
                     .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing")))
                             .or(Predicates.autoAbilities(definition.getRecipeTypes()))
                     )
-                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing"))))
+                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
+                            .or(Predicates.blocks(CBMachines.PARABIOTIC_BRIDGE.get()))
+                    )
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
                     .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
 

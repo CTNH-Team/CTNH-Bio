@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 
+import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
@@ -26,6 +27,7 @@ import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeMachineBlock;
 
 import com.moguang.ctnhbio.machine.digester.DigesterMachine;
+import com.moguang.ctnhbio.machine.multiblock.part.ParabioticBridgePartMachine;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.network.chat.Component;
@@ -35,6 +37,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import java.util.Locale;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
+import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.OVERLAY_ITEM_HATCH;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBMachines {
@@ -197,5 +200,15 @@ public class CBMachines {
                     .register();
         }
     }
+
+    public static final MachineDefinition PARABIOTIC_BRIDGE = REGISTRATE
+            .machine("parabiotic_bridge", ParabioticBridgePartMachine::new)
+            .langValue("Parabiotic Bridge")
+            .tier(ZPM)
+            .rotationState(RotationState.NON_Y_AXIS)
+            .abilities(PartAbility.IMPORT_ITEMS, PartAbility.EXPORT_ITEMS)
+            .colorOverlayTieredHullModel(GTCEu.id("block/overlay/machine/overlay_pipe_in_emissive"), null, GTCEu.id("block/overlay/machine/" + OVERLAY_ITEM_HATCH))
+            .register()
+            ;
 
 }

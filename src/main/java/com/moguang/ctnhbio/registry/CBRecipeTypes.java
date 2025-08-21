@@ -51,5 +51,17 @@ public class CBRecipeTypes {
             .setMaxTooltips(5)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
+    public static final GTRecipeType COGNI_ASSEMBLE = GTRecipeTypes.register("cogni_assemble", GTRecipeTypes.ELECTRIC)
+            .setMaxIOSize(16, 1, 8, 0)
+            .setEUIO(IO.IN)
+            .setMaxTooltips(5)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+
+    public static final GTRecipeType COGNI_ASSEMBLE_STEP = GTRecipeTypes.register("cogni_assemble_step", GTRecipeTypes.ELECTRIC)
+            .setMaxIOSize(3, 1, 1, 0)
+            .setEUIO(IO.IN)
+            .setMaxTooltips(5)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+
     public static void init() {}
 }

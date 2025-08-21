@@ -14,6 +14,7 @@ import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.data.recipe.*;
 import com.moguang.ctnhbio.data.recipe.living.*;
+import com.moguang.ctnhbio.data.recipe.multi.CogniRecipes;
 import com.moguang.ctnhbio.data.recipe.multi.GreatFleshRecipes;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +37,8 @@ public class CBRecipes {
         BioReactorRecipes.init(provider);
         DigesterRecipes.init(provider);
         CommonRecipes.init(provider);
-        //BiomancyRecipes.init(provider);
+
+        CogniRecipes.init(provider);
         VanillaRecipeProvider.init(provider);
         recipeAddition(provider);
     }

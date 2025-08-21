@@ -139,6 +139,25 @@ public class CBItems {
                     cellName()))
             .register();
 
+    public static ItemEntry<ComponentItem> WETWARE_PROCESSOR_COMPUTER_UNFINISHED = REGISTRATE
+            .item("wetware_processor_computer_unfinished", ComponentItem::create)
+            .lang("wetware_processor_computer_unfinished")
+            //.properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
+//            .onRegister(attach(new TooltipBehavior(list -> {
+//                list.add(Component.translatable("ctnhbio.ev_machine.tooltip").withStyle(ChatFormatting.LIGHT_PURPLE));
+//                list.add(Component.translatable("ctnhbio.nova_core.tooltip").withStyle(ChatFormatting.GRAY));
+//            })))
+            .register();
+
+    public static ItemEntry<ComponentItem> WETWARE_PROCESSOR_MAINFRAME_UNFINISHED = REGISTRATE
+            .item("wetware_processor_mainframe_unfinished", ComponentItem::create)
+            .lang("wetware_processor_mainframe_unfinished")
+            //.properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
+//            .onRegister(attach(new TooltipBehavior(list -> {
+//                list.add(Component.translatable("ctnhbio.ev_machine.tooltip").withStyle(ChatFormatting.LIGHT_PURPLE));
+//                list.add(Component.translatable("ctnhbio.nova_core.tooltip").withStyle(ChatFormatting.GRAY));
+//            })))
+            .register();
 
     public static <T extends IComponentItem> NonNullConsumer<T> attach(IItemComponent components) {
         return item -> item.attachComponents(components);
