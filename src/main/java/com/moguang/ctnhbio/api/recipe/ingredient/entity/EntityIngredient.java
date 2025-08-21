@@ -127,11 +127,11 @@ public class EntityIngredient implements Predicate<Entity> {
     //from id
     public static EntityIngredient of(String id){
         if(id.startsWith("#")){
-            ResourceLocation tag = new ResourceLocation(id.substring(1));
+            ResourceLocation tag = ResourceLocation.tryParse(id.substring(1));
             TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, tag);
             return new EntityIngredient(new TagValue(tagKey));
         }else{
-            ResourceLocation type = new ResourceLocation(id);
+            ResourceLocation type = ResourceLocation.tryParse(id);
             EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(type);
             if(entityType==null){
                 throw new JsonSyntaxException("Unknown entity type '"+ type +"'");
@@ -226,7 +226,7 @@ public class EntityIngredient implements Predicate<Entity> {
             throw new JsonSyntaxException("Expected either 'entityType' or 'tag', not both");
         }
         if (json.has("entityType")) {
-            ResourceLocation type = new ResourceLocation(GsonHelper.getAsString(json, "entityType"));
+            ResourceLocation type = ResourceLocation.tryParse(GsonHelper.getAsString(json, "entityType"));
             EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(type);
             if (entityType == null) {
                 throw new JsonSyntaxException("Unknown entity type '" + type + "'");
@@ -234,7 +234,7 @@ public class EntityIngredient implements Predicate<Entity> {
             return new TypeValue(entityType);
         }
         if (json.has("tag")) {
-            ResourceLocation tag = new ResourceLocation(GsonHelper.getAsString(json, "tag"));
+            ResourceLocation tag = ResourceLocation.tryParse(GsonHelper.getAsString(json, "tag"));
             TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, tag);
             return new TagValue(tagKey);
         }

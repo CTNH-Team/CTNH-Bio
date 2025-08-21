@@ -126,7 +126,7 @@ public class CommonRecipes {
                 .outputItems(ModItems.CREATOR_MIX,32)
                 .scannerResearch(b -> b
                         .researchId("flesh_bits_ccb")
-                        .researchStack(new ItemStack(ModItems.FLESH_BITS.get()))
+                        .researchStack(new ItemStack(Items.BREAD))
                         .EUt(VA[EV]))
                 .duration(1000)
                 .EUt(24000)
