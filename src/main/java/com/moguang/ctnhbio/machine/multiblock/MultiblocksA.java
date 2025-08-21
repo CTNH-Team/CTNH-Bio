@@ -139,7 +139,7 @@ public class MultiblocksA {
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
-            .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+            .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES,CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCACB", "BDADB", "BCACB", "AAAAA")
                     .aisle("AEEEA", "CFGFC", "DFGFD", "CFGFC", "AEEEA")
@@ -147,7 +147,7 @@ public class MultiblocksA {
                     .aisle("AEEEA", "CE@EC", "DEIED", "CEEEC", "AEEEA")
                     .aisle("AAAAA", "B###B", "B###B", "B###B", "AAAAA")
                     .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("kubejs:flesh_casing_fence"))))
-                    .where("B", Predicates.blocks(CBBlocks.HAEMOSTEEL_CASING.get()))
+                    .where("B", Predicates.blocks(CBBlocks.SYNAPTIC_CASING.get()))
                     .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
                     .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing"))))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))

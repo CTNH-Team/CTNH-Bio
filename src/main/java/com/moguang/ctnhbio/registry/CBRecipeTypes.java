@@ -51,5 +51,11 @@ public class CBRecipeTypes {
             .setMaxTooltips(5)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
+    public static final GTRecipeType CONSCIOUSNESS_ASSEMBLY = GTRecipeTypes.register("consciousness_assembly", NUTRIENT)
+            .setMaxIOSize(16, 1, 4, 0)
+            .setEUIO(IO.IN)
+            .setMaxTooltips(5)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+
     public static void init() {}
 }

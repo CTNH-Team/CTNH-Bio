@@ -1,11 +1,9 @@
 package com.moguang.ctnhbio.data.lang;
 
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
+import com.moguang.ctnhbio.data.materials.CommonMaterials;
 import com.moguang.ctnhbio.machine.multiblock.MultiblocksA;
 import com.moguang.ctnhbio.registry.CBBlocks;
-import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
-import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
-import com.moguang.ctnhbio.data.lang.utils.*;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBMachines;
 import com.moguang.ctnhbio.registry.CBMaterials;
@@ -27,8 +25,6 @@ public class ChineseLangHandler {
         provider.addItem(CBItems.META_CORE, "拓扑核心");
         provider.addItem(CBItems.NOVA_CORE, "灵蜕核心");
         provider.addItem(CBItems.OMNI_CORE, "终观核心");
-        provider.addItem(CBItems.ADVANCED_RAM_WAFER, "进阶RAM晶圆");
-        provider.addItem(CBItems.ADVANCED_RAM_CHIP, "进阶RAM芯片");
 
         provider.addItem(CBItems.WETWARE_CAPACITOR, "湿件电容");
         provider.addItem(CBItems.WETWARE_DIODE, "湿件二极管");
@@ -45,6 +41,8 @@ public class ChineseLangHandler {
         provider.addBlock(CBBlocks.PRIMAL_FLESH_CASING, "原初机械方块");
         provider.addBlock(CBBlocks.ACID_FLESH_CASING, "酸液机械方块");
         provider.addBlock(CBBlocks.BIO_ACID_CASING, "生物酸机械方块");
+        provider.addBlock(CBBlocks.SYNAPTIC_CASING, "神经突触机械方块");
+
 
         provider.addBlock(CBBlocks.IMPERMEABLE_MEMBRANE, "不渗透膜");
 
@@ -117,8 +115,7 @@ public class ChineseLangHandler {
         provider.add("ctnhbio.hv_machine.tooltip", "HV生物芯片");
         provider.add("ctnhbio.ev_machine.tooltip", "EV生物芯片");
         provider.add("ctnhbio.iv_machine.tooltip", "IV生物芯片");
-        provider.add("ctnhbio.advanced_ram_wafer.tooltip", "更好的内存原料");
-        provider.add("ctnhbio.advanced_ram_chip.tooltip", "更好的随机存取存储器");
+
 
         provider.add("ctnhbio.synet_core.tooltip", "精密如血管回路的金属骨架，每一道凹槽都在规律脉动，仿佛在输送某种不可见的生命能量。");
         provider.add("ctnhbio.meta_core.tooltip", "不断自我折叠的几何结构，表面浮现出违反欧几里得定律的棱角，在静止中持续完成着不可能的空间变换。");
@@ -150,12 +147,8 @@ public class ChineseLangHandler {
         provider.add("material.ctnhbio.cleansing_serum", "净化血清");
         provider.add("material.ctnhbio.frenzy_serum", "狂化血清");
         provider.add("material.ctnhbio.primordial_serum", "原初血清");
-        provider.add("material.ctnhbio.pyrrole", "吡咯");
-        provider.add("material.ctnhbio.polypyrrole", "聚吡咯");
-        provider.add("material.ctnhbio.blue_titanium_alloy", "蓝钛");
-        provider.add("material.ctnhbio.fentons_reagent", "芬顿试剂");
-        provider.add("material.ctnhbio.bio_flexible", "生物柔性材质");
-        provider.add("material.ctnhbio.weird_pixel_dust", "营养");
+        replace(provider, CommonMaterials.BLOODSTEEL.getUnlocalizedName(), "血髓钢");
+        replace(provider, CommonMaterials.WEIRD_PIXEL_DUST.getUnlocalizedName(), "富集营养");
 
         //Entity Properties
         EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"实体输入","实体输出");

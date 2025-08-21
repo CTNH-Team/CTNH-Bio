@@ -3,13 +3,16 @@ package com.moguang.ctnhbio.data.recipe.living;
 import com.github.elenterius.biomancy.crafting.EssenceIngredient;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.data.GTMachines;
+import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
+import com.moguang.ctnhbio.registry.CBBlocks;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBMachines;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
@@ -23,9 +26,12 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.awt.*;
 import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
+import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.dust;
+import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.plateDense;
 import static com.gregtechceu.gtceu.common.data.GTItems.*;
 import static com.gregtechceu.gtceu.common.data.GTMachines.HULL;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
@@ -784,7 +790,7 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(TagPrefix.dust,Graphene)
                 .inputItems(TagPrefix.wireFine,Platinum,16)
                 .inputItems(TagPrefix.wireFine,Tantalum,16)
-                .inputFluids(new FluidStack(POLYPYRROLE.getFluid(), 144))
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:polypyrrole")),144))
                 .outputItemsRanged(new ItemStack(CBItems.WETWARE_RESISTOR.get()), UniformInt.of(30, 48))
                 .EUt(6144)
                 .duration(100)
@@ -796,7 +802,7 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(TagPrefix.foil,Polybenzimidazole,4)
                 .inputItems(TagPrefix.foil,Polycaprolactam,2)
                 .inputItems(TagPrefix.foil,UraniumRhodiumDinaquadide,2)
-                .inputFluids(new FluidStack(POLYPYRROLE.getFluid(), 144))
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:polypyrrole")),144))
                 .outputItemsRanged(new ItemStack(CBItems.WETWARE_CAPACITOR.get()), UniformInt.of(18, 28))
                 .EUt(6144)
                 .duration(100)
@@ -809,7 +815,7 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(TagPrefix.ring,NickelZincFerrite,4)
                 .inputItems(TagPrefix.wireFine,Platinum,16)
                 .inputItems(TagPrefix.wireFine,Tantalum,16)
-                .inputFluids(new FluidStack(POLYPYRROLE.getFluid(), 144))
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:polypyrrole")),144))
                 .outputItemsRanged(new ItemStack(CBItems.WETWARE_INDUCTOR.get()), UniformInt.of(24, 32))
                 .EUt(6144)
                 .duration(100)
@@ -820,7 +826,7 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(CBItems.NOVA_CORE.get().getDefaultInstance())
                 .inputItems(TagPrefix.dust,IndiumGalliumPhosphide,1)
                 .inputItems(TagPrefix.wireFine,YttriumBariumCuprate,16)
-                .inputFluids(new FluidStack(POLYPYRROLE.getFluid(), 144))
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:polypyrrole")),144))
                 .outputItemsRanged(new ItemStack(CBItems.WETWARE_DIODE.get()), UniformInt.of(20, 30))
                 .EUt(6144)
                 .duration(100)
@@ -832,7 +838,7 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(TagPrefix.foil,Graphene,4)
                 .inputItems(TagPrefix.foil,Osmiridium,4)
                 .inputItems(TagPrefix.wireFine,Tantalum,16)
-                .inputFluids(new FluidStack(POLYPYRROLE.getFluid(), 144))
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:polypyrrole")),144))
                 .outputItemsRanged(new ItemStack(CBItems.WETWARE_TRANSISTOR.get()), UniformInt.of(16, 32))
                 .EUt(6144)
                 .duration(100)
@@ -870,7 +876,7 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(GTItems.NANO_CENTRAL_PROCESSING_UNIT.get().getDefaultInstance(),1)
                 .inputItems(CBItems.WETWARE_CAPACITOR.get().getDefaultInstance(),2)
                 .inputItems(CBItems.WETWARE_TRANSISTOR.get().getDefaultInstance(),2)
-                .inputItems(TagPrefix.wireGtSingle,BIO_FLEXIBLE,4)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:bio_flexible_single_wire")),4)
                 .inputFluids(new FluidStack(Ageing_Serum.getFluid(), 150))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 150))
                 .outputItemsRanged(new ItemStack(GTItems.WETWARE_PROCESSOR_LuV.get()), UniformInt.of(2, 4))
@@ -883,13 +889,24 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(GTItems.WETWARE_PROCESSOR_LuV.get().getDefaultInstance(),2)
                 .inputItems(CBItems.WETWARE_INDUCTOR.get().getDefaultInstance(),2)
                 .inputItems(CBItems.WETWARE_CAPACITOR.get().getDefaultInstance(),2)
-                .inputItems(CBItems.ADVANCED_RAM_CHIP.get().getDefaultInstance(),4)
-                .inputItems(TagPrefix.wireGtSingle,BIO_FLEXIBLE,16)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:advanced_ram_chip")),4)
+                .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu:bio_flexible_single_wire")),16)
                 .inputFluids(new FluidStack(Ageing_Serum.getFluid(), 100))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .outputItemsRanged(new ItemStack(GTItems.WETWARE_PROCESSOR_ASSEMBLY_ZPM.get()), UniformInt.of(1, 3))
                 .EUt(6144)
                 .duration(400)
                 .save(provider);
+        //神经突触机械方块
+        CBRecipeBuilder.of(CTNHBio.id("weird_pixel_dust_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .inputItems(TagPrefix.frameGt,BLOODSTEEL,1)
+                .inputItems(CustomTags.LuV_CIRCUITS,2)
+                .inputItems(plateDense,BLOODSTEEL,2)
+                .inputItems(ModItems.CREATOR_MIX,4)
+                .outputItemsRanged(CBBlocks.SYNAPTIC_CASING, UniformInt.of(1, 2))
+                .EUt(24768)
+                .duration(400)
+                .save(provider);
+
     }
 }
