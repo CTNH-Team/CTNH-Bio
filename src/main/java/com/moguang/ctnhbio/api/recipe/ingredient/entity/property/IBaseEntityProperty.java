@@ -5,6 +5,7 @@ import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperator;
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 
 import java.util.Locale;
 
@@ -16,6 +17,9 @@ public interface IBaseEntityProperty<T>{
     //JEI lang
     default String getLanguageKey(){
         return String.format("jei.entity.property.requirement.%s", getSection().toLowerCase(Locale.ROOT));
+    }
+    default Component showValue(T value){
+        return Component.literal(value.toString());
     }
 
     //Utils

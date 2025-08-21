@@ -4,6 +4,9 @@ import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProp
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 
 //暴力出奇迹喵
 @UtilityClass
@@ -26,6 +29,8 @@ public class SimpleEntityPropertyFactory{
             return (IBaseEntityProperty<T>) new DoubleEntityProperty(section);
         } else if (String.class.equals(clazz)) {
             return (IBaseEntityProperty<T>) new StringEntityProperty(section);
+        } else if (Component.class.equals(clazz)) {
+            return (IBaseEntityProperty<T>) new ComponentEntityProperty(section);
         } else {
             throw new IllegalArgumentException("Unsupported class: " + clazz.getName());
         }
@@ -85,6 +90,12 @@ public class SimpleEntityPropertyFactory{
 
     public static class StringEntityProperty extends SimpleEntityProperty<String> implements IStringEntityProperty {
         public StringEntityProperty(String section) {
+            super(section);
+        }
+    }
+
+    public static class ComponentEntityProperty extends SimpleEntityProperty<Component> implements IComponentEntityProperty{
+        public ComponentEntityProperty(String section) {
             super(section);
         }
     }

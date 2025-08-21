@@ -14,6 +14,9 @@ public class EntityPropertyBuilder {
     public EntityPropertyBuilder(EntityPropertyValue<?> ... values){
         this.values = new ArrayList<>(List.of(values));
     }
+    public static EntityPropertyBuilder of(EntityPropertyValue<?>... values){
+        return new EntityPropertyBuilder(values);
+    }
     public EntityPropertyBuilder add(EntityPropertyValue<?> value){
         values.add(value);
         return this;
