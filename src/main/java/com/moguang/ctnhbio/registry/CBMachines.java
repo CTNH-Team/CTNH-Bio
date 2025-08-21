@@ -79,6 +79,7 @@ public class CBMachines {
                             (type, pos, state) -> new BioelectricForgeBlockEntity(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
+                    .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
                     .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("bioelectric_forge"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
@@ -104,6 +105,7 @@ public class CBMachines {
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
+                    .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
                     .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("decompose"),CBRecipeTypes.DECOMPOSER_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
@@ -152,6 +154,7 @@ public class CBMachines {
                             (type, pos, state) -> new BioReactorBlockEntity(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
+                    .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
                     .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("bioreactor"),CBRecipeTypes.BIO_REACTOR_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
@@ -181,6 +184,7 @@ public class CBMachines {
                     )
 
                     .tier(tier)
+                    .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
                     .recipeType(CBRecipeTypes.BRAIN_IN_A_VAT_RECIPES)
                     .blockProp(prop -> prop
                             .noOcclusion()

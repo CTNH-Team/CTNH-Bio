@@ -14,6 +14,7 @@ import com.gregtechceu.gtceu.api.recipe.chance.logic.ChanceLogic;
 import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
+import com.moguang.ctnhbio.data.loot.CBLootTableProvider;
 import com.moguang.ctnhbio.data.recipe.BiomancyRecipes;
 import com.moguang.ctnhbio.registry.*;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
@@ -90,5 +91,6 @@ public class EventHandler {
 
         //generator.addProvider(event.includeServer(), new VanillaRecipeProvider(packOutput));
         generator.addProvider(event.includeServer(), new BiomancyRecipes(packOutput));
+        generator.addProvider(event.includeServer(), new CBLootTableProvider(packOutput));
     }
 }

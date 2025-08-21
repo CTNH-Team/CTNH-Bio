@@ -331,9 +331,8 @@ public class GrowingBlockPattern extends BlockPattern {
         if (!context.world.isEmptyBlock(pos)) {
             BlockState existingState = context.world.getBlockState(pos);
 
-            for (SimplePredicate limit : predicate.limited) {
-                limit.testLimited(context.worldState);
-            }
+            if(existingState.canBeReplaced())
+                return true;
 
             if(existingState.liquid()){
                 context.inFluid = true;
@@ -346,7 +345,9 @@ public class GrowingBlockPattern extends BlockPattern {
                 return true;
             }
 
-
+            for (SimplePredicate limit : predicate.limited) {
+                limit.testLimited(context.worldState);
+            }
 
             return false;
         }
@@ -455,7 +456,7 @@ public class GrowingBlockPattern extends BlockPattern {
     private boolean placeBlock(BlockPos pos, BlockInfo[] infos) {
 
         BlockInfo info = Arrays.stream(infos)
-                //.filter(i ->i.getBlockState().is(GROWABLE_TAG))
+                .filter(i ->i.getBlockState().is(CBTags.GROWABLE_BLOCK_TAG))
                 .findFirst()
                 .orElse(null);
         if(info != null)

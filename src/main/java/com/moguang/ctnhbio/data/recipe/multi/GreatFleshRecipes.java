@@ -42,7 +42,7 @@ public class GreatFleshRecipes {
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:genetic_compound")),64000))
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:heterogeneous_compound")),64000))
                 .duration(100)
-                //.EUt(GTValues.)
+                .EUt(32)
                 .save(provider);
 
         CBRecipeBuilder.of(CTNHBio.id("circulatory_system"), CBRecipeTypes.GREAT_FLESH)
