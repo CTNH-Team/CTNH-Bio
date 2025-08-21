@@ -1,6 +1,9 @@
 package com.moguang.ctnhbio.data.lang;
 
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
+import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
+import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
+import com.moguang.ctnhbio.data.lang.utils.EntityPropertyLangUtil;
 import com.moguang.ctnhbio.data.materials.CommonMaterials;
 import com.moguang.ctnhbio.machine.multiblock.MultiblocksA;
 import com.moguang.ctnhbio.registry.CBBlocks;
