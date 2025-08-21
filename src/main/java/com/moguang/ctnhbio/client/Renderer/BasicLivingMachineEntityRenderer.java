@@ -23,8 +23,8 @@ import net.minecraft.world.level.block.state.BlockState;
 public class BasicLivingMachineEntityRenderer extends EntityRenderer<LivingMetaMachineEntity> {
 
     private final EntityModel<LivingMetaMachineEntity> model;
-    private final ResourceLocation SLIME_TEXTURE = new ResourceLocation("textures/entity/slime/slime.png");
-    private final ResourceLocation LOG_TEXTURE = new ResourceLocation("textures/block/oak_log.png");
+    private final ResourceLocation SLIME_TEXTURE = ResourceLocation.tryBuild("minecraft","textures/entity/slime/slime.png");
+    private final ResourceLocation LOG_TEXTURE = ResourceLocation.tryBuild("minecraft","textures/block/oak_log.png");
 
     public BasicLivingMachineEntityRenderer(EntityRendererProvider.Context context) {
         super(context);

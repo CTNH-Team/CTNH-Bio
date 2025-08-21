@@ -213,7 +213,7 @@ public class RecipeRemoval {
 
         };
         for(var recipe: recipes) {
-            registry.accept(new ResourceLocation(recipe));
+            registry.accept(ResourceLocation.parse(recipe));
         }
 
     }
@@ -228,7 +228,7 @@ public class RecipeRemoval {
         };
 
         for(var recipe: recipes) {
-            registry.accept(new ResourceLocation(recipe));
+            registry.accept(ResourceLocation.parse(recipe));
         }
     }
 

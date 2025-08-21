@@ -66,7 +66,7 @@ public abstract class JeiBaseLootMixin {
         if (parts.length < 3) return null;
 
         String entityPath = String.join("/", Arrays.copyOfRange(parts, 2, parts.length));
-        ResourceLocation entityId = new ResourceLocation(namespace, entityPath);
+        ResourceLocation entityId = ResourceLocation.tryBuild(namespace, entityPath);
 
         return BuiltInRegistries.ENTITY_TYPE.getOptional(entityId).orElse(null);
     }
