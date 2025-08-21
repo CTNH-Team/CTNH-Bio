@@ -22,9 +22,11 @@ public record EntityPropertyValue<T>
 
     //jei
     public Component getDescription(){
-        return Component.translatable(property.getLanguageKey(), //text
-                Component.translatable(operator.getVerbKey()), //verb
-                value); //value
+        return Component.translatable(property.getLanguageKey()) //text
+                .append(" ")
+                .append(Component.translatable(operator.getVerbKey())) //verb
+                .append(" ")
+                .append(property.showValue(value)); //value
     }
 
     @Override

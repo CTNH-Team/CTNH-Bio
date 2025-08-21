@@ -38,7 +38,7 @@ public class EnglishLangHandler {
         provider.add("ctnhbio.omni_core.tooltip", "Within the mirror-smooth sphere, nebular matter slowly rotates - the longer you gaze, the clearer your own silhouette emerges within it.");
 
         //EntityProperties
-        EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"Input Entity","Output Entity");
+        EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"Input Entity","Output Entity","Available: %s","Requirement:");
 
         epu.add(EntityProperties.FALL_DISTANCE, "Fall Distance");
         epu.add(EntityProperties.REMAINING_FIRE_TICKS, "Remaining Fire Ticks");
