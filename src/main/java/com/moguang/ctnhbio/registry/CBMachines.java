@@ -43,29 +43,6 @@ public class CBMachines {
     }
     public static void init() {}
 
-    //public static final MachineDefinition[] BASIC_LIVING_MACHINE = new MachineDefinition[GTValues.TIER_COUNT];
-    static {
-//        for (int tier : GTValues.tiersBetween(LV, UV)) {
-//            BASIC_LIVING_MACHINE[tier] = REGISTRATE
-//                    .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_basic_living_machine",
-//                            MachineDefinition::new,
-//                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 100),
-//                            LivingMetaMachineBlock::new,
-//                            MetaMachineItem::new,
-//                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
-//                    )
-//                    .tier(tier)
-//                    .recipeType(CBRecipeTypes.BASIC_LIVING_RECIPES)
-//                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(GTCEu.id("basic_living_machine"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
-//                    .rotationState(RotationState.NON_Y_AXIS)
-//                    .onBlockEntityRegister( blockEntityBlockEntityType ->
-//                            BlockEntityRenderers.register(blockEntityBlockEntityType, LivingMetaMachineBlockEntityRenderer::new))
-//                    .simpleModel(ResourceLocation.tryBuild("minecraft", "block/oak_log"))
-//                    .blockProp(p -> p.noOcclusion()
-//                            .isViewBlocking((state, level, pos) -> false))
-//                    .register();
-//        }
-    }
 
     public static final MachineDefinition[] BIOELECTRIC_FORGE = new MachineDefinition[GTValues.TIER_COUNT];
     static {
@@ -76,7 +53,7 @@ public class CBMachines {
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             BioelectricForgeMachineBlock::new,
                             (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new BioelectricForgeModel())),
-                            (type, pos, state) -> new BioelectricForgeBlockEntity(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
+                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
                     .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
@@ -86,7 +63,7 @@ public class CBMachines {
                     .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
                     .onBlockEntityRegister(beType -> {
                         @SuppressWarnings("unchecked")
-                        BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
+                        var typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
                         BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new BioelectricForgeModel(), true));
                     })
                     .register();
@@ -134,7 +111,7 @@ public class CBMachines {
 
                     .onBlockEntityRegister(beType -> {
                         @SuppressWarnings("unchecked")
-                        BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
+                        var typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
                         BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new DigesterModel()));
                     })
                     .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
@@ -151,7 +128,7 @@ public class CBMachines {
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
                             (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new BioReactorModel())),
-                            (type, pos, state) -> new BioReactorBlockEntity(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
+                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
                     .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
@@ -161,7 +138,7 @@ public class CBMachines {
                     .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
                     .onBlockEntityRegister(beType -> {
                         @SuppressWarnings("unchecked")
-                        BlockEntityType<BioReactorBlockEntity> typed = (BlockEntityType<BioReactorBlockEntity>) (BlockEntityType<?>)beType;
+                        var typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
                         BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new BioReactorModel(), true));
                     })
                     .register();
@@ -192,10 +169,10 @@ public class CBMachines {
                     )
                     .tooltips(Component.translatable("ctnhbio.machine." + VN[tier].toLowerCase(Locale.ROOT) +"_brain_in_a_vat.tooltip.0").withStyle(ChatFormatting.GRAY))
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(ResourceLocation.tryBuild("minecraft", "block/air"))
+                    .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
                     .onBlockEntityRegister(beType -> {
                         @SuppressWarnings("unchecked")
-                        BlockEntityType<BioReactorBlockEntity> typed = (BlockEntityType<BioReactorBlockEntity>) (BlockEntityType<?>)beType;
+                        var typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
                         BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new VatModel(), true));
                     })
                     .register();

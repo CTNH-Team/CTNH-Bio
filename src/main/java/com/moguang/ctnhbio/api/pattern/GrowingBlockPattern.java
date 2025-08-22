@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 
 import java.lang.reflect.Field;
@@ -107,9 +108,9 @@ public class GrowingBlockPattern extends BlockPattern {
 
 
 
-    public void generateGrowPlan(Level level, MultiblockState worldState, GrowSetting setting) {
+    public void generateGrowPlan(@NotNull IMultiController controller, GrowSetting setting) {
         // 初始化阶段
-        initializeBuildContext(level, worldState, setting);
+        initializeBuildContext(controller, setting);
 
         // 计算每层的重复次数
         int[] repeatCounts = calculateLayerRepeatCounts(setting);
@@ -287,13 +288,13 @@ public class GrowingBlockPattern extends BlockPattern {
 
     }
 
-    private void initializeBuildContext(Level level, MultiblockState worldState, GrowSetting setting) {
-        IMultiController controller = worldState.getController();
+    private void initializeBuildContext(@NotNull IMultiController controller, GrowSetting setting) {
+        //IMultiController controller = worldState.getController();
 
 
-        context.world = level;
+        context.world = controller.self().getLevel();
 
-        context.worldState = worldState;
+        context.worldState = controller.getMultiblockState();
         context.settings = setting;
         context.controller = controller;
         context.centerPos = controller.self().getPos();
@@ -302,7 +303,7 @@ public class GrowingBlockPattern extends BlockPattern {
         context.isFlipped = controller.self().isFlipped();
         context.minZ = -centerOffset[4];
 
-        clearWorldState(worldState);
+        clearWorldState(context.worldState);
         //context.blocks.put(context.centerPos, controller);
 
     }

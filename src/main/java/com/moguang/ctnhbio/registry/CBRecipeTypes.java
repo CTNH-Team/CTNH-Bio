@@ -45,7 +45,7 @@ public class CBRecipeTypes {
             .setMaxTooltips(5)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-    public static final GTRecipeType GREAT_FLESH = GTRecipeTypes.register("great_flesh", GTRecipeTypes.ELECTRIC)
+    public static final GTRecipeType GREAT_FLESH = GTRecipeTypes.register("great_flesh", NUTRIENT)
             .setMaxIOSize(6, 0, 3, 0)
             .setEUIO(IO.IN)
             .setMaxTooltips(5)

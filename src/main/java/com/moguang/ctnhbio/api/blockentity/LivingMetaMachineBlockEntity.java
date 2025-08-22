@@ -3,6 +3,7 @@ package com.moguang.ctnhbio.api.blockentity;
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
+import com.gregtechceu.gtceu.api.machine.multiblock.WorkableMultiblockMachine;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.moguang.ctnhbio.api.ILivingEntityHost;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
@@ -92,6 +93,10 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
         {
             var tier = tieredMachine.getTier();
             entity.initAttributes(tier*20, tier*4);
+        }
+        else if(getMetaMachine() instanceof WorkableMultiblockMachine)
+        {
+            entity.initAttributes(1000, 50);
         }
         return entity;
     }

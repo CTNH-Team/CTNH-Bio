@@ -29,8 +29,16 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Function;
 
 public class LivingMultiMetaMachineBlock extends MetaMachineBlock implements ILivingEntityHostBlock<LivingMetaMachineEntity> {
+    private final boolean entityRender;
+
     public LivingMultiMetaMachineBlock(Properties properties, MachineDefinition definition) {
         super(properties, definition);
+        entityRender = false;
+    }
+
+    public LivingMultiMetaMachineBlock(Properties properties, MachineDefinition definition, boolean useEntityRender) {
+        super(properties, definition);
+        entityRender = useEntityRender;
     }
 
     //private LivingMetaMachineEntity machineEntity = null;
@@ -48,7 +56,7 @@ public class LivingMultiMetaMachineBlock extends MetaMachineBlock implements ILi
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+        return entityRender ? RenderShape.ENTITYBLOCK_ANIMATED : RenderShape.MODEL;
     }
 
 
@@ -68,12 +76,16 @@ public class LivingMultiMetaMachineBlock extends MetaMachineBlock implements ILi
         return super.use(state, level, pos, player, hand, hit);
     }
 
-    @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        super.onPlace(state, level, pos, oldState, movedByPiston);
 
+    @Override
+    public float getShadeBrightness(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+        return 1.0f;
     }
 
+    @Override
+    public int getLightBlock(BlockState state, BlockGetter world, BlockPos pos) {
+        return 0;
+    }
 
     @Override
     public String getDescriptionId() {

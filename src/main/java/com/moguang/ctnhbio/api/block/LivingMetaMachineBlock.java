@@ -46,11 +46,6 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
         registerDefaultState(getStateDefinition().any().setValue(WATERLOGGED, Boolean.FALSE));
     }
 
-    @Override
-    public @Nullable PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.NORMAL;
-    }
-
     //private LivingMetaMachineEntity machineEntity = null;
     @Override
     public LivingMetaMachineEntity getHostedEntity(Level level, BlockPos pos, BlockState state) {
@@ -61,11 +56,6 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
             return machine.getMachineEntity();
         }
         return null;
-    }
-
-    @Override
-    protected ImmutableMap<BlockState, VoxelShape> getShapeForEachState(Function<BlockState, VoxelShape> p_152459_) {
-        return super.getShapeForEachState(p_152459_);
     }
 
     @Override
@@ -107,12 +97,6 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
         return super.use(state, level, pos, player, hand, hit);
     }
 
-    @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        super.onPlace(state, level, pos, oldState, movedByPiston);
-
-    }
-
 
     @Override
     public boolean propagatesSkylightDown(BlockState p_49928_, BlockGetter p_49929_, BlockPos p_49930_) {
@@ -141,10 +125,5 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
 //            return name.getString();
 //        }
         return super.getDescriptionId();
-    }
-
-    @Override
-    public boolean skipRendering(BlockState p_60532_, BlockState p_60533_, Direction p_60534_) {
-        return super.skipRendering(p_60532_, p_60533_, p_60534_);
     }
 }

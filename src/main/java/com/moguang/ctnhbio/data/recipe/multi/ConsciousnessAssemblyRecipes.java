@@ -24,6 +24,7 @@ import static com.moguang.ctnhbio.registry.CBItems.WETWARE_INDUCTOR;
 public class ConsciousnessAssemblyRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
         CBRecipeBuilder.of(CTNHBio.id("wetware_super_computer_uv_cb"), CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY)
+                .inputFluids("gtceu:polypyrrole", 1152)
                 .inputItems(WETWARE_PRINTED_CIRCUIT_BOARD)
                 .inputItems(WETWARE_PROCESSOR_ASSEMBLY_ZPM, 2)
                 .inputItems(WETWARE_DIODE, 2)
@@ -32,12 +33,12 @@ public class ConsciousnessAssemblyRecipes {
                 .inputItems(wireFine, YttriumBariumCuprate, 24)
                 .inputItems(foil, Polybenzimidazole, 32)
                 .inputItems(plate, Europium, 4)
-                .inputFluids(SolderingAlloy.getFluid(1152))
                 .outputItemsRanged(new ItemStack(GTItems.WETWARE_SUPER_COMPUTER_UV.get()), UniformInt.of(1, 2))
                 .EUt(38400).duration(200)
                 .save(provider);
 
         CBRecipeBuilder.of(CTNHBio.id("wetware_mainframe_uhv_cb"), CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY)
+                .inputFluids("gtceu:polypyrrole", L * 20)
                 .inputItems(frameGt, Tritanium, 2)
                 .inputItems(WETWARE_SUPER_COMPUTER_UV, 2)
                 .inputItems(WETWARE_DIODE, 8)
@@ -49,7 +50,6 @@ public class ConsciousnessAssemblyRecipes {
                 .inputItems(ForgeRegistries.ITEMS.getValue(new ResourceLocation("ctnhcore:advanced_ram_chip")),8)
                 .inputItems(wireGtDouble, EnrichedNaquadahTriniumEuropiumDuranide, 16)
                 .inputItems(plate, Europium, 8)
-                .inputFluids(SolderingAlloy.getFluid(L * 20))
                 .inputFluids(Polybenzimidazole.getFluid(L * 8))
                 .outputItemsRanged(new ItemStack(GTItems.WETWARE_MAINFRAME_UHV.get()), UniformInt.of(1, 2))
                 .EUt(300000).duration(800)

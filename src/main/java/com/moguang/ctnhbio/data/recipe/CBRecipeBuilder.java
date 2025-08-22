@@ -3,6 +3,7 @@ package com.moguang.ctnhbio.data.recipe;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.moguang.ctnhbio.api.capability.NutrientRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
@@ -14,6 +15,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class CBRecipeBuilder extends GTRecipeBuilder {
     public CBRecipeBuilder(ResourceLocation id, GTRecipeType recipeType) {
@@ -98,6 +100,12 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
     @Override
     public CBRecipeBuilder inputFluids(FluidStack input) {
         super.inputFluids(input);
+        return this;
+    }
+
+
+    public CBRecipeBuilder inputFluids(String rl, int amount) {
+        super.inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse(rl)),amount));
         return this;
     }
 

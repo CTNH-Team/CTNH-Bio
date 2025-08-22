@@ -41,8 +41,8 @@ public class GreatFleshRecipes {
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:unstable_compound")),64000))
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:genetic_compound")),64000))
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:heterogeneous_compound")),64000))
-                .duration(100)
-                .EUt(32)
+                .duration(1000)
+                .EUt(GTValues.V[GTValues.UV])
                 .save(provider);
 
         CBRecipeBuilder.of(CTNHBio.id("circulatory_system"), CBRecipeTypes.GREAT_FLESH)
@@ -56,8 +56,8 @@ public class GreatFleshRecipes {
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:organic_compound")),64000))
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:wither_slime")),64000))
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:healing_compound")),64000))
-                .duration(100)
-                //.EUt(GTValues.)
+                .duration(1000)
+                .EUt(GTValues.V[GTValues.UV])
                 .save(provider);
 
         CBRecipeBuilder.of(CTNHBio.id("weatherer"), CBRecipeTypes.GREAT_FLESH)
@@ -71,8 +71,8 @@ public class GreatFleshRecipes {
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("biomancy:acid")),64000))
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:decay_essence")),64000))
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:bile")),64000))
-                .duration(100)
-                //.EUt(GTValues.)
+                .duration(1000)
+                .EUt(GTValues.V[GTValues.UV])
                 .save(provider);
 
     }
