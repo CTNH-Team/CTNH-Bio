@@ -361,9 +361,9 @@ public class BioReactorRecipes {
         //原初血清
         CBRecipeBuilder.of(CTNHBio.id("primordial_serum_cb"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(100)
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:rejuvenation_serum")),1000))
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:frenzy_serum")),1000))
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(new ResourceLocation("gtceu:cleansing_serum")),1000))
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:rejuvenation_serum")),1000))
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:frenzy_serum")),1000))
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:cleansing_serum")),1000))
                 .outputFluidsRanged(new FluidStack(PrimordiaL_Serum.getFluid(), 1), UniformInt.of(10, 50))
                 .EUt(122330)
                 .duration(120 * 20)
