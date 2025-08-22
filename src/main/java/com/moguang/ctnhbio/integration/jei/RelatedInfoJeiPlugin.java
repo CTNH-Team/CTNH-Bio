@@ -31,9 +31,7 @@ public class RelatedInfoJeiPlugin implements IModPlugin {
                 new ItemStack(Items.DIAMOND_AXE),
                 Component.literal("这是一把钻石剑")
         );
-        registration.addItemStackInfo(
-                new ItemStack(Items.DIAMOND_AXE)
-        );
+
 
         IModPlugin.super.registerRecipes(registration);
     }

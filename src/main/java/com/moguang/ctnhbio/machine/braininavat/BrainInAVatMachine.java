@@ -3,15 +3,25 @@ package com.moguang.ctnhbio.machine.braininavat;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.IOpticalComputationProvider;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
+import com.gregtechceu.gtceu.api.machine.TickableSubscription;
+import com.gregtechceu.gtceu.api.machine.feature.IDropSaveMachine;
+import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.List;
 
 import static com.gregtechceu.gtceu.api.GTValues.RNG;
 
-public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalComputationProvider {
+public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalComputationProvider, IDropSaveMachine {
 
     public record Quad(int CWUt,
                        double NUt,
@@ -31,6 +41,47 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     long lastWorkingTime = -1;
     boolean isDoubted = false;
 
+    @Persisted
+    public float maxHealth = 0;
+
+    public boolean oc = false;
+
+    @Override
+    public void saveToItem(CompoundTag tag) {
+        if(holder instanceof LivingMetaMachineBlockEntity<?> blockEntity
+        && blockEntity.getMachineEntity() != null)
+        {
+            maxHealth = blockEntity.getMachineEntity().getMaxHealth();
+        }
+        if(maxHealth != 0)
+        {
+            tag.putFloat("maxHealth", maxHealth);
+        }
+        IDropSaveMachine.super.saveToItem(tag);
+    }
+
+    @Override
+    public void loadFromItem(CompoundTag tag) {
+        IDropSaveMachine.super.loadFromItem(tag);
+        if(tag.contains("maxHealth"))
+        {
+            maxHealth = tag.getFloat("maxHealth");
+        }
+        if( maxHealth != 0 &&
+                holder instanceof LivingMetaMachineBlockEntity<?> blockEntity
+                && blockEntity.getMachineEntity() != null)
+        {
+            blockEntity.getMachineEntity().getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
+        }
+
+    }
+
+    @Override
+    public void doExplosion(float explosionPower) {
+        super.doExplosion(explosionPower);
+        oc = true;
+    }
+
     public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, double capacity, Object... args) {
         super(holder, tier, tankScalingFunction, capacity, args);
         q = Quad.tier(tier);
@@ -40,17 +91,29 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     public int requestCWUt(int cwut, boolean simulate, @NotNull Collection<IOpticalComputationProvider> seen) {
         seen.add(this);
         var ret = isWorkingEnabled() && consume(simulate);
-        if(ret&&!simulate){
+        if(!ret ) return 0;
+
+        if(!simulate){
             if(getLevel()!=null) lastWorkingTime = getLevel().getGameTime();
             if(!isDoubted && q.chanceToDoubt > 0 && RNG.nextInt(Byte.MAX_VALUE) <= q.chanceToDoubt) isDoubted = true;
         }
-        return (ret? q.CWUt : 0) / (isDoubted? 2 : 1);
+        int output;
+        if(oc)
+        {
+            output = 2*q.CWUt;
+        }
+        else {
+            output = q.CWUt  / (isDoubted? 2 : 1);
+        }
+        if(!simulate) oc = false;
+        return  output;
     }
 
     @Override
     public int getMaxCWUt(@NotNull Collection<IOpticalComputationProvider> seen) {
         seen.add(this);
-        return isWorkingEnabled() ? q.CWUt : 0;
+        int output = oc ? 2*q.CWUt : q.CWUt;
+        return isWorkingEnabled() ? output : 0;
     }
 
     @Override
@@ -72,7 +135,12 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
 
     //Utils
     private boolean consume(boolean simulate){
-        return simulate ? getStorage().getAmount() >= q.NUt && energyContainer.getEnergyStored() >= q.EUt :
-                getStorage().extract(q.NUt) >= q.NUt && energyContainer.removeEnergy(q.EUt) >= q.EUt;
+        var nut = oc ? 4*q.NUt : q.NUt;
+        var eut = oc ? 4*q.EUt : q.EUt;
+
+        return simulate ? getStorage().getAmount() >= nut && energyContainer.getEnergyStored() >= eut :
+                getStorage().extract(nut) >= nut && energyContainer.removeEnergy(eut) >= eut;
     }
+
+
 }

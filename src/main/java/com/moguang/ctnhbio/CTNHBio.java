@@ -2,6 +2,7 @@ package com.moguang.ctnhbio;
 
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
 import com.gregtechceu.gtceu.api.recipe.chance.logic.ChanceLogic;
 import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
 import com.moguang.ctnhbio.client.ClientProxy;
@@ -42,7 +43,8 @@ public class CTNHBio
         modEventBus.addGenericListener(MachineDefinition.class, EventHandler::registerMachines);
         modEventBus.addGenericListener(GTRecipeType.class, EventHandler::registerRecipeTypes);
         modEventBus.addGenericListener(RecipeConditionType.class, EventHandler::registerRecipeConditions);
-        modEventBus.addGenericListener(ChanceLogic.class,EventHandler::registerChanceLogic);
+        modEventBus.addGenericListener(GTRecipeCategory.class, EventHandler::onRecipeCategoryRegister);
+        //modEventBus.addGenericListener(ChanceLogic.class,EventHandler::registerChanceLogic);
 
         DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 

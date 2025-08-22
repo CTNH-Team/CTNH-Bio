@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
+import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
@@ -167,7 +168,13 @@ public class CBMachines {
                             .noOcclusion()
                             .lightLevel(state ->0)
                     )
+                    .tooltips(Component.translatable("ctnhbio.machine.brain_in_a_vat.tooltip.1"),
+                            Component.translatable("ctnhbio.machine.brain_in_a_vat.tooltip.2",(tier>=GTValues.HV?1<<(tier-GTValues.HV):0)),
+                            Component.translatable("ctnhbio.machine.brain_in_a_vat.tooltip.3")
+                            )   //输入电流16A
+
                     .tooltips(Component.translatable("ctnhbio.machine." + VN[tier].toLowerCase(Locale.ROOT) +"_brain_in_a_vat.tooltip.0").withStyle(ChatFormatting.GRAY))
+
                     .rotationState(RotationState.NON_Y_AXIS)
                     .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
                     .onBlockEntityRegister(beType -> {

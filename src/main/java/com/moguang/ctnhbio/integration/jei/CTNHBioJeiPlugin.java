@@ -1,11 +1,15 @@
 package com.moguang.ctnhbio.integration.jei;
 
 import com.github.elenterius.biomancy.init.ModEnchantments;
+import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.item.IGTTool;
+import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.lowdragmc.lowdraglib.gui.texture.ItemStackTexture;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.api.recipe.CBRecipeType;
 import com.moguang.ctnhbio.common.recipe.MobCrushingRecipe;
 import com.moguang.ctnhbio.common.recipe.MobCrushingRecipeManager;
+import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import com.moguang.ctnhbio.utils.LootTableAccess;
 import com.simibubi.create.AllBlocks;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
@@ -52,11 +56,12 @@ public class CTNHBioJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         List<MobCrushingRecipe> recipes = MobCrushingRecipeManager.getAllRecipes();
-        System.out.println("已加载配方数量: " + recipes.size());
+        //System.out.println("已加载配方数量: " + recipes.size());
         registration.addRecipes(
                 CBRecipeType.MOB_CRUSHING,
                 recipes
         );
+
     }
 
     @Override
@@ -66,6 +71,7 @@ public class CTNHBioJeiPlugin implements IModPlugin {
 
 
         var allRecipes = recipeManager.createRecipeLookup(aliGameplayType).get();
+
 
         List<GameplayLootType> toHide = allRecipes
                 .filter(recipe -> {
@@ -88,13 +94,16 @@ public class CTNHBioJeiPlugin implements IModPlugin {
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         System.out.println("催化剂 ");
         registration.addRecipeCatalyst(AllBlocks.CRUSHING_WHEEL.asStack(), CBRecipeType.MOB_CRUSHING);
+
+//        registration.addRecipeCatalyst(ModItems.NUTRIENT_PASTE.get(),
+//                new RecipeType<>(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory().registryKey, GTRecipe.class)
+//                );
+
         RecipeType<GameplayLootType> type = new RecipeType<>(ResourceLocation.tryBuild("ctnhbio", "despoil_loot"), GameplayLootType.class);
 
         registration.addRecipeCatalyst(new ItemStack(DESPOIL_SICKLE.get()), type);
-
         ItemStack enchantedBook = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ModEnchantments.DESPOIL.get(), 1));
         registration.addRecipeCatalyst(enchantedBook, type);
-
         for (ItemProviderEntry<IGTTool> entry : CB_TOOL_ITEMS.column(CBToolType.BONING_KNIFE).values()) {
             if(entry == null) continue;
             ItemStack stack = new ItemStack(entry.get());

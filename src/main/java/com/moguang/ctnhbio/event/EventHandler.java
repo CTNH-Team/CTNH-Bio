@@ -10,12 +10,16 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.MaterialPrope
 import com.gregtechceu.gtceu.api.item.IGTTool;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
 import com.gregtechceu.gtceu.api.recipe.chance.logic.ChanceLogic;
 import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
+import com.gregtechceu.gtceu.api.registry.GTRegistry;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.data.loot.CBLootTableProvider;
 import com.moguang.ctnhbio.data.recipe.BiomancyRecipes;
+import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
 import com.moguang.ctnhbio.registry.*;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.yanny.ali.registries.LootCategories;
@@ -56,10 +60,11 @@ public class EventHandler {
     public static void registerRecipeConditions(GTCEuAPI.RegisterEvent<ResourceLocation, RecipeConditionType> event) {
         CBRecipeConditions.init();
     }
-    public static void registerChanceLogic(GTCEuAPI.RegisterEvent<ResourceLocation, ChanceLogic> event){
-//        CTNHChanceLogic.init();
+
+    //@SubscribeEvent
+    public static void onRecipeCategoryRegister(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeCategory> event) {
+        CBRecipeCategories.init();
     }
-    //public static void onRe
 
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {

@@ -1,5 +1,6 @@
 package com.moguang.ctnhbio.data.lang;
 
+import com.github.elenterius.biofactory.init.ModFluids;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
@@ -78,6 +79,10 @@ public class ChineseLangHandler {
         provider.add(CBMachines.BRAIN_IN_A_VAT[IV].getBlock(), "§9IV 缸中之脑§r");
         provider.add(CBMachines.BRAIN_IN_A_VAT[LuV].getBlock(), "§dLuV 缸中之脑§r");
 
+        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.1", "§3自动化思考");
+        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.2", "§r电量和营养充足时,提供%d算力");
+        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.3", "§r超频可提供双倍算力，但会对大脑造成不可逆损伤");
+
         provider.add("ctnhbio.machine.hv_brain_in_a_vat.tooltip.0", "它觉得自己是一名出色的格雷员工");
         provider.add("ctnhbio.machine.ev_brain_in_a_vat.tooltip.0", "它正在优化铂系金属处理产线");
         provider.add("ctnhbio.machine.iv_brain_in_a_vat.tooltip.0", "它喜欢熬夜玩CTNH，这样不太好");
@@ -92,14 +97,17 @@ public class ChineseLangHandler {
         provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH]活体机器属性");
         provider.add("ctnhbio.living_machine", "living machine");
 
+        //replace(provider, "fluid_type.biofactory.nutrients_fluid", "营养液");
+        provider.add("fluid_type.biofactory.nutrients_fluid", "营养液");
 
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
-        provider.add("jei.category.gtceu.bioelectric_forge", "生物电炉");
-        provider.add("jei.category.gtceu.decomposer", "电力分解");
-        provider.add("jei.category.gtceu.digest", "电力消化");
-        provider.add("jei.category.gtceu.ctnhbio_reactor", "生物反应");
-        provider.add("jei.category.gtceu.basic_living", "摄入营养");
-        provider.add("jei.category.gtceu.great_flesh", "巨型肉块-分化");
+
+        provider.add("gtceu.bioelectric_forge", "生物电炉");
+        provider.add("gtceu.decomposer", "电力分解");
+        provider.add("gtceu.digest", "电力消化");
+        provider.add("gtceu.ctnhbio_reactor", "生物反应");
+        provider.add("gtceu.basic_living", "摄入营养");
+        provider.add("gtceu.great_flesh", "巨型肉块-分化");
 
 
         provider.add("ctnhbio.nutrient_bar.info", "营养:");
@@ -107,7 +115,8 @@ public class ChineseLangHandler {
         provider.add("jade.nutrient.info", "营养值：");
 
         provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
-        provider.add("ctnhbio.recipe.nutrient", "营养消耗：%d");
+        provider.add("ctnhbio.recipe.nutrient_consume", "营养消耗：%d");
+        provider.add("ctnhbio.recipe.nutrient_generate", "营养获取：%d");
         provider.add("ctnhbio.jade.nutrient_stored", "%s / %s u");
 
         provider.add("jei.ctnhbio.mob_crushing", "生物粉碎");

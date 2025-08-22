@@ -8,6 +8,7 @@ import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProp
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.CBDatagen;
 import com.moguang.ctnhbio.data.materials.OrganicMaterials;
+import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
 import com.moguang.ctnhbio.registry.CBCreativeModeTabs;
 import com.moguang.ctnhbio.registry.CBEntities;
 import com.moguang.ctnhbio.registry.CBItems;
@@ -36,7 +37,7 @@ public class CommonProxy {
 
         CBCreativeModeTabs.init();
         CBDatagen.init();
-
+        //CBRecipeCategories.init();
         CTNHBio.REGISTRATE.registerRegistrate();
 
         PropertyOperators.init();

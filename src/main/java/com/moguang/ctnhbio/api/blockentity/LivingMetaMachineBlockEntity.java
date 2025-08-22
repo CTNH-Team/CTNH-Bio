@@ -7,11 +7,14 @@ import com.gregtechceu.gtceu.api.machine.multiblock.WorkableMultiblockMachine;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.moguang.ctnhbio.api.ILivingEntityHost;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
+import com.moguang.ctnhbio.machine.braininavat.Brain;
+import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -81,7 +84,7 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     @Override
     public void onHostedEntityRemoved(LivingMetaMachineEntity entity) {
         level.getServer().submit(() ->
-                level.destroyBlock(getBlockPos(), true)
+                level.destroyBlock(getBlockPos(), !(entity instanceof Brain))
         );
     }
 
@@ -117,9 +120,12 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     @Override
     protected void saveAdditional(CompoundTag tag) {
         saveHostedEntityData(getPersistentData());
+        if(metaMachine instanceof BrainInAVatMachine vat)
+        {
+            vat.maxHealth = machineEntity.getMaxHealth();
+        }
         onChanged();
         super.saveAdditional(tag);
-
     }
 
 
@@ -130,6 +136,12 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
         if(getLevel().isClientSide()) return;
         if (machineEntity == null) {
             loadHostedEntityData(entityTag, level);
+            if(metaMachine instanceof BrainInAVatMachine vat
+            && vat.maxHealth != 0)
+            {
+                machineEntity.setHealth(vat.maxHealth);
+                machineEntity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(vat.maxHealth);
+            }
             spawnHostedEntity(this.getLevel());
         }
         if(!spawned)
