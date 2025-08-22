@@ -90,6 +90,10 @@ public class ChineseLangHandler {
         provider.add(MultiblocksA.CIRCULATORY_SYSTEM.getBlock(), "循环系统");
         provider.add(MultiblocksA.WEATHERER.getBlock(), "风化器");
 
+        provider.add("ctnhbio.great_flesh.info.0", "§5喂食原初温床，并给予其治疗药水，温床会孵化出肉块，挑选出有潜质的那些（不饥饿的那些）。");
+        provider.add("ctnhbio.great_flesh.info.1", "§5使用有机试管把原初血清装载入活体注射器，向它们注射，");
+        provider.add("ctnhbio.great_flesh.info.2", "§5他们将会向你展示最原初、最纯粹的生命形态");
+
         provider.add("item.gtceu.tool.boning_knife", "%s剔骨刀");
         provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH]活体机器属性");
         provider.add("ctnhbio.living_machine", "living machine");
