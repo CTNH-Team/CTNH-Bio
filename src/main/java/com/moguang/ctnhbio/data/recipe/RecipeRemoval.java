@@ -209,7 +209,8 @@ public class RecipeRemoval {
                 "biomancy:decomposing/cocoa_beans",
 
                 "biomancy:crafting/primordial_core",
-                "biomancy:bio_brewing"
+                "biomancy:bio_brewing",
+                "biomancy:crafting/despoil_sickle"
 
         };
         for(var recipe: recipes) {

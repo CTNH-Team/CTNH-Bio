@@ -7,10 +7,7 @@ import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.lang.utils.EntityPropertyLangUtil;
 import com.moguang.ctnhbio.data.materials.CommonMaterials;
 import com.moguang.ctnhbio.machine.multiblock.MultiblocksA;
-import com.moguang.ctnhbio.registry.CBBlocks;
-import com.moguang.ctnhbio.registry.CBItems;
-import com.moguang.ctnhbio.registry.CBMachines;
-import com.moguang.ctnhbio.registry.CBMaterials;
+import com.moguang.ctnhbio.registry.*;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 import net.minecraftforge.common.data.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
@@ -108,7 +105,7 @@ public class ChineseLangHandler {
         provider.add("gtceu.ctnhbio_reactor", "生物反应");
         provider.add("gtceu.basic_living", "摄入营养");
         provider.add("gtceu.great_flesh", "巨型肉块-分化");
-
+        provider.add(CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY.registryName.toLanguageKey(), "意识装配");
 
         provider.add("ctnhbio.nutrient_bar.info", "营养:");
         provider.add("recipe.capability.nutrient.name", "营养");

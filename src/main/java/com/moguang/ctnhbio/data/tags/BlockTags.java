@@ -13,6 +13,7 @@ import java.util.function.Supplier;
 
 import static com.github.elenterius.biomancy.init.ModBlocks.*;
 import static com.moguang.ctnhbio.registry.CBBlocks.*;
+import static com.moguang.ctnhbio.registry.CBBlocks.IMPERMEABLE_MEMBRANE;
 
 
 public class BlockTags {
@@ -29,13 +30,15 @@ public class BlockTags {
                 SMOOTH_PRIMAL_FLESH,
                 POROUS_PRIMAL_FLESH,
                 MALIGNANT_FLESH,
+                ACID_FLUID_BLOCK,
 
 
                 FLESH_CASING,
                 PRIMAL_FLESH_CASING,
                 ORNATE_FLESH_CASING,
                 ACID_FLESH_CASING,
-                BIO_ACID_CASING
+                BIO_ACID_CASING,
+                CBBlocks.IMPERMEABLE_MEMBRANE
                 );
     }
 
