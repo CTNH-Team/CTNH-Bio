@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.api;
 
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -80,7 +81,7 @@ public interface ILivingEntityHost<T extends LivingEntity> {
 //        return entity;
 //    }
 
-   void onHostedEntityRemoved(T entity);
+   void onHostedEntityRemoved(T entity, DamageSource source);
 
     // 子类需实现的方法 ---
     T createHostedEntity(Level level);
