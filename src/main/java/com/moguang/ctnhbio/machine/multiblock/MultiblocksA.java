@@ -94,7 +94,7 @@ public class MultiblocksA {
                     )
                     .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
-                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("gtceu:nichrome_coil_block"))))
+                    .where("G", Predicates.heatingCoils())
                     .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:bio_acid_casing"))))
                     .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
                             .or(Predicates.autoAbilities(definition.getRecipeTypes()))

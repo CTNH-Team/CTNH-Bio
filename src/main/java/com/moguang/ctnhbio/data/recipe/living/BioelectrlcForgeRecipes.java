@@ -228,110 +228,10 @@ public class BioelectrlcForgeRecipes {
                 .EUt(8)
                 .duration(40)
                 .save(provider);
-// 分解器
-//        CBRecipeBuilder.of(CTNHBio.id("decomposer_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-//                .nutrient(12)
-//                .effect(MobEffects.SATURATION)
-//                .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
-//                .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 8)
-//                .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 5)
-//                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 5)
-//                .inputItems(TagPrefix.dust,Steel, 8)
-//                .outputItems(ModItems.DECOMPOSER.get().getDefaultInstance())
-//                .EUt(30)
-//                .duration(200)
-//                .save(provider);
-
-// 消化器
-//        CBRecipeBuilder.of(CTNHBio.id("digester_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-//                .nutrient(12)
-//                .effect(MobEffects.SATURATION)
-//                .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
-//                .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 10)
-//                .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 3)
-//                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 8)
-//                .inputFluids(new FluidStack(Bile.getFluid(), 400))
-//                .outputItems(ModItems.DIGESTER.get().getDefaultInstance())
-//                .EUt(30)
-//                .duration(200)
-//                .save(provider);
-
-// 生物锻造台-ULV
-//        CBRecipeBuilder.of(CTNHBio.id("bio_forge_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-//                .nutrient(12)
-//                .effect(MobEffects.SATURATION)
-//                .inputItems(ModItems.LIVING_FLESH.get().getDefaultInstance())
-//                .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 5)
-//                .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 8)
-//                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 6)
-//                .inputItems(ModItems.EXOTIC_DUST.get().getDefaultInstance(), 2)
-//                .outputItems(ModItems.BIO_FORGE.get().getDefaultInstance())
-//                .EUt(32)
-//                .duration(220)
-//                .save(provider);
-//
-////电力分解者-LV
-//        CBRecipeBuilder.of(CTNHBio.id("lv_decomposer_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-//                .nutrient(50)
-//                .effect(MobEffects.SATURATION)
-//                .inputItems(ModItems.DECOMPOSER.get().getDefaultInstance())
-//                .inputItems(GTMachines.MACERATOR[LV],1)
-//                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance(), 2)
-//                .inputItems(TagPrefix.cableGtSingle,Tin,2)
-//                .inputItems(FLUID_REGULATOR_LV,2)
-//                .inputItems(ELECTRIC_PUMP_LV,2)
-//                .outputItems(CBMachines.DECOMPOSER[LV],1)
-//                .EUt(24)
-//                .duration(300)
-//                .save(provider);
-//
-////电力生物反应腔-LV
-//        CBRecipeBuilder.of(CTNHBio.id("lv_bioreactor_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-//                .nutrient(50)
-//                .effect(MobEffects.SATURATION)
-//                .inputItems(Items.SLIME_BLOCK,1)
-//                .inputItems(GTMachines.CHEMICAL_REACTOR[LV],1)
-//                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance(), 2)
-//                .inputItems(TagPrefix.cableGtSingle,Tin,2)
-//                .inputItems(FLUID_REGULATOR_LV,2)
-//                .inputItems(ELECTRIC_PUMP_LV,2)
-//                .outputItems(CBMachines.BIOREACTOR[LV],1)
-//                .EUt(24)
-//                .duration(300)
-//                .save(provider);
-//
-////电力生物消化器-LV
-//        CBRecipeBuilder.of(CTNHBio.id("lv_digester_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-//                .nutrient(50)
-//                .effect(MobEffects.SATURATION)
-//                .inputItems(ModItems.DIGESTER.get().getDefaultInstance())
-//                .inputItems(GTMachines.BREWERY[LV],1)
-//                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance(), 2)
-//                .inputItems(TagPrefix.cableGtSingle,Tin,2)
-//                .inputItems(FLUID_REGULATOR_LV,2)
-//                .inputItems(ELECTRIC_PUMP_LV,2)
-//                .outputItems(CBMachines.DIGESTER[LV],1)
-//                .EUt(24)
-//                .duration(300)
-//                .save(provider);
-////电力生物锻炉-LV
-//        CBRecipeBuilder.of(CTNHBio.id("lv_forge_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-//                .nutrient(50)
-//                .effect(MobEffects.SATURATION)
-//                .inputItems(ModItems.BIO_FORGE.get().getDefaultInstance())
-//                .inputItems(GTMachines.ASSEMBLER[LV],1)
-//                .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance(), 2)
-//                .inputItems(TagPrefix.cableGtSingle,Tin,2)
-//                .inputItems(FLUID_REGULATOR_LV,2)
-//                .inputItems(ELECTRIC_PUMP_LV,2)
-//                .outputItems(CBMachines.BIOELECTRIC_FORGE[LV],1)
-//                .EUt(24)
-//                .duration(300)
-//                .save(provider);
 //电力分解者-MV
         CBRecipeBuilder.of(CTNHBio.id("mv_decomposer_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.DECOMPOSER.get().getDefaultInstance())
                 .inputItems(GTMachines.MACERATOR[MV],1)
                 .inputItems(CBItems.SYNET_CORE.get().getDefaultInstance(), 2)
@@ -345,7 +245,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物反应腔-MV
         CBRecipeBuilder.of(CTNHBio.id("mv_bioreactor_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(Items.SLIME_BLOCK,1)
                 .inputItems(GTMachines.CHEMICAL_REACTOR[MV],1)
                 .inputItems(CBItems.SYNET_CORE.get().getDefaultInstance(), 2)
@@ -359,7 +259,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物消化器-MV
         CBRecipeBuilder.of(CTNHBio.id("mv_digester_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.DIGESTER.get().getDefaultInstance())
                 .inputItems(GTMachines.BREWERY[MV],1)
                 .inputItems(CBItems.SYNET_CORE.get().getDefaultInstance(), 2)
@@ -373,7 +273,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物锻炉-MV
         CBRecipeBuilder.of(CTNHBio.id("mv_forge_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.BIO_FORGE.get().getDefaultInstance())
                 .inputItems(GTMachines.ASSEMBLER[MV],1)
                 .inputItems(CBItems.SYNET_CORE.get().getDefaultInstance(), 2)
@@ -387,7 +287,7 @@ public class BioelectrlcForgeRecipes {
 //电力分解者-HV
         CBRecipeBuilder.of(CTNHBio.id("hv_decomposer_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.DECOMPOSER.get().getDefaultInstance())
                 .inputItems(GTMachines.MACERATOR[HV],1)
                 .inputItems(CBItems.META_CORE.get().getDefaultInstance(), 2)
@@ -401,7 +301,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物反应腔-HV
         CBRecipeBuilder.of(CTNHBio.id("hv_bioreactor_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(Items.SLIME_BLOCK,1)
                 .inputItems(GTMachines.CHEMICAL_REACTOR[HV],1)
                 .inputItems(CBItems.META_CORE.get().getDefaultInstance(), 2)
@@ -415,7 +315,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物消化器-HV
         CBRecipeBuilder.of(CTNHBio.id("hv_digester_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.DIGESTER.get().getDefaultInstance())
                 .inputItems(GTMachines.BREWERY[HV],1)
                 .inputItems(CBItems.META_CORE.get().getDefaultInstance(), 2)
@@ -429,7 +329,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物锻炉-HV
         CBRecipeBuilder.of(CTNHBio.id("hv_forge_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.BIO_FORGE.get().getDefaultInstance())
                 .inputItems(GTMachines.ASSEMBLER[HV],1)
                 .inputItems(CBItems.META_CORE.get().getDefaultInstance(), 2)
@@ -443,7 +343,7 @@ public class BioelectrlcForgeRecipes {
 //电力分解者-EV
         CBRecipeBuilder.of(CTNHBio.id("ev_decomposer_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.DECOMPOSER.get().getDefaultInstance())
                 .inputItems(GTMachines.MACERATOR[EV],1)
                 .inputItems(CBItems.NOVA_CORE.get().getDefaultInstance(), 2)
@@ -457,7 +357,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物反应腔-EV
         CBRecipeBuilder.of(CTNHBio.id("ev_bioreactor_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(Items.SLIME_BLOCK,1)
                 .inputItems(GTMachines.CHEMICAL_REACTOR[EV],1)
                 .inputItems(CBItems.NOVA_CORE.get().getDefaultInstance(), 2)
@@ -471,7 +371,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物消化器-EV
         CBRecipeBuilder.of(CTNHBio.id("ev_digester_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.DIGESTER.get().getDefaultInstance())
                 .inputItems(GTMachines.BREWERY[EV],1)
                 .inputItems(CBItems.NOVA_CORE.get().getDefaultInstance(), 2)
@@ -485,7 +385,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物锻炉-EV
         CBRecipeBuilder.of(CTNHBio.id("ev_forge_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.BIO_FORGE.get().getDefaultInstance())
                 .inputItems(GTMachines.ASSEMBLER[EV],1)
                 .inputItems(CBItems.NOVA_CORE.get().getDefaultInstance(), 2)
@@ -499,7 +399,7 @@ public class BioelectrlcForgeRecipes {
 //电力分解者-IV
         CBRecipeBuilder.of(CTNHBio.id("iv_decomposer_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.DECOMPOSER.get().getDefaultInstance())
                 .inputItems(GTMachines.MACERATOR[IV],1)
                 .inputItems(CBItems.OMNI_CORE.get().getDefaultInstance(), 2)
@@ -514,7 +414,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物反应腔-IV
         CBRecipeBuilder.of(CTNHBio.id("iv_bioreactor_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(Items.SLIME_BLOCK,1)
                 .inputItems(GTMachines.CHEMICAL_REACTOR[IV],1)
                 .inputItems(CBItems.OMNI_CORE.get().getDefaultInstance(), 2)
@@ -529,7 +429,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物消化器-IV
         CBRecipeBuilder.of(CTNHBio.id("iv_digester_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.DIGESTER.get().getDefaultInstance())
                 .inputItems(GTMachines.BREWERY[IV],1)
                 .inputItems(CBItems.OMNI_CORE.get().getDefaultInstance(), 2)
@@ -543,7 +443,7 @@ public class BioelectrlcForgeRecipes {
 //电力生物锻炉-IV
         CBRecipeBuilder.of(CTNHBio.id("iv_forge_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.BIO_FORGE.get().getDefaultInstance())
                 .inputItems(GTMachines.ASSEMBLER[IV],1)
                 .inputItems(CBItems.OMNI_CORE.get().getDefaultInstance(), 2)
@@ -557,7 +457,7 @@ public class BioelectrlcForgeRecipes {
 //缸中之脑-HV
         CBRecipeBuilder.of(CTNHBio.id("hv_brain_in_a_vat_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(),8)
                 .inputItems(GTBlocks.CASING_TEMPERED_GLASS,5)
                 .inputItems(HULL[HV],1)
@@ -571,7 +471,7 @@ public class BioelectrlcForgeRecipes {
 // 缸中之脑-EV
         CBRecipeBuilder.of(CTNHBio.id("ev_brain_in_a_vat_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(),8)
                 .inputItems(GTBlocks.CASING_TEMPERED_GLASS,5)
                 .inputItems(HULL[EV],1)
@@ -586,7 +486,7 @@ public class BioelectrlcForgeRecipes {
 // 缸中之脑-IV
         CBRecipeBuilder.of(CTNHBio.id("iv_brain_in_a_vat_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(),8)
                 .inputItems(GTBlocks.CASING_TEMPERED_GLASS,5)
                 .inputItems(HULL[IV],1)
@@ -601,7 +501,7 @@ public class BioelectrlcForgeRecipes {
 // 缸中之脑-LuV
         CBRecipeBuilder.of(CTNHBio.id("luv_brain_in_a_vat_cb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(50)
-                .effect(MobEffects.SATURATION)
+                .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(),8)
                 .inputItems(GTBlocks.CASING_TEMPERED_GLASS,5)
                 .inputItems(HULL[LuV],1)

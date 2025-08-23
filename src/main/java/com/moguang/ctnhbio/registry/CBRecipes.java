@@ -9,7 +9,6 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.item.tool.GTToolType;
-import com.gregtechceu.gtceu.api.item.tool.ToolHelper;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.data.recipe.*;
@@ -21,7 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.GENERATE_PLATE;
@@ -38,8 +36,8 @@ public class CBRecipes {
         DigesterRecipes.init(provider);
         CommonRecipes.init(provider);
         ConsciousnessAssemblyRecipes.init(provider);
-        //BiomancyRecipes.init(provider);
-        VanillaRecipeProvider.init(provider);
+        //VanillaRecipeProvider.init(provider);
+        VanillaRecipes.init(provider);
         recipeAddition(provider);
     }
 

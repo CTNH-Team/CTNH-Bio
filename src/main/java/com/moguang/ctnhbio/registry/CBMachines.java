@@ -17,10 +17,7 @@ import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineBlockEntityRenderer;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBlockEntityRenderer;
-import com.moguang.ctnhbio.client.model.BioReactorModel;
-import com.moguang.ctnhbio.client.model.BioelectricForgeModel;
-import com.moguang.ctnhbio.client.model.DigesterModel;
-import com.moguang.ctnhbio.client.model.VatModel;
+import com.moguang.ctnhbio.client.model.*;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeBlockEntity;
 import com.moguang.ctnhbio.machine.bioreactor.BioReactorBlockEntity;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
@@ -79,7 +76,7 @@ public class CBMachines {
                             MachineDefinition::new,
                             holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
                             LivingMetaMachineBlock::new,
-                            MetaMachineItem::new,
+                            (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new DecomposerModel())),
                             (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
                     )
                     .tier(tier)
@@ -88,7 +85,11 @@ public class CBMachines {
                     .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("decompose"),CBRecipeTypes.DECOMPOSER_RECIPES))
                     .rotationState(RotationState.NON_Y_AXIS)
                     .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
-
+                    .onBlockEntityRegister(beType -> {
+                        @SuppressWarnings("unchecked")
+                        var typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
+                        BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new DecomposerModel(), true));
+                    })
                     .register();
         }
     }

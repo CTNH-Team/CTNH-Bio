@@ -12,19 +12,22 @@ import org.jetbrains.annotations.NotNull;
 
 public class CBRecipeModifier {
     public static @NotNull ModifierFunction batchMode(@NotNull MetaMachine machine, @NotNull GTRecipe recipe) {
-        int parallel = ConfigHolder.INSTANCE.machines.batchDuration / recipe.duration;
-        parallel = ParallelLogic.getParallelAmountWithoutEU(machine, recipe, parallel);
+        if (recipe.duration < ConfigHolder.INSTANCE.machines.batchDuration) {
+            int parallel = ConfigHolder.INSTANCE.machines.batchDuration / recipe.duration;
+            parallel = ParallelLogic.getParallelAmountWithoutEU(machine, recipe, parallel);
 
-        if (parallel == 0) return ModifierFunction.NULL;
-        if (parallel == 1) return ModifierFunction.IDENTITY;
+            if (parallel == 0) return ModifierFunction.NULL;
+            if (parallel == 1) return ModifierFunction.IDENTITY;
 
-        int duration = recipe.recipeType == CBRecipeTypes.BASIC_LIVING_RECIPES ? 1: parallel;
+            int duration = recipe.recipeType == CBRecipeTypes.BASIC_LIVING_RECIPES ? 1 : parallel;
 
-        return ModifierFunction.builder()
-                .inputModifier(ContentModifier.multiplier(parallel))
-                .outputModifier(ContentModifier.multiplier(parallel))
-                .durationMultiplier(duration)
-                .batchParallels(parallel)
-                .build();
+            return ModifierFunction.builder()
+                    .inputModifier(ContentModifier.multiplier(parallel))
+                    .outputModifier(ContentModifier.multiplier(parallel))
+                    .durationMultiplier(duration)
+                    .batchParallels(parallel)
+                    .build();
+        }
+        return ModifierFunction.IDENTITY;
     }
 }
