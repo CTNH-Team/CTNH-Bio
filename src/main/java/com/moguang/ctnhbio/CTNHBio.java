@@ -54,7 +54,7 @@ public class CTNHBio
 
     }
 
-    public static ResourceLocation id(String name) {return ResourceLocation.tryBuild(MODID, name); }
+    public static ResourceLocation id(String name) {return ResourceLocation.tryParse(MODID + ":" + name); }
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         event.enqueueWork(VanillaRecipeProvider::buildBrewingRecipes);
