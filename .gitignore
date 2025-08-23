@@ -21,6 +21,7 @@ build
 eclipse
 run
 run-data
+mcmodsrepo
 src/generated/
 src/test/
 # Files from Forge MDK
