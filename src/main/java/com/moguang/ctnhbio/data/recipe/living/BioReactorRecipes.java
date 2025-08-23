@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.data.recipe.living;
 
 import com.github.elenterius.biomancy.init.ModItems;
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 
 import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
@@ -364,9 +365,9 @@ public class BioReactorRecipes {
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:rejuvenation_serum")),1000))
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:frenzy_serum")),1000))
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:cleansing_serum")),1000))
-                .outputFluidsRanged(new FluidStack(PrimordiaL_Serum.getFluid(), 1), UniformInt.of(10, 50))
-                .EUt(122330)
-                .duration(120 * 20)
+                .outputFluidsRanged(new FluidStack(PrimordiaL_Serum.getFluid(), 1), UniformInt.of(100, 300))
+                .EUt(GTValues.V[GTValues.LuV])
+                .duration(60 * 20)
                 .save(provider);
     }
 }
