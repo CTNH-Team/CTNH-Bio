@@ -89,6 +89,7 @@ public class ChineseLangHandler {
         provider.add("material.ctnhbio.fentons_reagent", "芬顿试剂");
         provider.add("material.ctnhbio.bio_flexible", "生物柔性材质");
         provider.add("material.ctnhbio.weird_pixel_dust", "营养");
+        provider.add("ctnhbio.recipe.datamodel.requirement", "§p以上为最低要求");
 
         //Entity Properties
         EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"实体输入","实体输出","接受实体: %s","要求:");

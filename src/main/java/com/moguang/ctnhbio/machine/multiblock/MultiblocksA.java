@@ -5,18 +5,20 @@ import com.github.elenterius.biomancy.init.ModBlocks;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
+import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.Predicates;
+import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.moguang.ctnhbio.CTNHBio;
-import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.block.LivingMultiMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
-import com.moguang.ctnhbio.machine.digester.DigesterBlockEntityRenderer;
+import com.moguang.ctnhbio.machine.bioobservation.HostileObserverMachine;
 import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
 import com.moguang.ctnhbio.machine.greatflesh.GreatFleshRenderer;
 import com.moguang.ctnhbio.registry.CBBlocks;
+import com.moguang.ctnhbio.registry.CBPartAbility;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -203,5 +205,43 @@ public class MultiblocksA {
                             Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
                 }
             })
+            .register();
+
+    public static MultiblockMachineDefinition HOSTILE_OBSERVER = REGISTRATE
+            .multiblock("hostile_observer", HostileObserverMachine::new)
+            .recipeType(CBRecipeTypes.HOSTILE_OBSERVATION)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("AAAAAAAAAAAAAAA", "###############", "###############", "###############", "###############", "###############")
+                    .aisle("AAAAAAAAABBBBBA", "#CCCCC#########", "#CAAAC#########", "#CADAC#########", "#CAAAC#########", "#CCCCC#########")
+                    .aisle("AAAAAAAAABBBBBA", "#CEEEC####CCC##", "#F###G####CGC##", "#F###B####CGC##", "#F###G####CGC##", "#CFFFC####CCC##")
+                    .aisle("AAAABBBBBBBBBBA", "#CEEEB####CHC##", "#F###B####GHG##", "#F###B####GHG##", "#F###B####GHG##", "#CFFFC####CBC##")
+                    .aisle("AAAAAAAAABBBBBA", "#CEEEC####CCC##", "#F###G####CFC##", "#F###B####CHC##", "#F###G####CFC##", "#CFFFC####CCC##")
+                    .aisle("AAAAAAAAABBBBBA", "#CEEEC####CCC##", "#F###C####FFF##", "#F###C####FHF##", "#F###C####FFF##", "#CFFFC####FCF##")
+                    .aisle("AAAAAAAAABAAABA", "#CEEEC###CCCCC#", "#F###F###CIFIC#", "#F###CCCCCIHIC#", "#F###F###CIFIC#", "#CFFFC###CCCCC#")
+                    .aisle("AAAAAABBBBAAABA", "#CEEEC###CCCCC#", "#F###CCCCCIFIJ#", "#F###HHHHHHHHJ#", "#F###CCCCCIFIJ#", "#CFFFC###CBBBC#")
+                    .aisle("AAAAAAAAABAAABA", "#CEEEC###CCCCC#", "#F###F###CICIC#", "#F###CCCCCCNCC#", "#F###F###CICIC#", "#CFFFC###CCCCC#")
+                    .aisle("AAAAAAAAABBBBBA", "#CC@CC####BBB##", "#CFFFC#########", "#CFFFC#########", "#CFFFC#########", "#CCCCC#########")
+                    .aisle("AAAAAAAAAAAAAAA", "###############", "###############", "###############", "###############", "###############")
+                    .aisle("C#####CAAAAAAAA", "###############", "###############", "###############", "###############", "###############")
+                    .aisle("#######AAAAAAAA", "##############A", "##############A", "##############A", "##############A", "##############A")
+                    .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse("gtceu:stainless_steel_frame"))))
+                    .where("J", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse("gtceu:computer_heat_vent"))))
+                    .where("@", Predicates.controller(Predicates.blocks(definition.get())))
+                    .where("D", Predicates.abilities(PartAbility.COMPUTATION_DATA_RECEPTION))
+                    .where("#", Predicates.any())
+                    .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse("gtceu:computer_heat_vent"))))
+                    .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse("gtceu:high_power_casing"))))
+                    .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse("gtceu:advanced_computer_casing"))))
+                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse("gtceu:computer_casing"))))
+                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse("gtceu:fusion_glass"))))
+                    .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse("gtceu:computer_heat_vent"))))
+                    .where("I", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse("gtceu:nonconducting_casing"))))
+                    .where("N",Predicates.abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR))
+                    .build())
+
+            .hasBER(false)
+            .sidedWorkableCasingModel(GTCEu.id("block/casings/hpca/advanced_computer_casing"),
+                    GTCEu.id("block/multiblock/research_station"))
+            .appearanceBlock(GTBlocks.HIGH_POWER_CASING)
             .register();
 }

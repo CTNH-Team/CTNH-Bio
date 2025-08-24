@@ -6,11 +6,13 @@ import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 
+import com.gregtechceu.gtceu.common.data.models.GTMachineModels;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+import com.moguang.ctnhbio.api.machine.multiblock.part.NeuralModelAccessorMachine;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineBlockEntityRenderer;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBlockEntityRenderer;
@@ -33,6 +35,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import java.util.Locale;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
+import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createOverlayCasingMachineModel;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBMachines {
@@ -191,5 +194,14 @@ public class CBMachines {
                     .register();
         }
     }
+
+    //Multi Part
+    public static final MachineDefinition NEURAL_MODEL_ACCESSOR = REGISTRATE.machine("neural_model_accessor", NeuralModelAccessorMachine::new)
+            .langValue("Neural Model Accessor")
+            .tier(LuV)
+            .rotationState(RotationState.NON_Y_AXIS)
+            .abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR)
+            .model(GTMachineModels.createOverlayCasingMachineModel(GTCEu.id("block/casings/hpca/computer_casing/front"),GTCEu.id("block/machine/part/computation_data_hatch")))
+            .register();
 
 }

@@ -1,10 +1,12 @@
 package com.moguang.ctnhbio.registry;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
+import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
+import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
 
 public class CBRecipeTypes {
     public static String NUTRIENT = "nutrient";
@@ -47,6 +49,14 @@ public class CBRecipeTypes {
             .setMaxIOSize(6, 0, 3, 0)
             //.setEUIO(IO.IN)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+
+    public static final GTRecipeType HOSTILE_OBSERVATION = GTRecipeTypes.register("hostile_observation", NUTRIENT)
+            .setMaxSize(IO.IN, ItemRecipeCapability.CAP,1)
+            .setMaxSize(IO.IN, EntityRecipeCapability.CAP,1)
+            .setMaxSize(IO.OUT, ItemRecipeCapability.CAP,1)
+            .setEUIO(IO.IN)
+            .setMaxTooltips(5)
+            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.UP_TO_DOWN);
 
     public static void init() {}
 }
