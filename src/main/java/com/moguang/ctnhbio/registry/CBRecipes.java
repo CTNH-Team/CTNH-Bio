@@ -61,9 +61,9 @@ public class CBRecipes {
                     material.hasProperty(PropertyKey.GEM) ? TagPrefix.gem : TagPrefix.ingot, material);
 
             addToolRecipe(provider, material, CBToolType.BONING_KNIFE,
-                    "PPI", "fSh", "ASA",
+                    " P ", "fPh", "ASA",
                     'P', plate,
-                    'I', ingot,
+                    //'I', ingot,
                     'S', stick,
                     'A', new ItemStack(ModItems.LIVING_FLESH.get()));
 
@@ -74,8 +74,8 @@ public class CBRecipes {
                                      @NotNull GTToolType tool, Object... recipe) {
 
         ItemStack toolStack = CBMaterialItems.CB_TOOL_ITEMS.get(material, tool).asStack();
-        toolStack.enchant(ModEnchantments.DESPOIL.get(), 3);
         if (toolStack.isEmpty()) return;
+        toolStack.enchant(ModEnchantments.DESPOIL.get(), 3);
         VanillaRecipeHelper.addShapedRecipe(provider, String.format("%s_%s", tool.name, material.getName()),
                     toolStack, recipe);
 

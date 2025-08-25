@@ -1549,7 +1549,7 @@ public class DecomposerRecipes {
             //ObjectIntPair<Material> washedInTuple = property.getWashedIn();
             CBRecipeBuilder.of(CTNHBio.id("acid_grind_centrifuge_" + material.getName()),
                             CBRecipeTypes.DECOMPOSER_RECIPES)
-                    .effect(MobEffects.DAMAGE_BOOST)
+                    //.effect(MobEffects.DAMAGE_BOOST)
                     .nutrient(5)
                     .inputItems(TagPrefix.crushed, material)
                     .inputFluids(FluidIngredient.of(CBTags.ACID_FLUIDS_TAG, 50))
