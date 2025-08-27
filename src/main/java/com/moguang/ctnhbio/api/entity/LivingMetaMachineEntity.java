@@ -46,7 +46,6 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     }
 
 
-
     public void setPos(BlockPos pos, Vec3 offset) {
         super.setPos(pos.getX()+offset.x, pos.getY()+offset.y, pos.getZ()+offset.z);
     }
@@ -63,10 +62,10 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     }
 
     @Override
-    public void die(DamageSource p_21014_) {
-        super.die(p_21014_);
+    public void die(DamageSource source) {
+        super.die(source);
         if (holder != null) {
-            holder.onHostedEntityRemoved(this); // 通知宿主
+            holder.onHostedEntityRemoved(this, source); // 通知宿主
         }
     }
 

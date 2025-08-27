@@ -5,6 +5,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.spongepowered.mixin' version '0.7.+'
     id "io.freefair.lombok" version "8.10"
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
 version = mod_version
@@ -161,7 +162,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:jade-324717:5640610")
 
-    runtimeOnly  fg.deobf("curse.maven:probejs-585406:5227399")
+    //runtimeOnly  fg.deobf("curse.maven:probejs-585406:5227399")
     implementation  fg.deobf("maven.modrinth:advanced-loot-info:nrGWQ7rF")
     //runtimeOnly  fg.deobf("curse.maven:JustEnoughResources-240630:5057220")
 
@@ -227,13 +228,13 @@ tasks.named('jar', Jar).configure {
     }
 
     // This is the preferred method to reobfuscate your jar file
-    finalizedBy 'reobfJar'
+    // finalizedBy 'reobfJar'
 }
 
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing:
-// tasks.named('publish').configure {
-//     dependsOn 'reobfJar'
-// }
+ tasks.named('publish').configure {
+     dependsOn 'reobfJar'
+ }
 
 // Example configuration to allow publishing using the maven-publish plugin
 publishing {

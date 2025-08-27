@@ -25,6 +25,7 @@ import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 
 import java.lang.reflect.Field;
@@ -107,9 +108,9 @@ public class GrowingBlockPattern extends BlockPattern {
 
 
 
-    public void generateGrowPlan(Level level, MultiblockState worldState, GrowSetting setting) {
+    public void generateGrowPlan(@NotNull IMultiController controller, GrowSetting setting) {
         // 初始化阶段
-        initializeBuildContext(level, worldState, setting);
+        initializeBuildContext(controller, setting);
 
         // 计算每层的重复次数
         int[] repeatCounts = calculateLayerRepeatCounts(setting);
@@ -287,13 +288,13 @@ public class GrowingBlockPattern extends BlockPattern {
 
     }
 
-    private void initializeBuildContext(Level level, MultiblockState worldState, GrowSetting setting) {
-        IMultiController controller = worldState.getController();
+    private void initializeBuildContext(@NotNull IMultiController controller, GrowSetting setting) {
+        //IMultiController controller = worldState.getController();
 
 
-        context.world = level;
+        context.world = controller.self().getLevel();
 
-        context.worldState = worldState;
+        context.worldState = controller.getMultiblockState();
         context.settings = setting;
         context.controller = controller;
         context.centerPos = controller.self().getPos();
@@ -302,7 +303,7 @@ public class GrowingBlockPattern extends BlockPattern {
         context.isFlipped = controller.self().isFlipped();
         context.minZ = -centerOffset[4];
 
-        clearWorldState(worldState);
+        clearWorldState(context.worldState);
         //context.blocks.put(context.centerPos, controller);
 
     }
@@ -331,9 +332,8 @@ public class GrowingBlockPattern extends BlockPattern {
         if (!context.world.isEmptyBlock(pos)) {
             BlockState existingState = context.world.getBlockState(pos);
 
-            for (SimplePredicate limit : predicate.limited) {
-                limit.testLimited(context.worldState);
-            }
+            if(existingState.canBeReplaced())
+                return true;
 
             if(existingState.liquid()){
                 context.inFluid = true;
@@ -346,7 +346,9 @@ public class GrowingBlockPattern extends BlockPattern {
                 return true;
             }
 
-
+            for (SimplePredicate limit : predicate.limited) {
+                limit.testLimited(context.worldState);
+            }
 
             return false;
         }
@@ -455,7 +457,7 @@ public class GrowingBlockPattern extends BlockPattern {
     private boolean placeBlock(BlockPos pos, BlockInfo[] infos) {
 
         BlockInfo info = Arrays.stream(infos)
-                //.filter(i ->i.getBlockState().is(GROWABLE_TAG))
+                .filter(i ->i.getBlockState().is(CBTags.GROWABLE_BLOCK_TAG))
                 .findFirst()
                 .orElse(null);
         if(info != null)

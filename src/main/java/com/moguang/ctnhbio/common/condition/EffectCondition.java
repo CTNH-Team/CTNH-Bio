@@ -43,8 +43,8 @@ public class EffectCondition extends RecipeCondition {
         super(isReverse);
         List<MobEffect> newEffect = new ArrayList<>();
         for (String effect: effects) {
-            if (BuiltInRegistries.MOB_EFFECT.containsKey(new ResourceLocation(effect))) {
-                newEffect.add(BuiltInRegistries.MOB_EFFECT.get(new ResourceLocation(effect)));
+            if (BuiltInRegistries.MOB_EFFECT.containsKey(ResourceLocation.parse(effect))) {
+                newEffect.add(BuiltInRegistries.MOB_EFFECT.get(ResourceLocation.parse(effect)));
             }
         }
         this.effects = newEffect.toArray(new MobEffect[0]);
@@ -115,7 +115,7 @@ public class EffectCondition extends RecipeCondition {
             effectStrings.add(element.getAsString());
         }
         this.effects = effectStrings.stream()
-                .map(ResourceLocation::new)
+                .map(ResourceLocation::parse)
                 .filter(BuiltInRegistries.MOB_EFFECT::containsKey)
                 .map(BuiltInRegistries.MOB_EFFECT::get)
                 .toArray(MobEffect[]::new);

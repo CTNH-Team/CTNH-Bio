@@ -51,7 +51,7 @@ public class NutrientRecipeCapability extends RecipeCapability<Double> {
                            boolean isInput, MutableInt yOffset) {
         double nutrient = contents.stream().map(Content::getContent).mapToDouble(NutrientRecipeCapability.CAP::of).sum();
         group.addWidget(new LabelWidget(3 - xOffset, yOffset.addAndGet(20),
-                LocalizationUtils.format("ctnhbio.recipe.nutrient", nutrient)));
+                LocalizationUtils.format(isInput ? "ctnhbio.recipe.nutrient_consume": "ctnhbio.recipe.nutrient_generate", nutrient)));
         yOffset.add(10);
     }
 }

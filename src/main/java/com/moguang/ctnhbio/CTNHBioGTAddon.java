@@ -3,9 +3,7 @@ package com.moguang.ctnhbio;
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.moguang.ctnhbio.data.recipe.RecipeRemoval;
-import com.moguang.ctnhbio.registry.CBRecipeCapabilities;
-import com.moguang.ctnhbio.registry.CBRecipes;
-import com.moguang.ctnhbio.registry.CBRegistrate;
+import com.moguang.ctnhbio.registry.*;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 
@@ -20,7 +18,8 @@ public class CTNHBioGTAddon implements IGTAddon {
 
     @Override
     public void initializeAddon() {
-
+        CBItems.init();
+        CBBlocks.init();
     }
 
     @Override

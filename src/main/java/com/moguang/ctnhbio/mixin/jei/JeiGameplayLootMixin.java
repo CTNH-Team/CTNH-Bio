@@ -110,7 +110,7 @@ public abstract class JeiGameplayLootMixin{
 
         // 一般为：["biomancy", "despoil", "catfish"]
         String entityPath = String.join("/", Arrays.copyOfRange(parts, 2, parts.length));
-        ResourceLocation entityId = new ResourceLocation(namespace, entityPath);
+        ResourceLocation entityId = ResourceLocation.tryBuild(namespace, entityPath);
 
         return BuiltInRegistries.ENTITY_TYPE.getOptional(entityId).orElse(null);
     }

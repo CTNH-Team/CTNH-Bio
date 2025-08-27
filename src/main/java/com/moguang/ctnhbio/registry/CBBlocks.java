@@ -38,6 +38,10 @@ public class CBBlocks {
     public static final BlockEntry<Block> BIO_ACID_CASING = createCasingBlock("bio_acid_casing",
             CTNHBio.id("block/casings/bio_acid_casing"));
 
+    public static final BlockEntry<Block> SYNAPTIC_CASING = createCasingBlock("synaptic_casing",
+            CTNHBio.id("block/casings/opv/opv_casing"));
+
+
     public static final BlockEntry<MembraneBlock> IMPERMEABLE_MEMBRANE = createMembraneBlock("impermeable_membrane",
             CTNHBio.id("block/membrane/impermeable_membrane"), () -> RenderType::translucent);
 
@@ -83,7 +87,8 @@ public class CBBlocks {
                 .blockstate((ctx, prov) -> {
                     prov.simpleBlock(ctx.getEntry(), prov.models().cubeAll(name, texture));
                 })
-                //.tag(TagKey.create(BuiltInRegistries.BLOCK.key(), new ResourceLocation("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
+                .loot((loot, block) -> loot.add(block, loot.noDrop()))
+                //.tag(TagKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.tryBuild("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
                 .item(BlockItem::new)
                 .build()
                 .register();

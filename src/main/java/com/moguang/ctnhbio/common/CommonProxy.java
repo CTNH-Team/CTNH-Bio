@@ -8,11 +8,15 @@ import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProp
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.CBDatagen;
 import com.moguang.ctnhbio.data.materials.OrganicMaterials;
+import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
 import com.moguang.ctnhbio.registry.CBCreativeModeTabs;
 import com.moguang.ctnhbio.registry.CBEntities;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBSerums;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import com.moguang.ctnhbio.registry.*;
+import net.minecraft.server.packs.PackType;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
@@ -33,7 +37,7 @@ public class CommonProxy {
 
         CBCreativeModeTabs.init();
         CBDatagen.init();
-
+        //CBRecipeCategories.init();
         CTNHBio.REGISTRATE.registerRegistrate();
 
         PropertyOperators.init();

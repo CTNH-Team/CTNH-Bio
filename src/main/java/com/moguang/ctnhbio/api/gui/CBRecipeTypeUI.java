@@ -8,6 +8,7 @@ import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.gui.WidgetUtils;
 import com.gregtechceu.gtceu.api.gui.editor.IEditableUI;
 import com.gregtechceu.gtceu.api.gui.widget.DualProgressWidget;
+import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
@@ -25,6 +26,8 @@ import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.jei.JEIPlugin;
 import com.lowdragmc.lowdraglib.utils.Position;
+import com.moguang.ctnhbio.registry.CBRecipeTypes;
+import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CBRecipeTypeUI extends GTRecipeTypeUI {
     public GTRecipeType gtRecipeType;
@@ -157,10 +161,13 @@ public class CBRecipeTypeUI extends GTRecipeTypeUI {
                         if (cd.isRemote) {
                             if (GTCEu.Mods.isJEILoaded()) {
                                 JEIPlugin.jeiRuntime.getRecipesGui().showTypes(
-                                        gtRecipeType.getCategories().stream()
-                                                .filter(GTRecipeCategory::isXEIVisible)
-                                                .map(GTRecipeJEICategory::machineType)
-                                                .collect(Collectors.toList()));
+                                        Stream.concat(
+                                                gtRecipeType.getCategories().stream()
+                                                        .filter(GTRecipeCategory::isXEIVisible)
+                                                        .map(GTRecipeJEICategory::machineType),
+                                                Stream.of(new RecipeType<>(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory().registryKey, GTRecipe.class))
+                                        ).collect(Collectors.toList())
+                                );
                             }
                         }
                     }).setHoverTooltips("gtceu.recipe_type.show_recipes"));

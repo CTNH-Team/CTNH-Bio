@@ -14,7 +14,7 @@ public class EnglishLangHandler {
         provider.add("item.gtceu.tool.boning_knife", "%s Boning Knife");
         //replace(provider, );
         provider.add("emi.category.ctnhbio.despoil_loot", "Despoil");
-        provider.add("ctnhbio.nutrient_bar.info", "Nutrient Slot");
+        provider.add("ctnhbio.nutrient_bar.info", "Nutrient:");
         provider.add("jade.nutrient.info", "Nutrient：");
 
         provider.add("recipe.condition.effect.tooltip", "Potion Effect : %s");
@@ -29,8 +29,7 @@ public class EnglishLangHandler {
         provider.add("ctnhbio.hv_machine.tooltip", "HV Biochip");
         provider.add("ctnhbio.ev_machine.tooltip", "EV Biochip");
         provider.add("ctnhbio.iv_machine.tooltip", "IV Biochip");
-        provider.add("ctnhbio.advanced_ram_wafer.tooltip", "Enhanced RAM Wafer");
-        provider.add("ctnhbio.advanced_ram_chip.tooltip", "Advanced Random Access Memory");
+
 
         provider.add("ctnhbio.synet_core.tooltip", "A metal skeleton intricate as vascular circuits, with every groove pulsing rhythmically, as if transporting some invisible life energy.");
         provider.add("ctnhbio.meta_core.tooltip", "A geometric structure perpetually folding upon itself, its surface revealing angles that defy Euclidean laws, continuously performing impossible spatial transformations in stillness.");

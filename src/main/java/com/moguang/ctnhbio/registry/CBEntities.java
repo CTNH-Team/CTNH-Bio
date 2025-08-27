@@ -5,8 +5,7 @@ import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
 
 import com.moguang.ctnhbio.machine.braininavat.Brain;
 import com.moguang.ctnhbio.machine.braininavat.BrainRenderer;
-import com.moguang.ctnhbio.machine.greatflesh.GreatFleshBlockEntity;
-import com.moguang.ctnhbio.machine.greatflesh.GreatFleshRenderer;
+
 import com.tterrag.registrate.util.entry.EntityEntry;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -50,14 +49,7 @@ public class CBEntities {
             .renderer(() -> BrainRenderer::new)
             .lang("Brain")
             .register();
-//    public static EntityEntry<GreatFleshBlockEntity> GREAT_FLESH_ENTITY = REGISTRATE
-//            .entity("living_multi_machine", GreatFleshBlockEntity::new, MobCategory.CREATURE)
-//            .properties(props -> props.sized(0.9F, 0.9F))
-//            .attributes(GreatFleshBlockEntity::createAttributes)
-//            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
-//            .renderer(() -> GreatFleshRenderer::new)
-//            .lang("Living Multi Machine")
-//            .register();
+
 
 
 

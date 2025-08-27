@@ -12,6 +12,10 @@ public class RecipeRemoval {
 
     public static void biomancyRemovals(Consumer<ResourceLocation> registry){
         var recipes = new String[]{
+                "biomancy:crafting/primordial_cradle",
+                "biomancy:primordial_cradle_cleansing.cleansed",
+                "biomancy:bio_forging/decomposer",
+
                 "biomancy:bio_forging/flesh",
                 "biomancy:bio_forging/flesh_pillar",
                 "biomancy:bio_forging/acolyte_armor_boots",
@@ -55,9 +59,8 @@ public class RecipeRemoval {
                 "biomancy:bio_forging/baby_permeable_membrane_pane",
                 "biomancy:bio_forging/string",
                 "biomancy:bio_forging/chiseled_flesh",
-                "biomancy:bio_forging/tongue",
                 "biomancy:bio_forging/undead_permeable_membrane",
-                "biomancy:bio_forging/bio_lantern_yellow",
+
                 "biomancy:bio_forging/baby_permeable_membrane",
                 "biomancy:bio_forging/modular_larynx",
                 "biomancy:bio_forging/fibrous_flesh_wall",
@@ -65,7 +68,7 @@ public class RecipeRemoval {
                 "biomancy:bio_forging/fibrous_flesh_stairs",
                 "biomancy:bio_forging/adult_permeable_membrane",
                 "biomancy:bio_forging/biometric_membrane",
-                "biomancy:bio_forging/bio_lantern_blue",
+
                 "biomancy:bio_forging/vial",
                 "biomancy:bio_forging/skeleton_skull",
                 "biomancy:bio_forging/packed_flesh_wall",
@@ -74,13 +77,12 @@ public class RecipeRemoval {
                 "biomancy:bio_forging/full_flesh_door",
                 "biomancy:bio_forging/cobweb",
                 "biomancy:bio_forging/ornate_flesh_slab",
-                "biomancy:bio_forging/fleshkin_pressure_plate",
+
                 "biomancy:bio_forging/packed_flesh_stairs",
                 "biomancy:bio_forging/mob_claw",
                 "biomancy:bio_forging/acolyte_armor_chestplate",
                 "biomancy:bio_forging/creator_mix",
-                "biomancy:bio_forging/flesh_spike",
-                "biomancy:bio_forging/maw_hopper",
+
                 "biomancy:bio_forging/injector",
                 "biomancy:bio_forging/packed_flesh_slab",
                 "biomancy:bio_forging/flesh_iris_door",
@@ -204,26 +206,32 @@ public class RecipeRemoval {
                 "biomancy:decomposing/torchflower_seeds",
                 "biomancy:decomposing/chorus_flower",
                 "biomancy:decomposing/forge_seeds",
-                "biomancy:decomposing/cocoa_beans"
+                "biomancy:decomposing/cocoa_beans",
+
+                "biomancy:crafting/primordial_core",
+                "biomancy:bio_brewing",
+                "biomancy:crafting/despoil_sickle"
+
         };
         for(var recipe: recipes) {
-            registry.accept(new ResourceLocation(recipe));
+            registry.accept(ResourceLocation.parse(recipe));
         }
-
-        registry.accept(new ResourceLocation("biomancy:crafting/primordial_core"));
-        registry.accept(new ResourceLocation("biomancy:bio_brewing"));
 
     }
     public static void ctnhbioRemovals(Consumer<ResourceLocation> registry){
         var recipes = new String[]{
-                "minecraft:tnt"
+                "biofactory:mixing/nutrients_fluid_from_paste",
+                "gtceu:circuit_assembler/wetware_processor_luv",
+                "gtceu:circuit_assembler/wetware_processor_luv_soldering_alloy",
+                "gtceu:circuit_assembler/wetware_processor_assembly_zpm",
+                "gtceu:circuit_assembler/wetware_processor_assembly_zpm_soldering_alloy",
+                "gtceu:assembly_line/wetware_super_computer_uv",
+                "gtceu:assembly_line/wetware_mainframe_uhv"
         };
 
-        registry.accept(new ResourceLocation("gtceu:circuit_assembler/wetware_processor_luv"));
-        registry.accept(new ResourceLocation("gtceu:circuit_assembler/wetware_processor_luv_soldering_alloy"));
-        registry.accept(new ResourceLocation("gtceu:circuit_assembler/wetware_processor_assembly_zpm"));
-        registry.accept(new ResourceLocation("gtceu:circuit_assembler/wetware_processor_assembly_zpm_soldering_alloy"));
-        registry.accept(new ResourceLocation("gtceu:assembly_line/wetware_super_computer_uv"));
+        for(var recipe: recipes) {
+            registry.accept(ResourceLocation.parse(recipe));
+        }
     }
 
 

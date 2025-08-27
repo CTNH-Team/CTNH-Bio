@@ -3,14 +3,18 @@ package com.moguang.ctnhbio.api.blockentity;
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
-import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+import com.gregtechceu.gtceu.api.machine.multiblock.WorkableMultiblockMachine;
+import com.gregtechceu.gtceu.common.data.GTDamageTypes;
 import com.moguang.ctnhbio.api.ILivingEntityHost;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
+import com.moguang.ctnhbio.machine.braininavat.Brain;
+import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,15 +24,13 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import static com.lowdragmc.lowdraglib.LDLib.isRemote;
-
 @Getter
 public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> extends MetaMachineBlockEntity implements ILivingEntityHost<T>, GeoBlockEntity {
 
     private final EntityType<T> entityType;
-    @Persisted
+
     private T machineEntity;
-    @Persisted
+
     @Getter
     private CompoundTag entityTag;
     private boolean spawned;
@@ -78,8 +80,10 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     }
 
     @Override
-    public void onHostedEntityRemoved(LivingMetaMachineEntity entity) {
-        level.removeBlock(getBlockPos(), false);
+    public void onHostedEntityRemoved(LivingMetaMachineEntity entity, DamageSource source) {
+        level.getServer().submit(() ->
+                level.destroyBlock(getBlockPos(), !source.is(GTDamageTypes.ELECTRIC.key))
+        );
     }
 
     @Override
@@ -91,6 +95,10 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
             var tier = tieredMachine.getTier();
             entity.initAttributes(tier*20, tier*4);
         }
+        else if(getMetaMachine() instanceof WorkableMultiblockMachine)
+        {
+            entity.initAttributes(1000, 50);
+        }
         return entity;
     }
 
@@ -100,19 +108,24 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        saveHostedEntityData(tag);
+    public void load(CompoundTag tag) {
+        super.load(tag);
+
+        if(getPersistentData().contains("HostedEntity"))
+            entityTag = getPersistentData().getCompound("HostedEntity");
     }
 
-//    @Override
-//    public void load(CompoundTag tag) {
-//        super.load(tag);
-//        if (tag.contains("HostedEntity")) {
-//            this.entityTag = tag.getCompound("HostedEntity");
-//        }
-//        //loadHostedEntityData(tag, this.getLevel());
-//    }
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        saveHostedEntityData(getPersistentData());
+        if(metaMachine instanceof BrainInAVatMachine vat)
+        {
+            vat.maxHealth = machineEntity.getMaxHealth();
+        }
+        onChanged();
+        super.saveAdditional(tag);
+    }
+
 
     // 生命周期挂钩
     @Override
@@ -121,6 +134,12 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
         if(getLevel().isClientSide()) return;
         if (machineEntity == null) {
             loadHostedEntityData(entityTag, level);
+            if(metaMachine instanceof BrainInAVatMachine vat
+            && vat.maxHealth != 0)
+            {
+                machineEntity.setHealth(vat.maxHealth);
+                machineEntity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(vat.maxHealth);
+            }
             spawnHostedEntity(this.getLevel());
         }
         if(!spawned)
@@ -132,8 +151,10 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
 
     @Override
     public void setRemoved() {
-        super.setRemoved();
+        saveHostedEntityData(getPersistentData());
         despawnHostedEntity();
+        onChanged();
+        super.setRemoved();
     }
 
 

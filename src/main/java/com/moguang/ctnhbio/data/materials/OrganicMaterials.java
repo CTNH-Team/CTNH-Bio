@@ -182,7 +182,7 @@ public class OrganicMaterials {
     @SuppressWarnings("all")
     public static FluidBuilder organicBuilder()
     {
-        return new FluidBuilder().attribute(ORGANIC).still(new ResourceLocation("create:fluid/potion_still"));
+        return new FluidBuilder().attribute(ORGANIC).still(ResourceLocation.parse("create:fluid/potion_still"));
     }
 
 }

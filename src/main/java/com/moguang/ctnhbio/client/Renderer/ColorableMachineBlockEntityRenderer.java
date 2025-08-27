@@ -39,7 +39,7 @@ public class ColorableMachineBlockEntityRenderer extends GeoBlockRenderer<Living
         if (bone.getName().startsWith("colorable")) {
             if(animatable.getMetaMachine() instanceof BasicLivingMachine livingMachine)
             {
-                Color vc =  CBValues.VoltageColor.values()[livingMachine.getTier()].LIGHT;
+                Color vc = CBValues.VoltageColor.values()[livingMachine.getTier()].NORMAL;
                 red = vc.getRedFloat();
                 green = vc.getGreenFloat();
                 blue = vc.getBlueFloat();

@@ -14,10 +14,12 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
@@ -29,12 +31,14 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Function;
 
 public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingEntityHostBlock<LivingMetaMachineEntity>, SimpleWaterloggedBlock {
@@ -44,11 +48,6 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
     public LivingMetaMachineBlock(Properties properties, MachineDefinition definition) {
         super(properties, definition);
         registerDefaultState(getStateDefinition().any().setValue(WATERLOGGED, Boolean.FALSE));
-    }
-
-    @Override
-    public @Nullable PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.NORMAL;
     }
 
     //private LivingMetaMachineEntity machineEntity = null;
@@ -61,11 +60,6 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
             return machine.getMachineEntity();
         }
         return null;
-    }
-
-    @Override
-    protected ImmutableMap<BlockState, VoxelShape> getShapeForEachState(Function<BlockState, VoxelShape> p_152459_) {
-        return super.getShapeForEachState(p_152459_);
     }
 
     @Override
@@ -107,12 +101,6 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
         return super.use(state, level, pos, player, hand, hit);
     }
 
-    @Override
-    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        super.onPlace(state, level, pos, oldState, movedByPiston);
-
-    }
-
 
     @Override
     public boolean propagatesSkylightDown(BlockState p_49928_, BlockGetter p_49929_, BlockPos p_49930_) {
@@ -141,10 +129,5 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
 //            return name.getString();
 //        }
         return super.getDescriptionId();
-    }
-
-    @Override
-    public boolean skipRendering(BlockState p_60532_, BlockState p_60533_, Direction p_60534_) {
-        return super.skipRendering(p_60532_, p_60533_, p_60534_);
     }
 }

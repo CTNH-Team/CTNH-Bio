@@ -42,7 +42,7 @@ public class MobCrushingRecipeManager {
                     .orElseThrow(() -> new JsonSyntaxException("未知生物类型: " + json.get("entity")));
 
             ItemStack result = new ItemStack(
-                    ForgeRegistries.ITEMS.getValue(new ResourceLocation(json.get("item").getAsString())),
+                    ForgeRegistries.ITEMS.getValue(ResourceLocation.parse(json.get("item").getAsString())),
                     1 // 基础数量为1，实际数量由 rollResult() 决定
             );
 

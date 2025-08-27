@@ -1,14 +1,13 @@
-package com.moguang.ctnhbio.data.recipe;
+package com.moguang.ctnhbio.data.recipe.living;
 
 import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
-import com.gregtechceu.gtceu.common.data.GTFluids;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
+import com.moguang.ctnhbio.registry.CBTags;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
 
@@ -27,8 +26,8 @@ public class BasicLivingRecipes {
                 .EUt(32)
                 .save(provider);
         CBRecipeBuilder.of(CTNHBio.id("nutrient3"), CBRecipeTypes.BASIC_LIVING_RECIPES)
-                .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance())
-                .nutrient(-1)
+                .nutrient(-10)
+                .inputFluids(FluidIngredient.of(CBTags.NUTRIENT_FLUIDS_TAG, 10))
                 .duration(1)
                 .EUt(32)
                 .save(provider);
@@ -38,10 +37,10 @@ public class BasicLivingRecipes {
                 .EUt(32)
                 .addData("potion", true)
                 .save(provider);
-        CBRecipeBuilder.of(CTNHBio.id("potion_test"), CBRecipeTypes.BASIC_LIVING_RECIPES)
-                .inputFluids(FluidIngredient.of(Fluids.WATER, 250))
-                .duration(10)
-                .EUt(32)
-                .save(provider);
+//        CBRecipeBuilder.of(CTNHBio.id("potion_test"), CBRecipeTypes.BASIC_LIVING_RECIPES)
+//                .inputFluids(FluidIngredient.of(Fluids.WATER, 250))
+//                .duration(10)
+//                .EUt(32)
+//                .save(provider);
     }
 }

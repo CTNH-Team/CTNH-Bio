@@ -10,6 +10,7 @@ import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
+import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
 import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
 import com.moguang.ctnhbio.api.pattern.GrowingBlockPattern;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
+
 public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockMachine implements ILivingMachine {
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(WorkableLivingMultiblockMachine.class, WorkableElectricMultiblockMachine.MANAGED_FIELD_HOLDER);
     @Persisted
@@ -36,7 +38,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     @Getter
     protected final SynchronizedNutrientStorage nutrientStorage;
 
-    protected static final double capacity = 1000;
+    protected static final double capacity = 1000000;
     protected static final double  NUTRIENT_NEEDED_FOR_GROWTH = 1;
 
     protected GrowingBlockPattern growingBlockPattern;
@@ -50,7 +52,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
         this.nutrientStorage = new SynchronizedNutrientStorage(capacity);
         this.inputTrait = new NotifiableNutrientTrait(this, nutrientStorage, IO.IN);
         this.outputTrait = new NotifiableNutrientTrait(this, nutrientStorage, IO.OUT);
-        nutrientStorage.add(capacity/2);
+        nutrientStorage.add(1000);
     }
     @Override
     public LivingMetaMachineEntity getMachineEntity() {
@@ -97,6 +99,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
                 getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
                         SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
                         1.0f, 1.0f);
+                if(!isFormed()) checkGrow();
             }
 
             return InteractionResult.sidedSuccess(getLevel().isClientSide);
@@ -113,12 +116,11 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
 
 
-
-
     @Override
     public void onLoad() {
         super.onLoad();
-        subscribeServerTick(this::checkGrow);
+        //subscribeServerTick(this::checkGrow);
+        checkGrow();
         subscribeServerTick(this::tickGrow);
     }
 
@@ -129,13 +131,19 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
     public void checkGrow(){
 
-        if(shouldTick(20))
+        if(true || shouldTick(20))
         {
-            if(growingBlockPattern == null)
-                growingBlockPattern = GrowingBlockPattern.getGrowingBlockPattern(getPattern());
+            isFormed = false;
+            checkPattern();
+            if(!isFormed())
+            {
+                if(growingBlockPattern == null)
+                    growingBlockPattern = GrowingBlockPattern.getGrowingBlockPattern(getPattern());
 
-            if(growingBlockPattern.growPlan.isCompleted())
-                growingBlockPattern.generateGrowPlan(getLevel(), getMultiblockState(), new GrowingBlockPattern.GrowSetting());
+                if(growingBlockPattern.growPlan.isCompleted())
+                    growingBlockPattern.generateGrowPlan(this, new GrowingBlockPattern.GrowSetting());
+            }
+
         }
 
     }
@@ -148,12 +156,18 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
                 growingBlockPattern.growPlan.tick())
         {
             nutrientStorage.extract(NUTRIENT_NEEDED_FOR_GROWTH);
+            if(growingBlockPattern.growPlan.isCompleted()) checkPattern();
         }
-
+        //updatePartPositions();
     }
 
     @Override
-    public @Nullable TickableSubscription subscribeServerTick(Runnable runnable) {
-        return super.subscribeServerTick(runnable);
+    protected BasicLivingMachine.BasicLivingRecipeLogic createRecipeLogic(Object... args) {
+        return new BasicLivingMachine.BasicLivingRecipeLogic(this);
+    }
+
+    @Override
+    public BasicLivingMachine.BasicLivingRecipeLogic getRecipeLogic() {
+        return (BasicLivingMachine.BasicLivingRecipeLogic) super.getRecipeLogic();
     }
 }
