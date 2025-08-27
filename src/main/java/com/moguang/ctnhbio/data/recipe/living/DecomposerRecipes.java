@@ -25,6 +25,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
 
+import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.dust;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.gemChipped;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
@@ -82,7 +83,7 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.SAND.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 3))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 1))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 1))
                 .EUt(32)
                 .duration(60)
                 .save(provider);
@@ -91,7 +92,7 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.RED_SAND.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 3))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 2))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 2))
                 .EUt(32)
                 .duration(60)
                 .save(provider);
@@ -115,7 +116,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("sea_pickle_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.SEA_PICKLE.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 2))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 2))
                 .outputItemsRanged(new ItemStack(ModItems.BIO_LUMENS.get()), UniformInt.of(1, 2))
                 .outputItemsRanged(new ItemStack(GTItems.BIO_CHAFF.get()), UniformInt.of(1, 2))
                 .EUt(32)
@@ -247,7 +248,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("chorus_flower_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.CHORUS_FLOWER.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(3, 5))
+                .outputItemsRanged(dust, Ash, UniformInt.of(3, 5))
                 .outputItemsRanged(new ItemStack(ModItems.EXOTIC_DUST.get()), UniformInt.of(2, 4))
                 .outputItemsRanged(new ItemStack(GTItems.BIO_CHAFF.get()), UniformInt.of(2, 5))
                 .EUt(32)
@@ -258,7 +259,7 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.CLAY.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 2))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 2))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 2))
                 .EUt(32)
                 .duration(100)
                 .save(provider);
@@ -475,7 +476,7 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.REDSTONE.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.BIO_LUMENS.get()), UniformInt.of(1, 1))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 1))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 1))
                 .EUt(32)
                 .duration(80)
                 .save(provider);
@@ -484,7 +485,7 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.TURTLE_HELMET.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.TOUGH_FIBERS.get()), UniformInt.of(15, 25))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(9, 15))
+                .outputItemsRanged(dust, Ash, UniformInt.of(9, 15))
                 .EUt(32)
                 .duration(400)
                 .save(provider);
@@ -493,7 +494,7 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.SCUTE.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.TOUGH_FIBERS.get()), UniformInt.of(3, 5))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 3))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 3))
                 .EUt(32)
                 .duration(120)
                 .save(provider);
@@ -509,7 +510,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("diamond_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.DIAMOND.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.GEM_FRAGMENTS.get()), UniformInt.of(4, 8))
+                .outputItems(gemChipped, Diamond,4)
                 .EUt(32)
                 .duration(200)
                 .save(provider);
@@ -517,7 +518,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("emerald_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.EMERALD.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.GEM_FRAGMENTS.get()), UniformInt.of(5, 9))
+                .outputItems(gemChipped, Emerald,4)
                 .EUt(32)
                 .duration(200)
                 .save(provider);
@@ -525,7 +526,8 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("lapis_lazuli_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.LAPIS_LAZULI.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.GEM_FRAGMENTS.get()), UniformInt.of(1, 1))
+                .outputItems(gemChipped, Lapis,4)
+                .outputItemsRanged(dust, Ash, UniformInt.of(5, 9))
                 .outputItemsRanged(new ItemStack(ModItems.EXOTIC_DUST.get()), UniformInt.of(1, 1))
                 .EUt(32)
                 .duration(100)
@@ -534,8 +536,8 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("quartz_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.QUARTZ.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.GEM_FRAGMENTS.get()), UniformInt.of(1, 2))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 2))
+                .outputItems(gemChipped, NetherQuartz,4)
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 2))
                 .EUt(32)
                 .duration(100)
                 .save(provider);
@@ -551,7 +553,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("raw_iron_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.RAW_IRON.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(5, 9))
+                .outputItemsRanged(dust, Ash, UniformInt.of(5, 9))
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 2))
                 .EUt(32)
                 .duration(150)
@@ -560,7 +562,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("iron_ingot_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.IRON_INGOT.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(5, 9))
+                .outputItemsRanged(dust, Ash, UniformInt.of(5, 9))
                 .EUt(32)
                 .duration(150)
                 .save(provider);
@@ -568,7 +570,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("raw_copper_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.RAW_COPPER.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(5, 9))
+                .outputItemsRanged(dust, Ash, UniformInt.of(5, 9))
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 2))
                 .EUt(32)
                 .duration(150)
@@ -577,7 +579,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("copper_ingot_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.COPPER_INGOT.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(5, 9))
+                .outputItemsRanged(dust, Ash, UniformInt.of(5, 9))
                 .EUt(32)
                 .duration(150)
                 .save(provider);
@@ -585,7 +587,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("raw_gold_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.RAW_GOLD.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(5, 9))
+                .outputItemsRanged(dust, Ash, UniformInt.of(5, 9))
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 2))
                 .EUt(32)
                 .duration(150)
@@ -594,7 +596,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("gold_ingot_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.GOLD_INGOT.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(5, 9))
+                .outputItemsRanged(dust, Ash, UniformInt.of(5, 9))
                 .EUt(32)
                 .duration(150)
                 .save(provider);
@@ -602,7 +604,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("netherite_ingot_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.NETHERITE_INGOT.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(43, 72))
+                .outputItemsRanged(dust, Ash, UniformInt.of(43, 72))
                 .EUt(32)
                 .duration(600)
                 .save(provider);
@@ -610,7 +612,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("netherite_scrap_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.NETHERITE_SCRAP.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(5, 9))
+                .outputItemsRanged(dust, Ash, UniformInt.of(5, 9))
                 .EUt(32)
                 .duration(150)
                 .save(provider);
@@ -618,7 +620,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("string_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.STRING.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 1))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 1))
                 .EUt(32)
                 .duration(40)
                 .save(provider);
@@ -627,7 +629,7 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.FEATHER.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.TOUGH_FIBERS.get()), UniformInt.of(1, 1))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 1))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 1))
                 .EUt(32)
                 .duration(40)
                 .save(provider);
@@ -636,7 +638,7 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.FLINT.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 1))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 1))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 1))
                 .EUt(32)
                 .duration(60)
                 .save(provider);
@@ -654,7 +656,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("golden_apple_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(12)
                 .inputItems(Items.GOLDEN_APPLE.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(37, 63))
+                .outputItemsRanged(dust, Ash, UniformInt.of(37, 63))
                 .outputItemsRanged(new ItemStack(GTItems.BIO_CHAFF.get()), UniformInt.of(4, 6))
                 .outputFluidsRanged(new FluidStack(Regenerate_Fluid.getFluid(), 1), UniformInt.of(30, 60))
                 .EUt(32)
@@ -664,7 +666,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("enchanted_golden_apple_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(17)
                 .inputItems(Items.ENCHANTED_GOLDEN_APPLE.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(43, 72))
+                .outputItemsRanged(dust, Ash, UniformInt.of(43, 72))
                 .outputFluidsRanged(new FluidStack(Regenerate_Fluid.getFluid(), 1), UniformInt.of(120, 200))
                 .outputItemsRanged(new ItemStack(ModItems.EXOTIC_DUST.get()), UniformInt.of(6, 10))
                 .EUt(32)
@@ -683,7 +685,7 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.CLAY_BALL.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 2))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 1))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 1))
                 .EUt(32)
                 .duration(60)
                 .save(provider);
@@ -933,7 +935,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("gold_nugget_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.GOLD_NUGGET.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 1))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 1))
                 .EUt(32)
                 .duration(40)
                 .save(provider);
@@ -977,7 +979,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("glistering_melon_slice_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.GLISTERING_MELON_SLICE.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(3, 6))
+                .outputItemsRanged(dust, Ash, UniformInt.of(3, 6))
                 .outputItemsRanged(new ItemStack(GTItems.BIO_CHAFF.get()), UniformInt.of(2, 2))
                 .EUt(32)
                 .duration(200)
@@ -1019,7 +1021,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("golden_carrot_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.GOLDEN_CARROT.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(4, 8))
+                .outputItemsRanged(dust, Ash, UniformInt.of(4, 8))
                 .outputItemsRanged(new ItemStack(GTItems.BIO_CHAFF.get()), UniformInt.of(2, 4))
                 .EUt(32)
                 .duration(200)
@@ -1029,7 +1031,7 @@ public class DecomposerRecipes {
                 .nutrient(15)
                 .inputItems(Items.SKELETON_SKULL.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.BONE_FRAGMENTS.get()), UniformInt.of(28, 48))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(4, 7))
+                .outputItemsRanged(dust, Ash, UniformInt.of(4, 7))
                 .EUt(32)
                 .duration(1880)
                 .save(provider);
@@ -1039,7 +1041,7 @@ public class DecomposerRecipes {
                 .inputItems(Items.WITHER_SKELETON_SKULL.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.BONE_FRAGMENTS.get()), UniformInt.of(28, 48))
                 .outputFluidsRanged(new FluidStack(Wither_Slime.getFluid(), 1), UniformInt.of(80, 160))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(4, 7))
+                .outputItemsRanged(dust, Ash, UniformInt.of(4, 7))
                 .EUt(32)
                 .duration(1880)
                 .save(provider);
@@ -1080,7 +1082,7 @@ public class DecomposerRecipes {
                 .outputItemsRanged(new ItemStack(ModItems.FLESH_BITS.get()), UniformInt.of(50, 50))
                 .outputItemsRanged(new ItemStack(ModItems.EXOTIC_DUST.get()), UniformInt.of(50, 50))
                 .outputItemsRanged(new ItemStack(ModItems.TOUGH_FIBERS.get()), UniformInt.of(25, 25))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(20, 20))
+                .outputItemsRanged(dust, Ash, UniformInt.of(20, 20))
                 .outputItemsRanged(new ItemStack(ModItems.BONE_FRAGMENTS.get()), UniformInt.of(50, 50))
                 .EUt(32)
                 .duration(10000)
@@ -1099,19 +1101,9 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("prismarine_shard_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.PRISMARINE_SHARD.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 2))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 2))
                 .EUt(32)
                 .duration(100)
-                .save(provider);
-
-        CBRecipeBuilder.of(CTNHBio.id("prismarine_crystals_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
-                .nutrient(10)
-                .inputItems(Items.PRISMARINE_CRYSTALS.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.GEM_FRAGMENTS.get()), UniformInt.of(1, 3))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 1))
-                .outputItemsRanged(new ItemStack(ModItems.BIO_LUMENS.get()), UniformInt.of(1, 1))
-                .EUt(32)
-                .duration(120)
                 .save(provider);
 
         CBRecipeBuilder.of(CTNHBio.id("rabbit_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
@@ -1155,7 +1147,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("chorus_fruit_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.CHORUS_FRUIT.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 3))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 3))
                 .outputItemsRanged(new ItemStack(ModItems.EXOTIC_DUST.get()), UniformInt.of(1, 2))
                 .outputFluidsRanged(new FluidStack(Bile.getFluid(), 1), UniformInt.of(1, 10))
                 .outputItemsRanged(new ItemStack(GTItems.BIO_CHAFF.get()), UniformInt.of(1, 1))
@@ -1165,7 +1157,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("chorus_flower_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.CHORUS_FLOWER.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(3, 5))
+                .outputItemsRanged(dust, Ash, UniformInt.of(3, 5))
                 .outputItemsRanged(new ItemStack(ModItems.EXOTIC_DUST.get()), UniformInt.of(2, 4))
                 .outputItemsRanged(new ItemStack(GTItems.BIO_CHAFF.get()), UniformInt.of(2, 5))
                 .EUt(32)
@@ -1175,7 +1167,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("shulker_shell_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(15)
                 .inputItems(Items.SHULKER_SHELL.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(6, 10))
+                .outputItemsRanged(dust, Ash, UniformInt.of(6, 10))
                 .outputItemsRanged(new ItemStack(ModItems.TOUGH_FIBERS.get()), UniformInt.of(4, 7))
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 2))
                 .EUt(32)
@@ -1185,7 +1177,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("iron_nugget_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.IRON_NUGGET.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 1))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 1))
                 .EUt(32)
                 .duration(40)
                 .save(provider);
@@ -1194,7 +1186,7 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.PHANTOM_MEMBRANE.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.TOUGH_FIBERS.get()), UniformInt.of(4, 7))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 2))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 2))
                 .outputItemsRanged(new ItemStack(ModItems.EXOTIC_DUST.get()), UniformInt.of(1, 3))
                 .EUt(32)
                 .duration(200)
@@ -1203,7 +1195,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("nautilus_shell_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(15)
                 .inputItems(Items.NAUTILUS_SHELL.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(6, 10))
+                .outputItemsRanged(dust, Ash, UniformInt.of(6, 10))
                 .outputItemsRanged(new ItemStack(ModItems.TOUGH_FIBERS.get()), UniformInt.of(4, 7))
                 .EUt(32)
                 .duration(600)
@@ -1214,7 +1206,7 @@ public class DecomposerRecipes {
                 .inputItems(Items.HEART_OF_THE_SEA.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.GEM_FRAGMENTS.get()), UniformInt.of(8, 8))
                 .outputItemsRanged(new ItemStack(ModItems.EXOTIC_DUST.get()), UniformInt.of(15, 15))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(5, 5))
+                .outputItemsRanged(dust, Ash, UniformInt.of(5, 5))
                 .EUt(32)
                 .duration(6000)
                 .save(provider);
@@ -1241,14 +1233,14 @@ public class DecomposerRecipes {
                 .nutrient(10)
                 .inputItems(Items.POINTED_DRIPSTONE.asItem().getDefaultInstance())
                 .outputItemsRanged(new ItemStack(ModItems.STONE_POWDER.get()), UniformInt.of(1, 2))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 2))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 2))
                 .EUt(32)
                 .duration(120)
                 .save(provider);
         CBRecipeBuilder.of(CTNHBio.id("mob_fang_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(ModItems.MOB_FANG.get().asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(2, 4))
+                .outputItemsRanged(dust, Ash, UniformInt.of(2, 4))
                 .outputItemsRanged(new ItemStack(ModItems.BONE_FRAGMENTS.get()), UniformInt.of(4, 6))
                 .EUt(32)
                 .duration(200)
@@ -1257,7 +1249,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("mob_claw_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(ModItems.MOB_CLAW.get().asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(3, 5))
+                .outputItemsRanged(dust, Ash, UniformInt.of(3, 5))
                 .outputItemsRanged(new ItemStack(ModItems.TOUGH_FIBERS.get()), UniformInt.of(4, 6))
                 .EUt(32)
                 .duration(200)
@@ -1277,7 +1269,7 @@ public class DecomposerRecipes {
                 .inputItems(ModItems.MOB_MARROW.get().asItem().getDefaultInstance())
                 .outputFluidsRanged(new FluidStack(Endocrine_Hormone.getFluid(), 1), UniformInt.of(10, 40))
                 .outputItemsRanged(new ItemStack(ModItems.BONE_FRAGMENTS.get()), UniformInt.of(2, 4))
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(1, 2))
+                .outputItemsRanged(dust, Ash, UniformInt.of(1, 2))
                 .EUt(32)
                 .duration(260)
                 .save(provider);
@@ -1331,7 +1323,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("goat_horn_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(Items.GOAT_HORN.asItem().getDefaultInstance())
-                .outputItemsRanged(new ItemStack(ModItems.MINERAL_FRAGMENT.get()), UniformInt.of(5, 7))
+                .outputItemsRanged(dust, Ash, UniformInt.of(5, 7))
                 .outputItemsRanged(new ItemStack(ModItems.TOUGH_FIBERS.get()), UniformInt.of(6, 8))
                 .EUt(32)
                 .duration(240)
@@ -1467,7 +1459,7 @@ public class DecomposerRecipes {
         CBRecipeBuilder.of(CTNHBio.id("flesh_bits_cb"), CBRecipeTypes.DECOMPOSER_RECIPES)
                 .nutrient(10)
                 .inputItems(ModItems.FLESH_BITS.get().asItem().getDefaultInstance())
-                .outputItemsRanged(TagPrefix.dust,Meat, UniformInt.of(1, 3))
+                .outputItemsRanged(dust,Meat, UniformInt.of(1, 3))
                 .EUt(24)
                 .duration(120)
                 .save(provider);
@@ -1488,7 +1480,7 @@ public class DecomposerRecipes {
     private static void addRawOreRecipe(Consumer<FinishedRecipe> provider, Material material) {
         //洗矿-热离-粉碎
         OreProperty property = material.getProperty(PropertyKey.ORE);
-        ItemStack finalDust = ChemicalHelper.get(TagPrefix.dust, material);
+        ItemStack finalDust = ChemicalHelper.get(dust, material);
         if (finalDust.isEmpty()) return;
         CBRecipeBuilder.of(CTNHBio.id("decompose_raw_" + material.getName()),
                         CBRecipeTypes.DECOMPOSER_RECIPES)
@@ -1498,17 +1490,17 @@ public class DecomposerRecipes {
                 .inputFluids(new FluidStack(DistilledWater.getFluid(), 1000))
                 .outputItems(finalDust)
                 .chancedOutput(
-                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(0, material)),
+                        ChemicalHelper.get(dust, property.getOreByProduct(0, material)),
                         1400,
                         0
                 )
                 .chancedOutput(
-                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(1, material)),
+                        ChemicalHelper.get(dust, property.getOreByProduct(1, material)),
                         3300,
                         0
                 )
                 .chancedOutput(
-                        ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(2, material)),
+                        ChemicalHelper.get(dust, property.getOreByProduct(2, material)),
                         1700,
                         0
                 )
@@ -1517,7 +1509,7 @@ public class DecomposerRecipes {
                 .save(provider);
         //洗矿-粉碎-离心
         OreProperty one = material.getProperty(PropertyKey.ORE);
-        ItemStack Dust = ChemicalHelper.get(TagPrefix.dust, material);
+        ItemStack Dust = ChemicalHelper.get(dust, material);
         if (Dust.isEmpty()) return;
         CBRecipeBuilder.of(CTNHBio.id("wash_grind_centrifuge_" + material.getName()),
                         CBRecipeTypes.DECOMPOSER_RECIPES)
@@ -1526,17 +1518,17 @@ public class DecomposerRecipes {
                 .inputFluids(new FluidStack(Fluids.WATER, 1500))
                 .outputItems(Dust)
                 .chancedOutput(
-                        ChemicalHelper.get(TagPrefix.dust, one.getOreByProduct(0, material)),
+                        ChemicalHelper.get(dust, one.getOreByProduct(0, material)),
                         1400,
                         0
                 )
                 .chancedOutput(
-                        ChemicalHelper.get(TagPrefix.dust, one.getOreByProduct(1, material)),
+                        ChemicalHelper.get(dust, one.getOreByProduct(1, material)),
                         1500,
                         0
                 )
                 .chancedOutput(
-                        ChemicalHelper.get(TagPrefix.dust, one.getOreByProduct(1, material)),
+                        ChemicalHelper.get(dust, one.getOreByProduct(1, material)),
                         1700,
                         0
                 )
@@ -1553,19 +1545,19 @@ public class DecomposerRecipes {
                     .nutrient(5)
                     .inputItems(TagPrefix.crushed, material)
                     .inputFluids(FluidIngredient.of(CBTags.ACID_FLUIDS_TAG, 50))
-                    .outputItems(ChemicalHelper.get(TagPrefix.dust, material))
+                    .outputItems(ChemicalHelper.get(dust, material))
                     .chancedOutput(
-                            ChemicalHelper.get(TagPrefix.dust, washingByproduct),
+                            ChemicalHelper.get(dust, washingByproduct),
                             7000,
                             0
                     )
                     .chancedOutput(
-                            ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(1, material)),
+                            ChemicalHelper.get(dust, property.getOreByProduct(1, material)),
                             1700,
                             0
                     )
                     .chancedOutput(
-                            ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(1, material)),
+                            ChemicalHelper.get(dust, property.getOreByProduct(1, material)),
                             1300,
                             0
                     )
