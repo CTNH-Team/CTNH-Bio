@@ -25,8 +25,8 @@ public class HostileObservationRecipes {
     static ResourceLocation getModelId(EntityType<?> type) {
         ResourceLocation t = ForgeRegistries.ENTITY_TYPES.getKey(type);
         return t.getNamespace().equals("minecraft")?
-                new ResourceLocation("hostilenetworks",t.getPath()) :
-                new ResourceLocation("hostilenetworks","%s/%s".formatted(t.getNamespace(),t.getPath()));
+                ResourceLocation.fromNamespaceAndPath("hostilenetworks",t.getPath()) :
+                ResourceLocation.fromNamespaceAndPath("hostilenetworks","%s/%s".formatted(t.getNamespace(),t.getPath()));
     }
     public static void registerForEntityType(EntityType<?> type, Consumer<FinishedRecipe> provider){
         ResourceLocation recipeId = getRecipeId(type);
