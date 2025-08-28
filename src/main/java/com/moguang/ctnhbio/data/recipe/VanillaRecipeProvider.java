@@ -67,20 +67,6 @@ public class VanillaRecipeProvider extends RecipeProvider {
                 Ingredient.of(Items.GUNPOWDER), // 火药
                 splashResultStack // 喷溅型结果
         );
-
-        VanillaRecipeHelper.addShapedRecipe(provider, false, true,
-                CTNHBio.id("bio_forge_recipe"),
-                new ItemStack(ModItems.BIO_FORGE.get(), 1),
-                "AEA",
-                "BIB",
-                "CDC",
-                'A', ModItems.MOB_CLAW.get(),
-                'B', CustomTags.LV_CIRCUITS,
-                'C', GTItems.FLUID_CELL_LARGE_TUNGSTEN_STEEL.get(),
-                'D', ModItems.LIVING_FLESH,
-                'E', ModItems.PRIMORDIAL_CORE,
-                'I', GTMachines.HULL[LV]
-        );
     }
 
 

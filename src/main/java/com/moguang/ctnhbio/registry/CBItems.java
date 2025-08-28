@@ -65,6 +65,23 @@ public class CBItems {
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
 
+    public static ItemEntry<ComponentItem> ADVANCED_RAM_WAFER = REGISTRATE
+            .item("advanced_ram_wafer", ComponentItem::create)
+            .lang("Advanced Ram Wafer")
+            .properties(p -> new Item.Properties().rarity(ModRarities.UNCOMMON))
+            .onRegister(attach(new TooltipBehavior(list -> {
+                list.add(Component.translatable("ctnhbio.advanced_ram_wafer.tooltip").withStyle(ChatFormatting.YELLOW));
+            })))
+            .register();
+    public static ItemEntry<ComponentItem> ADVANCED_RAM_CHIP = REGISTRATE
+            .item("advanced_ram_chip", ComponentItem::create)
+            .lang("Advanced Ram Chip")
+            .properties(p -> new Item.Properties().rarity(ModRarities.UNCOMMON))
+            .onRegister(attach(new TooltipBehavior(list -> {
+                list.add(Component.translatable("ctnhbio.advanced_ram_chip.tooltip").withStyle(ChatFormatting.YELLOW));
+            })))
+            .register();
+
     public static ItemEntry<ComponentItem> SYNET_CORE = REGISTRATE
             .item("synet_core", ComponentItem::create)
             .lang("Synet Core")

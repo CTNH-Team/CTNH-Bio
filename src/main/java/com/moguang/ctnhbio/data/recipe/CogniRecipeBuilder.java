@@ -111,7 +111,7 @@ public class CogniRecipeBuilder extends GTRecipeBuilder {
             String stepName = (step == subRecipes.size() - 1) ? "_final_step" : "_step_" + (step + 1);
 
             GTRecipeBuilder stepBuilder = GTRecipeBuilder.of(
-                            new ResourceLocation(id.getNamespace(), id.getPath() + stepName),
+                            ResourceLocation.fromNamespaceAndPath(id.getNamespace(), id.getPath() + stepName),
                             subRecipeType)
                     .EUt(eut)
                     .duration(this.duration);
