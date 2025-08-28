@@ -209,7 +209,8 @@ public class RecipeRemoval {
                 "biomancy:decomposing/cocoa_beans",
 
                 "biomancy:crafting/primordial_core",
-                "biomancy:bio_brewing"
+                "biomancy:bio_brewing",
+                "biomancy:crafting/despoil_sickle"
 
         };
         for(var recipe: recipes) {
@@ -224,7 +225,8 @@ public class RecipeRemoval {
                 "gtceu:circuit_assembler/wetware_processor_luv_soldering_alloy",
                 "gtceu:circuit_assembler/wetware_processor_assembly_zpm",
                 "gtceu:circuit_assembler/wetware_processor_assembly_zpm_soldering_alloy",
-                "gtceu:assembly_line/wetware_super_computer_uv"
+                "gtceu:assembly_line/wetware_super_computer_uv",
+                "gtceu:assembly_line/wetware_mainframe_uhv"
         };
 
         for(var recipe: recipes) {

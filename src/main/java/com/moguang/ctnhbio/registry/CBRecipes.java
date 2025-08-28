@@ -9,11 +9,11 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.item.tool.GTToolType;
-import com.gregtechceu.gtceu.api.item.tool.ToolHelper;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.data.recipe.*;
 import com.moguang.ctnhbio.data.recipe.living.*;
+import com.moguang.ctnhbio.data.recipe.multi.ConsciousnessAssemblyRecipes;
 import com.moguang.ctnhbio.data.recipe.multi.CogniRecipes;
 import com.moguang.ctnhbio.data.recipe.multi.GreatFleshRecipes;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -21,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.GENERATE_PLATE;
@@ -36,10 +35,12 @@ public class CBRecipes {
         BioelectrlcForgeRecipes.init(provider);
         BioReactorRecipes.init(provider);
         DigesterRecipes.init(provider);
+        HostileObservationRecipes.init(provider);
         CommonRecipes.init(provider);
 
         CogniRecipes.init(provider);
-        VanillaRecipeProvider.init(provider);
+        ConsciousnessAssemblyRecipes.init(provider);
+        VanillaRecipes.init(provider);
         recipeAddition(provider);
     }
 
@@ -63,9 +64,9 @@ public class CBRecipes {
                     material.hasProperty(PropertyKey.GEM) ? TagPrefix.gem : TagPrefix.ingot, material);
 
             addToolRecipe(provider, material, CBToolType.BONING_KNIFE,
-                    "PPI", "fSh", "ASA",
+                    " P ", "fPh", "ASA",
                     'P', plate,
-                    'I', ingot,
+                    //'I', ingot,
                     'S', stick,
                     'A', new ItemStack(ModItems.LIVING_FLESH.get()));
 
@@ -76,8 +77,8 @@ public class CBRecipes {
                                      @NotNull GTToolType tool, Object... recipe) {
 
         ItemStack toolStack = CBMaterialItems.CB_TOOL_ITEMS.get(material, tool).asStack();
-        toolStack.enchant(ModEnchantments.DESPOIL.get(), 3);
         if (toolStack.isEmpty()) return;
+        toolStack.enchant(ModEnchantments.DESPOIL.get(), 3);
         VanillaRecipeHelper.addShapedRecipe(provider, String.format("%s_%s", tool.name, material.getName()),
                     toolStack, recipe);
 

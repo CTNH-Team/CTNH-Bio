@@ -1,8 +1,10 @@
 package com.moguang.ctnhbio.data.recipe.living;
 
 import com.github.elenterius.biomancy.init.ModItems;
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 
+import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.moguang.ctnhbio.CTNHBio;
@@ -10,12 +12,14 @@ import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
 
@@ -355,6 +359,15 @@ public class BioReactorRecipes {
                 .EUt(6144)
                 .duration(2 * 20)
                 .save(provider);
-
+        //原初血清
+        CBRecipeBuilder.of(CTNHBio.id("primordial_serum_cb"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(100)
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:rejuvenation_serum")),1000))
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:frenzy_serum")),1000))
+                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:cleansing_serum")),1000))
+                .outputFluidsRanged(new FluidStack(PrimordiaL_Serum.getFluid(), 1), UniformInt.of(100, 300))
+                .EUt(GTValues.V[GTValues.LuV])
+                .duration(60 * 20)
+                .save(provider);
     }
 }

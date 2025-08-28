@@ -8,6 +8,7 @@ import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import com.moguang.ctnhbio.registry.CBTags;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
@@ -24,7 +25,7 @@ public class DigesterRecipes {
                 .nutrient(1)
                 .circuitMeta(1)
                 .inputItems(Ingredient.of(CBTags.FOOD_TAG))
-                .outputItems(ModItems.NUTRIENT_PASTE)
+                .outputItems(new ItemStack(ModItems.NUTRIENT_PASTE.get(), 1) )
                 .outputItems(ModItems.NUTRIENT_BAR)
                 .duration(100)
                 .EUt(32)

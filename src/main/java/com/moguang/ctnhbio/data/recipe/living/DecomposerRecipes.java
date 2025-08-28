@@ -1495,7 +1495,7 @@ public class DecomposerRecipes {
                 .effect(MobEffects.DAMAGE_BOOST)
                 .nutrient(10)
                 .inputItems(TagPrefix.crushed, material)
-                .inputFluids(new FluidStack(DistilledWater.getFluid(), 5000))
+                .inputFluids(new FluidStack(DistilledWater.getFluid(), 1000))
                 .outputItems(finalDust)
                 .chancedOutput(
                         ChemicalHelper.get(TagPrefix.dust, property.getOreByProduct(0, material)),
@@ -1513,7 +1513,7 @@ public class DecomposerRecipes {
                         0
                 )
                 .EUt(8000)
-                .duration(500)
+                .duration(60)
                 .save(provider);
         //洗矿-粉碎-离心
         OreProperty one = material.getProperty(PropertyKey.ORE);
@@ -1521,8 +1521,7 @@ public class DecomposerRecipes {
         if (Dust.isEmpty()) return;
         CBRecipeBuilder.of(CTNHBio.id("wash_grind_centrifuge_" + material.getName()),
                         CBRecipeTypes.DECOMPOSER_RECIPES)
-                .effect(MobEffects.DAMAGE_BOOST)
-                .nutrient(15)
+                .nutrient(5)
                 .inputItems(TagPrefix.crushed, material)
                 .inputFluids(new FluidStack(Fluids.WATER, 1500))
                 .outputItems(Dust)
@@ -1550,10 +1549,10 @@ public class DecomposerRecipes {
             //ObjectIntPair<Material> washedInTuple = property.getWashedIn();
             CBRecipeBuilder.of(CTNHBio.id("acid_grind_centrifuge_" + material.getName()),
                             CBRecipeTypes.DECOMPOSER_RECIPES)
-                    .effect(MobEffects.DAMAGE_BOOST)
-                    .nutrient(10)
+                    //.effect(MobEffects.DAMAGE_BOOST)
+                    .nutrient(5)
                     .inputItems(TagPrefix.crushed, material)
-                    .inputFluids(FluidIngredient.of(CBTags.ACID_FLUIDS_TAG, 200))
+                    .inputFluids(FluidIngredient.of(CBTags.ACID_FLUIDS_TAG, 50))
                     .outputItems(ChemicalHelper.get(TagPrefix.dust, material))
                     .chancedOutput(
                             ChemicalHelper.get(TagPrefix.dust, washingByproduct),
@@ -1571,7 +1570,7 @@ public class DecomposerRecipes {
                             0
                     )
                     .EUt(64)
-                    .duration(800)
+                    .duration(200)
                     .save(provider);
         }
     }

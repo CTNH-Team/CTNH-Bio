@@ -38,7 +38,7 @@ public class CBBlocks {
     public static final BlockEntry<Block> BIO_ACID_CASING = createCasingBlock("bio_acid_casing",
             CTNHBio.id("block/casings/bio_acid_casing"));
 
-    public static final BlockEntry<Block> HAEMOSTEEL_CASING = createCasingBlock("haemosteel_casing",
+    public static final BlockEntry<Block> SYNAPTIC_CASING = createCasingBlock("synaptic_casing",
             CTNHBio.id("block/casings/opv/opv_casing"));
 
 

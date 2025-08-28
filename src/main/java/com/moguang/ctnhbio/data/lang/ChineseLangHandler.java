@@ -1,14 +1,13 @@
 package com.moguang.ctnhbio.data.lang;
 
+import com.github.elenterius.biofactory.init.ModFluids;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
-import com.moguang.ctnhbio.machine.multiblock.MultiblocksA;
-import com.moguang.ctnhbio.registry.CBBlocks;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
-import com.moguang.ctnhbio.data.lang.utils.*;
-import com.moguang.ctnhbio.registry.CBItems;
-import com.moguang.ctnhbio.registry.CBMachines;
-import com.moguang.ctnhbio.registry.CBMaterials;
+import com.moguang.ctnhbio.data.lang.utils.EntityPropertyLangUtil;
+import com.moguang.ctnhbio.data.materials.CommonMaterials;
+import com.moguang.ctnhbio.machine.multiblock.MultiblocksA;
+import com.moguang.ctnhbio.registry.*;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 import net.minecraftforge.common.data.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
@@ -27,8 +26,6 @@ public class ChineseLangHandler {
         provider.addItem(CBItems.META_CORE, "拓扑核心");
         provider.addItem(CBItems.NOVA_CORE, "灵蜕核心");
         provider.addItem(CBItems.OMNI_CORE, "终观核心");
-        provider.addItem(CBItems.ADVANCED_RAM_WAFER, "进阶RAM晶圆");
-        provider.addItem(CBItems.ADVANCED_RAM_CHIP, "进阶RAM芯片");
 
         provider.addItem(CBItems.WETWARE_CAPACITOR, "湿件电容");
         provider.addItem(CBItems.WETWARE_DIODE, "湿件二极管");
@@ -45,6 +42,8 @@ public class ChineseLangHandler {
         provider.addBlock(CBBlocks.PRIMAL_FLESH_CASING, "原初机械方块");
         provider.addBlock(CBBlocks.ACID_FLESH_CASING, "酸液机械方块");
         provider.addBlock(CBBlocks.BIO_ACID_CASING, "生物酸机械方块");
+        provider.addBlock(CBBlocks.SYNAPTIC_CASING, "神经突触机械方块");
+
 
         provider.addBlock(CBBlocks.IMPERMEABLE_MEMBRANE, "不渗透膜");
 
@@ -77,6 +76,10 @@ public class ChineseLangHandler {
         provider.add(CBMachines.BRAIN_IN_A_VAT[IV].getBlock(), "§9IV 缸中之脑§r");
         provider.add(CBMachines.BRAIN_IN_A_VAT[LuV].getBlock(), "§dLuV 缸中之脑§r");
 
+        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.1", "§3自动化思考");
+        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.2", "§r电量和营养充足时,提供%d算力");
+        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.3", "§r超频可提供双倍算力，但会对大脑造成不可逆损伤");
+
         provider.add("ctnhbio.machine.hv_brain_in_a_vat.tooltip.0", "它觉得自己是一名出色的格雷员工");
         provider.add("ctnhbio.machine.ev_brain_in_a_vat.tooltip.0", "它正在优化铂系金属处理产线");
         provider.add("ctnhbio.machine.iv_brain_in_a_vat.tooltip.0", "它喜欢熬夜玩CTNH，这样不太好");
@@ -87,26 +90,34 @@ public class ChineseLangHandler {
         provider.add(MultiblocksA.CIRCULATORY_SYSTEM.getBlock(), "循环系统");
         provider.add(MultiblocksA.WEATHERER.getBlock(), "风化器");
 
+        provider.add("ctnhbio.great_flesh.info.0", "§5喂食原初温床，并给予其治疗药水，温床会孵化出肉块，挑选出有潜质的那些（不饥饿的那些）。");
+        provider.add("ctnhbio.great_flesh.info.1", "§5使用有机试管把原初血清装载入活体注射器，向它们注射，");
+        provider.add("ctnhbio.great_flesh.info.2", "§5他们将会向你展示最原初、最纯粹的生命形态");
+
         provider.add("item.gtceu.tool.boning_knife", "%s剔骨刀");
         provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH]活体机器属性");
         provider.add("ctnhbio.living_machine", "living machine");
 
+        //replace(provider, "fluid_type.biofactory.nutrients_fluid", "营养液");
+        provider.add("fluid_type.biofactory.nutrients_fluid", "营养液");
 
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
-        provider.add("jei.category.gtceu.bioelectric_forge", "生物电炉");
-        provider.add("jei.category.gtceu.decomposer", "电力分解");
-        provider.add("jei.category.gtceu.digest", "电力消化");
-        provider.add("jei.category.gtceu.ctnhbio_reactor", "生物反应");
-        provider.add("jei.category.gtceu.basic_living", "摄入营养");
-        provider.add("jei.category.gtceu.great_flesh", "巨型肉块-分化");
 
+        provider.add("gtceu.bioelectric_forge", "生物电炉");
+        provider.add("gtceu.decomposer", "电力分解");
+        provider.add("gtceu.digest", "电力消化");
+        provider.add("gtceu.ctnhbio_reactor", "生物反应");
+        provider.add("gtceu.basic_living", "摄入营养");
+        provider.add("gtceu.great_flesh", "巨型肉块-分化");
+        provider.add(CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY.registryName.toLanguageKey(), "意识装配");
 
         provider.add("ctnhbio.nutrient_bar.info", "营养:");
         provider.add("recipe.capability.nutrient.name", "营养");
         provider.add("jade.nutrient.info", "营养值：");
 
         provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
-        provider.add("ctnhbio.recipe.nutrient", "营养消耗：%d");
+        provider.add("ctnhbio.recipe.nutrient_consume", "营养消耗：%d");
+        provider.add("ctnhbio.recipe.nutrient_generate", "营养获取：%d");
         provider.add("ctnhbio.jade.nutrient_stored", "%s / %s u");
 
         provider.add("jei.ctnhbio.mob_crushing", "生物粉碎");
@@ -117,8 +128,7 @@ public class ChineseLangHandler {
         provider.add("ctnhbio.hv_machine.tooltip", "HV生物芯片");
         provider.add("ctnhbio.ev_machine.tooltip", "EV生物芯片");
         provider.add("ctnhbio.iv_machine.tooltip", "IV生物芯片");
-        provider.add("ctnhbio.advanced_ram_wafer.tooltip", "更好的内存原料");
-        provider.add("ctnhbio.advanced_ram_chip.tooltip", "更好的随机存取存储器");
+
 
         provider.add("ctnhbio.synet_core.tooltip", "精密如血管回路的金属骨架，每一道凹槽都在规律脉动，仿佛在输送某种不可见的生命能量。");
         provider.add("ctnhbio.meta_core.tooltip", "不断自我折叠的几何结构，表面浮现出违反欧几里得定律的棱角，在静止中持续完成着不可能的空间变换。");
@@ -150,12 +160,8 @@ public class ChineseLangHandler {
         provider.add("material.ctnhbio.cleansing_serum", "净化血清");
         provider.add("material.ctnhbio.frenzy_serum", "狂化血清");
         provider.add("material.ctnhbio.primordial_serum", "原初血清");
-        provider.add("material.ctnhbio.pyrrole", "吡咯");
-        provider.add("material.ctnhbio.polypyrrole", "聚吡咯");
-        provider.add("material.ctnhbio.blue_titanium_alloy", "蓝钛");
-        provider.add("material.ctnhbio.fentons_reagent", "芬顿试剂");
-        provider.add("material.ctnhbio.bio_flexible", "生物柔性材质");
-        provider.add("material.ctnhbio.weird_pixel_dust", "营养");
+        replace(provider, CommonMaterials.BLOODSTEEL.getUnlocalizedName(), "血髓钢");
+        replace(provider, CommonMaterials.WEIRD_PIXEL_DUST.getUnlocalizedName(), "富集营养");
 
         //Entity Properties
         EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"实体输入","实体输出","接受实体: %s","要求:");

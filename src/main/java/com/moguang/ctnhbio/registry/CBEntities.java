@@ -49,14 +49,7 @@ public class CBEntities {
             .renderer(() -> BrainRenderer::new)
             .lang("Brain")
             .register();
-//    public static EntityEntry<GreatFleshBlockEntity> GREAT_FLESH_ENTITY = REGISTRATE
-//            .entity("living_multi_machine", GreatFleshBlockEntity::new, MobCategory.CREATURE)
-//            .properties(props -> props.sized(0.9F, 0.9F))
-//            .attributes(GreatFleshBlockEntity::createAttributes)
-//            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
-//            .renderer(() -> GreatFleshRenderer::new)
-//            .lang("Living Multi Machine")
-//            .register();
+
 
 
 

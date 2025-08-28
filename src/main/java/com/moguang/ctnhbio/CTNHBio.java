@@ -2,10 +2,13 @@ package com.moguang.ctnhbio;
 
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
 import com.gregtechceu.gtceu.api.recipe.chance.logic.ChanceLogic;
 import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
+import com.gregtechceu.gtceu.api.sound.SoundEntry;
 import com.moguang.ctnhbio.client.ClientProxy;
 import com.moguang.ctnhbio.common.CommonProxy;
+import com.moguang.ctnhbio.data.recipe.VanillaRecipeProvider;
 import com.moguang.ctnhbio.event.EventHandler;
 import com.moguang.ctnhbio.registry.CBRegistrate;
 import com.moguang.ctnhbio.registry.CBSerums;
@@ -42,16 +45,19 @@ public class CTNHBio
         modEventBus.addGenericListener(MachineDefinition.class, EventHandler::registerMachines);
         modEventBus.addGenericListener(GTRecipeType.class, EventHandler::registerRecipeTypes);
         modEventBus.addGenericListener(RecipeConditionType.class, EventHandler::registerRecipeConditions);
-        modEventBus.addGenericListener(ChanceLogic.class,EventHandler::registerChanceLogic);
+        modEventBus.addGenericListener(GTRecipeCategory.class, EventHandler::onRecipeCategoryRegister);
+        modEventBus.addGenericListener(SoundEntry.class, EventHandler::onSoundRegister);
+        //modEventBus.addGenericListener(ChanceLogic.class,EventHandler::registerChanceLogic);
 
         DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
 
     }
 
-    public static ResourceLocation id(String name) {return ResourceLocation.tryBuild(MODID, name); }
+    public static ResourceLocation id(String name) {return ResourceLocation.tryParse(MODID + ":" + name); }
     private void commonSetup(final FMLCommonSetupEvent event)
     {
+        event.enqueueWork(VanillaRecipeProvider::buildBrewingRecipes);
     }
 
     // Add the example block item to the building blocks tab

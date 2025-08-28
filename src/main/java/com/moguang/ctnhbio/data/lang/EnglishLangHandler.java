@@ -29,13 +29,14 @@ public class EnglishLangHandler {
         provider.add("ctnhbio.hv_machine.tooltip", "HV Biochip");
         provider.add("ctnhbio.ev_machine.tooltip", "EV Biochip");
         provider.add("ctnhbio.iv_machine.tooltip", "IV Biochip");
-        provider.add("ctnhbio.advanced_ram_wafer.tooltip", "Enhanced RAM Wafer");
-        provider.add("ctnhbio.advanced_ram_chip.tooltip", "Advanced Random Access Memory");
+
 
         provider.add("ctnhbio.synet_core.tooltip", "A metal skeleton intricate as vascular circuits, with every groove pulsing rhythmically, as if transporting some invisible life energy.");
         provider.add("ctnhbio.meta_core.tooltip", "A geometric structure perpetually folding upon itself, its surface revealing angles that defy Euclidean laws, continuously performing impossible spatial transformations in stillness.");
         provider.add("ctnhbio.nova_core.tooltip", "Beneath its semi-transparent shell float countless crystal fragments, constantly shedding and regenerating, each fracture refracting different light spectra.");
         provider.add("ctnhbio.omni_core.tooltip", "Within the mirror-smooth sphere, nebular matter slowly rotates - the longer you gaze, the clearer your own silhouette emerges within it.");
+
+        provider.add("ctnhbio.recipe.datamodel.requirement", "§pAbove Are Minimum Requirement(s)");
 
         //EntityProperties
         EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"Input Entity","Output Entity","Available: %s","Requirement:");
