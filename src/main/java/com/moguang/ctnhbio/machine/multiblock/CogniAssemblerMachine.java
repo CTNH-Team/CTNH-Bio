@@ -1,29 +1,44 @@
 package com.moguang.ctnhbio.machine.multiblock;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
-import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
+import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
 import com.gregtechceu.gtceu.api.recipe.ActionResult;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
-import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
 import com.moguang.ctnhbio.data.recipe.CogniRecipeBuilder;
 import com.moguang.ctnhbio.machine.multiblock.part.ParabioticBridgePartMachine;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
     public CogniAssemblerMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
+    }
+
+    //bind trait
+
+    @Override
+    public void onStructureInvalid() {
+        super.onStructureInvalid();
+    }
+
+    @Override
+    public void onStructureFormed() {
+        super.onStructureFormed();
+        //绑定连体桥IO
+        getParts().stream()
+                .filter(ParabioticBridgePartMachine.class::isInstance)
+                .map(ParabioticBridgePartMachine.class::cast)
+                .forEach(pb->{
+                    addHandlerList(RecipeHandlerList.of(IO.IN,pb.getInventory()));
+                    addHandlerList(RecipeHandlerList.of(IO.OUT,pb.getInventory()));
+                });
     }
 
     @Override
@@ -78,16 +93,15 @@ public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
 
         @Override
         protected ActionResult matchRecipe(GTRecipe recipe) {
-            return super.matchRecipe(recipe);
-//            if(!isCogniAssemble(recipe) || isLastStep(recipe))
-//            {
-//                return super.matchRecipe(recipe);
-//            }
-//
-//            var match = matchRecipeNoOutput(recipe);
-//            if (!match.isSuccess()) return match;
-//
-//            return matchTickRecipeNoOutput(recipe);
+            if(!isCogniAssemble(recipe) || isLastStep(recipe))
+            {
+                return super.matchRecipe(recipe);
+            }
+
+            var match = matchRecipeNoOutput(recipe);
+            if (!match.isSuccess()) return match;
+
+            return matchTickRecipeNoOutput(recipe);
         }
 
         @Override
@@ -105,15 +119,15 @@ public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
                     .orElse(null);
         }
 
-//        @Override
-//        protected ActionResult handleRecipeIO(GTRecipe recipe, IO io) {
-//            if(io == IO.OUT && isCogniAssemble(recipe)) {
-//                if (lastRecipe == null) {
-//                    return ActionResult.SUCCESS;
-//                }
-//            }
-//            return super.handleRecipeIO(recipe, io);
-//        }
+        @Override
+        protected ActionResult handleRecipeIO(GTRecipe recipe, IO io) {
+            if(io == IO.OUT && isCogniAssemble(recipe)) {
+                if (lastRecipe == null) {
+                    return ActionResult.SUCCESS;
+                }
+            }
+            return super.handleRecipeIO(recipe, io);
+        }
 
         protected ActionResult matchRecipeNoOutput(GTRecipe recipe) {
             if (!machine.hasCapabilityProxies()) return ActionResult.FAIL_NO_CAPABILITIES;

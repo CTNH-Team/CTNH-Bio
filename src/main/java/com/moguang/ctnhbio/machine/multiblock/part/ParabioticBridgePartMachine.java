@@ -14,17 +14,18 @@ import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
-import com.moguang.ctnhbio.machine.multiblock.CogniAssemblerMachine;
 import lombok.Getter;
-import lombok.Setter;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import static net.minecraft.nbt.Tag.TAG_INT;
 
 public class ParabioticBridgePartMachine extends TieredIOPartMachine {
 
@@ -62,11 +63,32 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
 
         @Override
         public List<Ingredient> handleRecipeInner(IO io, GTRecipe recipe, List<Ingredient> left, boolean simulate) {
-            List<Ingredient> result = handleRecipe(io, recipe, left, simulate, io, storage);
-            if (io == IO.IN && !(Objects.equals(result, left))) {
-                lastRecipeID = recipe.id;
+            if (io == IO.IN){
+                List<Ingredient> result = handleRecipe(io, recipe, left, simulate, io, storage);
+                if(!(Objects.equals(result, left)))
+                    lastRecipeID = recipe.id;
+                return result;
             }
-            return result;
+            else {
+                //不处理非步骤物品
+                List<Ingredient> intermediates = new ArrayList<>();
+                List<Ingredient> finalProducts = new ArrayList<>();
+                for (Ingredient ingredient : left) {
+                    if (Arrays.stream(ingredient.getItems())
+                            .map(ItemStack::getOrCreateTag)
+                            .anyMatch(nbt -> nbt.getTagType("cogin_assemble_step") == TAG_INT)) {
+                        intermediates.add(ingredient);
+                    }
+                    else {
+                        finalProducts.add(ingredient);
+                    }
+                }
+
+                List<Ingredient> result = handleRecipe(io, recipe, intermediates, simulate, io, storage);
+                if(finalProducts.isEmpty() && result == null) return null;
+                if(result != null) finalProducts.addAll(result);
+                return finalProducts;
+            }
         }
 
 
@@ -74,7 +96,6 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
             return handleRecipe(io, recipe, left, simulate, handler, storage);
         }
     }
-
 
 
     @Override
