@@ -3,12 +3,10 @@ package com.moguang.ctnhbio.registry;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.RotationState;
-import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 
 import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
-import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.gregtechceu.gtceu.common.data.models.GTMachineModels;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
@@ -16,13 +14,10 @@ import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
-import com.moguang.ctnhbio.api.machine.multiblock.part.NeuralModelAccessorMachine;
+import com.moguang.ctnhbio.machine.multiblock.part.NeuralModelAccessorMachine;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineBlockEntityRenderer;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
-import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBlockEntityRenderer;
 import com.moguang.ctnhbio.client.model.*;
-import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeBlockEntity;
-import com.moguang.ctnhbio.machine.bioreactor.BioReactorBlockEntity;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeMachineBlock;
 
@@ -37,7 +32,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import java.util.Locale;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createOverlayCasingMachineModel;
 import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.OVERLAY_ITEM_HATCH;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 

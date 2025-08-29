@@ -1,4 +1,4 @@
-package com.moguang.ctnhbio.api.machine.multiblock.part;
+package com.moguang.ctnhbio.machine.multiblock.part;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
