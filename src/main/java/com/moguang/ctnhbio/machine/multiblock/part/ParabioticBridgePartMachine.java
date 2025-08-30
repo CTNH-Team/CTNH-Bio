@@ -9,11 +9,13 @@ import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.MultiblockPartMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.TieredIOPartMachine;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
+import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+import com.moguang.ctnhbio.utils.MetaMachineUtils;
 import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -54,6 +56,11 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
 
     public ItemStack insertItemInternal(int slot, @NotNull ItemStack stack, boolean simulate) {
         return inventory.insertItemInternal(slot, stack, simulate);
+    }
+
+    @Override
+    public @NotNull List<RecipeHandlerList> getRecipeHandlers() {
+        return MetaMachineUtils.getRecipeHandlers(this,inventory);
     }
 
     public class ParabioticBridgeHandler extends NotifiableItemStackHandler {

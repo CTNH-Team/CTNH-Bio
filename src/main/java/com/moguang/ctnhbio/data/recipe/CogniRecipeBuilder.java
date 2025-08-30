@@ -1,16 +1,15 @@
 package com.moguang.ctnhbio.data.recipe;
 
 import com.gregtechceu.gtceu.GTCEu;
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
-import lombok.Setter;
+import dev.shadowsoffire.hostilenetworks.data.ModelTier;
+import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -21,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import static com.moguang.ctnhbio.data.recipe.HostileObservationRecipes.getModelId;
+import static dev.shadowsoffire.hostilenetworks.Hostile.Items.DATA_MODEL;
 
 public class CogniRecipeBuilder extends GTRecipeBuilder {
 
@@ -200,6 +202,19 @@ public class CogniRecipeBuilder extends GTRecipeBuilder {
         public SubRecipe inputItems(Ingredient... ingredients) {
             itemInputs.addAll(List.of(ingredients));
             return this;
+        }
+
+        public SubRecipe inputModel(EntityType<?> modelEntityType, ModelTier tier){
+            ItemStack stack = new ItemStack(DATA_MODEL.get());
+            DataModelItem.setStoredModel(stack, getModelId(modelEntityType));
+            DataModelItem.setData(stack, tier.data().requiredData());
+            return inputItems(stack);
+        }
+        public SubRecipe inputModel(ResourceLocation entityId, ModelTier tier){
+            ItemStack stack = new ItemStack(DATA_MODEL.get());
+            DataModelItem.setStoredModel(stack, getModelId(entityId));
+            DataModelItem.setData(stack, tier.data().requiredData());
+            return inputItems(stack);
         }
 
         public SubRecipe inputFluids(FluidStack... fluids) {

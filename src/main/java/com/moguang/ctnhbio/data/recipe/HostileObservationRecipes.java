@@ -22,11 +22,14 @@ public class HostileObservationRecipes {
         ResourceLocation t = ForgeRegistries.ENTITY_TYPES.getKey(type);
         return CTNHBio.id("observation_%s_%s".formatted(t.getNamespace(),t.getPath()));
     }
+    static ResourceLocation getModelId(ResourceLocation type) {
+        return type.getNamespace().equals("minecraft")?
+                ResourceLocation.fromNamespaceAndPath("hostilenetworks",type.getPath()) :
+                ResourceLocation.fromNamespaceAndPath("hostilenetworks","%s/%s".formatted(type.getNamespace(),type.getPath()));
+    }
     static ResourceLocation getModelId(EntityType<?> type) {
         ResourceLocation t = ForgeRegistries.ENTITY_TYPES.getKey(type);
-        return t.getNamespace().equals("minecraft")?
-                ResourceLocation.fromNamespaceAndPath("hostilenetworks",t.getPath()) :
-                ResourceLocation.fromNamespaceAndPath("hostilenetworks","%s/%s".formatted(t.getNamespace(),t.getPath()));
+        return getModelId(t);
     }
     public static void registerForEntityType(EntityType<?> type, Consumer<FinishedRecipe> provider){
         ResourceLocation recipeId = getRecipeId(type);

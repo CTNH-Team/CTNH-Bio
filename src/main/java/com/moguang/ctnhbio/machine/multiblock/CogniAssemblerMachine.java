@@ -3,7 +3,6 @@ package com.moguang.ctnhbio.machine.multiblock;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
-import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
 import com.gregtechceu.gtceu.api.recipe.ActionResult;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
@@ -19,26 +18,6 @@ import java.util.Collections;
 public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
     public CogniAssemblerMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
-    }
-
-    //bind trait
-
-    @Override
-    public void onStructureInvalid() {
-        super.onStructureInvalid();
-    }
-
-    @Override
-    public void onStructureFormed() {
-        super.onStructureFormed();
-        //绑定连体桥IO
-        getParts().stream()
-                .filter(ParabioticBridgePartMachine.class::isInstance)
-                .map(ParabioticBridgePartMachine.class::cast)
-                .forEach(pb->{
-                    addHandlerList(RecipeHandlerList.of(IO.IN,pb.getInventory()));
-                    addHandlerList(RecipeHandlerList.of(IO.OUT,pb.getInventory()));
-                });
     }
 
     @Override

@@ -3,7 +3,9 @@ package com.moguang.ctnhbio.data.recipe.multi;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CogniRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
+import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
@@ -26,13 +28,11 @@ public class CogniRecipes {
                 .addStep(step -> step
                         .inputItems(WETWARE_PROCESSOR_ASSEMBLY_ZPM)
                         .inputItems(NOR_MEMORY_CHIP)
-                        .endStep())
+                        .inputModel(EntityType.COW, ModelTier.SELF_AWARE))
                 .addStep(step -> step
-                        .inputItems(WETWARE_DIODE, 2)
-                        .endStep())
+                        .inputItems(WETWARE_DIODE, 2))
                 .addStep(step -> step
-                        .inputItems(ADVANCED_RAM_CHIP, 2)
-                        .endStep())
+                        .inputItems(ADVANCED_RAM_CHIP, 2))
                 .save(provider);
 
     }

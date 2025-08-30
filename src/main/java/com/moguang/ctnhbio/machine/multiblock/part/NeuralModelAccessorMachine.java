@@ -6,8 +6,11 @@ import com.gregtechceu.gtceu.api.gui.widget.BlockableSlotWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
+import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiController;
+import com.gregtechceu.gtceu.api.machine.feature.multiblock.IWorkableMultiController;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.MultiblockPartMachine;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
+import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.transfer.item.CustomItemStackHandler;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
@@ -16,12 +19,14 @@ import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import com.lowdragmc.lowdraglib.utils.Position;
+import com.moguang.ctnhbio.utils.MetaMachineUtils;
 import dev.shadowsoffire.hostilenetworks.data.DataModel;
 import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
 import lombok.Getter;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -36,6 +41,19 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
         return MANAGED_FIELD_HOLDER;
     }
 
+    @MustBeInvokedByOverriders
+    @Override
+    public void removedFromController(@NotNull IMultiController controller) {
+        super.removedFromController(controller);
+        if (controllers.isEmpty())
+            setLocked(false);
+    }
+
+    @Override
+    public boolean afterWorking(IWorkableMultiController controller) {
+        setLocked(false);
+        return super.afterWorking(controller);
+    }
 
     @Persisted
     @Getter
@@ -68,6 +86,11 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
                 .addWidget(new BlockableSlotWidget(itemHolder, 0, 50/2-18-6, 50/2-18)
                         .setIsBlocked(this::isLocked)
                         .setBackground(GuiTextures.SLOT, GuiTextures.RESEARCH_STATION_OVERLAY));
+    }
+
+    @Override
+    public @NotNull List<RecipeHandlerList> getRecipeHandlers() {
+        return MetaMachineUtils.getRecipeHandlers(this,itemHolder);
     }
 
     //Container
@@ -150,7 +173,7 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
                 break;
             }
 
-            if(changed && !simulate) isLocked = (io==IO.IN);
+            if(!simulate) isLocked = (io==IO.IN && changed);
 
             return left.isEmpty() ? null : left;
         }
