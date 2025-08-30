@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.data.recipe;
 
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import dev.shadowsoffire.hostilenetworks.Hostile;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
@@ -12,6 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
 
+import static com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient.getModelId;
 import static com.moguang.ctnhbio.registry.CBRecipeTypes.HOSTILE_OBSERVATION;
 
 public class HostileObservationRecipes {
@@ -22,32 +24,13 @@ public class HostileObservationRecipes {
         ResourceLocation t = ForgeRegistries.ENTITY_TYPES.getKey(type);
         return CTNHBio.id("observation_%s_%s".formatted(t.getNamespace(),t.getPath()));
     }
-    static ResourceLocation getModelId(ResourceLocation type) {
-        return type.getNamespace().equals("minecraft")?
-                ResourceLocation.fromNamespaceAndPath("hostilenetworks",type.getPath()) :
-                ResourceLocation.fromNamespaceAndPath("hostilenetworks","%s/%s".formatted(type.getNamespace(),type.getPath()));
-    }
-    static ResourceLocation getModelId(EntityType<?> type) {
-        ResourceLocation t = ForgeRegistries.ENTITY_TYPES.getKey(type);
-        return getModelId(t);
-    }
     public static void registerForEntityType(EntityType<?> type, Consumer<FinishedRecipe> provider){
         ResourceLocation recipeId = getRecipeId(type);
-        ResourceLocation model = getModelId(type);
-        DataModelItem item = Hostile.Items.DATA_MODEL.get();
-
-        ItemStack input = new ItemStack(item);
-        DataModelItem.setStoredModel(input, model);
-        DataModelItem.setData(input, ModelTier.SUPERIOR.data().requiredData());
-
-        ItemStack output = new ItemStack(item);
-        DataModelItem.setStoredModel(output, model);
-        DataModelItem.setData(output, ModelTier.SELF_AWARE.data().requiredData());
 
         CBRecipeBuilder.of(recipeId, HOSTILE_OBSERVATION)
                 .inputEntity(type)
-                .inputItems(input)
-                .outputItems(output)
+                .inputModel(ModelIngredient.of(ModelTier.SUPERIOR,type))
+                .outputModel(ModelIngredient.of(ModelTier.SELF_AWARE,type))
 //                .durationIsTotalCWU(true)
                 .CWUt(64)
                 .duration(ModelTier.SELF_AWARE.data().requiredData() * 64)

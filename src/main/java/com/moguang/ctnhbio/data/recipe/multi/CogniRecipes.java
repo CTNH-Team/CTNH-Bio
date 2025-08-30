@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.data.recipe.multi;
 
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import com.moguang.ctnhbio.data.recipe.CogniRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
@@ -28,7 +29,7 @@ public class CogniRecipes {
                 .addStep(step -> step
                         .inputItems(WETWARE_PROCESSOR_ASSEMBLY_ZPM)
                         .inputItems(NOR_MEMORY_CHIP)
-                        .inputModel(EntityType.COW, ModelTier.SELF_AWARE))
+                        .inputModel(ModelIngredient.of(ModelTier.SELF_AWARE,EntityType.COW)))
                 .addStep(step -> step
                         .inputItems(WETWARE_DIODE, 2))
                 .addStep(step -> step

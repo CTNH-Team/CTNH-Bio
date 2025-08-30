@@ -2,6 +2,9 @@ package com.moguang.ctnhbio;
 
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
+import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.MapIngredientTypeManager;
+import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.item.StrictNBTItemStackMapIngredient;
+import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import com.moguang.ctnhbio.data.recipe.RecipeRemoval;
 import com.moguang.ctnhbio.registry.*;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -20,6 +23,9 @@ public class CTNHBioGTAddon implements IGTAddon {
     public void initializeAddon() {
         CBItems.init();
         CBBlocks.init();
+
+
+        MapIngredientTypeManager.registerMapIngredient(ModelIngredient.class, StrictNBTItemStackMapIngredient::from);
     }
 
     @Override

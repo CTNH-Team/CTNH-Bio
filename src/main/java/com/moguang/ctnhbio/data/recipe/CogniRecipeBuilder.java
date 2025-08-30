@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
+import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -17,11 +18,12 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import static com.moguang.ctnhbio.data.recipe.HostileObservationRecipes.getModelId;
+import static com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient.getModelId;
 import static dev.shadowsoffire.hostilenetworks.Hostile.Items.DATA_MODEL;
 
 public class CogniRecipeBuilder extends GTRecipeBuilder {
@@ -176,6 +178,7 @@ public class CogniRecipeBuilder extends GTRecipeBuilder {
     public static class SubRecipe {
         private final CogniRecipeBuilder parent;
         private final List<Ingredient> itemInputs = new ArrayList<>();
+        private final List<ModelIngredient> modelInputs = new ArrayList<>();
         private final List<FluidStack> fluidInputs = new ArrayList<>();
 
         public SubRecipe(CogniRecipeBuilder parent) {
@@ -204,17 +207,9 @@ public class CogniRecipeBuilder extends GTRecipeBuilder {
             return this;
         }
 
-        public SubRecipe inputModel(EntityType<?> modelEntityType, ModelTier tier){
-            ItemStack stack = new ItemStack(DATA_MODEL.get());
-            DataModelItem.setStoredModel(stack, getModelId(modelEntityType));
-            DataModelItem.setData(stack, tier.data().requiredData());
-            return inputItems(stack);
-        }
-        public SubRecipe inputModel(ResourceLocation entityId, ModelTier tier){
-            ItemStack stack = new ItemStack(DATA_MODEL.get());
-            DataModelItem.setStoredModel(stack, getModelId(entityId));
-            DataModelItem.setData(stack, tier.data().requiredData());
-            return inputItems(stack);
+        public SubRecipe inputModel(ModelIngredient... models){
+            modelInputs.addAll(Arrays.asList(models));
+            return this;
         }
 
         public SubRecipe inputFluids(FluidStack... fluids) {

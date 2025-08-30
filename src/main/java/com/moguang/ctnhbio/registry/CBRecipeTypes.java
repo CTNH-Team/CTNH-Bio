@@ -8,6 +8,7 @@ import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
+import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
 
 public class CBRecipeTypes {
     public static String NUTRIENT = "nutrient";
@@ -66,21 +67,25 @@ public class CBRecipeTypes {
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
     public static final GTRecipeType HOSTILE_OBSERVATION = GTRecipeTypes.register("hostile_observation", NUTRIENT)
-            .setMaxSize(IO.IN, ItemRecipeCapability.CAP,1)
             .setMaxSize(IO.IN, EntityRecipeCapability.CAP,1)
-            .setMaxSize(IO.OUT, ItemRecipeCapability.CAP,1)
+            .setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
+            .setMaxSize(IO.OUT, ModelRecipeCapability.CAP,1)
             .setEUIO(IO.IN)
             .setMaxTooltips(5)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.UP_TO_DOWN);
 
     public static final GTRecipeType COGNI_ASSEMBLE = GTRecipeTypes.register("cogni_assemble", GTRecipeTypes.ELECTRIC)
             .setMaxIOSize(16, 1, 8, 0)
+            .setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
+            .setMaxSize(IO.OUT, ModelRecipeCapability.CAP,1)
             .setEUIO(IO.IN)
             .setMaxTooltips(5)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
     public static final GTRecipeType COGNI_ASSEMBLE_STEP = GTRecipeTypes.register("cogni_assemble_step", GTRecipeTypes.ELECTRIC)
             .setMaxIOSize(3, 1, 1, 0)
+            .setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
+            .setMaxSize(IO.OUT, ModelRecipeCapability.CAP,1)
             .setEUIO(IO.IN)
             .setMaxTooltips(5)
             .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
