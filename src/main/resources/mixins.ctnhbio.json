@@ -12,6 +12,7 @@
         "createmetallurgy.CrucibleBlockEntityMixin",
         "gtm.FluidBuilderMixin",
         "gtm.IThermalFluidHandlerItemStackMixin",
+        "gtm.MultiblockDisplayText$BuilderMixin",
         "gtm.NotifiableFluidTankMixin",
         "gtm.RecipeRunnerMixin",
         "gtm.ThermalFluidStatsMixin",

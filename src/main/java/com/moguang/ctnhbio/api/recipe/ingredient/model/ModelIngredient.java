@@ -13,6 +13,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ModelIngredient extends StrictNBTIngredient {
@@ -22,6 +23,11 @@ public class ModelIngredient extends StrictNBTIngredient {
     public static ModelIngredient DEFAULT = of(0, getModelId(EntityType.PIG));
     final int requiredData;
     final ResourceLocation modelID;
+    protected ModelIngredient(ItemStack modelStack){
+        super(modelStack);
+        this.requiredData = DataModelItem.getData(modelStack);
+        this.modelID = DataModelItem.getStoredModel(modelStack).getId();
+    }
     protected ModelIngredient(int requiredData, ResourceLocation modelID) {
         super(getModelStack(modelID, requiredData));
         this.requiredData = requiredData;
@@ -59,6 +65,9 @@ public class ModelIngredient extends StrictNBTIngredient {
 
     public ModelIngredient copy(){
         return new ModelIngredient(requiredData, modelID);
+    }
+    public static ModelIngredient of(@NotNull ItemStack modelStack) {
+        return new ModelIngredient(modelStack);
     }
 
     public static ModelIngredient of(int requiredData, ResourceLocation modelID) {
