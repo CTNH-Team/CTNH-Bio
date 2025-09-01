@@ -166,8 +166,11 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             }
         }
         else {
-            this.energyContainer.changeEnergy(GTValues.V[tier + 1]);
-            this.machineEntity.hurt(GTDamageTypes.ELECTRIC.source(this.getLevel()), tier);
+            if(getMachineEntity() != null)
+            {
+                this.energyContainer.changeEnergy(GTValues.V[tier + 1]);
+                this.machineEntity.hurt(GTDamageTypes.ELECTRIC.source(this.getLevel()), tier);
+            }
         }
     }
 
