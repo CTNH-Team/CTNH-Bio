@@ -369,5 +369,21 @@ public class BioReactorRecipes {
                 .EUt(GTValues.V[GTValues.LuV])
                 .duration(60 * 20)
                 .save(provider);
+        //乙醇
+        CBRecipeBuilder.of(CTNHBio.id("ethanol_cb"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(10)
+                .inputItems(Items.SUGAR,24)
+                .outputFluidsRanged(new FluidStack(Ethanol.getFluid(), 1), UniformInt.of(1500, 3000))
+                .EUt(GTValues.V[GTValues.MV])
+                .duration(60 * 15)
+                .save(provider);
+        //四氟乙烯
+        CBRecipeBuilder.of(CTNHBio.id("ethanol_cb"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(10)
+                .inputItems(Items.SUGAR,24)
+                .outputFluidsRanged(new FluidStack(Ethanol.getFluid(), 1), UniformInt.of(1500, 3000))
+                .EUt(GTValues.V[GTValues.MV])
+                .duration(60 * 15)
+                .save(provider);
     }
 }
