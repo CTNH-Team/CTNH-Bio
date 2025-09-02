@@ -7,9 +7,7 @@ import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.data.GTMachines;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
-import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBBlocks;
@@ -26,11 +24,9 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.awt.*;
 import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.dust;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.plateDense;
 import static com.gregtechceu.gtceu.common.data.GTItems.*;
 import static com.gregtechceu.gtceu.common.data.GTMachines.HULL;
@@ -61,8 +57,8 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(ModItems.NUTRIENTS.get().getDefaultInstance(), 30)
                 .inputItems(ModItems.ORGANIC_MATTER.get().getDefaultInstance(), 4)
                 .inputItems(TagPrefix.dust,Steel, 4)
-                .inputFluids(new FluidStack(Endocrine_Hormone.getFluid(), 600))
-                .inputFluids(new FluidStack(Regenerate_Fluid.getFluid(), 400))
+                .inputFluids(new FluidStack(Hormone_Secretion.getFluid(), 600))
+                .inputFluids(new FluidStack(Regenerative_Fluid.getFluid(), 400))
                 .outputItems(ModItems.FERTILIZER.get().getDefaultInstance())
                 .EUt(12)
                 .duration(80)
@@ -169,7 +165,7 @@ public class BioelectrlcForgeRecipes {
                 .nutrient(4)
                 .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 50)
                 .inputItems(TagPrefix.dust,Steel, 9)
-                .inputFluids(new FluidStack(Wither_Slime.getFluid(), 1800))
+                .inputFluids(new FluidStack(Withering_Ooze.getFluid(), 1800))
                 .outputItems(Items.WITHER_SKELETON_SKULL.getDefaultInstance())
                 .EUt(32)
                 .duration(150)
@@ -644,7 +640,7 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(CustomTags.HV_CIRCUITS,2)
                 .inputItems(Items.GLOW_INK_SAC.getDefaultInstance(),2)
                 .inputItems(ModItems.TOUGH_FIBERS.get().getDefaultInstance(),4)
-                .inputFluids(new FluidStack(Regenerate_Fluid.getFluid(), 1000))
+                .inputFluids(new FluidStack(Regenerative_Fluid.getFluid(), 1000))
                 .chancedOutput(new ItemStack(CBItems.SYNET_CORE),5000,0)
                 .EUt(96)
                 .duration(500)
@@ -677,7 +673,7 @@ public class BioelectrlcForgeRecipes {
                 .inputItems(TagPrefix.gemFlawless,Emerald,30)
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 1000))
                 .inputFluids(new FluidStack(Healing_Compound.getFluid(), 1000))
-                .inputFluids(new FluidStack(Endocrine_Hormone.getFluid(), 1000))
+                .inputFluids(new FluidStack(Hormone_Secretion.getFluid(), 1000))
                 .chancedOutput(new ItemStack(CBItems.NOVA_CORE),3000,0)
                 .EUt(1960)
                 .duration(500)

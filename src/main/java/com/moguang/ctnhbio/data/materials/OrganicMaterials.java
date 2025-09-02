@@ -1,18 +1,11 @@
 package com.moguang.ctnhbio.data.materials;
 
-import com.github.elenterius.biomancy.api.serum.Serum;
-import com.github.elenterius.biomancy.init.ModSerums;
-import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.fluids.FluidBuilder;
 import com.gregtechceu.gtceu.api.fluids.attribute.FluidAttribute;
 import com.moguang.ctnhbio.CTNHBio;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.material.Fluid;
-
-import java.util.HashMap;
-import java.util.function.Supplier;
 
 public class OrganicMaterials {
     public static FluidAttribute ORGANIC = new FluidAttribute(
@@ -22,12 +15,12 @@ public class OrganicMaterials {
 
     );
 
-    public static Material Regenerate_Fluid;
-    public static Material Wither_Slime;
-    public static Material Endocrine_Hormone;
+    public static Material Regenerative_Fluid;
+    public static Material Withering_Ooze;
+    public static Material Hormone_Secretion;
     public static Material Toxin_Extract;
     public static Material Bile;
-    public static Material Mutagenic_Secretion;
+    public static Material Volatile_Fluid;
     public static Material Organic_Compound;
     public static Material Unstable_Compound;
     public static Material Genetic_Compound;
@@ -43,18 +36,18 @@ public class OrganicMaterials {
     public static Material Cleansing_Serum;
     public static Material Frenzy_Serum;
     public static Material Insomnia_Cure;
-    public static Material PrimordiaL_Serum;
+    public static Material Primordial_Serum;
     
 
     public static void register() {
 // 1. 凋零软泥
-        Wither_Slime = new Material.Builder(CTNHBio.id("wither_slime"))
+        Withering_Ooze = new Material.Builder(CTNHBio.id("withering_ooze"))
                 .liquid(organicBuilder())
                 .color(0xA0A0A0)
                 .buildAndRegister();
 
 // 2. 内分泌激素
-        Endocrine_Hormone = new Material.Builder(CTNHBio.id("endocrine_hormone"))
+        Hormone_Secretion = new Material.Builder(CTNHBio.id("hormone_secretion"))
                 .liquid(organicBuilder())
                 .color(0xFFA500)
                 .buildAndRegister();
@@ -72,13 +65,13 @@ public class OrganicMaterials {
                 .buildAndRegister();
 
 // 5. 激变分泌液
-        Mutagenic_Secretion = new Material.Builder(CTNHBio.id("mutagenic_secretion"))
+        Volatile_Fluid = new Material.Builder(CTNHBio.id("volatile_fluid"))
                 .liquid(organicBuilder())
                 .color(0xFF4500)
                 .buildAndRegister();
 
 // 6. 再生粘液
-        Regenerate_Fluid = new Material.Builder(CTNHBio.id("regenerate_fluid"))
+        Regenerative_Fluid = new Material.Builder(CTNHBio.id("regenerative_fluid"))
                 .liquid(organicBuilder())
                 .color(0x8BC34A)
                 .buildAndRegister();
@@ -173,7 +166,7 @@ public class OrganicMaterials {
                 .buildAndRegister();
 
 //21. 原初血清（新）
-        PrimordiaL_Serum = new Material.Builder(CTNHBio.id("primordial_serum"))
+        Primordial_Serum = new Material.Builder(CTNHBio.id("primordial_serum"))
                 .liquid(organicBuilder())
                 .color(0xac4a5a)
                 .buildAndRegister();

@@ -1,20 +1,16 @@
 package com.moguang.ctnhbio.data.lang;
 
-import com.github.elenterius.biofactory.init.ModFluids;
-import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.lang.utils.EntityPropertyLangUtil;
 import com.moguang.ctnhbio.data.materials.CommonMaterials;
+import com.moguang.ctnhbio.data.materials.OrganicMaterials;
 import com.moguang.ctnhbio.machine.multiblock.MultiblocksA;
 import com.moguang.ctnhbio.registry.*;
-import com.tterrag.registrate.providers.RegistrateLangProvider;
 import net.minecraftforge.common.data.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
@@ -139,27 +135,29 @@ public class ChineseLangHandler {
         provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§a可传输生物活性流体");
         provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4生物活性流体可能失活！");
 
-        provider.add("material.ctnhbio.wither_slime", "凋灵软泥");
-        provider.add("material.ctnhbio.endocrine_hormone", "内分泌激素");
-        provider.add("material.ctnhbio.toxin_extract", "毒素提取物");
-        provider.add("material.ctnhbio.bile", "胆汁");
-        provider.add("material.ctnhbio.mutagenic_secretion", "激变分泌液");
-        provider.add("material.ctnhbio.regenerate_fluid", "再生粘液");
-        provider.add("material.ctnhbio.organic_compound", "有机化合物");
-        provider.add("material.ctnhbio.unstable_compound", "不稳定化合物");
-        provider.add("material.ctnhbio.genetic_compound", "遗传化合物");
-        provider.add("material.ctnhbio.heterogeneous_compound", "异质化合物");
-        provider.add("material.ctnhbio.healing_compound", "治愈性原液");
-        provider.add("material.ctnhbio.decay_essence", "衰败原液");
-        provider.add("material.ctnhbio.rejuvenation_serum", "活力血清");
-        provider.add("material.ctnhbio.ageing_serum", "成长血清");
-        provider.add("material.ctnhbio.enlargement_serum", "巨化血清");
-        provider.add("material.ctnhbio.shrinking_serum", "缩小血清");
-        provider.add("material.ctnhbio.breeding_stimulant", "配种兴奋剂");
-        provider.add("material.ctnhbio.absorption_boost", "伤痛反应剂");
-        provider.add("material.ctnhbio.cleansing_serum", "净化血清");
-        provider.add("material.ctnhbio.frenzy_serum", "狂化血清");
-        provider.add("material.ctnhbio.primordial_serum", "原初血清");
+        provider.add(OrganicMaterials.Regenerative_Fluid.getUnlocalizedName(), "再生粘液");
+        provider.add(OrganicMaterials.Withering_Ooze.getUnlocalizedName(), "凋灵软泥");
+        provider.add(OrganicMaterials.Hormone_Secretion.getUnlocalizedName(), "内分泌激素");
+        provider.add(OrganicMaterials.Toxin_Extract.getUnlocalizedName(), "毒素提取物");
+        provider.add(OrganicMaterials.Bile.getUnlocalizedName(), "胆汁");
+        provider.add(OrganicMaterials.Volatile_Fluid.getUnlocalizedName(), "激变分泌液");
+        provider.add(OrganicMaterials.Organic_Compound.getUnlocalizedName(), "有机化合物");
+        provider.add(OrganicMaterials.Unstable_Compound.getUnlocalizedName(), "不稳定化合物");
+        provider.add(OrganicMaterials.Genetic_Compound.getUnlocalizedName(), "遗传化合物");
+        provider.add(OrganicMaterials.Heterogeneous_Compound.getUnlocalizedName(), "异质化合物");
+        provider.add(OrganicMaterials.Healing_Compound.getUnlocalizedName(), "治愈性原液");
+        provider.add(OrganicMaterials.Decay_Essence.getUnlocalizedName(), "衰败原液");
+        provider.add(OrganicMaterials.Rejuvenation_Serum.getUnlocalizedName(), "活力血清");
+        provider.add(OrganicMaterials.Ageing_Serum.getUnlocalizedName(), "成长血清");
+        provider.add(OrganicMaterials.Enlargement_Serum.getUnlocalizedName(), "巨化血清");
+        provider.add(OrganicMaterials.Shrinking_Serum.getUnlocalizedName(), "缩小血清");
+        provider.add(OrganicMaterials.Breeding_Stimulant.getUnlocalizedName(), "配种兴奋剂");
+        provider.add(OrganicMaterials.Absorption_Boost.getUnlocalizedName(), "伤痛反应剂");
+        provider.add(OrganicMaterials.Cleansing_Serum.getUnlocalizedName(), "净化血清");
+        provider.add(OrganicMaterials.Frenzy_Serum.getUnlocalizedName(), "狂化血清");
+        provider.add(OrganicMaterials.Insomnia_Cure.getUnlocalizedName(), "失眠治疗剂");
+        provider.add(OrganicMaterials.Primordial_Serum.getUnlocalizedName(), "原初血清");
+
         replace(provider, CommonMaterials.BLOODSTEEL.getUnlocalizedName(), "血髓钢");
         replace(provider, CommonMaterials.WEIRD_PIXEL_DUST.getUnlocalizedName(), "富集营养");
 
