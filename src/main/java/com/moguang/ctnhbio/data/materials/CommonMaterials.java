@@ -35,14 +35,6 @@ public class CommonMaterials {
                 .secondaryColor(0x5E1914)
                 .iconSet(METALLIC)
                 .flags(GENERATE_PLATE, GENERATE_GEAR, DISABLE_DECOMPOSITION, GENERATE_ROD, GENERATE_FRAME, GENERATE_DENSE)
-                .components(
-                        GTMaterials.Iron, 3,
-                        GTMaterials.Chromium, 1,
-                        GTMaterials.Neodymium, 1,
-                        GTMaterials.Carbon, 2,
-                        GTMaterials.Oxygen, 1,
-                        GTMaterials.Vanadium, 1
-                )
                 .blast(b -> b.temp(7300, BlastProperty.GasTier.HIGH)
                         .blastStats(VA[GTValues.EV], 700)
                         .vacuumStats(VA[HV]))
