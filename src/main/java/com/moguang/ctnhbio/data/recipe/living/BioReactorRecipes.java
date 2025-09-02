@@ -330,12 +330,12 @@ public class BioReactorRecipes {
                 .outputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(),2)
                 .chancedOutput(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(), 7000, 0)
                 .chancedOutput(CBItems.NOVA_CORE.get().asItem().getDefaultInstance(), 1400, 0)
-                .EUt(1960)
+                .EUt(6144)
                 .duration(10 * 20)
                 .save(provider);
         //原初核心循环-终观核心
-        CBRecipeBuilder.of(CTNHBio.id("primordial_core_omni"), CBRecipeTypes.BIO_REACTOR_RECIPES)
-                .nutrient(10)
+        CBRecipeBuilder.of(CTNHBio.id("primordial_core_omni_cb"), CBRecipeTypes.BIO_REACTOR_RECIPES)
+                .nutrient(20)
                 .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(CBItems.OMNI_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
@@ -346,8 +346,8 @@ public class BioReactorRecipes {
                 .outputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(),3)
                 .chancedOutput(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(), 9000, 0)
                 .chancedOutput(CBItems.OMNI_CORE.get().asItem().getDefaultInstance(), 1700, 0)
-                .EUt(6144)
-                .duration(10 * 20)
+                .EUt(24768)
+                .duration(12 * 20)
                 .save(provider);
         //印刷湿件电路基板
         CBRecipeBuilder.of(CTNHBio.id("primordial_core_omni"), CBRecipeTypes.BIO_REACTOR_RECIPES)
