@@ -12,7 +12,6 @@ import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
-import dev.architectury.platform.Mod;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;

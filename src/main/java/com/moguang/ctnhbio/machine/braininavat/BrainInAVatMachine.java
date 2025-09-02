@@ -93,8 +93,8 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
         oc = true;
     }
 
-    public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, double capacity, Object... args) {
-        super(holder, tier, tankScalingFunction, capacity, args);
+    public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Object... args) {
+        super(holder, tier, args);
         q = Quad.tier(tier);
     }
 

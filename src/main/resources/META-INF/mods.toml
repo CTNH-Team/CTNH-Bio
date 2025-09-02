@@ -75,8 +75,56 @@ description='''${mod_description}'''
 [[dependencies.${mod_id}]]
     modId="biomancy"
     mandatory=true
-    versionRange="[2.8.19.0,)"
+    versionRange="[2.8.19.0]"
     ordering="BEFORE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="biofactory"
+    mandatory=true
+    versionRange="[0.6.0,)"
+    ordering="BEFORE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="create"
+    mandatory=true
+    versionRange="[6.0.6,)"
+    ordering="BEFORE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="jade"
+    mandatory=true
+    versionRange="[11.10.1,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="hostilenetworks"
+    mandatory=true
+    versionRange="[5.3.3,)"
+    ordering="BEFORE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="jei"
+    mandatory=true
+    versionRange="[15.20.0,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="ali"
+    mandatory=true
+    versionRange="[1.20.1-1.1.8]"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="createmetallurgy"
+    mandatory=true
+    versionRange="[0.0.7,)"
+    ordering="BEFORE"
+    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="kubejs"
+    mandatory=true
+    versionRange="[2001.6.5,)"
+    ordering="NONE"
     side="BOTH"
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't

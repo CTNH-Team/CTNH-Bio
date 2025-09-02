@@ -13,7 +13,7 @@
     "gtm.FluidBuilderMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
     "gtm.NotifiableFluidTankMixin",
-    "gtm.ThermalFluidStatsMixin",
+
     "jei.JeiBaseLootMixin",
     "jei.JeiGameplayLootMixin",
     "jei.LootTableMixin",
@@ -21,7 +21,8 @@
   ],
   "client": [
     "biomancy.InjectorScreenMixin",
-    "jei.RecipesGuiMixin"
+    "jei.RecipesGuiMixin",
+    "gtm.ThermalFluidStatsMixin"
   ],
   "minVersion": "0.8"
 }

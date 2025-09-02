@@ -22,25 +22,6 @@ public class CBEntities {
             .lang("Living Machine")
             .register();
 
-    public static EntityEntry<LivingMetaMachineEntity> BIOELECTRIC_FORGE_ENTITY = REGISTRATE
-            .entity("bioelectric_forge", LivingMetaMachineEntity::new, MobCategory.CREATURE)
-            .properties(props -> props.sized(0.9F, 0.9F))
-            .attributes(LivingMetaMachineEntity::createAttributes)
-            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
-            .renderer(() -> BasicLivingMachineEntityRenderer::new)
-            .lang("Bioelectric Forge")
-            .register();
-
-//    public static EntityEntry<BioReactorBlockEntity> BIOREACTOR_ENTITY = REGISTRATE
-//            .entity("bioreactor", BioReactorBlockEntity::new, MobCategory.CREATURE)
-//            .properties(props -> props.sized(0.9F, 0.9F))
-//            .attributes(BioReactorBlockEntity::createAttributes)
-//            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
-//            .renderer(() -> BioReactorRenderer::new)
-//            .lang("Bioreactor")
-//            .register();
-
-
     public static EntityEntry<Brain> BRAIN_IN_A_VAT_BRAIN = REGISTRATE
             .entity("brain_in_a_vat_brain", Brain::new, MobCategory.CREATURE)
             .properties(props -> props.sized(0.25F, 0.2F))

@@ -18,6 +18,7 @@ import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachin
 import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineBlockEntityRenderer;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
+import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
 import com.moguang.ctnhbio.client.model.GreatFleshModel;
 import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
 
@@ -29,6 +30,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
@@ -40,7 +43,7 @@ public class MultiblocksA {
             .biomultiblock("great_flesh",
                     GreatFleshMachine::new,
                     (p, d) -> new LivingMultiMetaMachineBlock(p, d, true),
-                    (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new GreatFleshModel())))
+                    (b, p) -> new LivingMetaMachineItem(b, p, "great_flesh"))
             .recipeType(CBRecipeTypes.GREAT_FLESH)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAA", "AAA", "AAA")
@@ -66,9 +69,9 @@ public class MultiblocksA {
             })
             .hasBER(false)
             .onBlockEntityRegister(beType -> {
-                @SuppressWarnings("unchecked")
-                BlockEntityType<LivingMetaMachineBlockEntity> typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
-                BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new GreatFleshModel()));
+                if (FMLEnvironment.dist == Dist.CLIENT) {
+                    LivingMetaMachineBERProvider.registerRenderer(beType, "great_flesh", false);
+                }
             })
             .register();
 

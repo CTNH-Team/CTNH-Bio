@@ -2,6 +2,8 @@ package com.moguang.ctnhbio.api.item;
 
 import com.gregtechceu.gtceu.api.block.IMachineBlock;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
+import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
+import com.moguang.ctnhbio.client.model.CBModels;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -14,10 +16,10 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class LivingMetaMachineItem extends MetaMachineItem implements GeoAnimatable {
-    private final Supplier<GeoItemRenderer<LivingMetaMachineItem>> rendererFactory;
-    public LivingMetaMachineItem(IMachineBlock block, Properties properties, Supplier<GeoItemRenderer<LivingMetaMachineItem>> rendererFactory) {
+    private final String modelKey;
+    public LivingMetaMachineItem(IMachineBlock block, Properties properties, String modelKey) {
         super(block, properties);
-        this.rendererFactory = rendererFactory;
+        this.modelKey = modelKey;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class LivingMetaMachineItem extends MetaMachineItem implements GeoAnimata
 
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                return rendererFactory.get();
+                return new ColorableMachineItemRenderer(CBModels.MODELS.get(modelKey));
             }
         });
     }

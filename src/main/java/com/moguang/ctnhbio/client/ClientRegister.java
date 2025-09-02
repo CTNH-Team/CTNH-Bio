@@ -2,7 +2,6 @@ package com.moguang.ctnhbio.client;
 
 import com.gregtechceu.gtceu.api.GTValues;
 import com.moguang.ctnhbio.CTNHBio;
-import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeBlockEntity;
 import com.moguang.ctnhbio.machine.braininavat.BrainModel;
 import com.moguang.ctnhbio.registry.CBMachines;
 import net.minecraft.world.level.block.entity.BlockEntityType;
