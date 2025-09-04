@@ -37,10 +37,19 @@ public class CBBlocks {
             CTNHBio.id("block/casings/acid_flesh_casing"));
     public static final BlockEntry<Block> BIO_ACID_CASING = createCasingBlock("bio_acid_casing",
             CTNHBio.id("block/casings/bio_acid_casing"));
-
     public static final BlockEntry<Block> SYNAPTIC_CASING = createCasingBlock("synaptic_casing",
             CTNHBio.id("block/casings/opv/opv_casing"));
+    public static final BlockEntry<Block> CONSCIOUSNESS_LINKER = createCasingBlock("consciousness_linker",
+            CTNHBio.id("block/casings/consciousness_linker"));
+    public static final BlockEntry<Block> NEURAL_NETWORK_CASING = createCasingBlock("neural_network_casing",
+            CTNHBio.id("block/casings/neural_network_casing"));
+    public static final BlockEntry<Block> NEURAL_COOLING_CONDUIT = createCasingBlock("neural_cooling_conduit",
+            CTNHBio.id("block/casings/neural_cooling_conduit"));
+    public static final BlockEntry<Block> CONSCIOUSNESS_CONTROLLER = createCasingBlock("consciousness_controller",
+            CTNHBio.id("block/casings/consciousness_controller"));
 
+    public static final BlockEntry<MembraneBlock> CONSCIOUSNESS_SENSOR_GLASS = createMembraneBlock("consciousness_sensor_glass",
+            CTNHBio.id("block/casings/consciousness_sensor_glass"), () -> RenderType::translucent);
 
     public static final BlockEntry<MembraneBlock> IMPERMEABLE_MEMBRANE = createMembraneBlock("impermeable_membrane",
             CTNHBio.id("block/membrane/impermeable_membrane"), () -> RenderType::translucent);
@@ -54,6 +63,9 @@ public class CBBlocks {
     public static BlockEntry<Block> createCasingBlock(String name, ResourceLocation texture) {
         return createCasingBlock(name, Block::new, texture, () -> Blocks.IRON_BLOCK,
                 () -> RenderType::cutoutMipped);
+    }
+    private static BlockEntry<Block> createGlassCasingBlock(String name, ResourceLocation texture, Supplier<Supplier<RenderType>> type) {
+        return createCasingBlock(name, GlassBlock::new, texture, () -> Blocks.GLASS, type);
     }
     private static BlockEntry<MembraneBlock> createMembraneBlock(String name, ResourceLocation texture,
                                                                  Supplier<Supplier<RenderType>> type) {

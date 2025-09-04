@@ -40,6 +40,11 @@ public class ChineseLangHandler {
         provider.addBlock(CBBlocks.BIO_ACID_CASING, "生物酸机械方块");
         provider.addBlock(CBBlocks.SYNAPTIC_CASING, "神经突触机械方块");
 
+        provider.addBlock(CBBlocks.CONSCIOUSNESS_LINKER, "意识链接器");
+        provider.addBlock(CBBlocks.NEURAL_NETWORK_CASING, "神经网络外壳");
+        provider.addBlock(CBBlocks.NEURAL_COOLING_CONDUIT, "神经冷却导管");
+        provider.addBlock(CBBlocks.CONSCIOUSNESS_CONTROLLER, "意识控制器");
+        provider.addBlock(CBBlocks.CONSCIOUSNESS_SENSOR_GLASS, "意识传感玻璃");
 
         provider.addBlock(CBBlocks.IMPERMEABLE_MEMBRANE, "不渗透膜");
 
