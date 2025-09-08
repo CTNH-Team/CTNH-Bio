@@ -5,8 +5,13 @@ import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.lang.utils.*;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
+import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
-public class EnglishLangHandler {
+
+public class LangHandler {
+    public static void process(){
+        REGISTRATE.addLang(Infos.class);
+    }
     public static void init(RegistrateLangProvider provider){
 
         provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH] Living Machine Status");
@@ -14,8 +19,6 @@ public class EnglishLangHandler {
         provider.add("item.gtceu.tool.boning_knife", "%s Boning Knife");
         //replace(provider, );
         provider.add("emi.category.ctnhbio.despoil_loot", "Despoil");
-        provider.add("ctnhbio.nutrient_bar.info", "Nutrient:");
-        provider.add("jade.nutrient.info", "Nutrient：");
 
         provider.add("recipe.condition.effect.tooltip", "Potion Effect : %s");
         provider.add("ctnhbio.recipe.nutrient", "Nutrient Consumption: %d");

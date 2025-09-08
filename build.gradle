@@ -20,7 +20,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
-    mappings channel: mapping_channel, version: mapping_version
+    mappings channel: 'parchment', version: '2023.09.03-1.20.1'
 
     copyIdeResources = true
 
@@ -156,6 +156,8 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
+    implementation project(":modules:CTNH-Lib")
+
     //compileOnly fg.deobf("mezz.jei:jei-1.20.1-common-api:${jei_version}")
     //compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:${jei_version}")
     implementation fg.deobf("mezz.jei:jei-1.20.1-forge:${jei_version}")
@@ -163,7 +165,7 @@ dependencies {
     implementation fg.deobf("curse.maven:jade-324717:5640610")
 
     //runtimeOnly  fg.deobf("curse.maven:probejs-585406:5227399")
-    implementation  fg.deobf("maven.modrinth:advanced-loot-info:nrGWQ7rF")
+    implementation fg.deobf("maven.modrinth:advanced-loot-info:nrGWQ7rF")
     //runtimeOnly  fg.deobf("curse.maven:JustEnoughResources-240630:5057220")
 
     implementation fg.deobf("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}") { transitive = false }
