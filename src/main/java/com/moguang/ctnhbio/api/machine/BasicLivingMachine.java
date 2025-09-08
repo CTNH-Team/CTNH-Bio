@@ -34,6 +34,7 @@ import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
 import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
 import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
 import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
+import com.moguang.ctnhbio.data.lang.Infos;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import lombok.Getter;
@@ -258,8 +259,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
             progressBar.setProgressSupplier(
                     () -> machine.getNutrientAmount() * 1d / machine.getNutrientCapacity());
-            progressBar.setHoverTooltips(
-                    Component.translatable("ctnhbio.nutrient_bar.info"));
+            progressBar.setHoverTooltips(Infos.Jade.Nutrient.translate());
             progressBar.setDynamicHoverTips(progress -> {
                     double current = progress * machine.getNutrientCapacity();
                     double max = machine.getNutrientCapacity();

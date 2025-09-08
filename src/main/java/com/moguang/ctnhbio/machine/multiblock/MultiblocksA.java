@@ -44,6 +44,7 @@ public class MultiblocksA {
                     GreatFleshMachine::new,
                     (p, d) -> new LivingMultiMetaMachineBlock(p, d, true),
                     (b, p) -> new LivingMetaMachineItem(b, p, "great_flesh"))
+            .nutrientInfo()
             .recipeType(CBRecipeTypes.GREAT_FLESH)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAA", "AAA", "AAA")
@@ -61,12 +62,6 @@ public class MultiblocksA {
 
             .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
             //.simpleModel(ResourceLocation.tryBuild("minecraft", "block/air"))
-            .additionalDisplay((controller, components) -> {
-                if(controller instanceof WorkableLivingMultiblockMachine machine){
-                    components.add(Component.translatable("jade.nutrient.info",
-                            Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
-                }
-            })
             .hasBER(false)
             .onBlockEntityRegister(beType -> {
                 if (FMLEnvironment.dist == Dist.CLIENT) {
@@ -83,6 +78,7 @@ public class MultiblocksA {
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
+            .nutrientInfo()
             .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
             .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
             .pattern(definition -> FactoryBlockPattern.start()
@@ -110,12 +106,6 @@ public class MultiblocksA {
                     CTNHBio.id("block/multiblock/red"))
             .appearanceBlock(CBBlocks.ORNATE_FLESH_CASING)
             //.simpleModel(ResourceLocation.tryBuild("minecraft", "block/acacia_log"))
-            .additionalDisplay((controller, components) -> {
-                if(controller instanceof WorkableLivingMultiblockMachine machine){
-                    components.add(Component.translatable("jade.nutrient.info",
-                            Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
-                }
-            })
             .register();
 
     public static MultiblockMachineDefinition COGNI_ASSEMBLER = REGISTRATE
@@ -124,6 +114,7 @@ public class MultiblocksA {
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
+            .nutrientInfo()
             .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES,CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY)
             .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
             .pattern(definition -> FactoryBlockPattern.start()
@@ -151,12 +142,6 @@ public class MultiblocksA {
             .workableCasingModel(CTNHBio.id("block/casings/primal_flesh_casing"),
                     CTNHBio.id("block/multiblock/red"))
             .appearanceBlock(CBBlocks.PRIMAL_FLESH_CASING)
-            .additionalDisplay((controller, components) -> {
-                if(controller instanceof WorkableLivingMultiblockMachine machine){
-                    components.add(Component.translatable("jade.nutrient.info",
-                            Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
-                }
-            })
             .register();
 
     public static MultiblockMachineDefinition WEATHERER = REGISTRATE
@@ -165,6 +150,7 @@ public class MultiblocksA {
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
+            .nutrientInfo()
             .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
             .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
             .pattern(definition -> FactoryBlockPattern.start()
@@ -191,12 +177,6 @@ public class MultiblocksA {
             .workableCasingModel(CTNHBio.id("block/casings/flesh_casing"),
                     CTNHBio.id("block/multiblock/red"))
             .appearanceBlock(CBBlocks.FLESH_CASING)
-            .additionalDisplay((controller, components) -> {
-                if(controller instanceof WorkableLivingMultiblockMachine machine){
-                    components.add(Component.translatable("jade.nutrient.info",
-                            Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
-                }
-            })
             .register();
 
     public static MultiblockMachineDefinition HOSTILE_OBSERVER = REGISTRATE
