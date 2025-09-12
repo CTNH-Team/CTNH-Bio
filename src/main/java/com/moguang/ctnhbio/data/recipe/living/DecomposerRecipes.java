@@ -70,7 +70,7 @@ public class DecomposerRecipes {
                         1700,
                         0
                 )
-                .EUt(8000)
+                .EUt(128)
                 .duration(60)
                 .save(provider);
         //洗矿-粉碎-离心
@@ -98,8 +98,8 @@ public class DecomposerRecipes {
                         1700,
                         0
                 )
-                .EUt(24)
-                .duration(200)
+                //.EUt(24) 不要电
+                .duration(100)
                 .save(provider);
         //酸洗-粉碎-离心
         if (!property.getWashedIn().first().isNull()) {
@@ -127,8 +127,8 @@ public class DecomposerRecipes {
                             1300,
                             0
                     )
-                    .EUt(64)
-                    .duration(200)
+                    //.EUt(64)
+                    .duration(100)
                     .save(provider);
         }
     }

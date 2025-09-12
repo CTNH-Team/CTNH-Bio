@@ -794,12 +794,12 @@ public class BioelectrlcForgeRecipes {
                 .duration(400)
                 .save(provider);
         //神经突触机械方块
-        CBRecipeBuilder.of(CTNHBio.id("weird_pixel_dust_recipe"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+        CBRecipeBuilder.of(CTNHBio.id("synaptic_casing"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .inputItems(TagPrefix.frameGt,BLOODSTEEL,1)
-                .inputItems(CustomTags.LuV_CIRCUITS,2)
+                .inputItems(CustomTags.UV_CIRCUITS,1)
                 .inputItems(plateDense,BLOODSTEEL,2)
                 .inputItems(ModItems.CREATOR_MIX,4)
-                .outputItemsRanged(CBBlocks.SYNAPTIC_CASING, UniformInt.of(1, 2))
+                .outputItems(CBBlocks.SYNAPTIC_CASING, 1)
                 .EUt(24768)
                 .duration(400)
                 .save(provider);

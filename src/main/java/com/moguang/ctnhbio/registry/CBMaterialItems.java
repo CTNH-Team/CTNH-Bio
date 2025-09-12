@@ -48,7 +48,7 @@ public class CBMaterialItems{
 
     public static void generateTool(Material material, GTToolType toolType) {
         var tier = material.getToolTier();
-        CB_TOOL_ITEMS.put(material, toolType, (ItemProviderEntry<IGTTool>) (ItemProviderEntry<?>) com.moguang.ctnhbio.CTNHBio.REGISTRATE
+        CB_TOOL_ITEMS.put(material, toolType, (ItemProviderEntry<IGTTool>) (ItemProviderEntry<?>) REGISTRATE
                 .item(toolType.idFormat.formatted(tier.material.getName()),
                         p -> toolType.constructor.apply(toolType, tier, material,
                                 toolType.toolDefinition, p).asItem())

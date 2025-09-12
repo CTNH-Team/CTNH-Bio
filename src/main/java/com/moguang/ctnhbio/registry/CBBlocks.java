@@ -48,7 +48,7 @@ public class CBBlocks {
     public static final BlockEntry<Block> CONSCIOUSNESS_CONTROLLER = createCasingBlock("consciousness_controller",
             CTNHBio.id("block/casings/consciousness_controller"));
 
-    public static final BlockEntry<MembraneBlock> CONSCIOUSNESS_SENSOR_GLASS = createMembraneBlock("consciousness_sensor_glass",
+    public static final BlockEntry<Block> CONSCIOUSNESS_SENSOR_GLASS = createGlassCasingBlock("consciousness_sensor_glass",
             CTNHBio.id("block/casings/consciousness_sensor_glass"), () -> RenderType::translucent);
 
     public static final BlockEntry<MembraneBlock> IMPERMEABLE_MEMBRANE = createMembraneBlock("impermeable_membrane",
@@ -70,7 +70,7 @@ public class CBBlocks {
     private static BlockEntry<MembraneBlock> createMembraneBlock(String name, ResourceLocation texture,
                                                                  Supplier<Supplier<RenderType>> type) {
         return REGISTRATE.block(name, p -> new MembraneBlock(p, IgnoreEntityCollisionPredicate.NEVER))
-                //.initialProperties(() -> Blocks.GLASS)
+                .initialProperties(() -> Blocks.GLASS)
                 .properties(p ->
                         p.isValidSpawn((state, level, pos, ent) -> false)
                         .noOcclusion()
@@ -80,7 +80,7 @@ public class CBBlocks {
                 )
                 .addLayer(type)
                 .exBlockstate(GTModels.cubeAllModel(texture))
-                //.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .item(BlockItem::new)
                 .build()
                 .register();
@@ -99,8 +99,7 @@ public class CBBlocks {
                 .blockstate((ctx, prov) -> {
                     prov.simpleBlock(ctx.getEntry(), prov.models().cubeAll(name, texture));
                 })
-                .loot((loot, block) -> loot.add(block, loot.noDrop()))
-                //.tag(TagKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.tryBuild("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
+                .tag(TagKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.tryBuild("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
                 .item(BlockItem::new)
                 .build()
                 .register();
