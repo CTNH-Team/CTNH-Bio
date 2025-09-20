@@ -61,7 +61,9 @@ public class CBRegistrate extends GTRegistrate {
                                                BiFunction<IMachineBlock, Item.Properties, MetaMachineItem> itemFactory) {
         return new MultiblockMachineBuilder(this, name, metaMachine,
                 blockFactory, itemFactory,
-                (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get()));
+                (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
+        ).allowFlip(false).allowExtendedFacing(false)
+                ;
     }
 
 
@@ -111,6 +113,7 @@ public class CBRegistrate extends GTRegistrate {
                     }
 
                 })
+                //for particle
                 .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
                 ;
     }

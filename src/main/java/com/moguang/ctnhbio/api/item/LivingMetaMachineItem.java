@@ -34,7 +34,6 @@ public class LivingMetaMachineItem extends MetaMachineItem implements GeoAnimata
     }
 
 
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
     }
