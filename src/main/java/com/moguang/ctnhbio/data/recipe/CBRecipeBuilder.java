@@ -66,6 +66,17 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
         input(EntityRecipeCapability.CAP, entity);
         return this;
     }
+
+    public CBRecipeBuilder inputEntity(EntityIngredient entity, int chance){
+        perTick = false;
+        int lastChance = this.chance;
+        this.chance = chance;
+        input(EntityRecipeCapability.CAP, entity);
+        this.chance = lastChance;
+        return this;
+    }
+
+
     public CBRecipeBuilder outputEntity(EntityIngredient entity){
         perTick = false;
         output(EntityRecipeCapability.CAP, entity);
@@ -75,6 +86,10 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
     public CBRecipeBuilder inputEntity(EntityType<?> type){
         return inputEntity(EntityIngredient.of(type));
     }
+    public CBRecipeBuilder inputEntity(EntityType<?> type, int chance){
+        return inputEntity(EntityIngredient.of(type), chance);
+    }
+
     public CBRecipeBuilder inputEntity(TagKey<EntityType<?>> tag){
         return inputEntity(EntityIngredient.of(tag));
     }

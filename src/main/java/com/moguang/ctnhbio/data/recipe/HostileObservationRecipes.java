@@ -28,12 +28,13 @@ public class HostileObservationRecipes {
         ResourceLocation recipeId = getRecipeId(type);
 
         CBRecipeBuilder.of(recipeId, HOSTILE_OBSERVATION)
-                .inputEntity(type)
-                .inputModel(ModelIngredient.of(ModelTier.SUPERIOR,type))
-                .outputModel(ModelIngredient.of(ModelTier.SELF_AWARE,type))
+                .inputEntity(type, 0)
+                .inputModel(ModelIngredient.of(ModelTier.ADVANCED,type))
+                .outputModel(ModelIngredient.of(ModelTier.SUPERIOR,type))
 //                .durationIsTotalCWU(true)
+
                 .CWUt(64)
-                .duration(ModelTier.SELF_AWARE.data().requiredData() * 64)
+                .duration(200)
                 .save(provider);
     }
 }

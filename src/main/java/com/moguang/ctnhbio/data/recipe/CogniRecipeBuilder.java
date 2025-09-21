@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
+import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
@@ -130,7 +131,11 @@ public class CogniRecipeBuilder extends GTRecipeBuilder {
 
             // 添加配方特定输入
             stepBuilder.inputItems(currentRecipe.itemInputs.toArray(Ingredient[]::new))
-                    .inputFluids(currentRecipe.fluidInputs.toArray(FluidStack[]::new));
+                    .inputFluids(currentRecipe.fluidInputs.toArray(FluidStack[]::new))
+            ;
+            if(!currentRecipe.modelInputs.isEmpty())
+                stepBuilder.input(ModelRecipeCapability.CAP, currentRecipe.modelInputs.get(0));
+
 
             // 设置输出
             if (step == subRecipes.size() - 1) {
