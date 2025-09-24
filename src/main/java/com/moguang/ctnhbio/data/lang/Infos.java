@@ -7,7 +7,8 @@ import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 public class Infos {
     @Prefix
     public abstract static class Jade {
-        @Localized("Nutrient : ")
+        @EN("Nutrient : ")
+        @CN("营养液 : ")
         public static Lang Nutrient;
     }
 }
