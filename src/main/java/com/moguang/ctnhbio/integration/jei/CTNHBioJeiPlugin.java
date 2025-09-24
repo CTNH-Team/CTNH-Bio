@@ -92,7 +92,7 @@ public class CTNHBioJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        System.out.println("催化剂 ");
+        //System.out.println("催化剂 ");
         registration.addRecipeCatalyst(AllBlocks.CRUSHING_WHEEL.asStack(), CBRecipeType.MOB_CRUSHING);
 
 //        registration.addRecipeCatalyst(ModItems.NUTRIENT_PASTE.get(),

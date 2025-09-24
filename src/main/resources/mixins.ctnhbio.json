@@ -9,7 +9,6 @@
     "biomancy.InjectorItemMixin",
     "biomancy.VialHolderBlockEntityMixin",
     "create.CrushingWheelControllerBlockEntityMixin",
-    "createmetallurgy.CrucibleBlockEntityMixin",
     "gtm.FluidBuilderMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
     "gtm.NotifiableFluidTankMixin",

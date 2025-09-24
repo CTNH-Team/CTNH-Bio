@@ -17,6 +17,8 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.WaterFluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -201,12 +203,12 @@ public class BioReactorRecipes {
 
         //鲜肉增殖-初级配方
         CBRecipeBuilder.of(CTNHBio.id("living_flesh_recipe_one"), CBRecipeTypes.BIO_REACTOR_RECIPES)
-                .nutrient(16)
+                .nutrient(4)
                 .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
                 .inputItems(GTItems.BIO_CHAFF.get().asItem().getDefaultInstance(),5)
-                .inputFluids(new FluidStack(Regenerative_Fluid.getFluid(), 300))
+                .inputFluids(new FluidStack(Fluids.WATER, 300))
                 .outputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),2)
                 .chancedOutput(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(), 3000, 0)
                 .chancedOutput(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(), 1000, 0)
@@ -215,7 +217,7 @@ public class BioReactorRecipes {
                 .save(provider);
         //鲜肉增殖-中级配方
         CBRecipeBuilder.of(CTNHBio.id("living_flesh_recipe_two"), CBRecipeTypes.BIO_REACTOR_RECIPES)
-                .nutrient(16)
+                .nutrient(8)
                 .effect(MobEffects.MOVEMENT_SPEED)
                 .notConsumable(CBItems.SYNET_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance())
@@ -292,8 +294,6 @@ public class BioReactorRecipes {
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),1)
                 .inputFluids(new FluidStack(Healing_Compound.getFluid(), 50))
-                .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 50))
-                .inputFluids(new FluidStack(Unstable_Compound.getFluid(), 50))
                 .outputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(),1)
                 .chancedOutput(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(), 6000, 0)
                 .chancedOutput(CBItems.SYNET_CORE.get().asItem().getDefaultInstance(), 1000, 0)
@@ -307,9 +307,7 @@ public class BioReactorRecipes {
                 .notConsumable(CBItems.META_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),1)
-                .inputFluids(new FluidStack(Healing_Compound.getFluid(), 100))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
-                .inputFluids(new FluidStack(Unstable_Compound.getFluid(), 100))
                 .outputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(),1)
                 .chancedOutput(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(), 9500, 0)
                 .chancedOutput(CBItems.META_CORE.get().asItem().getDefaultInstance(), 1200, 0)
@@ -323,8 +321,6 @@ public class BioReactorRecipes {
                 .notConsumable(CBItems.NOVA_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance())
                 .inputItems(ModItems.LIVING_FLESH.get().asItem().getDefaultInstance(),1)
-                .inputFluids(new FluidStack(Healing_Compound.getFluid(), 150))
-                .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 150))
                 .inputFluids(new FluidStack(Unstable_Compound.getFluid(), 150))
                 .outputItems(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(),2)
                 .chancedOutput(ModItems.PRIMORDIAL_CORE.get().asItem().getDefaultInstance(), 7000, 0)
