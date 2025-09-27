@@ -1,7 +1,0 @@
-{
-  "entity": "minecraft:piglin",
-  "item": "minecraft:porkchop",
-  "chance": 1.0,
-  "min_amount": 5,
-  "max_amount": 15
-}
