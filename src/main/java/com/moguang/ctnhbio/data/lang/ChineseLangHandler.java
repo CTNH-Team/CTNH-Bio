@@ -9,6 +9,7 @@ import com.moguang.ctnhbio.machine.multiblock.MultiblocksA;
 import com.moguang.ctnhbio.registry.*;
 import net.minecraftforge.common.data.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
+import tech.vixhentx.mcmod.ctnhlib.registrate.lang.RegistrateCNLangProvider;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class ChineseLangHandler {
         provider.addItem(CBItems.NOVA_CORE, "灵蜕核心");
         provider.addItem(CBItems.OMNI_CORE, "终观核心");
 
-        provider.addItem(CBItems.WETWARE_CAPACITOR, "湿件电容");
+        //provider.addItem(CBItems.WETWARE_CAPACITOR, "湿件电容");
         provider.addItem(CBItems.WETWARE_DIODE, "湿件二极管");
         provider.addItem(CBItems.WETWARE_INDUCTOR, "湿件电感");
         provider.addItem(CBItems.WETWARE_RESISTOR, "湿件电阻");
@@ -33,7 +34,7 @@ public class ChineseLangHandler {
         provider.addItem(CBItems.ORGANIC_VIAL, "有机%s试管");
         provider.addItem(CBItems.ORGANIC_BEAKER, "有机%s烧杯");
 
-        provider.addBlock(CBBlocks.FLESH_CASING, "血肉机械方块");
+        //provider.addBlock(CBBlocks.FLESH_CASING, "血肉机械方块");
         provider.addBlock(CBBlocks.ORNATE_FLESH_CASING, "装饰性机械方块");
         provider.addBlock(CBBlocks.PRIMAL_FLESH_CASING, "原初机械方块");
         provider.addBlock(CBBlocks.ACID_FLESH_CASING, "酸液机械方块");
@@ -77,9 +78,9 @@ public class ChineseLangHandler {
         provider.add(CBMachines.BRAIN_IN_A_VAT[IV].getBlock(), "§9IV 缸中之脑§r");
         provider.add(CBMachines.BRAIN_IN_A_VAT[LuV].getBlock(), "§dLuV 缸中之脑§r");
 
-        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.1", "§3自动化思考");
-        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.2", "§r电量和营养充足时,提供%d算力");
-        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.3", "§r超频可提供双倍算力，但会对大脑造成不可逆损伤");
+        //provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.1", "§3自动化思考");
+        //provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.2", "§r电量和营养充足时,提供%d算力");
+        //provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.3", "§r超频可提供双倍算力，但会对大脑造成不可逆损伤");
 
         provider.add("ctnhbio.machine.hv_brain_in_a_vat.tooltip.0", "它觉得自己是一名出色的格雷员工");
         provider.add("ctnhbio.machine.ev_brain_in_a_vat.tooltip.0", "它正在优化铂系金属处理产线");

@@ -54,6 +54,7 @@ public class CBMaterialItems{
                                 toolType.toolDefinition, p).asItem())
                 .properties(p -> p.craftRemainder(Items.AIR))
                 .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+
                 .model(NonNullBiConsumer.noop())
                 .color(() -> IGTTool::tintColor)
                 .register());
