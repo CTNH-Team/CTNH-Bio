@@ -16,6 +16,7 @@ import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
 import com.moguang.ctnhbio.client.model.*;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeMachineBlock;
+import com.moguang.ctnhbio.utils.CBMachineNames.*;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -38,7 +39,9 @@ import java.util.Locale;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
+import static com.moguang.ctnhbio.registry.CBMachines.brain_in_a_vat.story;
 import static com.moguang.ctnhbio.registry.CBMachines.brain_in_a_vat.tooltip;
+import static com.moguang.ctnhbio.utils.CBMachineNames.*;
 
 @Suffix("machine")
 public class CBMachines {
@@ -65,10 +68,12 @@ public class CBMachines {
     }
 
     private static void registerBioelectricForge() {
+
         for (int tier : GTValues.tiersBetween(LV, IV)) {
+            String id = "bioelectric_forge";
             BIOELECTRIC_FORGE[tier] = REGISTRATE
                     .livingMachine(tier,
-                            "bioelectric_forge",
+                            id,
                             BasicLivingMachine::new,
                             (p, d) -> new LivingMetaMachineBlock(p, d) {
                                 @Override
@@ -78,32 +83,40 @@ public class CBMachines {
                             },
                             CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES,
                             false)
+                    .cnLangValue(getCNName(id, tier))
+                    .langValue(getENName(id, tier))
                     .register();
         }
     }
 
     private static void registerDecomposer() {
         for (int tier : GTValues.tiersBetween(LV, IV)) {
+            String id  = "decomposer";
             DECOMPOSER[tier] = REGISTRATE
                     .livingMachine(tier,
-                            "decomposer",
+                            id,
                             BasicLivingMachine::new,
                             LivingMetaMachineBlock::new,
                             CBRecipeTypes.DECOMPOSER_RECIPES,
                             true)
+                    .cnLangValue(getCNName(id, tier))
+                    .langValue(getENName(id, tier))
                     .register();
         }
     }
 
     private static void registerDigester() {
         for (int tier : GTValues.tiersBetween(LV, IV)) {
+            String id = "digester";
             DIGESTER[tier] = REGISTRATE
                     .livingMachine(tier,
-                            "digester",
+                            id,
                             BasicLivingMachine::new,
                             LivingMetaMachineBlock::new,
                             CBRecipeTypes.DIGEST_RECIPES,
                             false)
+                    .cnLangValue(getCNName(id, tier))
+                    .langValue(getENName(id, tier))
                     .recipeModifiers(
                             CBRecipeModifier::digesterRecipeModifier,
                             GTRecipeModifiers.OC_NON_PERFECT,
@@ -114,18 +127,21 @@ public class CBMachines {
 
     private static void registerBioreactor() {
         for (int tier : GTValues.tiersBetween(LV, IV)) {
+            String id = "bioreactor";
             BIOREACTOR[tier] = REGISTRATE
                     .livingMachine(tier,
-                            "bioreactor",
+                            id,
                             BasicLivingMachine::new,
                             LivingMetaMachineBlock::new,
                             CBRecipeTypes.BIO_REACTOR_RECIPES,
                             true)
+                    .cnLangValue(getCNName(id, tier))
+                    .langValue(getENName(id, tier))
                     .tooltips(bioreactor_tooltip.translate())
                     .register();
         }
     }
-
+    @Suffix("brain_in_a_vat")
     static class brain_in_a_vat{
         @CN({
                 "§3自动化思考",
@@ -138,6 +154,20 @@ public class CBMachines {
                 "3"
         })
         static Lang[] tooltip;
+
+        @CN({
+                "它觉得自己是一名出色的格雷员工",
+                "它正在优化铂系金属处理产线",
+                "它喜欢熬夜玩CTNH，这样不太好",
+                "它又开始自我怀疑了，重启一下吧"
+        })
+        @EN({
+                "It believes it's a top-notch GregTech employee",
+                "It's busy streamlining the platinum-group metal processing line",
+                "It loves staying up late playing CTNH — not the healthiest habit",
+                "It's doubting itself again... time for a reboot"
+        })
+        static Lang[] story;
     }
 
 
@@ -159,7 +189,7 @@ public class CBMachines {
                             tooltip[1].translate(tier >= GTValues.HV ? 1 << (tier - GTValues.HV) : 0),
                             tooltip[2].translate()
                     )
-                    .tooltips(Component.translatable("ctnhbio.machine." + VN[tier].toLowerCase(Locale.ROOT) + "_brain_in_a_vat.tooltip.0").withStyle(ChatFormatting.GRAY))
+                    .tooltips(story[tier - 3].translate().withStyle(ChatFormatting.GRAY))
                     .register();
         }
     }

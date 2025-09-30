@@ -49,29 +49,29 @@ public class ChineseLangHandler {
 
         provider.addBlock(CBBlocks.IMPERMEABLE_MEMBRANE, "不渗透膜");
 
-        provider.add(CBMachines.BIOELECTRIC_FORGE[LV].getBlock(), "基础生物电炉");
-        provider.add(CBMachines.BIOELECTRIC_FORGE[MV].getBlock(), "§b进阶生物电炉§r");
-        provider.add(CBMachines.BIOELECTRIC_FORGE[HV].getBlock(), "§6进阶生物电炉 II§r");
-        provider.add(CBMachines.BIOELECTRIC_FORGE[EV].getBlock(), "§5进阶生物电炉 III§r");
-        provider.add(CBMachines.BIOELECTRIC_FORGE[IV].getBlock(), "§9精英生物电炉§r");
+//        provider.add(CBMachines.BIOELECTRIC_FORGE[LV].getBlock(), "基础生物电炉");
+//        provider.add(CBMachines.BIOELECTRIC_FORGE[MV].getBlock(), "§b进阶生物电炉§r");
+//        provider.add(CBMachines.BIOELECTRIC_FORGE[HV].getBlock(), "§6进阶生物电炉 II§r");
+//        provider.add(CBMachines.BIOELECTRIC_FORGE[EV].getBlock(), "§5进阶生物电炉 III§r");
+//        provider.add(CBMachines.BIOELECTRIC_FORGE[IV].getBlock(), "§9精英生物电炉§r");
 
-        provider.add(CBMachines.DECOMPOSER[LV].getBlock(), "基础电力分解者");
-        provider.add(CBMachines.DECOMPOSER[MV].getBlock(), "§b进阶电力分解者§r");
-        provider.add(CBMachines.DECOMPOSER[HV].getBlock(), "§6进阶电力分解者 II§r");
-        provider.add(CBMachines.DECOMPOSER[EV].getBlock(), "§5进阶电力分解者 III§r");
-        provider.add(CBMachines.DECOMPOSER[IV].getBlock(), "§9精英电力分解者§r");
-
-        provider.add(CBMachines.DIGESTER[LV].getBlock(), "基础电力消化器");
-        provider.add(CBMachines.DIGESTER[MV].getBlock(), "§b进阶电力消化器§r");
-        provider.add(CBMachines.DIGESTER[HV].getBlock(), "§6进阶电力消化器 II§r");
-        provider.add(CBMachines.DIGESTER[EV].getBlock(), "§5进阶电力消化器 III§r");
-        provider.add(CBMachines.DIGESTER[IV].getBlock(), "§9精英电力消化器§r");
-
-        provider.add(CBMachines.BIOREACTOR[LV].getBlock(), "基础生物反应腔");
-        provider.add(CBMachines.BIOREACTOR[MV].getBlock(), "§b进阶生物反应腔§r");
-        provider.add(CBMachines.BIOREACTOR[HV].getBlock(), "§6进阶生物反应腔 II§r");
-        provider.add(CBMachines.BIOREACTOR[EV].getBlock(), "§5进阶生物反应腔 III§r");
-        provider.add(CBMachines.BIOREACTOR[IV].getBlock(), "§9精英生物反应腔§r");
+//        provider.add(CBMachines.DECOMPOSER[LV].getBlock(), "基础电力分解者");
+//        provider.add(CBMachines.DECOMPOSER[MV].getBlock(), "§b进阶电力分解者§r");
+//        provider.add(CBMachines.DECOMPOSER[HV].getBlock(), "§6进阶电力分解者 II§r");
+//        provider.add(CBMachines.DECOMPOSER[EV].getBlock(), "§5进阶电力分解者 III§r");
+//        provider.add(CBMachines.DECOMPOSER[IV].getBlock(), "§9精英电力分解者§r");
+//
+//        provider.add(CBMachines.DIGESTER[LV].getBlock(), "基础电力消化器");
+//        provider.add(CBMachines.DIGESTER[MV].getBlock(), "§b进阶电力消化器§r");
+//        provider.add(CBMachines.DIGESTER[HV].getBlock(), "§6进阶电力消化器 II§r");
+//        provider.add(CBMachines.DIGESTER[EV].getBlock(), "§5进阶电力消化器 III§r");
+//        provider.add(CBMachines.DIGESTER[IV].getBlock(), "§9精英电力消化器§r");
+//
+//        provider.add(CBMachines.BIOREACTOR[LV].getBlock(), "基础生物反应腔");
+//        provider.add(CBMachines.BIOREACTOR[MV].getBlock(), "§b进阶生物反应腔§r");
+//        provider.add(CBMachines.BIOREACTOR[HV].getBlock(), "§6进阶生物反应腔 II§r");
+//        provider.add(CBMachines.BIOREACTOR[EV].getBlock(), "§5进阶生物反应腔 III§r");
+//        provider.add(CBMachines.BIOREACTOR[IV].getBlock(), "§9精英生物反应腔§r");
 
         provider.add(CBMachines.BRAIN_IN_A_VAT[HV].getBlock(), "§6HV 缸中之脑§r");
         provider.add(CBMachines.BRAIN_IN_A_VAT[EV].getBlock(), "§5EV 缸中之脑§r");
@@ -82,10 +82,10 @@ public class ChineseLangHandler {
         //provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.2", "§r电量和营养充足时,提供%d算力");
         //provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.3", "§r超频可提供双倍算力，但会对大脑造成不可逆损伤");
 
-        provider.add("ctnhbio.machine.hv_brain_in_a_vat.tooltip.0", "它觉得自己是一名出色的格雷员工");
-        provider.add("ctnhbio.machine.ev_brain_in_a_vat.tooltip.0", "它正在优化铂系金属处理产线");
-        provider.add("ctnhbio.machine.iv_brain_in_a_vat.tooltip.0", "它喜欢熬夜玩CTNH，这样不太好");
-        provider.add("ctnhbio.machine.luv_brain_in_a_vat.tooltip.0", "它又开始自我怀疑了，重启一下吧");
+//        provider.add("ctnhbio.machine.hv_brain_in_a_vat.tooltip.0", "它觉得自己是一名出色的格雷员工");
+//        provider.add("ctnhbio.machine.ev_brain_in_a_vat.tooltip.0", "它正在优化铂系金属处理产线");
+//        provider.add("ctnhbio.machine.iv_brain_in_a_vat.tooltip.0", "它喜欢熬夜玩CTNH，这样不太好");
+//        provider.add("ctnhbio.machine.luv_brain_in_a_vat.tooltip.0", "它又开始自我怀疑了，重启一下吧");
 
         provider.add(MultiblocksA.GREAT_FLESH.getBlock(), "巨型肉块");
         provider.add(MultiblocksA.COGNI_ASSEMBLER.getBlock(), "意识装配机");
@@ -112,7 +112,7 @@ public class ChineseLangHandler {
         provider.add("gtceu.ctnhbio_reactor", "生物反应");
         provider.add("gtceu.basic_living", "摄入营养");
         provider.add("gtceu.great_flesh", "巨型肉块-分化");
-        provider.add(CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY.registryName.toLanguageKey(), "意识装配");
+        //provider.add(CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY.registryName.toLanguageKey(), "意识装配");
 
         provider.add("ctnhbio.nutrient_bar.info", "营养:");
         provider.add("recipe.capability.nutrient.name", "营养");
