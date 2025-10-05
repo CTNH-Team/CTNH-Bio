@@ -50,7 +50,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void registerMaterial(MaterialRegistryEvent event) {
-        MaterialRegistryManager.getInstance().createRegistry(CTNHBio.MODID);
+//        MaterialRegistryManager.getInstance().createRegistry(CTNHBio.MODID);
     }
 
 
