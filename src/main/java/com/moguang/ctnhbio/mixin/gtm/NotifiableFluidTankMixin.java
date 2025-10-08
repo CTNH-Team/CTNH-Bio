@@ -38,7 +38,7 @@ public abstract class NotifiableFluidTankMixin extends NotifiableRecipeHandlerTr
             locals = LocalCapture.CAPTURE_FAILHARD,
             remap = false)
     public void handlerRecipeInner(IO io, GTRecipe recipe, List<FluidIngredient> left, boolean simulate, CallbackInfoReturnable<List<FluidIngredient>> cir, Runnable[] listeners, boolean changed, IFluidHandler.FluidAction action, FluidStack[] visited, Iterator it, FluidIngredient ingredient, FluidStack[] fluids, int amount, int tank, FluidStack current, int count) {
-        if (recipe.data.getBoolean("potion") && !simulate) {
+        if (recipe != null && recipe.data.getBoolean("potion") && !simulate) {
             if (getMachine() instanceof ILivingMachine livingMachine) {
                 if (current.hasTag()) {
                     ListTag effects = current.getOrCreateTag().getList("CustomPotionEffects", 9);
