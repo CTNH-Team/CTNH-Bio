@@ -1,0 +1,58 @@
+dependencies {
+    compileOnly("org.jetbrains:annotations:26.0.1")
+
+    // Mixin
+    annotationProcessor('org.spongepowered:mixin:0.8.5:processor')
+
+    // JEI, EMI, Jade
+    modImplementation("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    //modCompileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    //modRuntimeOnly("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    //modRuntimeOnly("dev.emi:emi-forge:${emi_version}+${minecraft_version}")
+    modImplementation("curse.maven:jade-324717:6855440")
+
+    // GregTech and dependencies
+    modImplementation("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gtceu_version}:slim") { transitive = false }
+    modImplementation("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}") { transitive = false }
+    modImplementation("com.tterrag.registrate:Registrate:${registrate_version}")
+    modImplementation("dev.toma.configuration:configuration-forge-${minecraft_version}:${configuration_version}")
+
+    //Create
+    modImplementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    modImplementation("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
+    modImplementation("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
+
+
+    modImplementation("software.bernie.geckolib:geckolib-forge-${minecraft_version}:${geckolib_version}")
+
+    modRuntimeOnly("curse.maven:modernfix-790626:6719008")
+
+    // KubeJS
+    modImplementation("dev.latvian.mods:kubejs-forge:${kubejs_version}")
+    modImplementation("dev.latvian.mods:rhino-forge:${rhino_version}")
+    modImplementation("dev.architectury:architectury-forge:${architectury_version}")
+
+
+    //modRuntimeOnly("curse.maven:gtmthings-1104310:6764930")
+
+
+    modImplementation("curse.maven:placebo-283644:6274231")
+
+    // Create Metallurgy & Create Vintage
+    modImplementation("curse.maven:createmetallurgy-1007404:6741785")
+
+
+    modImplementation("maven.modrinth:advanced-loot-info:nrGWQ7rF")
+
+    //Hostile Neural NetWork
+    modImplementation("curse.maven:hostile_neural_network-552574:5895036")
+
+    // Biomancy
+    modImplementation("curse.maven:biomancy-492939:5886758")
+    modImplementation("curse.maven:bio-factory-1136762:6293100")
+
+    modRuntimeOnly("curse.maven:constructionwand-399558:4684054")
+    // lombok
+    //compileOnly 'org.projectlombok:lombok:1.18.24'
+    //annotationProcessor 'org.projectlombok:lombok:1.18.24'
+}

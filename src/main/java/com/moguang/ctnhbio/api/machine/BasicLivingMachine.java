@@ -130,17 +130,17 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         // 判断是否是食物
         if (stack.isEdible()) {
             if (!getLevel().isClientSide) {
-                // 消耗一个物品
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
+//                if (!player.getAbilities().instabuild && !stack.getFoodProperties(player).canAlwaysEat()) {
+//                    stack.shrink(1);
+//                }
+                getMachineEntity().eat(getLevel(), stack);
                 int nutrition = stack.getFoodProperties(null).getNutrition();
                 float saturation = stack.getFoodProperties(null).getSaturationModifier();
                 storage.add(nutrition + 0.5 * saturation);
 
-                getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
-                        SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
-                        1.0f, 1.0f);
+//                getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
+//                        SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
+//                        1.0f, 1.0f);
             }
 
             return InteractionResult.sidedSuccess(getLevel().isClientSide);
