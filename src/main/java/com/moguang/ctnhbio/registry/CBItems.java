@@ -15,6 +15,7 @@ import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
 import com.moguang.ctnhbio.api.item.component.StyleItem;
 import com.moguang.ctnhbio.common.item.OrganicVialItem;
+import com.moguang.ctnhbio.data.CBDatagen;
 import com.moguang.ctnhbio.utils.VialCraftingRemainingItem;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -28,15 +29,22 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Domain;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
-import static com.gregtechceu.gtceu.common.data.GTItems.attach;
+
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
+@Prefix("item2.item1")
 public class CBItems {
     public static void init() {
         CBMaterialItems.generateTools();
     }
     public static final ItemEntry<StyleItem> WETWARE_CAPACITOR = REGISTRATE.item("wetware_capacitor", StyleItem::new)
+            .cnlang("湿件电容")
             .lang("Wetware-Capacitor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
@@ -65,13 +73,18 @@ public class CBItems {
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
 
+    @EN("test tooltip")
+    //@CN("测试翻译键")
+    static Lang testtootip;
     public static ItemEntry<ComponentItem> SYNET_CORE = REGISTRATE
             .item("synet_core", ComponentItem::create)
             .lang("Synet Core")
             .properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
             .onRegister(attach(new TooltipBehavior(list -> {
                 list.add(Component.translatable("ctnhbio.mv_machine.tooltip").withStyle(ChatFormatting.AQUA));
-                list.add(Component.translatable("ctnhbio.synet_core.tooltip").withStyle(ChatFormatting.GRAY));
+                list.add(
+                        Component.translatable("ctnhbio.synet_core.tooltip").withStyle(ChatFormatting.GRAY));
+                list.add(testtootip.translate());
             })))
             .register();
     public static ItemEntry<ComponentItem> META_CORE = REGISTRATE

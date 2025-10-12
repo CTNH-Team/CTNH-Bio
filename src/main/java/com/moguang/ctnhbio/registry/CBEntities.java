@@ -15,6 +15,7 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 public class CBEntities {
     public static EntityEntry<LivingMetaMachineEntity> LIVING_META_MACHINE_ENTITY = REGISTRATE
             .entity("living_machine", LivingMetaMachineEntity::create, MobCategory.CREATURE)
+            
             .properties(props -> props.sized(0.9F, 0.9F))
             .attributes(LivingMetaMachineEntity::createAttributes)
             .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
