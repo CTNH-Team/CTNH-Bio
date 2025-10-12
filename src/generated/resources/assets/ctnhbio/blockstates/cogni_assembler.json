@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ctnhbio:block/machine/cogni_assembler",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ctnhbio:block/machine/cogni_assembler"
+    },
+    "facing=south": {
+      "model": "ctnhbio:block/machine/cogni_assembler",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ctnhbio:block/machine/cogni_assembler",
+      "y": 270
+    }
+  }
+}

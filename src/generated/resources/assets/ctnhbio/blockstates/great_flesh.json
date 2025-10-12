@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ctnhbio:block/machine/great_flesh",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ctnhbio:block/machine/great_flesh"
+    },
+    "facing=south": {
+      "model": "ctnhbio:block/machine/great_flesh",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ctnhbio:block/machine/great_flesh",
+      "y": 270
+    }
+  }
+}

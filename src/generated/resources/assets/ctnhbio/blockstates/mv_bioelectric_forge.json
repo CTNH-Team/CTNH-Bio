@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ctnhbio:block/machine/mv_bioelectric_forge",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ctnhbio:block/machine/mv_bioelectric_forge"
+    },
+    "facing=south": {
+      "model": "ctnhbio:block/machine/mv_bioelectric_forge",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ctnhbio:block/machine/mv_bioelectric_forge",
+      "y": 270
+    }
+  }
+}

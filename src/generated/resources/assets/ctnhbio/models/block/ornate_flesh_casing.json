@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "ctnhbio:block/casings/ornate_flesh_casing"
+  }
+}

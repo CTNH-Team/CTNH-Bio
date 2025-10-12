@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ctnhbio:block/machine/ev_decomposer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ctnhbio:block/machine/ev_decomposer"
+    },
+    "facing=south": {
+      "model": "ctnhbio:block/machine/ev_decomposer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ctnhbio:block/machine/ev_decomposer",
+      "y": 270
+    }
+  }
+}

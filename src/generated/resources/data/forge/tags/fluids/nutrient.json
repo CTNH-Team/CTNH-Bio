@@ -1,0 +1,8 @@
+{
+  "values": [
+    {
+      "id": "biofactory:nutrients_fluid",
+      "required": false
+    }
+  ]
+}
