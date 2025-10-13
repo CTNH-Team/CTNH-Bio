@@ -41,6 +41,7 @@
   "block.ctnhbio.synaptic_casing": "Synaptic Casing",
   "block.ctnhbio.weatherer": "Weatherer",
   "config.jade.plugin_gtceu.living_machine_status_provider": "[CTNH] Living Machine Status",
+  "ctnhbio.bioelectric_forge": "Bioelectric Forge",
   "ctnhbio.brain_in_a_vat.story.0": "It believes it's a top-notch GregTech employee",
   "ctnhbio.brain_in_a_vat.story.1": "It's busy streamlining the platinum-group metal processing line",
   "ctnhbio.brain_in_a_vat.story.2": "It loves staying up late playing CTNH — not the healthiest habit",
@@ -111,6 +112,6 @@
   "jei.property.requirement.verb.lesser": "Lesser Than",
   "material.ctnhbio.weird_pixel_dust": "WEIRD PIXEL DUST",
   "material.ctnhbio.withering_ooze": "OOZE",
-  "recipe.condition.effect.tooltip": "Potion Effect : %s",
+  "recipe.condition.ctnhbio.tooltip": "Potion Effect : %s",
   "whatfk.basiclivingmachine.nuinfo": "Nutrientxxx"
 }

@@ -4,6 +4,7 @@ dependencies {
     // Mixin
     annotationProcessor('org.spongepowered:mixin:0.8.5:processor')
 
+    modImplementation(project(":modules:CTNH-Lib")){transitive = false}
     // JEI, EMI, Jade
     modImplementation("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
     //modCompileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")

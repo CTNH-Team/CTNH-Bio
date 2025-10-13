@@ -41,6 +41,7 @@
   "block.ctnhbio.synaptic_casing": "buısɐƆ ɔıʇdɐuʎS",
   "block.ctnhbio.weatherer": "ɹǝɹǝɥʇɐǝM",
   "config.jade.plugin_gtceu.living_machine_status_provider": "snʇɐʇS ǝuıɥɔɐW buıʌıꞀ ]HN⟘Ɔ[",
+  "ctnhbio.bioelectric_forge": "ǝbɹoℲ ɔıɹʇɔǝןǝoıᗺ",
   "ctnhbio.brain_in_a_vat.story.0": "ǝǝʎoןdɯǝ ɥɔǝ⟘bǝɹ⅁ ɥɔʇou-doʇ ɐ s,ʇı sǝʌǝıןǝq ʇI",
   "ctnhbio.brain_in_a_vat.story.1": "ǝuıן buıssǝɔoɹd ןɐʇǝɯ dnoɹb-ɯnuıʇɐןd ǝɥʇ buıuıןɯɐǝɹʇs ʎsnq s,ʇI",
   "ctnhbio.brain_in_a_vat.story.2": "ʇıqɐɥ ʇsǝıɥʇןɐǝɥ ǝɥʇ ʇou — HN⟘Ɔ buıʎɐןd ǝʇɐן dn buıʎɐʇs sǝʌoן ʇI",
@@ -111,6 +112,6 @@
   "jei.property.requirement.verb.lesser": "uɐɥ⟘ ɹǝssǝꞀ",
   "material.ctnhbio.weird_pixel_dust": "⟘S∩ᗡ ꞀƎXIԀ ᗡᴚIƎM",
   "material.ctnhbio.withering_ooze": "ƎZOO",
-  "recipe.condition.effect.tooltip": "%s : ʇɔǝɟɟƎ uoıʇoԀ",
+  "recipe.condition.ctnhbio.tooltip": "%s : ʇɔǝɟɟƎ uoıʇoԀ",
   "whatfk.basiclivingmachine.nuinfo": "xxxʇuǝıɹʇnN"
 }

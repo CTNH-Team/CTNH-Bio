@@ -106,7 +106,7 @@ public class ChineseLangHandler {
 
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
 
-        provider.add("gtceu.bioelectric_forge", "生物电炉");
+        //provider.add("gtceu.bioelectric_forge", "生物电炉");
         provider.add("gtceu.decomposer", "电力分解");
         provider.add("gtceu.digest", "电力消化");
         provider.add("gtceu.ctnhbio_reactor", "生物反应");
@@ -118,7 +118,7 @@ public class ChineseLangHandler {
         provider.add("recipe.capability.nutrient.name", "营养");
         provider.add("jade.nutrient.info", "营养值：");
 
-        provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
+        //provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
         provider.add("ctnhbio.recipe.nutrient_consume", "营养消耗：%d");
         provider.add("ctnhbio.recipe.nutrient_generate", "营养获取：%d");
         provider.add("ctnhbio.jade.nutrient_stored", "%s / %s u");
@@ -143,7 +143,7 @@ public class ChineseLangHandler {
         provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4生物活性流体可能失活！");
 
         provider.add(OrganicMaterials.Regenerative_Fluid.getUnlocalizedName(), "再生粘液");
-        provider.add(OrganicMaterials.Withering_Ooze.getUnlocalizedName(), "凋灵软泥");
+        //provider.add(OrganicMaterials.Withering_Ooze.getUnlocalizedName(), "凋灵软泥");
         provider.add(OrganicMaterials.Hormone_Secretion.getUnlocalizedName(), "内分泌激素");
         provider.add(OrganicMaterials.Toxin_Extract.getUnlocalizedName(), "毒素提取物");
         provider.add(OrganicMaterials.Bile.getUnlocalizedName(), "胆汁");
@@ -166,7 +166,7 @@ public class ChineseLangHandler {
         provider.add(OrganicMaterials.Primordial_Serum.getUnlocalizedName(), "原初血清");
 
         replace(provider, CommonMaterials.BLOODSTEEL.getUnlocalizedName(), "血髓钢");
-        replace(provider, CommonMaterials.WEIRD_PIXEL_DUST.getUnlocalizedName(), "富集营养");
+        //replace(provider, CommonMaterials.WEIRD_PIXEL_DUST.getUnlocalizedName(), "富集营养");
 
         //Entity Properties
         EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"实体输入","实体输出");

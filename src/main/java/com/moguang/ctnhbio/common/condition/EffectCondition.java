@@ -19,12 +19,17 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import org.jetbrains.annotations.NotNull;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Prefix("recipe.condition")
 public class EffectCondition extends RecipeCondition {
     public static final Codec<EffectCondition> CODEC = RecordCodecBuilder
             .create(instance -> RecipeCondition.isReverse(instance)
@@ -55,9 +60,13 @@ public class EffectCondition extends RecipeCondition {
         return CBRecipeConditions.EFFECT;
     }
 
+    @CN("药水效果：%s")
+    @EN("Potion Effect : %s")
+    static Lang tooltip;
     @Override
     public Component getTooltips() {
-        return Component.translatable("recipe.condition.effect.tooltip", getEffectName());
+        return tooltip.translate(getEffectName());
+        //return Component.translatable("recipe.condition.effect.tooltip", getEffectName());
     }
     public String getEffectName() {
         String name = "";

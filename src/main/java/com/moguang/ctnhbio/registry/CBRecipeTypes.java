@@ -6,8 +6,11 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
+import com.moguang.ctnhbio.CTNHBio;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
+
+import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBRecipeTypes {
     public static String NUTRIENT = "nutrient";
@@ -22,12 +25,15 @@ public class CBRecipeTypes {
     public static GTRecipeType GREAT_FLESH;
     public static GTRecipeType CONSCIOUSNESS_ASSEMBLY;
 
-    @CN("意识装配")
-    static Lang consciousness_assembly = new Lang("gtceu.consciousness_assembly");
+//    @CN("意识装配")
+//    static Lang consciousness_assembly = new Lang("gtceu.consciousness_assembly");
 
     public static void init() {
         // 初始化所有配方类型
-        BIOELECTRIC_FORGE_RECIPES = GTRecipeTypes.register("bioelectric_forge", NUTRIENT)
+        BIOELECTRIC_FORGE_RECIPES = REGISTRATE.recipeType(CTNHBio.id("bioelectric_forge"), NUTRIENT)
+                //GTRecipeTypes.register("bioelectric_forge", NUTRIENT)
+                .cnlang("生物电炉")
+                .lang("Bioelectric Forge")
                 .setMaxIOSize(6, 2, 3, 1)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)

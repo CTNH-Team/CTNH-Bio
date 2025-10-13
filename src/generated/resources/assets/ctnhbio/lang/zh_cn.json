@@ -41,6 +41,7 @@
   "block.ctnhbio.synaptic_casing": "神经突触机械方块",
   "block.ctnhbio.weatherer": "风化器",
   "config.jade.plugin_gtceu.living_machine_status_provider": "[CTNH]活体机器属性",
+  "ctnhbio.bioelectric_forge": "生物电炉",
   "ctnhbio.brain_in_a_vat.story.0": "它觉得自己是一名出色的格雷员工",
   "ctnhbio.brain_in_a_vat.story.1": "它正在优化铂系金属处理产线",
   "ctnhbio.brain_in_a_vat.story.2": "它喜欢熬夜玩CTNH，这样不太好",
@@ -71,9 +72,9 @@
   "ctnhbio.recipe.output_entity": "实体输出",
   "ctnhbio.synet_core.tooltip": "精密如血管回路的金属骨架，每一道凹槽都在规律脉动，仿佛在输送某种不可见的生命能量。",
   "emi.category.ctnhbio.despoil_loot": "血肉掠夺",
+  "entity.ctnhbio.living_machine": "活体机器",
   "fluid_type.biofactory.nutrients_fluid": "营养液",
   "gtceu.basic_living": "摄入营养",
-  "gtceu.bioelectric_forge": "生物电炉",
   "gtceu.ctnhbio_reactor": "生物反应",
   "gtceu.decomposer": "电力分解",
   "gtceu.digest": "电力消化",
@@ -145,6 +146,6 @@
   "material.ctnhbio.weird_pixel_dust": "非常怪异的尘埃",
   "material.ctnhbio.withering_ooze": "凋灵软泥_111",
   "recipe.capability.nutrient.name": "营养",
-  "recipe.condition.effect.tooltip": "药水效果：%s",
+  "recipe.condition.ctnhbio.tooltip": "药水效果：%s",
   "whatfk.basiclivingmachine.nuinfo": "营养xxx:"
 }

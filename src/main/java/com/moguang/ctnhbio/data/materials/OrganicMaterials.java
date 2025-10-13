@@ -7,6 +7,8 @@ import com.moguang.ctnhbio.CTNHBio;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
+
 public class OrganicMaterials {
     public static FluidAttribute ORGANIC = new FluidAttribute(
             CTNHBio.id("organic"),
@@ -41,7 +43,9 @@ public class OrganicMaterials {
 
     public static void register() {
 // 1. 凋零软泥
-        Withering_Ooze = new Material.Builder(CTNHBio.id("withering_ooze"))
+        Withering_Ooze = REGISTRATE.material(CTNHBio.id("withering_ooze"))
+                .lang("OOZE")
+                .cnlang("凋灵软泥_111")
                 .liquid(organicBuilder())
                 .color(0xA0A0A0)
                 .buildAndRegister();
