@@ -17,7 +17,7 @@ public class EnglishLangHandler {
         provider.add("ctnhbio.nutrient_bar.info", "Nutrient:");
         provider.add("jade.nutrient.info", "Nutrient：");
 
-        provider.add("recipe.condition.effect.tooltip", "Potion Effect : %s");
+        //provider.add("recipe.condition.effect.tooltip", "Potion Effect : %s");
         provider.add("ctnhbio.recipe.nutrient", "Nutrient Consumption: %d");
         provider.add("ctnhbio.jade.nutrient_stored", "%s / %s");
 

@@ -20,7 +20,7 @@ public class CBToolType {
                     .attackSpeed(-2.2F)
                     //.defaultEnchantment(ModEnchantments.DESPOIL.get(), 3)
             )
-            .constructor(GTSwordItem::create)
+            .constructor(GTSwordItem::new)
             .toolClassNames("sword")
             .toolClasses(GTToolType.SWORD)
             .materialAmount(2 * GTValues.M)

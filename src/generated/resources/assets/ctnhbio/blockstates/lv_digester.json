@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ctnhbio:block/machine/lv_digester",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ctnhbio:block/machine/lv_digester"
+    },
+    "facing=south": {
+      "model": "ctnhbio:block/machine/lv_digester",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ctnhbio:block/machine/lv_digester",
+      "y": 270
+    }
+  }
+}

@@ -10,7 +10,6 @@ import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.gregtechceu.gtceu.api.registry.registrate.MachineBuilder;
 import com.gregtechceu.gtceu.api.registry.registrate.MultiblockMachineBuilder;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
@@ -31,17 +30,18 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.apache.commons.lang3.function.TriFunction;
 import org.jetbrains.annotations.NotNull;
+import tech.vixhentx.mcmod.ctnhlib.registrate.CNRegistrate;
+import tech.vixhentx.mcmod.ctnhlib.registrate.builders.CTNHMachineBuilder;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class CBRegistrate extends GTRegistrate {
+public class CBRegistrate extends CNRegistrate {
     protected CBRegistrate() {
         super(CTNHBio.MODID);
     }
@@ -67,16 +67,17 @@ public class CBRegistrate extends GTRegistrate {
     }
 
 
-    @Override @NotNull @ParametersAreNonnullByDefault
-    public <DEFINITION extends MachineDefinition> MachineBuilder<DEFINITION> machine(String name,
-                                                                                     Function<ResourceLocation, DEFINITION> definitionFactory,
-                                                                                     Function<IMachineBlockEntity, MetaMachine> metaMachine,
-                                                                                     BiFunction<BlockBehaviour.Properties, DEFINITION, IMachineBlock> blockFactory,
-                                                                                     BiFunction<IMachineBlock, Item.Properties, MetaMachineItem> itemFactory,
-                                                                                     TriFunction<BlockEntityType<?>, BlockPos, BlockState, IMachineBlockEntity> blockEntityFactory) {
-        return super.machine(name, definitionFactory, metaMachine, blockFactory, itemFactory, blockEntityFactory)
-                .hasBER(false);
-    }
+//    @Override
+//    @ParametersAreNonnullByDefault
+//    public <DEFINITION extends MachineDefinition> CTNHMachineBuilder<DEFINITION> machine(String name,
+//                                                                                         Function<ResourceLocation, DEFINITION> definitionFactory,
+//                                                                                         Function<IMachineBlockEntity, MetaMachine> metaMachine,
+//                                                                                         BiFunction<BlockBehaviour.Properties, DEFINITION, IMachineBlock> blockFactory,
+//                                                                                         BiFunction<IMachineBlock, Item.Properties, MetaMachineItem> itemFactory,
+//                                                                                         TriFunction<BlockEntityType<?>, BlockPos, BlockState, IMachineBlockEntity> blockEntityFactory) {
+//        return super.machine(name, definitionFactory, metaMachine, blockFactory, itemFactory, blockEntityFactory)
+//                .hasBER(false);
+//    }
 
     @Override @NotNull @ParametersAreNonnullByDefault
     public MachineBuilder<MachineDefinition> machine(String name, Function<IMachineBlockEntity, MetaMachine> metaMachine) {
@@ -85,7 +86,7 @@ public class CBRegistrate extends GTRegistrate {
     }
 
     @NotNull @ParametersAreNonnullByDefault
-    public MachineBuilder<MachineDefinition> livingMachine(int tier,
+    public CTNHMachineBuilder<MachineDefinition> livingMachine(int tier,
                                                            String name,
                                                            BiFunction<IMachineBlockEntity, Integer, MetaMachine> metaMachine,
                                                            BiFunction<BlockBehaviour.Properties, MachineDefinition, IMachineBlock> blockFactory,
@@ -93,13 +94,14 @@ public class CBRegistrate extends GTRegistrate {
                                                            GTRecipeType recipeType,
                                                            boolean transparent
     ) {
-        return super.machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + '_' + name,
+        return (CTNHMachineBuilder<MachineDefinition>)super.machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + '_' + name,
                         MachineDefinition::new,
                         holder -> metaMachine.apply(holder, tier),
                         blockFactory,
                         (b, p) -> new LivingMetaMachineItem(b, p, name),
                         blockEntityFactory
                 )
+
                 .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
                 .tier(tier)
                 .hasBER(false)
@@ -118,7 +120,7 @@ public class CBRegistrate extends GTRegistrate {
                 ;
     }
     @NotNull @ParametersAreNonnullByDefault
-    public MachineBuilder<MachineDefinition>    livingMachine(int tier,
+    public CTNHMachineBuilder<MachineDefinition>  livingMachine(int tier,
                                                            String name,
                                                            BiFunction<IMachineBlockEntity, Integer, MetaMachine> metaMachine,
                                                            BiFunction<BlockBehaviour.Properties, MachineDefinition, IMachineBlock> blockFactory,
@@ -134,4 +136,5 @@ public class CBRegistrate extends GTRegistrate {
                 transparent
         );
     }
+
 }

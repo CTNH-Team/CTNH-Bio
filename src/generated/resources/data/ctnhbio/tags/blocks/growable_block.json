@@ -1,0 +1,72 @@
+{
+  "values": [
+    {
+      "id": "biomancy:flesh",
+      "required": false
+    },
+    {
+      "id": "biomancy:flesh_fence",
+      "required": false
+    },
+    {
+      "id": "biomancy:packed_flesh",
+      "required": false
+    },
+    {
+      "id": "biomancy:fibrous_flesh",
+      "required": false
+    },
+    {
+      "id": "biomancy:ornate_flesh",
+      "required": false
+    },
+    {
+      "id": "biomancy:ornate_flesh_slab",
+      "required": false
+    },
+    {
+      "id": "biomancy:primal_flesh",
+      "required": false
+    },
+    {
+      "id": "biomancy:smooth_primal_flesh",
+      "required": false
+    },
+    {
+      "id": "biomancy:porous_primal_flesh",
+      "required": false
+    },
+    {
+      "id": "biomancy:malignant_flesh",
+      "required": false
+    },
+    {
+      "id": "biomancy:acid_fluid_block",
+      "required": false
+    },
+    {
+      "id": "ctnhbio:flesh_casing",
+      "required": false
+    },
+    {
+      "id": "ctnhbio:primal_flesh_casing",
+      "required": false
+    },
+    {
+      "id": "ctnhbio:ornate_flesh_casing",
+      "required": false
+    },
+    {
+      "id": "ctnhbio:acid_flesh_casing",
+      "required": false
+    },
+    {
+      "id": "ctnhbio:bio_acid_casing",
+      "required": false
+    },
+    {
+      "id": "ctnhbio:impermeable_membrane",
+      "required": false
+    }
+  ]
+}

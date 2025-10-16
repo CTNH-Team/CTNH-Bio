@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class CBModels {
     public static final Map<String, ? extends GeoModel<GeoAnimatable>> MODELS = Map.of(
-            "bioeclectric_forge", new BioelectricForgeModel(),
+            "bioelectric_forge", new BioelectricForgeModel(),
             "decomposer", new DecomposerModel(),
             "digester", new DigesterModel(),
             "bioreactor", new BioReactorModel(),

@@ -19,12 +19,17 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import org.jetbrains.annotations.NotNull;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Prefix("recipe.condition")
 public class EffectCondition extends RecipeCondition {
     public static final Codec<EffectCondition> CODEC = RecordCodecBuilder
             .create(instance -> RecipeCondition.isReverse(instance)
@@ -55,9 +60,13 @@ public class EffectCondition extends RecipeCondition {
         return CBRecipeConditions.EFFECT;
     }
 
+    @CN("药水效果：%s")
+    @EN("Potion Effect : %s")
+    static Lang tooltip;
     @Override
     public Component getTooltips() {
-        return Component.translatable("recipe.condition.effect.tooltip", getEffectName());
+        return tooltip.translate(getEffectName());
+        //return Component.translatable("recipe.condition.effect.tooltip", getEffectName());
     }
     public String getEffectName() {
         String name = "";
@@ -94,52 +103,52 @@ public class EffectCondition extends RecipeCondition {
         return new EffectCondition();
     }
 
-    @NotNull
-    @Override
-    public JsonObject serialize() {
-        JsonObject config = super.serialize();
-        JsonArray effectsArray = new JsonArray();
-        for (MobEffect effect : effects) {
-            effectsArray.add(BuiltInRegistries.MOB_EFFECT.getKey(effect).toString());
-        }
-        config.add("mob_effect", effectsArray);
-        return config;
-    }
-
-    @Override
-    public RecipeCondition deserialize(@NotNull JsonObject config) {
-        super.deserialize(config);
-        JsonArray effectsArray = GsonHelper.getAsJsonArray(config, "mob_effect");
-        List<String> effectStrings = new ArrayList<>();
-        for (JsonElement element : effectsArray) {
-            effectStrings.add(element.getAsString());
-        }
-        this.effects = effectStrings.stream()
-                .map(ResourceLocation::parse)
-                .filter(BuiltInRegistries.MOB_EFFECT::containsKey)
-                .map(BuiltInRegistries.MOB_EFFECT::get)
-                .toArray(MobEffect[]::new);
-        return this;
-    }
-
-    @Override
-    public RecipeCondition fromNetwork(FriendlyByteBuf buf) {
-        super.fromNetwork(buf);
-        int effectCount = buf.readVarInt();
-        this.effects = new MobEffect[effectCount];
-        for (int i = 0; i < effectCount; i++) {
-            ResourceLocation effectId = buf.readResourceLocation();
-            this.effects[i] = BuiltInRegistries.MOB_EFFECT.get(effectId);
-        }
-        return this;
-    }
-
-    @Override
-    public void toNetwork(FriendlyByteBuf buf) {
-        super.toNetwork(buf);
-        buf.writeVarInt(effects.length);
-        for (MobEffect effect : effects) {
-            buf.writeResourceLocation(BuiltInRegistries.MOB_EFFECT.getKey(effect));
-        }
-    }
+//    @NotNull
+//    @Override
+//    public JsonObject serialize() {
+//        JsonObject config = super.serialize();
+//        JsonArray effectsArray = new JsonArray();
+//        for (MobEffect effect : effects) {
+//            effectsArray.add(BuiltInRegistries.MOB_EFFECT.getKey(effect).toString());
+//        }
+//        config.add("mob_effect", effectsArray);
+//        return config;
+//    }
+//
+//    @Override
+//    public RecipeCondition deserialize(@NotNull JsonObject config) {
+//        super.deserialize(config);
+//        JsonArray effectsArray = GsonHelper.getAsJsonArray(config, "mob_effect");
+//        List<String> effectStrings = new ArrayList<>();
+//        for (JsonElement element : effectsArray) {
+//            effectStrings.add(element.getAsString());
+//        }
+//        this.effects = effectStrings.stream()
+//                .map(ResourceLocation::parse)
+//                .filter(BuiltInRegistries.MOB_EFFECT::containsKey)
+//                .map(BuiltInRegistries.MOB_EFFECT::get)
+//                .toArray(MobEffect[]::new);
+//        return this;
+//    }
+//
+//    @Override
+//    public RecipeCondition fromNetwork(FriendlyByteBuf buf) {
+//        super.fromNetwork(buf);
+//        int effectCount = buf.readVarInt();
+//        this.effects = new MobEffect[effectCount];
+//        for (int i = 0; i < effectCount; i++) {
+//            ResourceLocation effectId = buf.readResourceLocation();
+//            this.effects[i] = BuiltInRegistries.MOB_EFFECT.get(effectId);
+//        }
+//        return this;
+//    }
+//
+//    @Override
+//    public void toNetwork(FriendlyByteBuf buf) {
+//        super.toNetwork(buf);
+//        buf.writeVarInt(effects.length);
+//        for (MobEffect effect : effects) {
+//            buf.writeResourceLocation(BuiltInRegistries.MOB_EFFECT.getKey(effect));
+//        }
+//    }
 }

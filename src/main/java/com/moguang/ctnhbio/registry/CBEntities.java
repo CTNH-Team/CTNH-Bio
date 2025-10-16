@@ -15,11 +15,13 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 public class CBEntities {
     public static EntityEntry<LivingMetaMachineEntity> LIVING_META_MACHINE_ENTITY = REGISTRATE
             .entity("living_machine", LivingMetaMachineEntity::create, MobCategory.CREATURE)
+            .cnlang("活体机器")
+            .lang("Living Machine")
             .properties(props -> props.sized(0.9F, 0.9F))
             .attributes(LivingMetaMachineEntity::createAttributes)
             .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
             .renderer(() -> BasicLivingMachineEntityRenderer::new)
-            .lang("Living Machine")
+
             .register();
 
     public static EntityEntry<Brain> BRAIN_IN_A_VAT_BRAIN = REGISTRATE

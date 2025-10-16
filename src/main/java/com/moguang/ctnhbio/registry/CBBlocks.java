@@ -28,6 +28,7 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 public class CBBlocks {
 
     public static final BlockEntry<Block> FLESH_CASING = createCasingBlock("flesh_casing",
+            "血肉机械方块",
             CTNHBio.id("block/casings/flesh_casing"));
     public static final BlockEntry<Block> PRIMAL_FLESH_CASING = createCasingBlock("primal_flesh_casing",
             CTNHBio.id("block/casings/primal_flesh_casing"));
@@ -64,6 +65,11 @@ public class CBBlocks {
         return createCasingBlock(name, Block::new, texture, () -> Blocks.IRON_BLOCK,
                 () -> RenderType::cutoutMipped);
     }
+    public static BlockEntry<Block> createCasingBlock(String name, String cnname, ResourceLocation texture) {
+        return createCasingBlock(name, cnname,  Block::new, texture, () -> Blocks.IRON_BLOCK,
+                () -> RenderType::cutoutMipped);
+    }
+
     private static BlockEntry<Block> createGlassCasingBlock(String name, ResourceLocation texture, Supplier<Supplier<RenderType>> type) {
         return createCasingBlock(name, GlassBlock::new, texture, () -> Blocks.GLASS, type);
     }
@@ -105,6 +111,25 @@ public class CBBlocks {
                 .register();
     }
 
+    public static BlockEntry<Block> createCasingBlock(String name,
+                                                      String cnname,
+                                                      NonNullFunction<BlockBehaviour.Properties, Block> blockSupplier,
+                                                      ResourceLocation texture,
+                                                      NonNullSupplier<? extends Block> properties,
+                                                      Supplier<Supplier<RenderType>> type) {
+        return REGISTRATE.block(name, blockSupplier)
+                .cnlang(cnname)
+                .initialProperties(properties)
+                .properties(p -> p.isValidSpawn((state, level, pos, ent) -> false))
+                .addLayer(type)
+                .blockstate((ctx, prov) -> {
+                    prov.simpleBlock(ctx.getEntry(), prov.models().cubeAll(name, texture));
+                })
+                .tag(TagKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.tryBuild("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
+                .item(BlockItem::new)
+                .build()
+                .register();
+    }
 
     public static void init() {}
 }

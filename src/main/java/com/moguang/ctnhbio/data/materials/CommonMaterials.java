@@ -12,6 +12,8 @@ import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlag
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 
+import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
+
 public class CommonMaterials {
 
 
@@ -19,7 +21,9 @@ public class CommonMaterials {
     public static Material BLOODSTEEL;
 
     public static void register() {
-        WEIRD_PIXEL_DUST = new Material.Builder(CTNHBio.id("weird_pixel_dust"))
+        WEIRD_PIXEL_DUST = REGISTRATE.material(CTNHBio.id("weird_pixel_dust"))
+                .lang("WEIRD PIXEL DUST")
+                .cnlang("非常怪异的尘埃")
                 .dust()
                 .color(0xC0D848)
                 .secondaryColor(0x789C38)

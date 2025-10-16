@@ -9,6 +9,7 @@ import com.moguang.ctnhbio.machine.multiblock.MultiblocksA;
 import com.moguang.ctnhbio.registry.*;
 import net.minecraftforge.common.data.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
+import tech.vixhentx.mcmod.ctnhlib.registrate.lang.RegistrateCNLangProvider;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class ChineseLangHandler {
         provider.addItem(CBItems.NOVA_CORE, "灵蜕核心");
         provider.addItem(CBItems.OMNI_CORE, "终观核心");
 
-        provider.addItem(CBItems.WETWARE_CAPACITOR, "湿件电容");
+        //provider.addItem(CBItems.WETWARE_CAPACITOR, "湿件电容");
         provider.addItem(CBItems.WETWARE_DIODE, "湿件二极管");
         provider.addItem(CBItems.WETWARE_INDUCTOR, "湿件电感");
         provider.addItem(CBItems.WETWARE_RESISTOR, "湿件电阻");
@@ -33,7 +34,7 @@ public class ChineseLangHandler {
         provider.addItem(CBItems.ORGANIC_VIAL, "有机%s试管");
         provider.addItem(CBItems.ORGANIC_BEAKER, "有机%s烧杯");
 
-        provider.addBlock(CBBlocks.FLESH_CASING, "血肉机械方块");
+        //provider.addBlock(CBBlocks.FLESH_CASING, "血肉机械方块");
         provider.addBlock(CBBlocks.ORNATE_FLESH_CASING, "装饰性机械方块");
         provider.addBlock(CBBlocks.PRIMAL_FLESH_CASING, "原初机械方块");
         provider.addBlock(CBBlocks.ACID_FLESH_CASING, "酸液机械方块");
@@ -48,43 +49,43 @@ public class ChineseLangHandler {
 
         provider.addBlock(CBBlocks.IMPERMEABLE_MEMBRANE, "不渗透膜");
 
-        provider.add(CBMachines.BIOELECTRIC_FORGE[LV].getBlock(), "基础生物电炉");
-        provider.add(CBMachines.BIOELECTRIC_FORGE[MV].getBlock(), "§b进阶生物电炉§r");
-        provider.add(CBMachines.BIOELECTRIC_FORGE[HV].getBlock(), "§6进阶生物电炉 II§r");
-        provider.add(CBMachines.BIOELECTRIC_FORGE[EV].getBlock(), "§5进阶生物电炉 III§r");
-        provider.add(CBMachines.BIOELECTRIC_FORGE[IV].getBlock(), "§9精英生物电炉§r");
+//        provider.add(CBMachines.BIOELECTRIC_FORGE[LV].getBlock(), "基础生物电炉");
+//        provider.add(CBMachines.BIOELECTRIC_FORGE[MV].getBlock(), "§b进阶生物电炉§r");
+//        provider.add(CBMachines.BIOELECTRIC_FORGE[HV].getBlock(), "§6进阶生物电炉 II§r");
+//        provider.add(CBMachines.BIOELECTRIC_FORGE[EV].getBlock(), "§5进阶生物电炉 III§r");
+//        provider.add(CBMachines.BIOELECTRIC_FORGE[IV].getBlock(), "§9精英生物电炉§r");
 
-        provider.add(CBMachines.DECOMPOSER[LV].getBlock(), "基础电力分解者");
-        provider.add(CBMachines.DECOMPOSER[MV].getBlock(), "§b进阶电力分解者§r");
-        provider.add(CBMachines.DECOMPOSER[HV].getBlock(), "§6进阶电力分解者 II§r");
-        provider.add(CBMachines.DECOMPOSER[EV].getBlock(), "§5进阶电力分解者 III§r");
-        provider.add(CBMachines.DECOMPOSER[IV].getBlock(), "§9精英电力分解者§r");
-
-        provider.add(CBMachines.DIGESTER[LV].getBlock(), "基础电力消化器");
-        provider.add(CBMachines.DIGESTER[MV].getBlock(), "§b进阶电力消化器§r");
-        provider.add(CBMachines.DIGESTER[HV].getBlock(), "§6进阶电力消化器 II§r");
-        provider.add(CBMachines.DIGESTER[EV].getBlock(), "§5进阶电力消化器 III§r");
-        provider.add(CBMachines.DIGESTER[IV].getBlock(), "§9精英电力消化器§r");
-
-        provider.add(CBMachines.BIOREACTOR[LV].getBlock(), "基础生物反应腔");
-        provider.add(CBMachines.BIOREACTOR[MV].getBlock(), "§b进阶生物反应腔§r");
-        provider.add(CBMachines.BIOREACTOR[HV].getBlock(), "§6进阶生物反应腔 II§r");
-        provider.add(CBMachines.BIOREACTOR[EV].getBlock(), "§5进阶生物反应腔 III§r");
-        provider.add(CBMachines.BIOREACTOR[IV].getBlock(), "§9精英生物反应腔§r");
+//        provider.add(CBMachines.DECOMPOSER[LV].getBlock(), "基础电力分解者");
+//        provider.add(CBMachines.DECOMPOSER[MV].getBlock(), "§b进阶电力分解者§r");
+//        provider.add(CBMachines.DECOMPOSER[HV].getBlock(), "§6进阶电力分解者 II§r");
+//        provider.add(CBMachines.DECOMPOSER[EV].getBlock(), "§5进阶电力分解者 III§r");
+//        provider.add(CBMachines.DECOMPOSER[IV].getBlock(), "§9精英电力分解者§r");
+//
+//        provider.add(CBMachines.DIGESTER[LV].getBlock(), "基础电力消化器");
+//        provider.add(CBMachines.DIGESTER[MV].getBlock(), "§b进阶电力消化器§r");
+//        provider.add(CBMachines.DIGESTER[HV].getBlock(), "§6进阶电力消化器 II§r");
+//        provider.add(CBMachines.DIGESTER[EV].getBlock(), "§5进阶电力消化器 III§r");
+//        provider.add(CBMachines.DIGESTER[IV].getBlock(), "§9精英电力消化器§r");
+//
+//        provider.add(CBMachines.BIOREACTOR[LV].getBlock(), "基础生物反应腔");
+//        provider.add(CBMachines.BIOREACTOR[MV].getBlock(), "§b进阶生物反应腔§r");
+//        provider.add(CBMachines.BIOREACTOR[HV].getBlock(), "§6进阶生物反应腔 II§r");
+//        provider.add(CBMachines.BIOREACTOR[EV].getBlock(), "§5进阶生物反应腔 III§r");
+//        provider.add(CBMachines.BIOREACTOR[IV].getBlock(), "§9精英生物反应腔§r");
 
         provider.add(CBMachines.BRAIN_IN_A_VAT[HV].getBlock(), "§6HV 缸中之脑§r");
         provider.add(CBMachines.BRAIN_IN_A_VAT[EV].getBlock(), "§5EV 缸中之脑§r");
         provider.add(CBMachines.BRAIN_IN_A_VAT[IV].getBlock(), "§9IV 缸中之脑§r");
         provider.add(CBMachines.BRAIN_IN_A_VAT[LuV].getBlock(), "§dLuV 缸中之脑§r");
 
-        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.1", "§3自动化思考");
-        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.2", "§r电量和营养充足时,提供%d算力");
-        provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.3", "§r超频可提供双倍算力，但会对大脑造成不可逆损伤");
+        //provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.1", "§3自动化思考");
+        //provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.2", "§r电量和营养充足时,提供%d算力");
+        //provider.add("ctnhbio.machine.brain_in_a_vat.tooltip.3", "§r超频可提供双倍算力，但会对大脑造成不可逆损伤");
 
-        provider.add("ctnhbio.machine.hv_brain_in_a_vat.tooltip.0", "它觉得自己是一名出色的格雷员工");
-        provider.add("ctnhbio.machine.ev_brain_in_a_vat.tooltip.0", "它正在优化铂系金属处理产线");
-        provider.add("ctnhbio.machine.iv_brain_in_a_vat.tooltip.0", "它喜欢熬夜玩CTNH，这样不太好");
-        provider.add("ctnhbio.machine.luv_brain_in_a_vat.tooltip.0", "它又开始自我怀疑了，重启一下吧");
+//        provider.add("ctnhbio.machine.hv_brain_in_a_vat.tooltip.0", "它觉得自己是一名出色的格雷员工");
+//        provider.add("ctnhbio.machine.ev_brain_in_a_vat.tooltip.0", "它正在优化铂系金属处理产线");
+//        provider.add("ctnhbio.machine.iv_brain_in_a_vat.tooltip.0", "它喜欢熬夜玩CTNH，这样不太好");
+//        provider.add("ctnhbio.machine.luv_brain_in_a_vat.tooltip.0", "它又开始自我怀疑了，重启一下吧");
 
         provider.add(MultiblocksA.GREAT_FLESH.getBlock(), "巨型肉块");
         provider.add(MultiblocksA.COGNI_ASSEMBLER.getBlock(), "意识装配机");
@@ -105,19 +106,19 @@ public class ChineseLangHandler {
 
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
 
-        provider.add("gtceu.bioelectric_forge", "生物电炉");
+        //provider.add("gtceu.bioelectric_forge", "生物电炉");
         provider.add("gtceu.decomposer", "电力分解");
         provider.add("gtceu.digest", "电力消化");
         provider.add("gtceu.ctnhbio_reactor", "生物反应");
         provider.add("gtceu.basic_living", "摄入营养");
         provider.add("gtceu.great_flesh", "巨型肉块-分化");
-        provider.add(CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY.registryName.toLanguageKey(), "意识装配");
+        //provider.add(CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY.registryName.toLanguageKey(), "意识装配");
 
         provider.add("ctnhbio.nutrient_bar.info", "营养:");
         provider.add("recipe.capability.nutrient.name", "营养");
         provider.add("jade.nutrient.info", "营养值：");
 
-        provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
+        //provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
         provider.add("ctnhbio.recipe.nutrient_consume", "营养消耗：%d");
         provider.add("ctnhbio.recipe.nutrient_generate", "营养获取：%d");
         provider.add("ctnhbio.jade.nutrient_stored", "%s / %s u");
@@ -142,7 +143,7 @@ public class ChineseLangHandler {
         provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4生物活性流体可能失活！");
 
         provider.add(OrganicMaterials.Regenerative_Fluid.getUnlocalizedName(), "再生粘液");
-        provider.add(OrganicMaterials.Withering_Ooze.getUnlocalizedName(), "凋灵软泥");
+        //provider.add(OrganicMaterials.Withering_Ooze.getUnlocalizedName(), "凋灵软泥");
         provider.add(OrganicMaterials.Hormone_Secretion.getUnlocalizedName(), "内分泌激素");
         provider.add(OrganicMaterials.Toxin_Extract.getUnlocalizedName(), "毒素提取物");
         provider.add(OrganicMaterials.Bile.getUnlocalizedName(), "胆汁");
@@ -165,7 +166,7 @@ public class ChineseLangHandler {
         provider.add(OrganicMaterials.Primordial_Serum.getUnlocalizedName(), "原初血清");
 
         replace(provider, CommonMaterials.BLOODSTEEL.getUnlocalizedName(), "血髓钢");
-        replace(provider, CommonMaterials.WEIRD_PIXEL_DUST.getUnlocalizedName(), "富集营养");
+        //replace(provider, CommonMaterials.WEIRD_PIXEL_DUST.getUnlocalizedName(), "富集营养");
 
         //Entity Properties
         EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"实体输入","实体输出");

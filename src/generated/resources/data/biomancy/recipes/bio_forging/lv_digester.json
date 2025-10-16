@@ -1,0 +1,28 @@
+{
+  "type": "biomancy:bio_forging",
+  "bio_forge_tab": "biomancy:machines",
+  "ingredients": [
+    {
+      "count": 2,
+      "item": "biomancy:primordial_core"
+    },
+    {
+      "item": "biomancy:digester"
+    },
+    {
+      "count": 2,
+      "tag": "gtceu:circuits/mv"
+    },
+    {
+      "item": "gtceu:lv_brewery"
+    },
+    {
+      "count": 2,
+      "item": "gtceu:lv_conveyor_module"
+    }
+  ],
+  "nutrientsCost": 2,
+  "result": {
+    "item": "ctnhbio:lv_digester"
+  }
+}

@@ -186,8 +186,9 @@ public class BioelectrlcForgeRecipes {
 // 培养皿
         CBRecipeBuilder.of(CTNHBio.id("vial"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(12)
-                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 1)
-                .outputItems(ModItems.VIAL.get().getDefaultInstance())
+                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 2)
+                .circuitMeta(1)
+                .outputItems(CBItems.ORGANIC_VIAL)
                 .EUt(8)
                 .duration(50)
                 .save(provider);
@@ -655,7 +656,7 @@ public class BioelectrlcForgeRecipes {
                 .effect(MobEffects.REGENERATION)
                 .inputItems(ModItems.PRIMORDIAL_CORE.get().getDefaultInstance())
                 .inputItems(TagPrefix.frameGt,Titanium,1)
-                .inputItems(TagPrefix.gearSmall,BlackSteel,1)
+                .inputItems(TagPrefix.gear,BlackSteel,1)
                 .inputItems(CustomTags.IV_CIRCUITS,2)
                 .inputItems(GTItems.QUANTUM_STAR.get(),2)
                 .inputItems(TagPrefix.gemFlawless,Emerald,30)

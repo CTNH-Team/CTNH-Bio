@@ -9,10 +9,13 @@ import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.CBDatagen;
 import com.moguang.ctnhbio.data.materials.OrganicMaterials;
 import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
+import com.moguang.ctnhbio.integration.jade.LivingMachineStatusProvider;
 import com.moguang.ctnhbio.registry.CBCreativeModeTabs;
 import com.moguang.ctnhbio.registry.CBEntities;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBSerums;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import com.moguang.ctnhbio.registry.*;
 import net.minecraft.server.packs.PackType;
@@ -21,6 +24,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import tech.vixhentx.mcmod.ctnhlib.jade.JadePriorityManager;
 
 @SuppressWarnings("removal")
 public class CommonProxy {
@@ -42,6 +46,21 @@ public class CommonProxy {
 
         PropertyOperators.init();
         EntityProperties.init();
+
+
+        JadePriorityManager.registerBlockData(
+                new LivingMachineStatusProvider(),
+                BlockEntity.class,
+                900,
+                "living_machine_status");
+
+        JadePriorityManager.registerBlockComponent(
+                new LivingMachineStatusProvider(),
+                Block.class,
+                900,
+                "living_machine_status")
+        ;
+
 
     }
 

@@ -1,0 +1,19 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "gtceu:machine",
+  "machine": "ctnhbio:hv_bioelectric_forge",
+  "variants": {
+    "recipe_logic_status=idle": {
+      "model": "biomancy:block/flesh"
+    },
+    "recipe_logic_status=suspend": {
+      "model": "biomancy:block/flesh"
+    },
+    "recipe_logic_status=waiting": {
+      "model": "biomancy:block/flesh"
+    },
+    "recipe_logic_status=working": {
+      "model": "biomancy:block/flesh"
+    }
+  }
+}

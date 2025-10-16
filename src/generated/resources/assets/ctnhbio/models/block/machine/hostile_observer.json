@@ -1,0 +1,90 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "gtceu:machine",
+  "machine": "ctnhbio:hostile_observer",
+  "texture_overrides": {
+    "all": "ctnhbio:block/casings/neural_cooling_conduit"
+  },
+  "variants": {
+    "is_formed=false,recipe_logic_status=idle": {
+      "model": {
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "ctnhbio:block/casings/neural_cooling_conduit",
+          "overlay_front": "ctnhbio:block/multiblock/red/overlay_front",
+          "overlay_front_emissive": "ctnhbio:block/multiblock/red/overlay_front_emissive"
+        }
+      }
+    },
+    "is_formed=false,recipe_logic_status=suspend": {
+      "model": {
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "ctnhbio:block/casings/neural_cooling_conduit",
+          "overlay_front": "ctnhbio:block/multiblock/red/overlay_front",
+          "overlay_front_emissive": "ctnhbio:block/multiblock/red/overlay_front_emissive"
+        }
+      }
+    },
+    "is_formed=false,recipe_logic_status=waiting": {
+      "model": {
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "ctnhbio:block/casings/neural_cooling_conduit",
+          "overlay_front": "ctnhbio:block/multiblock/red/overlay_front_active",
+          "overlay_front_emissive": "ctnhbio:block/multiblock/red/overlay_front_active_emissive"
+        }
+      }
+    },
+    "is_formed=false,recipe_logic_status=working": {
+      "model": {
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "ctnhbio:block/casings/neural_cooling_conduit",
+          "overlay_front": "ctnhbio:block/multiblock/red/overlay_front_active",
+          "overlay_front_emissive": "ctnhbio:block/multiblock/red/overlay_front_active_emissive"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=idle": {
+      "model": {
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "ctnhbio:block/casings/neural_cooling_conduit",
+          "overlay_front": "ctnhbio:block/multiblock/red/overlay_front",
+          "overlay_front_emissive": "ctnhbio:block/multiblock/red/overlay_front_emissive"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=suspend": {
+      "model": {
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "ctnhbio:block/casings/neural_cooling_conduit",
+          "overlay_front": "ctnhbio:block/multiblock/red/overlay_front",
+          "overlay_front_emissive": "ctnhbio:block/multiblock/red/overlay_front_emissive"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=waiting": {
+      "model": {
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "ctnhbio:block/casings/neural_cooling_conduit",
+          "overlay_front": "ctnhbio:block/multiblock/red/overlay_front_active",
+          "overlay_front_emissive": "ctnhbio:block/multiblock/red/overlay_front_active_emissive"
+        }
+      }
+    },
+    "is_formed=true,recipe_logic_status=working": {
+      "model": {
+        "parent": "gtceu:block/machine/template/cube_all/sided",
+        "textures": {
+          "all": "ctnhbio:block/casings/neural_cooling_conduit",
+          "overlay_front": "ctnhbio:block/multiblock/red/overlay_front_active",
+          "overlay_front_emissive": "ctnhbio:block/multiblock/red/overlay_front_active_emissive"
+        }
+      }
+    }
+  }
+}

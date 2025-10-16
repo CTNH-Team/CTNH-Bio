@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "minecraft:bread",
+      "required": false
+    },
+    {
+      "id": "minecraft:apple",
+      "required": false
+    }
+  ]
+}
