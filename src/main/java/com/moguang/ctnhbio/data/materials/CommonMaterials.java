@@ -22,7 +22,7 @@ public class CommonMaterials {
 
     public static void register() {
         WEIRD_PIXEL_DUST = REGISTRATE.material(CTNHBio.id("weird_pixel_dust"))
-                .lang("WEIRD PIXEL DUST")
+                .lang("Weird Pixel Dust")
                 .cnlang("非常怪异的尘埃")
                 .dust()
                 .color(0xC0D848)
@@ -31,7 +31,9 @@ public class CommonMaterials {
                 .components(Carbon, 1, Hydrogen, 4, Oxygen, 3)
                 .flags(NO_SMASHING)
                 .buildAndRegister();
-        BLOODSTEEL = new Material.Builder(CTNHBio.id("bloodsteel"))
+        BLOODSTEEL = REGISTRATE.material(CTNHBio.id("bloodsteel"))
+                .lang("Blood Steel")
+                .cnlang("血髓钢")
                 .dust()
                 .ingot()
                 .liquid()

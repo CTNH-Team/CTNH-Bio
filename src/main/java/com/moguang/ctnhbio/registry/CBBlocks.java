@@ -31,29 +31,42 @@ public class CBBlocks {
             "血肉机械方块",
             CTNHBio.id("block/casings/flesh_casing"));
     public static final BlockEntry<Block> PRIMAL_FLESH_CASING = createCasingBlock("primal_flesh_casing",
+            "原初机械方块",
             CTNHBio.id("block/casings/primal_flesh_casing"));
     public static final BlockEntry<Block> ORNATE_FLESH_CASING = createCasingBlock("ornate_flesh_casing",
+            "装饰性机械方块",
             CTNHBio.id("block/casings/ornate_flesh_casing"));
     public static final BlockEntry<Block> ACID_FLESH_CASING = createCasingBlock("acid_flesh_casing",
+            "酸液机械方块",
             CTNHBio.id("block/casings/acid_flesh_casing"));
     public static final BlockEntry<Block> BIO_ACID_CASING = createCasingBlock("bio_acid_casing",
+            "生物酸机械方块",
             CTNHBio.id("block/casings/bio_acid_casing"));
     public static final BlockEntry<Block> SYNAPTIC_CASING = createCasingBlock("synaptic_casing",
+            "神经突触机械方块",
             CTNHBio.id("block/casings/opv/opv_casing"));
     public static final BlockEntry<Block> CONSCIOUSNESS_LINKER = createCasingBlock("consciousness_linker",
+            "意识链接器",
             CTNHBio.id("block/casings/consciousness_linker"));
     public static final BlockEntry<Block> NEURAL_NETWORK_CASING = createCasingBlock("neural_network_casing",
+            "神经网络外壳",
             CTNHBio.id("block/casings/neural_network_casing"));
     public static final BlockEntry<Block> NEURAL_COOLING_CONDUIT = createCasingBlock("neural_cooling_conduit",
+            "神经冷却导管",
             CTNHBio.id("block/casings/neural_cooling_conduit"));
     public static final BlockEntry<Block> CONSCIOUSNESS_CONTROLLER = createCasingBlock("consciousness_controller",
+            "意识控制器",
             CTNHBio.id("block/casings/consciousness_controller"));
 
     public static final BlockEntry<Block> CONSCIOUSNESS_SENSOR_GLASS = createGlassCasingBlock("consciousness_sensor_glass",
-            CTNHBio.id("block/casings/consciousness_sensor_glass"), () -> RenderType::translucent);
+            "意识传感玻璃",
+            CTNHBio.id("block/casings/consciousness_sensor_glass"),
+            () -> RenderType::translucent);
 
     public static final BlockEntry<MembraneBlock> IMPERMEABLE_MEMBRANE = createMembraneBlock("impermeable_membrane",
-            CTNHBio.id("block/membrane/impermeable_membrane"), () -> RenderType::translucent);
+            "不渗透膜",
+            CTNHBio.id("block/membrane/impermeable_membrane"),
+            () -> RenderType::translucent);
 
 //    //联体桥
 //    public static final BlockEntry<Block> PARABIOTIC_BRIDGE = REGISTRATE.block("parabiotic_bridge", Block::new)
@@ -70,12 +83,14 @@ public class CBBlocks {
                 () -> RenderType::cutoutMipped);
     }
 
-    private static BlockEntry<Block> createGlassCasingBlock(String name, ResourceLocation texture, Supplier<Supplier<RenderType>> type) {
-        return createCasingBlock(name, GlassBlock::new, texture, () -> Blocks.GLASS, type);
+    private static BlockEntry<Block> createGlassCasingBlock(String name, String cnname, ResourceLocation texture, Supplier<Supplier<RenderType>> type) {
+        return createCasingBlock(name, cnname,  GlassBlock::new, texture, () -> Blocks.GLASS, type);
     }
-    private static BlockEntry<MembraneBlock> createMembraneBlock(String name, ResourceLocation texture,
+
+    private static BlockEntry<MembraneBlock> createMembraneBlock(String name, String cnname, ResourceLocation texture,
                                                                  Supplier<Supplier<RenderType>> type) {
         return REGISTRATE.block(name, p -> new MembraneBlock(p, IgnoreEntityCollisionPredicate.NEVER))
+                .cnlang(cnname)
                 .initialProperties(() -> Blocks.GLASS)
                 .properties(p ->
                         p.isValidSpawn((state, level, pos, ent) -> false)

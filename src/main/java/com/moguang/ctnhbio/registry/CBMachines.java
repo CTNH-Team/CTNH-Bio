@@ -149,9 +149,9 @@ public class CBMachines {
                 "§r超频可提供双倍算力，但会对大脑造成不可逆损伤"
         })
         @EN({
-                "1",
-                "2",
-                "3"
+                "§3Automated Thinking",
+                "§rProvides %d compute power when power and nutrition are sufficient",
+                "§rOverclocking provides double compute power, but causes irreversible brain damage"
         })
         static Lang[] tooltip;
 

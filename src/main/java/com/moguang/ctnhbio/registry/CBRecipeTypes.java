@@ -40,27 +40,35 @@ public class CBRecipeTypes {
                 .setSound(GTSoundEntries.CHEMICAL)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        DECOMPOSER_RECIPES = GTRecipeTypes.register("decomposer", NUTRIENT)
+        DECOMPOSER_RECIPES = REGISTRATE.recipeType(CTNHBio.id("decomposer"), NUTRIENT)
+                .cnlang("电力分解")
+                .lang("Decomposer")
                 .setMaxIOSize(2, 6, 1, 3)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_MACERATE, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        DIGEST_RECIPES = GTRecipeTypes.register("digest", NUTRIENT)
+        DIGEST_RECIPES = REGISTRATE.recipeType(CTNHBio.id("digest"), NUTRIENT)
+                .cnlang("电力消化")
+                .lang("Digest")
                 .setMaxIOSize(2, 2, 2, 2)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setSound(CBSoundEntries.DIGESTER_CRAFTING)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        BIO_REACTOR_RECIPES = GTRecipeTypes.register("ctnhbio_reactor", NUTRIENT)
+        BIO_REACTOR_RECIPES = REGISTRATE.recipeType(CTNHBio.id("ctnhbio_reactor"), NUTRIENT)
+                .cnlang("生物反应")
+                .lang("Bio Reactor")
                 .setMaxIOSize(3, 3, 3, 3)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setSound(GTSoundEntries.CHEMICAL)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        BRAIN_IN_A_VAT_RECIPES = GTRecipeTypes.register("brain_in_a_vat", NUTRIENT)
+        BRAIN_IN_A_VAT_RECIPES = REGISTRATE.recipeType(CTNHBio.id("brain_in_a_vat"), NUTRIENT)
+                .cnlang("缸中之脑")
+                .lang("Brain In A Vat")
                 .setMaxIOSize(1, 0, 1, 0)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
@@ -74,13 +82,17 @@ public class CBRecipeTypes {
                 .setSound(CBSoundEntries.EAT)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        GREAT_FLESH = GTRecipeTypes.register("great_flesh", NUTRIENT)
+        GREAT_FLESH = REGISTRATE.recipeType(CTNHBio.id("great_flesh"), NUTRIENT)
+                .cnlang("巨型肉块-分化")
+                .lang("Great Flesh")
                 .setMaxIOSize(6, 0, 3, 0)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        CONSCIOUSNESS_ASSEMBLY = GTRecipeTypes.register("consciousness_assembly", NUTRIENT)
+        CONSCIOUSNESS_ASSEMBLY = REGISTRATE.recipeType(CTNHBio.id("consciousness_assembly"), NUTRIENT)
+                .cnlang("意识装配")
+                .lang("Consciousness Assembly")
                 .setMaxIOSize(15, 1, 3, 0)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
