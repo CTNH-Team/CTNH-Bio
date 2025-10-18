@@ -9,6 +9,7 @@ import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 import com.moguang.ctnhbio.CTNHBio;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
@@ -75,7 +76,9 @@ public class CBRecipeTypes {
                 .setSound(GTSoundEntries.SCIENCE)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_BOILER_HEAT, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        BASIC_LIVING_RECIPES = GTRecipeTypes.register("basic_living", NUTRIENT)
+        BASIC_LIVING_RECIPES = REGISTRATE.recipeType(CTNHBio.id("basic_living"), NUTRIENT)
+                .cnlang("摄入营养")
+                .lang("Living")
                 .setMaxIOSize(1, 0, 1, 0)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)

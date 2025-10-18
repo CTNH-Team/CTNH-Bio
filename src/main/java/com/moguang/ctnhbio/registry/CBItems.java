@@ -30,15 +30,12 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Domain;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
-@Prefix("coreitem")
+@Suffix("tooltip")
 public class CBItems {
     public static void init() {
         CBMaterialItems.generateTools();
