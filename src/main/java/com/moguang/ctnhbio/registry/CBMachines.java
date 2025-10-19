@@ -51,9 +51,9 @@ public class CBMachines {
     public static final MachineDefinition[] BIOREACTOR = new MachineDefinition[GTValues.TIER_COUNT];
     public static final MachineDefinition[] BRAIN_IN_A_VAT = new MachineDefinition[GTValues.TIER_COUNT];
 
-    @CN("反应器")
-    //@EN("reactor")
-    static Lang bioreactor_tooltip;
+//    @CN("反应器")
+//    //@EN("reactor")
+//    static Lang bioreactor_tooltip;
 
     static {
         REGISTRATE.creativeModeTab(() -> CBCreativeModeTabs.ITEM);
@@ -137,7 +137,6 @@ public class CBMachines {
                             true)
                     .cnLangValue(getCNName(id, tier))
                     .langValue(getENName(id, tier))
-                    .tooltips(bioreactor_tooltip.translate())
                     .register();
         }
     }

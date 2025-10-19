@@ -2,6 +2,7 @@ package com.moguang.ctnhbio.mixin.gtm;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
+import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiPart;
 import com.gregtechceu.gtceu.api.machine.trait.ICapabilityTrait;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableFluidTank;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
@@ -24,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,7 +41,15 @@ public abstract class NotifiableFluidTankMixin extends NotifiableRecipeHandlerTr
             remap = false)
     public void handlerRecipeInner(IO io, GTRecipe recipe, List<FluidIngredient> left, boolean simulate, CallbackInfoReturnable<List<FluidIngredient>> cir, Runnable[] listeners, boolean changed, IFluidHandler.FluidAction action, FluidStack[] visited, Iterator it, FluidIngredient ingredient, FluidStack[] fluids, int amount, int tank, FluidStack current, int count) {
         if (recipe != null && recipe.data.getBoolean("potion") && !simulate) {
-            if (getMachine() instanceof ILivingMachine livingMachine) {
+            List<ILivingMachine> livingMachines = new ArrayList<>();
+            if (getMachine() instanceof ILivingMachine machine) {
+                livingMachines.add(machine);
+            } else if (getMachine() instanceof IMultiPart multiPart) {
+                multiPart.getControllers()
+                        .stream().filter(c -> c instanceof ILivingMachine)
+                        .forEach( c-> livingMachines.add((ILivingMachine)c));
+            }
+            for (ILivingMachine livingMachine : livingMachines) {
                 if (current.hasTag()) {
                     ListTag effects = current.getOrCreateTag().getList("CustomPotionEffects", 9);
                     for (var effect : effects) {

@@ -367,6 +367,7 @@ public class BioReactorRecipes {
         //乙醇
         CBRecipeBuilder.of(CTNHBio.id("ethanol_cb"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(10)
+                .circuitMeta(1)
                 .inputItems(Items.SUGAR,24)
                 .outputFluidsRanged(new FluidStack(Ethanol.getFluid(), 1), UniformInt.of(1500, 3000))
                 .EUt(GTValues.V[GTValues.MV])

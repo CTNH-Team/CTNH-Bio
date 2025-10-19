@@ -87,11 +87,11 @@ public class ChineseLangHandler {
 //        provider.add("ctnhbio.machine.iv_brain_in_a_vat.tooltip.0", "它喜欢熬夜玩CTNH，这样不太好");
 //        provider.add("ctnhbio.machine.luv_brain_in_a_vat.tooltip.0", "它又开始自我怀疑了，重启一下吧");
 
-        provider.add(MultiblocksA.GREAT_FLESH.getBlock(), "巨型肉块");
-        provider.add(MultiblocksA.COGNI_ASSEMBLER.getBlock(), "意识装配机");
-        provider.add(MultiblocksA.CIRCULATORY_SYSTEM.getBlock(), "循环系统");
-        provider.add(MultiblocksA.WEATHERER.getBlock(), "风化器");
-        provider.add(MultiblocksA.HOSTILE_OBSERVER.getBlock(), "敌意观测站");
+//        provider.add(MultiblocksA.GREAT_FLESH.getBlock(), "巨型肉块");
+//        provider.add(MultiblocksA.COGNI_ASSEMBLER.getBlock(), "意识装配机");
+//        provider.add(MultiblocksA.CIRCULATORY_SYSTEM.getBlock(), "循环系统");
+//        provider.add(MultiblocksA.WEATHERER.getBlock(), "风化器");
+//        provider.add(MultiblocksA.HOSTILE_OBSERVER.getBlock(), "敌意观测站");
 
         provider.add("ctnhbio.great_flesh.info.0", "§5喂食原初温床，并给予其治疗药水，温床会孵化出肉块，挑选出有潜质的那些（不饥饿的那些）。");
         provider.add("ctnhbio.great_flesh.info.1", "§5使用有机试管把原初血清装载入活体注射器，向它们注射，");
