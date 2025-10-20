@@ -19,35 +19,35 @@ import static com.gregtechceu.gtceu.api.GTValues.*;
 
 public class ChineseLangHandler {
     public static void init(RegistrateCNLangProvider provider){
-        provider.addItem(CBItems.SYNET_CORE, "脉络核心");
-        provider.addItem(CBItems.META_CORE, "拓扑核心");
-        provider.addItem(CBItems.NOVA_CORE, "灵蜕核心");
-        provider.addItem(CBItems.OMNI_CORE, "终观核心");
+//        provider.addItem(CBItems.SYNET_CORE, "脉络核心");
+//        provider.addItem(CBItems.META_CORE, "拓扑核心");
+//        provider.addItem(CBItems.NOVA_CORE, "灵蜕核心");
+//        provider.addItem(CBItems.OMNI_CORE, "终观核心");
 
         //provider.addItem(CBItems.WETWARE_CAPACITOR, "湿件电容");
-        provider.addItem(CBItems.WETWARE_DIODE, "湿件二极管");
-        provider.addItem(CBItems.WETWARE_INDUCTOR, "湿件电感");
-        provider.addItem(CBItems.WETWARE_RESISTOR, "湿件电阻");
-        provider.addItem(CBItems.WETWARE_TRANSISTOR, "湿件晶体管");
-        provider.addItem(CBItems.WETWARE_CIRCUIT_BOARD, "湿件电路基板");
-        provider.addItem(CBItems.WETWARE_PRINTED_CIRCUIT_BOARD, "湿件印刷电路基板");
-        provider.addItem(CBItems.ORGANIC_VIAL, "有机%s试管");
-        provider.addItem(CBItems.ORGANIC_BEAKER, "有机%s烧杯");
+//        provider.addItem(CBItems.WETWARE_DIODE, "湿件二极管");
+//        provider.addItem(CBItems.WETWARE_INDUCTOR, "湿件电感");
+//        provider.addItem(CBItems.WETWARE_RESISTOR, "湿件电阻");
+//        provider.addItem(CBItems.WETWARE_TRANSISTOR, "湿件晶体管");
+//        provider.addItem(CBItems.WETWARE_CIRCUIT_BOARD, "湿件电路基板");
+//        provider.addItem(CBItems.WETWARE_PRINTED_CIRCUIT_BOARD, "湿件印刷电路基板");
+//        provider.addItem(CBItems.ORGANIC_VIAL, "有机%s试管");
+//        provider.addItem(CBItems.ORGANIC_BEAKER, "有机%s烧杯");
 
         //provider.addBlock(CBBlocks.FLESH_CASING, "血肉机械方块");
-        provider.addBlock(CBBlocks.ORNATE_FLESH_CASING, "装饰性机械方块");
-        provider.addBlock(CBBlocks.PRIMAL_FLESH_CASING, "原初机械方块");
-        provider.addBlock(CBBlocks.ACID_FLESH_CASING, "酸液机械方块");
-        provider.addBlock(CBBlocks.BIO_ACID_CASING, "生物酸机械方块");
-        provider.addBlock(CBBlocks.SYNAPTIC_CASING, "神经突触机械方块");
-
-        provider.addBlock(CBBlocks.CONSCIOUSNESS_LINKER, "意识链接器");
-        provider.addBlock(CBBlocks.NEURAL_NETWORK_CASING, "神经网络外壳");
-        provider.addBlock(CBBlocks.NEURAL_COOLING_CONDUIT, "神经冷却导管");
-        provider.addBlock(CBBlocks.CONSCIOUSNESS_CONTROLLER, "意识控制器");
-        provider.addBlock(CBBlocks.CONSCIOUSNESS_SENSOR_GLASS, "意识传感玻璃");
-
-        provider.addBlock(CBBlocks.IMPERMEABLE_MEMBRANE, "不渗透膜");
+//        provider.addBlock(CBBlocks.ORNATE_FLESH_CASING, "装饰性机械方块");
+//        provider.addBlock(CBBlocks.PRIMAL_FLESH_CASING, "原初机械方块");
+//        provider.addBlock(CBBlocks.ACID_FLESH_CASING, "酸液机械方块");
+//        provider.addBlock(CBBlocks.BIO_ACID_CASING, "生物酸机械方块");
+//        provider.addBlock(CBBlocks.SYNAPTIC_CASING, "神经突触机械方块");
+//
+//        provider.addBlock(CBBlocks.CONSCIOUSNESS_LINKER, "意识链接器");
+//        provider.addBlock(CBBlocks.NEURAL_NETWORK_CASING, "神经网络外壳");
+//        provider.addBlock(CBBlocks.NEURAL_COOLING_CONDUIT, "神经冷却导管");
+//        provider.addBlock(CBBlocks.CONSCIOUSNESS_CONTROLLER, "意识控制器");
+//        provider.addBlock(CBBlocks.CONSCIOUSNESS_SENSOR_GLASS, "意识传感玻璃");
+//
+//        provider.addBlock(CBBlocks.IMPERMEABLE_MEMBRANE, "不渗透膜");
 
 //        provider.add(CBMachines.BIOELECTRIC_FORGE[LV].getBlock(), "基础生物电炉");
 //        provider.add(CBMachines.BIOELECTRIC_FORGE[MV].getBlock(), "§b进阶生物电炉§r");
@@ -87,11 +87,11 @@ public class ChineseLangHandler {
 //        provider.add("ctnhbio.machine.iv_brain_in_a_vat.tooltip.0", "它喜欢熬夜玩CTNH，这样不太好");
 //        provider.add("ctnhbio.machine.luv_brain_in_a_vat.tooltip.0", "它又开始自我怀疑了，重启一下吧");
 
-        provider.add(MultiblocksA.GREAT_FLESH.getBlock(), "巨型肉块");
-        provider.add(MultiblocksA.COGNI_ASSEMBLER.getBlock(), "意识装配机");
-        provider.add(MultiblocksA.CIRCULATORY_SYSTEM.getBlock(), "循环系统");
-        provider.add(MultiblocksA.WEATHERER.getBlock(), "风化器");
-        provider.add(MultiblocksA.HOSTILE_OBSERVER.getBlock(), "敌意观测站");
+//        provider.add(MultiblocksA.GREAT_FLESH.getBlock(), "巨型肉块");
+//        provider.add(MultiblocksA.COGNI_ASSEMBLER.getBlock(), "意识装配机");
+//        provider.add(MultiblocksA.CIRCULATORY_SYSTEM.getBlock(), "循环系统");
+//        provider.add(MultiblocksA.WEATHERER.getBlock(), "风化器");
+//        provider.add(MultiblocksA.HOSTILE_OBSERVER.getBlock(), "敌意观测站");
 
         provider.add("ctnhbio.great_flesh.info.0", "§5喂食原初温床，并给予其治疗药水，温床会孵化出肉块，挑选出有潜质的那些（不饥饿的那些）。");
         provider.add("ctnhbio.great_flesh.info.1", "§5使用有机试管把原初血清装载入活体注射器，向它们注射，");
@@ -107,11 +107,11 @@ public class ChineseLangHandler {
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
 
         //provider.add("gtceu.bioelectric_forge", "生物电炉");
-        provider.add("gtceu.decomposer", "电力分解");
-        provider.add("gtceu.digest", "电力消化");
-        provider.add("gtceu.ctnhbio_reactor", "生物反应");
-        provider.add("gtceu.basic_living", "摄入营养");
-        provider.add("gtceu.great_flesh", "巨型肉块-分化");
+//        provider.add("gtceu.decomposer", "电力分解");
+//        provider.add("gtceu.digest", "电力消化");
+//        provider.add("gtceu.ctnhbio_reactor", "生物反应");
+//        provider.add("gtceu.basic_living", "摄入营养");
+//        provider.add("gtceu.great_flesh", "巨型肉块-分化");
         //provider.add(CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY.registryName.toLanguageKey(), "意识装配");
 
         provider.add("ctnhbio.nutrient_bar.info", "营养:");
@@ -127,45 +127,45 @@ public class ChineseLangHandler {
         provider.add("jei.ctnhbio.tooltip.chance", "概率：");
         provider.add("jei.ctnhbio.tooltip.amount_range", "数量：%d-%d");
 
-        provider.add("ctnhbio.mv_machine.tooltip", "MV生物芯片");
-        provider.add("ctnhbio.hv_machine.tooltip", "HV生物芯片");
-        provider.add("ctnhbio.ev_machine.tooltip", "EV生物芯片");
-        provider.add("ctnhbio.iv_machine.tooltip", "IV生物芯片");
+//        provider.add("ctnhbio.mv_machine.tooltip", "MV生物芯片");
+//        provider.add("ctnhbio.hv_machine.tooltip", "HV生物芯片");
+//        provider.add("ctnhbio.ev_machine.tooltip", "EV生物芯片");
+//        provider.add("ctnhbio.iv_machine.tooltip", "IV生物芯片");
+//
+//
+//        provider.add("ctnhbio.synet_core.tooltip", "精密如血管回路的金属骨架，每一道凹槽都在规律脉动，仿佛在输送某种不可见的生命能量。");
+//        provider.add("ctnhbio.meta_core.tooltip", "不断自我折叠的几何结构，表面浮现出违反欧几里得定律的棱角，在静止中持续完成着不可能的空间变换。");
+//        provider.add("ctnhbio.nova_core.tooltip", "半透明外壳下悬浮着无数晶体碎片，它们持续剥落又再生，每次破碎都折射出不同的光谱。");
+//        provider.add("ctnhbio.omni_core.tooltip", "光滑如镜面的球体内部，有星云状物质在缓慢旋转，凝视越久越能看见其中浮现出观测者自身的轮廓。");
 
-
-        provider.add("ctnhbio.synet_core.tooltip", "精密如血管回路的金属骨架，每一道凹槽都在规律脉动，仿佛在输送某种不可见的生命能量。");
-        provider.add("ctnhbio.meta_core.tooltip", "不断自我折叠的几何结构，表面浮现出违反欧几里得定律的棱角，在静止中持续完成着不可能的空间变换。");
-        provider.add("ctnhbio.nova_core.tooltip", "半透明外壳下悬浮着无数晶体碎片，它们持续剥落又再生，每次破碎都折射出不同的光谱。");
-        provider.add("ctnhbio.omni_core.tooltip", "光滑如镜面的球体内部，有星云状物质在缓慢旋转，凝视越久越能看见其中浮现出观测者自身的轮廓。");
-
-        provider.add("ctnhbio.fluid.type_organic.tooltip", "§a生物活性流体");
-        provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§a可传输生物活性流体");
+//        provider.add("ctnhbio.fluid.type_organic.tooltip", "§a生物活性流体");
+//        provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§a可传输生物活性流体");
         provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4生物活性流体可能失活！");
 
-        provider.add(OrganicMaterials.Regenerative_Fluid.getUnlocalizedName(), "再生粘液");
-        //provider.add(OrganicMaterials.Withering_Ooze.getUnlocalizedName(), "凋灵软泥");
-        provider.add(OrganicMaterials.Hormone_Secretion.getUnlocalizedName(), "内分泌激素");
-        provider.add(OrganicMaterials.Toxin_Extract.getUnlocalizedName(), "毒素提取物");
-        provider.add(OrganicMaterials.Bile.getUnlocalizedName(), "胆汁");
-        provider.add(OrganicMaterials.Volatile_Fluid.getUnlocalizedName(), "激变分泌液");
-        provider.add(OrganicMaterials.Organic_Compound.getUnlocalizedName(), "有机化合物");
-        provider.add(OrganicMaterials.Unstable_Compound.getUnlocalizedName(), "不稳定化合物");
-        provider.add(OrganicMaterials.Genetic_Compound.getUnlocalizedName(), "遗传化合物");
-        provider.add(OrganicMaterials.Heterogeneous_Compound.getUnlocalizedName(), "异质化合物");
-        provider.add(OrganicMaterials.Healing_Compound.getUnlocalizedName(), "治愈性原液");
-        provider.add(OrganicMaterials.Decay_Essence.getUnlocalizedName(), "衰败原液");
-        provider.add(OrganicMaterials.Rejuvenation_Serum.getUnlocalizedName(), "活力血清");
-        provider.add(OrganicMaterials.Ageing_Serum.getUnlocalizedName(), "成长血清");
-        provider.add(OrganicMaterials.Enlargement_Serum.getUnlocalizedName(), "巨化血清");
-        provider.add(OrganicMaterials.Shrinking_Serum.getUnlocalizedName(), "缩小血清");
-        provider.add(OrganicMaterials.Breeding_Stimulant.getUnlocalizedName(), "配种兴奋剂");
-        provider.add(OrganicMaterials.Absorption_Boost.getUnlocalizedName(), "伤痛反应剂");
-        provider.add(OrganicMaterials.Cleansing_Serum.getUnlocalizedName(), "净化血清");
-        provider.add(OrganicMaterials.Frenzy_Serum.getUnlocalizedName(), "狂化血清");
-        provider.add(OrganicMaterials.Insomnia_Cure.getUnlocalizedName(), "失眠治疗剂");
-        provider.add(OrganicMaterials.Primordial_Serum.getUnlocalizedName(), "原初血清");
+//        provider.add(OrganicMaterials.Regenerative_Fluid.getUnlocalizedName(), "再生粘液");
+//        //provider.add(OrganicMaterials.Withering_Ooze.getUnlocalizedName(), "凋灵软泥");
+//        provider.add(OrganicMaterials.Hormone_Secretion.getUnlocalizedName(), "内分泌激素");
+//        provider.add(OrganicMaterials.Toxin_Extract.getUnlocalizedName(), "毒素提取物");
+//        provider.add(OrganicMaterials.Bile.getUnlocalizedName(), "胆汁");
+//        provider.add(OrganicMaterials.Volatile_Fluid.getUnlocalizedName(), "激变分泌液");
+//        provider.add(OrganicMaterials.Organic_Compound.getUnlocalizedName(), "有机化合物");
+//        provider.add(OrganicMaterials.Unstable_Compound.getUnlocalizedName(), "不稳定化合物");
+//        provider.add(OrganicMaterials.Genetic_Compound.getUnlocalizedName(), "遗传化合物");
+//        provider.add(OrganicMaterials.Heterogeneous_Compound.getUnlocalizedName(), "异质化合物");
+//        provider.add(OrganicMaterials.Healing_Compound.getUnlocalizedName(), "治愈性原液");
+//        provider.add(OrganicMaterials.Decay_Essence.getUnlocalizedName(), "衰败原液");
+//        provider.add(OrganicMaterials.Rejuvenation_Serum.getUnlocalizedName(), "活力血清");
+//        provider.add(OrganicMaterials.Ageing_Serum.getUnlocalizedName(), "成长血清");
+//        provider.add(OrganicMaterials.Enlargement_Serum.getUnlocalizedName(), "巨化血清");
+//        provider.add(OrganicMaterials.Shrinking_Serum.getUnlocalizedName(), "缩小血清");
+//        provider.add(OrganicMaterials.Breeding_Stimulant.getUnlocalizedName(), "配种兴奋剂");
+//        provider.add(OrganicMaterials.Absorption_Boost.getUnlocalizedName(), "伤痛反应剂");
+//        provider.add(OrganicMaterials.Cleansing_Serum.getUnlocalizedName(), "净化血清");
+//        provider.add(OrganicMaterials.Frenzy_Serum.getUnlocalizedName(), "狂化血清");
+//        provider.add(OrganicMaterials.Insomnia_Cure.getUnlocalizedName(), "失眠治疗剂");
+//        provider.add(OrganicMaterials.Primordial_Serum.getUnlocalizedName(), "原初血清");
 
-        replace(provider, CommonMaterials.BLOODSTEEL.getUnlocalizedName(), "血髓钢");
+        //replace(provider, CommonMaterials.BLOODSTEEL.getUnlocalizedName(), "血髓钢");
         //replace(provider, CommonMaterials.WEIRD_PIXEL_DUST.getUnlocalizedName(), "富集营养");
 
         //Entity Properties

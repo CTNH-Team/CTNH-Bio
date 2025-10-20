@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +32,6 @@ public class RelatedInfoJeiPlugin implements IModPlugin {
     public ResourceLocation getPluginUid() {
         return null;
     }
-
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {

@@ -160,7 +160,7 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     @Override
     public int getMaxCWUt(@NotNull Collection<IOpticalComputationProvider> seen) {
         seen.add(this);
-        int output = oc ? 2*q.CWUt : q.CWUt;
+        int output = oc ? 2*q.CWUt : (isDoubted ? q.CWUt/2 : q.CWUt);
         return isWorkingEnabled() ? output : 0;
     }
 

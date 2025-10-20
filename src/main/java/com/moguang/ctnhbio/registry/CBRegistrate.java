@@ -35,6 +35,7 @@ import org.apache.commons.lang3.function.TriFunction;
 import org.jetbrains.annotations.NotNull;
 import tech.vixhentx.mcmod.ctnhlib.registrate.CNRegistrate;
 import tech.vixhentx.mcmod.ctnhlib.registrate.builders.CTNHMachineBuilder;
+import tech.vixhentx.mcmod.ctnhlib.registrate.builders.CTNHMultiblockMachineBuilder;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Locale;
@@ -55,15 +56,17 @@ public class CBRegistrate extends CNRegistrate {
                 (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get()));
     }
 
-    public MultiblockMachineBuilder biomultiblock(String name,
-                                               Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine,
-                                               BiFunction<BlockBehaviour.Properties, MultiblockMachineDefinition, IMachineBlock> blockFactory,
-                                               BiFunction<IMachineBlock, Item.Properties, MetaMachineItem> itemFactory) {
-        return new MultiblockMachineBuilder(this, name, metaMachine,
-                blockFactory, itemFactory,
+    public CTNHMultiblockMachineBuilder biomultiblock(String name,
+                                                      Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine,
+                                                      BiFunction<BlockBehaviour.Properties, MultiblockMachineDefinition, IMachineBlock> blockFactory,
+                                                      BiFunction<IMachineBlock, Item.Properties, MetaMachineItem> itemFactory) {
+        return multiblock(
+                name,
+                metaMachine,
+                blockFactory,
+                itemFactory,
                 (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
-        ).allowFlip(false).allowExtendedFacing(false)
-                ;
+        ).allowFlip(false).allowExtendedFacing(false);
     }
 
 

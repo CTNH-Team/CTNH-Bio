@@ -46,6 +46,8 @@ public class MultiblocksA {
                     GreatFleshMachine::new,
                     (p, d) -> new LivingMultiMetaMachineBlock(p, d, true),
                     (b, p) -> new LivingMetaMachineItem(b, p, "great_flesh"))
+            .cnLangValue("巨型肉块")
+            .langValue("Giant Flesh")
             .recipeType(CBRecipeTypes.GREAT_FLESH)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAA", "AAA", "AAA")
@@ -85,6 +87,7 @@ public class MultiblocksA {
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
+            .cnLangValue("循环系统")
             .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
             .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
             .pattern(definition -> FactoryBlockPattern.start()
@@ -126,6 +129,7 @@ public class MultiblocksA {
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
+            .cnLangValue("意识装配机")
             .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES,CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY)
             .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
             .pattern(definition -> FactoryBlockPattern.start()
@@ -167,6 +171,7 @@ public class MultiblocksA {
                     LivingMultiMetaMachineBlock::new,
                     MetaMachineItem::new
             )
+            .cnLangValue("风化器")
             .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
             .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
             .pattern(definition -> FactoryBlockPattern.start()
@@ -203,6 +208,7 @@ public class MultiblocksA {
 
     public static MultiblockMachineDefinition HOSTILE_OBSERVER = REGISTRATE
             .multiblock("hostile_observer", WorkableElectricMultiblockMachine::new)
+            .cnLangValue("敌意观测站")
             .recipeType(CBRecipeTypes.GREAT_FLESH)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("################AAAAAAAAAAA################", "################AAAAAAAAAAA################", "################AAAAAAAAAAA################", "################AAABBBBBAAA################", "################ABBBCCCBBBA################", "################ABDDDDDDDBA################", "################ABBBCCCBBBA################", "################AAABBBBBAAA################", "################AAAAAAAAAAA################", "################AAAAAAAAAAA################", "################AAAAAAAAAAA################")

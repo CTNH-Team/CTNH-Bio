@@ -51,9 +51,9 @@ public class CBMachines {
     public static final MachineDefinition[] BIOREACTOR = new MachineDefinition[GTValues.TIER_COUNT];
     public static final MachineDefinition[] BRAIN_IN_A_VAT = new MachineDefinition[GTValues.TIER_COUNT];
 
-    @CN("反应器")
-    //@EN("reactor")
-    static Lang bioreactor_tooltip;
+//    @CN("反应器")
+//    //@EN("reactor")
+//    static Lang bioreactor_tooltip;
 
     static {
         REGISTRATE.creativeModeTab(() -> CBCreativeModeTabs.ITEM);
@@ -137,7 +137,6 @@ public class CBMachines {
                             true)
                     .cnLangValue(getCNName(id, tier))
                     .langValue(getENName(id, tier))
-                    .tooltips(bioreactor_tooltip.translate())
                     .register();
         }
     }
@@ -149,9 +148,9 @@ public class CBMachines {
                 "§r超频可提供双倍算力，但会对大脑造成不可逆损伤"
         })
         @EN({
-                "1",
-                "2",
-                "3"
+                "§3Automated Thinking",
+                "§rProvides %d compute power when power and nutrition are sufficient",
+                "§rOverclocking provides double compute power, but causes irreversible brain damage"
         })
         static Lang[] tooltip;
 
