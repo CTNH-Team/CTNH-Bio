@@ -135,9 +135,9 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 //                if (!player.getAbilities().instabuild && !stack.getFoodProperties(player).canAlwaysEat()) {
 //                    stack.shrink(1);
 //                }
-                getMachineEntity().eat(getLevel(), stack);
                 int nutrition = stack.getFoodProperties(null).getNutrition();
                 float saturation = stack.getFoodProperties(null).getSaturationModifier();
+                getMachineEntity().eat(getLevel(), stack);
                 storage.add(nutrition + 0.5 * saturation);
 
 //                getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
