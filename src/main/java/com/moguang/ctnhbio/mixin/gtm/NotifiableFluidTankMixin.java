@@ -54,7 +54,8 @@ public abstract class NotifiableFluidTankMixin extends NotifiableRecipeHandlerTr
                     ListTag effects = current.getOrCreateTag().getList("CustomPotionEffects", 9);
                     for (var effect : effects) {
                         MobEffectInstance mobEffectInstance = MobEffectInstance.load((CompoundTag) effect);
-                        appendEffect(livingMachine.getMachineEntity(), mobEffectInstance);
+                        if(mobEffectInstance != null)
+                            appendEffect(livingMachine.getMachineEntity(), mobEffectInstance);
                     }
                     var potion = current.getOrCreateTag().getString("Potion");
                     Potion potion1 = BuiltInRegistries.POTION.get(ResourceLocation.parse(potion));
@@ -70,11 +71,11 @@ public abstract class NotifiableFluidTankMixin extends NotifiableRecipeHandlerTr
     public void appendEffect(LivingEntity entity, MobEffectInstance mobEffect) {
         MobEffectInstance existEffect = entity.getEffect(mobEffect.getEffect());
         if (existEffect != null) {
-            MobEffectInstance newEffect = new MobEffectInstance(existEffect.getEffect(), existEffect.getDuration() + mobEffect.getDuration() / 5, existEffect.getAmplifier(), existEffect.isAmbient(), existEffect.isVisible(), existEffect.showIcon());
+            MobEffectInstance newEffect = new MobEffectInstance(existEffect.getEffect(), existEffect.getDuration() + mobEffect.getDuration(), existEffect.getAmplifier(), existEffect.isAmbient(), existEffect.isVisible(), existEffect.showIcon());
             entity.addEffect(newEffect);
         }
         else {
-            entity.addEffect(new MobEffectInstance(mobEffect.getEffect(), mobEffect.getDuration() / 5, mobEffect.getAmplifier(), mobEffect.isAmbient(), mobEffect.isVisible(), mobEffect.showIcon()));
+            entity.addEffect(new MobEffectInstance(mobEffect.getEffect(), mobEffect.getDuration(), mobEffect.getAmplifier(), mobEffect.isAmbient(), mobEffect.isVisible(), mobEffect.showIcon()));
         }
     }
 }

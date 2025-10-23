@@ -57,7 +57,6 @@ import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 
 import java.util.*;
 import java.util.function.BiFunction;
-@Domain("whatfk")
 public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMachine {
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(BasicLivingMachine.class, SimpleTieredMachine.MANAGED_FIELD_HOLDER);
     @Persisted
@@ -135,9 +134,9 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 //                if (!player.getAbilities().instabuild && !stack.getFoodProperties(player).canAlwaysEat()) {
 //                    stack.shrink(1);
 //                }
-                getMachineEntity().eat(getLevel(), stack);
                 int nutrition = stack.getFoodProperties(null).getNutrition();
                 float saturation = stack.getFoodProperties(null).getSaturationModifier();
+                getMachineEntity().eat(getLevel(), stack);
                 storage.add(nutrition + 0.5 * saturation);
 
 //                getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
