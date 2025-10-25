@@ -41,7 +41,7 @@ public class CBRecipeTypes {
                 .setSound(GTSoundEntries.CHEMICAL)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        DECOMPOSER_RECIPES = REGISTRATE.recipeType(CTNHBio.id("decomposer"), NUTRIENT)
+        DECOMPOSER_RECIPES = REGISTRATE.recipeType("decomposer", NUTRIENT)
                 .cnlang("电力分解")
                 .lang("Decomposer")
                 .setMaxIOSize(2, 6, 1, 3)
