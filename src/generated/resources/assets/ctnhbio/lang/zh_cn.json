@@ -41,6 +41,7 @@
   "block.ctnhbio.synaptic_casing": "神经突触机械方块",
   "block.ctnhbio.weatherer": "风化器",
   "config.jade.plugin_gtceu.living_machine_status_provider": "[CTNH]活体机器属性",
+  "creativemodetab.ctnhbio.itemgroup": "CTNH-Bio 物品",
   "ctnhbio.basic_living": "摄入营养",
   "ctnhbio.bioelectric_forge": "生物电炉",
   "ctnhbio.brain_in_a_vat": "缸中之脑",
