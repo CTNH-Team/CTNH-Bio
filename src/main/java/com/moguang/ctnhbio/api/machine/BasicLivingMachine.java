@@ -242,8 +242,8 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                 }
             }));
 
-    @CN("营养xxx:")
-    @EN("Nutrientxxx")
+    @CN("营养:")
+    @EN("Nutrient:")
     @Key("nuinfo")
     static Lang nutrient;
 
