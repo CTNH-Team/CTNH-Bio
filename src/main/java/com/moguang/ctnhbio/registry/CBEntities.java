@@ -15,31 +15,14 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 public class CBEntities {
     public static EntityEntry<LivingMetaMachineEntity> LIVING_META_MACHINE_ENTITY = REGISTRATE
             .entity("living_machine", LivingMetaMachineEntity::create, MobCategory.CREATURE)
-            .properties(props -> props.sized(0.9F, 0.9F))
-            .attributes(LivingMetaMachineEntity::createAttributes)
-            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
-            .renderer(() -> BasicLivingMachineEntityRenderer::new)
+            .cnlang("活体机器")
             .lang("Living Machine")
-            .register();
-
-    public static EntityEntry<LivingMetaMachineEntity> BIOELECTRIC_FORGE_ENTITY = REGISTRATE
-            .entity("bioelectric_forge", LivingMetaMachineEntity::new, MobCategory.CREATURE)
             .properties(props -> props.sized(0.9F, 0.9F))
             .attributes(LivingMetaMachineEntity::createAttributes)
             .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
             .renderer(() -> BasicLivingMachineEntityRenderer::new)
-            .lang("Bioelectric Forge")
+
             .register();
-
-//    public static EntityEntry<BioReactorBlockEntity> BIOREACTOR_ENTITY = REGISTRATE
-//            .entity("bioreactor", BioReactorBlockEntity::new, MobCategory.CREATURE)
-//            .properties(props -> props.sized(0.9F, 0.9F))
-//            .attributes(BioReactorBlockEntity::createAttributes)
-//            .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
-//            .renderer(() -> BioReactorRenderer::new)
-//            .lang("Bioreactor")
-//            .register();
-
 
     public static EntityEntry<Brain> BRAIN_IN_A_VAT_BRAIN = REGISTRATE
             .entity("brain_in_a_vat_brain", Brain::new, MobCategory.CREATURE)

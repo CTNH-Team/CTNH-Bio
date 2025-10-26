@@ -12,7 +12,6 @@ import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
-import dev.architectury.platform.Mod;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -26,7 +25,7 @@ import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.api.GTValues.IV;
 import static com.moguang.ctnhbio.data.materials.CommonMaterials.BLOODSTEEL;
-import static com.moguang.ctnhbio.data.materials.OrganicMaterials.Ageing_Serum;
+import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
 
 public class GreatFleshRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
@@ -38,9 +37,9 @@ public class GreatFleshRecipes {
                 .inputItems(TagPrefix.plateDense,BLOODSTEEL,6)
                 .inputItems(TagPrefix.plateDense,BLOODSTEEL,6)
                 .inputItems(ModItems.CREATOR_MIX,8)
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:unstable_compound")),64000))
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:genetic_compound")),64000))
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:heterogeneous_compound")),64000))
+                .inputFluids(new FluidStack(Unstable_Compound.getFluid(), 64000))
+                .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 64000))
+                .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 64000))
                 .duration(1000)
                 .EUt(GTValues.V[GTValues.UV])
                 .save(provider);
@@ -53,9 +52,9 @@ public class GreatFleshRecipes {
                 .inputItems(TagPrefix.plateDense,BLOODSTEEL,6)
                 .inputItems(TagPrefix.plateDense,BLOODSTEEL,6)
                 .inputItems(ModItems.CREATOR_MIX,8)
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:organic_compound")),64000))
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:wither_slime")),64000))
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:healing_compound")),64000))
+                .inputFluids(new FluidStack(Organic_Compound.getFluid(), 64000))
+                .inputFluids(new FluidStack(Withering_Ooze.getFluid(), 64000))
+                .inputFluids(new FluidStack(Healing_Compound.getFluid(), 64000))
                 .duration(1000)
                 .EUt(GTValues.V[GTValues.UV])
                 .save(provider);
@@ -69,11 +68,11 @@ public class GreatFleshRecipes {
                 .inputItems(TagPrefix.plateDense,BLOODSTEEL,6)
                 .inputItems(ModItems.CREATOR_MIX,8)
                 .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("biomancy:acid")),64000))
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:decay_essence")),64000))
-                .inputFluids(FluidIngredient.of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:bile")),64000))
+                .inputFluids(new FluidStack(Decay_Essence.getFluid(), 64000))
+                .inputFluids(new FluidStack(Bile.getFluid(), 64000))
                 .duration(1000)
                 .EUt(GTValues.V[GTValues.UV])
                 .save(provider);
-
+//.inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
     }
 }

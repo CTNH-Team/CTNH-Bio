@@ -10,6 +10,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.item.tool.GTToolType;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
+import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.data.recipe.*;
 import com.moguang.ctnhbio.data.recipe.living.*;
@@ -79,7 +80,7 @@ public class CBRecipes {
         ItemStack toolStack = CBMaterialItems.CB_TOOL_ITEMS.get(material, tool).asStack();
         if (toolStack.isEmpty()) return;
         toolStack.enchant(ModEnchantments.DESPOIL.get(), 3);
-        VanillaRecipeHelper.addShapedRecipe(provider, String.format("%s_%s", tool.name, material.getName()),
+        VanillaRecipeHelper.addShapedRecipe(provider, CTNHBio.id(String.format("%s_%s", tool.name, material.getName())),
                     toolStack, recipe);
 
     }

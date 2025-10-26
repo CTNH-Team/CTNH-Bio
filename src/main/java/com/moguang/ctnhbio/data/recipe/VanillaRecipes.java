@@ -23,7 +23,7 @@ public class VanillaRecipes {
         // 第一个配方：LIVING_FLESH
         VanillaRecipeHelper.addShapedRecipe(provider, false, true,
                 CTNHBio.id("living_flesh_recipe"),
-                new ItemStack(ModItems.LIVING_FLESH.get(), 4),
+                new ItemStack(ModItems.LIVING_FLESH.get(), 16),
                 "ABC",
                 "HIH",
                 "DFG",

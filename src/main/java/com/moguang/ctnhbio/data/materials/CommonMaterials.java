@@ -12,6 +12,8 @@ import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlag
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 
+import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
+
 public class CommonMaterials {
 
 
@@ -19,7 +21,9 @@ public class CommonMaterials {
     public static Material BLOODSTEEL;
 
     public static void register() {
-        WEIRD_PIXEL_DUST = new Material.Builder(CTNHBio.id("weird_pixel_dust"))
+        WEIRD_PIXEL_DUST = REGISTRATE.material(CTNHBio.id("weird_pixel_dust"))
+                .lang("Weird Pixel Dust")
+                .cnlang("非常怪异的尘埃")
                 .dust()
                 .color(0xC0D848)
                 .secondaryColor(0x789C38)
@@ -27,7 +31,9 @@ public class CommonMaterials {
                 .components(Carbon, 1, Hydrogen, 4, Oxygen, 3)
                 .flags(NO_SMASHING)
                 .buildAndRegister();
-        BLOODSTEEL = new Material.Builder(CTNHBio.id("bloodsteel"))
+        BLOODSTEEL = REGISTRATE.material(CTNHBio.id("bloodsteel"))
+                .lang("Blood Steel")
+                .cnlang("血髓钢")
                 .dust()
                 .ingot()
                 .liquid()
@@ -35,14 +41,6 @@ public class CommonMaterials {
                 .secondaryColor(0x5E1914)
                 .iconSet(METALLIC)
                 .flags(GENERATE_PLATE, GENERATE_GEAR, DISABLE_DECOMPOSITION, GENERATE_ROD, GENERATE_FRAME, GENERATE_DENSE)
-                .components(
-                        GTMaterials.Iron, 3,
-                        GTMaterials.Chromium, 1,
-                        GTMaterials.Neodymium, 1,
-                        GTMaterials.Carbon, 2,
-                        GTMaterials.Oxygen, 1,
-                        GTMaterials.Vanadium, 1
-                )
                 .blast(b -> b.temp(7300, BlastProperty.GasTier.HIGH)
                         .blastStats(VA[GTValues.EV], 700)
                         .vacuumStats(VA[HV]))

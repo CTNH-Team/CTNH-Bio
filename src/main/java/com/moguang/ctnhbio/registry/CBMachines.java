@@ -1,209 +1,195 @@
 package com.moguang.ctnhbio.registry;
 
-import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
-
-import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
-import com.gregtechceu.gtceu.common.data.models.GTMachineModels;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
+import com.moguang.ctnhbio.api.block.LivingMultiMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
-import com.moguang.ctnhbio.machine.multiblock.part.NeuralModelAccessorMachine;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineBlockEntityRenderer;
 import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
 import com.moguang.ctnhbio.client.model.*;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeMachineBlock;
+import com.moguang.ctnhbio.utils.CBMachineNames.*;
 
-import com.moguang.ctnhbio.machine.digester.DigesterMachine;
-import com.moguang.ctnhbio.machine.multiblock.part.ParabioticBridgePartMachine;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Domain;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Suffix;
 
 import java.util.Locale;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.OVERLAY_ITEM_HATCH;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
+import static com.moguang.ctnhbio.registry.CBMachines.brain_in_a_vat.story;
+import static com.moguang.ctnhbio.registry.CBMachines.brain_in_a_vat.tooltip;
+import static com.moguang.ctnhbio.utils.CBMachineNames.*;
 
+@Suffix("machine")
 public class CBMachines {
+    public static final MachineDefinition[] BIOELECTRIC_FORGE = new MachineDefinition[GTValues.TIER_COUNT];
+    public static final MachineDefinition[] DECOMPOSER = new MachineDefinition[GTValues.TIER_COUNT];
+    public static final MachineDefinition[] DIGESTER = new MachineDefinition[GTValues.TIER_COUNT];
+    public static final MachineDefinition[] BIOREACTOR = new MachineDefinition[GTValues.TIER_COUNT];
+    public static final MachineDefinition[] BRAIN_IN_A_VAT = new MachineDefinition[GTValues.TIER_COUNT];
+
+//    @CN("反应器")
+//    //@EN("reactor")
+//    static Lang bioreactor_tooltip;
+
     static {
         REGISTRATE.creativeModeTab(() -> CBCreativeModeTabs.ITEM);
     }
-    public static void init() {}
 
+    public static void init() {
+        registerBioelectricForge();
+        registerDecomposer();
+        registerDigester();
+        registerBioreactor();
+        registerBrainInAVat();
+    }
 
-    public static final MachineDefinition[] BIOELECTRIC_FORGE = new MachineDefinition[GTValues.TIER_COUNT];
-    static {
+    private static void registerBioelectricForge() {
+
         for (int tier : GTValues.tiersBetween(LV, IV)) {
+            String id = "bioelectric_forge";
             BIOELECTRIC_FORGE[tier] = REGISTRATE
-                    .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_bioeclectric_forge",
-                            MachineDefinition::new,
-                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
-                            BioelectricForgeMachineBlock::new,
-                            (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new BioelectricForgeModel())),
-                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
-                    )
-                    .tier(tier)
-                    .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
-                    .recipeType(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("bioelectric_forge"),CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES))
-                    .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
-                    .onBlockEntityRegister(beType -> {
-                        @SuppressWarnings("unchecked")
-                        var typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
-                        BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new BioelectricForgeModel(), true));
-                    })
+                    .livingMachine(tier,
+                            id,
+                            BasicLivingMachine::new,
+                            (p, d) -> new LivingMetaMachineBlock(p, d) {
+                                @Override
+                                public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+                                    return Shapes.box(0, 0, 0, 1, 1.5, 1);
+                                }
+                            },
+                            CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES,
+                            false)
+                    .cnLangValue(getCNName(id, tier))
+                    .langValue(getENName(id, tier))
                     .register();
         }
     }
 
-    public static final MachineDefinition[] DECOMPOSER = new MachineDefinition[GTValues.TIER_COUNT];
-    static {
+    private static void registerDecomposer() {
         for (int tier : GTValues.tiersBetween(LV, IV)) {
+            String id  = "decomposer";
             DECOMPOSER[tier] = REGISTRATE
-                    .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_decomposer",
-                            MachineDefinition::new,
-                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
+                    .livingMachine(tier,
+                            id,
+                            BasicLivingMachine::new,
                             LivingMetaMachineBlock::new,
-                            (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new DecomposerModel())),
-                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
-                    )
-                    .tier(tier)
-                    .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
-                    .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
-                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("decompose"),CBRecipeTypes.DECOMPOSER_RECIPES))
-                    .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
-                    .onBlockEntityRegister(beType -> {
-                        @SuppressWarnings("unchecked")
-                        var typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
-                        BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new DecomposerModel(), true));
-                    })
+                            CBRecipeTypes.DECOMPOSER_RECIPES,
+                            true)
+                    .cnLangValue(getCNName(id, tier))
+                    .langValue(getENName(id, tier))
                     .register();
         }
     }
 
-    public static final MachineDefinition[] DIGESTER = new MachineDefinition[GTValues.TIER_COUNT];
-    static {
+    private static void registerDigester() {
         for (int tier : GTValues.tiersBetween(LV, IV)) {
+            String id = "digester";
             DIGESTER[tier] = REGISTRATE
-                    .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_digester",
-                            MachineDefinition::new,
-                            holder -> new DigesterMachine(holder, tier, (tiers) -> tiers * 32000, 200),
+                    .livingMachine(tier,
+                            id,
+                            BasicLivingMachine::new,
                             LivingMetaMachineBlock::new,
-                            (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new DigesterModel())),
-                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
-                    )
-                    .tier(tier)
-                    .recipeModifiers(DigesterMachine::recipeModifier, GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
-                    .recipeType(CBRecipeTypes.DIGEST_RECIPES)
-                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("digester"),CBRecipeTypes.DIGEST_RECIPES))
-                    .rotationState(RotationState.NON_Y_AXIS)
-
-                    .onBlockEntityRegister(beType -> {
-                        @SuppressWarnings("unchecked")
-                        var typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
-                        BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new DigesterModel()));
-                    })
-                    .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
+                            CBRecipeTypes.DIGEST_RECIPES,
+                            false)
+                    .cnLangValue(getCNName(id, tier))
+                    .langValue(getENName(id, tier))
+                    .recipeModifiers(
+                            CBRecipeModifier::digesterRecipeModifier,
+                            GTRecipeModifiers.OC_NON_PERFECT,
+                            CBRecipeModifier::batchMode)
                     .register();
         }
     }
 
-    public static final MachineDefinition[] BIOREACTOR = new MachineDefinition[GTValues.TIER_COUNT];
-    static {
+    private static void registerBioreactor() {
         for (int tier : GTValues.tiersBetween(LV, IV)) {
+            String id = "bioreactor";
             BIOREACTOR[tier] = REGISTRATE
-                    .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_bioreactor",
-                            MachineDefinition::new,
-                            holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000, 200),
+                    .livingMachine(tier,
+                            id,
+                            BasicLivingMachine::new,
                             LivingMetaMachineBlock::new,
-                            (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new BioReactorModel())),
-                            (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
-                    )
-                    .tier(tier)
-                    .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
-                    .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
-                    .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id("bioreactor"),CBRecipeTypes.BIO_REACTOR_RECIPES))
-                    .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
-                    .onBlockEntityRegister(beType -> {
-                        @SuppressWarnings("unchecked")
-                        var typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
-                        BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new BioReactorModel(), true));
-                    })
+                            CBRecipeTypes.BIO_REACTOR_RECIPES,
+                            true)
+                    .cnLangValue(getCNName(id, tier))
+                    .langValue(getENName(id, tier))
                     .register();
         }
     }
+    @Suffix("brain_in_a_vat")
+    static class brain_in_a_vat{
+        @CN({
+                "§3自动化思考",
+                "§r电量和营养充足时,提供%d算力",
+                "§r超频可提供双倍算力，但会对大脑造成不可逆损伤"
+        })
+        @EN({
+                "§3Automated Thinking",
+                "§rProvides %d compute power when power and nutrition are sufficient",
+                "§rOverclocking provides double compute power, but causes irreversible brain damage"
+        })
+        static Lang[] tooltip;
 
-    public static final MachineDefinition[] BRAIN_IN_A_VAT = new MachineDefinition[GTValues.TIER_COUNT];
-    static {
+        @CN({
+                "它觉得自己是一名出色的格雷员工",
+                "它正在优化铂系金属处理产线",
+                "它喜欢熬夜玩CTNH，这样不太好",
+                "它又开始自我怀疑了，重启一下吧"
+        })
+        @EN({
+                "It believes it's a top-notch GregTech employee",
+                "It's busy streamlining the platinum-group metal processing line",
+                "It loves staying up late playing CTNH — not the healthiest habit",
+                "It's doubting itself again... time for a reboot"
+        })
+        static Lang[] story;
+    }
+
+
+    private static void registerBrainInAVat() {
         for (int tier : GTValues.tiersBetween(HV, LuV)) {
             BRAIN_IN_A_VAT[tier] = REGISTRATE
-                    .machine(VN[tier].toLowerCase(Locale.ROOT) + "_brain_in_a_vat",
-                            MachineDefinition::new,
-                            //holder -> new BasicLivingMachine(holder, tier, (tiers) -> tiers * 32000),
-                            holder -> new BrainInAVatMachine(holder, tier, (tiers) -> tiers * 32000, 200),
+                    .livingMachine(tier,
+                            "brain_in_a_vat",
+                            BrainInAVatMachine::new,
                             LivingMetaMachineBlock::new,
-                            (b, p) -> new LivingMetaMachineItem(b, p, () -> new ColorableMachineItemRenderer(new VatModel())),
                             (type, pos, state) ->
-                                    LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.BRAIN_IN_A_VAT_BRAIN.get())
-                                            .setEntityOffset(0.5, 0.6, 0.5)
+                                    new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.BRAIN_IN_A_VAT_BRAIN.get())
+                                            .setEntityOffset(0.5, 0.6, 0.5),
+                            CBRecipeTypes.BRAIN_IN_A_VAT_RECIPES,
+                            true)
+                    .editableUI(null)
+                    .tooltips(
+                            tooltip[0].translate(),
+                            tooltip[1].translate(tier >= GTValues.HV ? 1 << (tier - GTValues.HV) : 0),
+                            tooltip[2].translate()
                     )
-
-                    .tier(tier)
-                    .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
-                    .recipeType(CBRecipeTypes.BRAIN_IN_A_VAT_RECIPES)
-                    .blockProp(prop -> prop
-                            .noOcclusion()
-                            .lightLevel(state ->0)
-                    )
-                    .tooltips(Component.translatable("ctnhbio.machine.brain_in_a_vat.tooltip.1"),
-                            Component.translatable("ctnhbio.machine.brain_in_a_vat.tooltip.2",(tier>=GTValues.HV?1<<(tier-GTValues.HV):0)),
-                            Component.translatable("ctnhbio.machine.brain_in_a_vat.tooltip.3")
-                            )   //输入电流16A
-
-                    .tooltips(Component.translatable("ctnhbio.machine." + VN[tier].toLowerCase(Locale.ROOT) +"_brain_in_a_vat.tooltip.0").withStyle(ChatFormatting.GRAY))
-
-                    .rotationState(RotationState.NON_Y_AXIS)
-                    .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
-                    .onBlockEntityRegister(beType -> {
-                        @SuppressWarnings("unchecked")
-                        var typed = (BlockEntityType<LivingMetaMachineBlockEntity>) (BlockEntityType<?>)beType;
-                        BlockEntityRenderers.register(typed, ctx -> new ColorableMachineBlockEntityRenderer(new VatModel(), true));
-                    })
+                    .tooltips(story[tier - 3].translate().withStyle(ChatFormatting.GRAY))
                     .register();
         }
     }
-
-    //Multi Part
-    public static final MachineDefinition NEURAL_MODEL_ACCESSOR = REGISTRATE.machine("neural_model_accessor", NeuralModelAccessorMachine::new)
-            .langValue("Neural Model Accessor")
-            .tier(LuV)
-            .rotationState(RotationState.NON_Y_AXIS)
-            .abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR)
-            .model(GTMachineModels.createOverlayCasingMachineModel(GTCEu.id("block/casings/hpca/computer_casing/front"),GTCEu.id("block/machine/part/computation_data_hatch")))
-            .register();
-
-    public static final MachineDefinition PARABIOTIC_BRIDGE = REGISTRATE
-            .machine("parabiotic_bridge", ParabioticBridgePartMachine::new)
-            .langValue("Parabiotic Bridge")
-            .tier(ZPM)
-            .rotationState(RotationState.NON_Y_AXIS)
-            .abilities(PartAbility.IMPORT_ITEMS, PartAbility.EXPORT_ITEMS)
-            .colorOverlayTieredHullModel(GTCEu.id("block/overlay/machine/overlay_pipe_in_emissive"), null, GTCEu.id("block/overlay/machine/" + OVERLAY_ITEM_HATCH))
-            .register()
-            ;
-
 }

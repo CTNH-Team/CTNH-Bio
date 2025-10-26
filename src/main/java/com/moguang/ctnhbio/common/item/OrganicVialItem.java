@@ -8,9 +8,6 @@ import com.moguang.ctnhbio.registry.CBSerums;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -32,7 +29,7 @@ public class OrganicVialItem extends ComponentItem implements SerumContainer {
         SERUM_FLUID_MAP.put(Insomnia_Cure.getFluid(), ModSerums.INSOMNIA_CURE);
         SERUM_FLUID_MAP.put(Cleansing_Serum.getFluid(), ModSerums.CLEANSING_SERUM);
         SERUM_FLUID_MAP.put(Frenzy_Serum.getFluid(), ModSerums.FRENZY_SERUM);
-        SERUM_FLUID_MAP.put(PrimordiaL_Serum.getFluid(), CBSerums.PRIMORDIAL_SERUM);
+        SERUM_FLUID_MAP.put(Primordial_Serum.getFluid(), CBSerums.PRIMORDIAL_SERUM);
     }
 
 

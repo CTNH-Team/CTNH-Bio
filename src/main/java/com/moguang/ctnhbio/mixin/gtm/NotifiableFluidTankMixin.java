@@ -2,6 +2,7 @@ package com.moguang.ctnhbio.mixin.gtm;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
+import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiPart;
 import com.gregtechceu.gtceu.api.machine.trait.ICapabilityTrait;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableFluidTank;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
@@ -24,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -38,13 +40,22 @@ public abstract class NotifiableFluidTankMixin extends NotifiableRecipeHandlerTr
             locals = LocalCapture.CAPTURE_FAILHARD,
             remap = false)
     public void handlerRecipeInner(IO io, GTRecipe recipe, List<FluidIngredient> left, boolean simulate, CallbackInfoReturnable<List<FluidIngredient>> cir, Runnable[] listeners, boolean changed, IFluidHandler.FluidAction action, FluidStack[] visited, Iterator it, FluidIngredient ingredient, FluidStack[] fluids, int amount, int tank, FluidStack current, int count) {
-        if (recipe.data.getBoolean("potion") && !simulate) {
-            if (getMachine() instanceof ILivingMachine livingMachine) {
+        if (recipe != null && recipe.data.getBoolean("potion") && !simulate) {
+            List<ILivingMachine> livingMachines = new ArrayList<>();
+            if (getMachine() instanceof ILivingMachine machine) {
+                livingMachines.add(machine);
+            } else if (getMachine() instanceof IMultiPart multiPart) {
+                multiPart.getControllers()
+                        .stream().filter(c -> c instanceof ILivingMachine)
+                        .forEach( c-> livingMachines.add((ILivingMachine)c));
+            }
+            for (ILivingMachine livingMachine : livingMachines) {
                 if (current.hasTag()) {
                     ListTag effects = current.getOrCreateTag().getList("CustomPotionEffects", 9);
                     for (var effect : effects) {
                         MobEffectInstance mobEffectInstance = MobEffectInstance.load((CompoundTag) effect);
-                        appendEffect(livingMachine.getMachineEntity(), mobEffectInstance);
+                        if(mobEffectInstance != null)
+                            appendEffect(livingMachine.getMachineEntity(), mobEffectInstance);
                     }
                     var potion = current.getOrCreateTag().getString("Potion");
                     Potion potion1 = BuiltInRegistries.POTION.get(ResourceLocation.parse(potion));
@@ -60,11 +71,11 @@ public abstract class NotifiableFluidTankMixin extends NotifiableRecipeHandlerTr
     public void appendEffect(LivingEntity entity, MobEffectInstance mobEffect) {
         MobEffectInstance existEffect = entity.getEffect(mobEffect.getEffect());
         if (existEffect != null) {
-            MobEffectInstance newEffect = new MobEffectInstance(existEffect.getEffect(), existEffect.getDuration() + mobEffect.getDuration() / 5, existEffect.getAmplifier(), existEffect.isAmbient(), existEffect.isVisible(), existEffect.showIcon());
+            MobEffectInstance newEffect = new MobEffectInstance(existEffect.getEffect(), existEffect.getDuration() + mobEffect.getDuration(), existEffect.getAmplifier(), existEffect.isAmbient(), existEffect.isVisible(), existEffect.showIcon());
             entity.addEffect(newEffect);
         }
         else {
-            entity.addEffect(new MobEffectInstance(mobEffect.getEffect(), mobEffect.getDuration() / 5, mobEffect.getAmplifier(), mobEffect.isAmbient(), mobEffect.isVisible(), mobEffect.showIcon()));
+            entity.addEffect(new MobEffectInstance(mobEffect.getEffect(), mobEffect.getDuration(), mobEffect.getAmplifier(), mobEffect.isAmbient(), mobEffect.isVisible(), mobEffect.showIcon()));
         }
     }
 }

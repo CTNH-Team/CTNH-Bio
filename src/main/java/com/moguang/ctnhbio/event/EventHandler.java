@@ -2,13 +2,14 @@ package com.moguang.ctnhbio.event;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
+import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
 import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
 import com.gregtechceu.gtceu.api.sound.SoundEntry;
+import com.gregtechceu.gtceu.common.unification.material.MaterialRegistryManager;
 import com.moguang.ctnhbio.CTNHBio;
-import com.moguang.ctnhbio.data.loot.CBLootTableProvider;
 import com.moguang.ctnhbio.data.recipe.VanillaRecipeProvider;
 import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
 import com.moguang.ctnhbio.registry.*;
@@ -48,6 +49,12 @@ public class EventHandler {
     }
 
     @SubscribeEvent
+    public static void registerMaterial(MaterialRegistryEvent event) {
+//        MaterialRegistryManager.getInstance().createRegistry(CTNHBio.MODID);
+    }
+
+
+    @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
 
     }
@@ -77,6 +84,5 @@ public class EventHandler {
 
         //generator.addProvider(event.includeServer(), new VanillaRecipes(packOutput));
         generator.addProvider(event.includeServer(), new VanillaRecipeProvider(packOutput));
-        generator.addProvider(event.includeServer(), new CBLootTableProvider(packOutput));
     }
 }

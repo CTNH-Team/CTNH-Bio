@@ -1,0 +1,33 @@
+{
+  "required": true,
+  "package": "com.moguang.ctnhbio.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.ctnhbio.refmap.json",
+  "mixins": [
+    "GTMixin",
+    "biomancy.InjectorItemMixin",
+    "biomancy.VialHolderBlockEntityMixin",
+    "create.CrushingWheelControllerBlockEntityMixin",
+    "gtm.FluidBuilderMixin",
+    "gtm.IThermalFluidHandlerItemStackMixin",
+    "gtm.MultiblockDisplayText$BuilderMixin",
+    "gtm.NotifiableFluidTankMixin",
+    "gtm.RecipeRunnerMixin",
+    "gtm.ThermalFluidStatsMixin",
+    "gtm.WorkableMultiblockMachineMixin",
+    "gtm.WorkableTieredMachineMixin",
+    "hostilenetworks.CacheModelMixin",
+    "hostilenetworks.HostileEventsMixin",
+    "hostilenetworks.SimChamberTileEntityMixin",
+    "jei.JeiBaseLootMixin",
+    "jei.JeiGameplayLootMixin",
+    "jei.LootTableMixin",
+    "jei.RecipeGuiLogicMixin"
+  ],
+  "client": [
+    "biomancy.InjectorScreenMixin",
+    "jei.RecipesGuiMixin",
+    "gtm.ThermalFluidStatsMixin"
+  ],
+  "minVersion": "0.8"
+}

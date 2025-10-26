@@ -1,94 +1,104 @@
 package com.moguang.ctnhbio.registry;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
-import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
-import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
-import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
+import com.moguang.ctnhbio.CTNHBio;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
+
+import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBRecipeTypes {
     public static String NUTRIENT = "nutrient";
-    public static final GTRecipeType BIOELECTRIC_FORGE_RECIPES = GTRecipeTypes.register("bioelectric_forge", NUTRIENT)
-            .setMaxIOSize(6, 2, 3, 1)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            .setSound(GTSoundEntries.CHEMICAL)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-    public static final GTRecipeType DECOMPOSER_RECIPES = GTRecipeTypes.register("decomposer", NUTRIENT)
-            .setMaxIOSize(2, 6, 1, 3)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            //.setSound(GTSoundEntries.)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_MACERATE, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+    // 声明所有配方类型变量
+    public static GTRecipeType BIOELECTRIC_FORGE_RECIPES;
+    public static GTRecipeType DECOMPOSER_RECIPES;
+    public static GTRecipeType DIGEST_RECIPES;
+    public static GTRecipeType BIO_REACTOR_RECIPES;
+    public static GTRecipeType BRAIN_IN_A_VAT_RECIPES;
+    public static GTRecipeType BASIC_LIVING_RECIPES;
+    public static GTRecipeType GREAT_FLESH;
+    public static GTRecipeType CONSCIOUSNESS_ASSEMBLY;
 
-    public static final GTRecipeType DIGEST_RECIPES = GTRecipeTypes.register("digest", NUTRIENT)
-            .setMaxIOSize(2, 2, 2, 2)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            .setSound(CBSoundEntries.DIGESTER_CRAFTING)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+//    @CN("意识装配")
+//    static Lang consciousness_assembly = new Lang("gtceu.consciousness_assembly");
 
-    public static final GTRecipeType BIO_REACTOR_RECIPES = GTRecipeTypes.register("ctnhbio_reactor", NUTRIENT)
-            .setMaxIOSize(3, 3, 3, 3)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            .setSound(GTSoundEntries.CHEMICAL)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+    public static void init() {
+        // 初始化所有配方类型
+        BIOELECTRIC_FORGE_RECIPES = REGISTRATE.recipeType(CTNHBio.id("bioelectric_forge"), NUTRIENT)
+                //GTRecipeTypes.register("bioelectric_forge", NUTRIENT)
+                .cnlang("生物电炉")
+                .lang("Bioelectric Forge")
+                .setMaxIOSize(6, 2, 3, 1)
+                .setEUIO(IO.IN)
+                .setMaxTooltips(5)
+                .setSound(GTSoundEntries.CHEMICAL)
+                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-    public static final GTRecipeType BRAIN_IN_A_VAT_RECIPES = GTRecipeTypes.register("brain_in_a_vat", NUTRIENT)
-            .setMaxIOSize(1, 0, 1, 0)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            .setSound(GTSoundEntries.SCIENCE)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_BOILER_HEAT, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+        DECOMPOSER_RECIPES = REGISTRATE.recipeType("decomposer", NUTRIENT)
+                .cnlang("电力分解")
+                .lang("Decomposer")
+                .setMaxIOSize(2, 6, 1, 3)
+                .setEUIO(IO.IN)
+                .setMaxTooltips(5)
+                .setProgressBar(GuiTextures.PROGRESS_BAR_MACERATE, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-    public static final GTRecipeType BASIC_LIVING_RECIPES = GTRecipeTypes.register("basic_living", NUTRIENT)
-            .setMaxIOSize(1, 0, 1, 0)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            .setSound(CBSoundEntries.EAT)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+        DIGEST_RECIPES = REGISTRATE.recipeType(CTNHBio.id("digest"), NUTRIENT)
+                .cnlang("电力消化")
+                .lang("Digest")
+                .setMaxIOSize(2, 2, 2, 2)
+                .setEUIO(IO.IN)
+                .setMaxTooltips(5)
+                .setSound(CBSoundEntries.DIGESTER_CRAFTING)
+                .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-    public static final GTRecipeType GREAT_FLESH = GTRecipeTypes.register("great_flesh", NUTRIENT)
-            .setMaxIOSize(6, 0, 3, 0)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+        BIO_REACTOR_RECIPES = REGISTRATE.recipeType(CTNHBio.id("ctnhbio_reactor"), NUTRIENT)
+                .cnlang("生物反应")
+                .lang("Bio Reactor")
+                .setMaxIOSize(3, 3, 3, 3)
+                .setEUIO(IO.IN)
+                .setMaxTooltips(5)
+                .setSound(GTSoundEntries.CHEMICAL)
+                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-    public static final GTRecipeType CONSCIOUSNESS_ASSEMBLY = GTRecipeTypes.register("consciousness_assembly", NUTRIENT)
-            .setMaxIOSize(15, 1, 3, 0)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+        BRAIN_IN_A_VAT_RECIPES = REGISTRATE.recipeType(CTNHBio.id("brain_in_a_vat"), NUTRIENT)
+                .cnlang("缸中之脑")
+                .lang("Brain In A Vat")
+                .setMaxIOSize(1, 0, 1, 0)
+                .setEUIO(IO.IN)
+                .setMaxTooltips(5)
+                .setSound(GTSoundEntries.SCIENCE)
+                .setProgressBar(GuiTextures.PROGRESS_BAR_BOILER_HEAT, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-    public static final GTRecipeType HOSTILE_OBSERVATION = GTRecipeTypes.register("hostile_observation", NUTRIENT)
-            .setMaxSize(IO.IN, EntityRecipeCapability.CAP,1)
-            .setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
-            .setMaxSize(IO.OUT, ModelRecipeCapability.CAP,1)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.UP_TO_DOWN);
+        BASIC_LIVING_RECIPES = REGISTRATE.recipeType(CTNHBio.id("basic_living"), NUTRIENT)
+                .cnlang("摄入营养")
+                .lang("Living")
+                .setMaxIOSize(1, 0, 1, 0)
+                .setEUIO(IO.IN)
+                .setMaxTooltips(5)
+                .setSound(CBSoundEntries.EAT)
+                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-    public static final GTRecipeType COGNI_ASSEMBLE = GTRecipeTypes.register("cogni_assemble", GTRecipeTypes.ELECTRIC)
-            .setMaxIOSize(16, 1, 8, 0)
-            .setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
-            .setMaxSize(IO.OUT, ModelRecipeCapability.CAP,1)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+        GREAT_FLESH = REGISTRATE.recipeType(CTNHBio.id("great_flesh"), NUTRIENT)
+                .cnlang("巨型肉块-分化")
+                .lang("Great Flesh")
+                .setMaxIOSize(6, 0, 3, 0)
+                .setEUIO(IO.IN)
+                .setMaxTooltips(5)
+                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-    public static final GTRecipeType COGNI_ASSEMBLE_STEP = GTRecipeTypes.register("cogni_assemble_step", GTRecipeTypes.ELECTRIC)
-            .setMaxIOSize(3, 1, 1, 0)
-            .setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
-            .setMaxSize(IO.OUT, ModelRecipeCapability.CAP,1)
-            .setEUIO(IO.IN)
-            .setMaxTooltips(5)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
-
-    public static void init() {}
+        CONSCIOUSNESS_ASSEMBLY = REGISTRATE.recipeType(CTNHBio.id("consciousness_assembly"), NUTRIENT)
+                .cnlang("意识装配")
+                .lang("Consciousness Assembly")
+                .setMaxIOSize(15, 1, 3, 0)
+                .setEUIO(IO.IN)
+                .setMaxTooltips(5)
+                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+    }
 }

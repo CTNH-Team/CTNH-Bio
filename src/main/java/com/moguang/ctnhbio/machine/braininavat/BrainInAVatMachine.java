@@ -93,8 +93,8 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
         oc = true;
     }
 
-    public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, double capacity, Object... args) {
-        super(holder, tier, tankScalingFunction, capacity, args);
+    public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Object... args) {
+        super(holder, tier, args);
         q = Quad.tier(tier);
     }
 
@@ -160,7 +160,7 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     @Override
     public int getMaxCWUt(@NotNull Collection<IOpticalComputationProvider> seen) {
         seen.add(this);
-        int output = oc ? 2*q.CWUt : q.CWUt;
+        int output = oc ? 2*q.CWUt : (isDoubted ? q.CWUt/2 : q.CWUt);
         return isWorkingEnabled() ? output : 0;
     }
 

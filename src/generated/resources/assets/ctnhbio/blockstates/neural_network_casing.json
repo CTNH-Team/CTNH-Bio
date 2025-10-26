@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ctnhbio:block/neural_network_casing"
+    }
+  }
+}

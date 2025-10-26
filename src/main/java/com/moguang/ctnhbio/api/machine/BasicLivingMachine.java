@@ -52,10 +52,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 
 import java.util.*;
 import java.util.function.BiFunction;
-
 public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMachine {
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(BasicLivingMachine.class, SimpleTieredMachine.MANAGED_FIELD_HOLDER);
     @Persisted
@@ -72,8 +73,8 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     @Setter
     private String name = null;
 
-    public BasicLivingMachine(IMachineBlockEntity holder, int tier, Int2IntFunction tankScalingFunction, double capacity, Object... args) {
-        super(holder, tier, tankScalingFunction, args);
+    public BasicLivingMachine(IMachineBlockEntity holder, int tier, Object... args) {
+        super(holder, tier, (tiers) -> tiers * 32000, args);
         this.storage = new SynchronizedNutrientStorage(GTValues.V[tier] * 64);
         this.inputTrait = new NotifiableNutrientTrait(this, storage, IO.IN);
         this.outputTrait = new NotifiableNutrientTrait(this, storage, IO.OUT);
@@ -130,17 +131,17 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         // 判断是否是食物
         if (stack.isEdible()) {
             if (!getLevel().isClientSide) {
-                // 消耗一个物品
-                if (!player.getAbilities().instabuild) {
-                    stack.shrink(1);
-                }
+//                if (!player.getAbilities().instabuild && !stack.getFoodProperties(player).canAlwaysEat()) {
+//                    stack.shrink(1);
+//                }
                 int nutrition = stack.getFoodProperties(null).getNutrition();
                 float saturation = stack.getFoodProperties(null).getSaturationModifier();
+                getMachineEntity().eat(getLevel(), stack);
                 storage.add(nutrition + 0.5 * saturation);
 
-                getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
-                        SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
-                        1.0f, 1.0f);
+//                getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
+//                        SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
+//                        1.0f, 1.0f);
             }
 
             return InteractionResult.sidedSuccess(getLevel().isClientSide);
@@ -166,8 +167,11 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             }
         }
         else {
-            this.energyContainer.changeEnergy(GTValues.V[tier + 1]);
-            this.machineEntity.hurt(GTDamageTypes.ELECTRIC.source(this.getLevel()), tier);
+            if(getMachineEntity() != null)
+            {
+                this.energyContainer.changeEnergy(GTValues.V[tier + 1]);
+                this.machineEntity.hurt(GTDamageTypes.ELECTRIC.source(this.getLevel()), tier);
+            }
         }
     }
 
@@ -215,13 +219,6 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                 group.addWidget(nutrientBar);
                 group.addWidget(template);
 
-                // TODO fix this.
-//                 if (ConfigHolder.INSTANCE.machines.ghostCircuit) {
-//                 SlotWidget circuitSlot = createCircuitConfigurator().createDefault();
-//                 circuitSlot.setSelfPosition(new Position(120, 62));
-//                 group.addWidget(circuitSlot);
-//                 }
-
                 return group;
             }, (template, machine) -> {
                 if (machine instanceof BasicLivingMachine livingMachine) {
@@ -244,6 +241,12 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                     // createCircuitConfigurator().setupUI(template, livingMachine);
                 }
             }));
+
+    @CN("营养:")
+    @EN("Nutrient:")
+    @Key("nuinfo")
+    static Lang nutrient;
+
     protected static EditableUI<ProgressWidget, BasicLivingMachine> createNutrientBar() {
         return new EditableUI<>("nutrient_bar", ProgressWidget.class, () -> {
             var progressBar = new ProgressWidget(ProgressWidget.JEIProgress, 0, 0, 9, 40,
@@ -256,7 +259,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             progressBar.setProgressSupplier(
                     () -> machine.getNutrientAmount() * 1d / machine.getNutrientCapacity());
             progressBar.setHoverTooltips(
-                    Component.translatable("ctnhbio.nutrient_bar.info"));
+                    nutrient.translate());
             progressBar.setDynamicHoverTips(progress -> {
                     double current = progress * machine.getNutrientCapacity();
                     double max = machine.getNutrientCapacity();

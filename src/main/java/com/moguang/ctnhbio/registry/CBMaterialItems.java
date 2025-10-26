@@ -21,9 +21,7 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 import static com.moguang.ctnhbio.registry.CBCreativeModeTabs.ITEM;
 
 public class CBMaterialItems{
-    static {
-        REGISTRATE.creativeModeTab(() -> CBCreativeModeTabs.ITEM);
-    }
+
     public final static Table<Material, GTToolType, ItemProviderEntry<IGTTool>> CB_TOOL_ITEMS = ArrayTable.create(
             GTCEuAPI.materialManager.getRegisteredMaterials().stream()
                     .filter(mat -> mat.hasProperty(PropertyKey.TOOL))
@@ -48,12 +46,13 @@ public class CBMaterialItems{
 
     public static void generateTool(Material material, GTToolType toolType) {
         var tier = material.getToolTier();
-        CB_TOOL_ITEMS.put(material, toolType, (ItemProviderEntry<IGTTool>) (ItemProviderEntry<?>) com.moguang.ctnhbio.CTNHBio.REGISTRATE
+        CB_TOOL_ITEMS.put(material, toolType, (ItemProviderEntry<IGTTool>) (ItemProviderEntry<?>) REGISTRATE
                 .item(toolType.idFormat.formatted(tier.material.getName()),
                         p -> toolType.constructor.apply(toolType, tier, material,
                                 toolType.toolDefinition, p).asItem())
                 .properties(p -> p.craftRemainder(Items.AIR))
                 .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+
                 .model(NonNullBiConsumer.noop())
                 .color(() -> IGTTool::tintColor)
                 .register());

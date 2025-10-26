@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ctnhbio:block/machine/ev_brain_in_a_vat",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ctnhbio:block/machine/ev_brain_in_a_vat"
+    },
+    "facing=south": {
+      "model": "ctnhbio:block/machine/ev_brain_in_a_vat",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ctnhbio:block/machine/ev_brain_in_a_vat",
+      "y": 270
+    }
+  }
+}

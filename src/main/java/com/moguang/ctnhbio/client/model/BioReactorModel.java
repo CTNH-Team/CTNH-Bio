@@ -1,7 +1,4 @@
-package com.moguang.ctnhbio.client.model;// Made with Blockbench 4.12.5
-// Exported for Minecraft version 1.17 or later with Mojang mappings
-// Paste this class into your mod and generate all required imports
-
+package com.moguang.ctnhbio.client.model;
 
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.CBValues;
