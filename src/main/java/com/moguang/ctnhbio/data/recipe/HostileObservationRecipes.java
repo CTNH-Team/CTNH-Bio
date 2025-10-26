@@ -9,6 +9,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
@@ -28,13 +29,15 @@ public class HostileObservationRecipes {
         ResourceLocation recipeId = getRecipeId(type);
 
         CBRecipeBuilder.of(recipeId, HOSTILE_OBSERVATION)
-                .inputEntity(type, 0)
-                .inputModel(ModelIngredient.of(ModelTier.ADVANCED,type))
-                .outputModel(ModelIngredient.of(ModelTier.SUPERIOR,type))
+                .inputEntity(type, 1, 0)
+                //.inputModel(ModelIngredient.of(ModelTier.ADVANCED,type))
+                //.outputModel(ModelIngredient.of(ModelTier.SUPERIOR,type))
 //                .durationIsTotalCWU(true)
-
-                .CWUt(64)
-                .duration(200)
+                .inputItems(Items.WHEAT)
+                .outputItems(Items.BEEF)
+                //.CWUt(64)
+                .EUt(32)
+                .duration(10)
                 .save(provider);
     }
 }

@@ -86,9 +86,11 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
     public CBRecipeBuilder inputEntity(EntityType<?> type){
         return inputEntity(EntityIngredient.of(type));
     }
-    public CBRecipeBuilder inputEntity(EntityType<?> type, int chance){
-        return inputEntity(EntityIngredient.of(type), chance);
+    public CBRecipeBuilder inputEntity(EntityType<?> type, int count, int chance){
+        return inputEntity(EntityIngredient.of(type, count), chance);
     }
+
+
 
     public CBRecipeBuilder inputEntity(TagKey<EntityType<?>> tag){
         return inputEntity(EntityIngredient.of(tag));

@@ -1,9 +1,12 @@
 package com.moguang.ctnhbio.registry;
 
+import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
+import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
+import com.gregtechceu.gtceu.common.data.models.GTMachineModels;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.block.LivingMultiMetaMachineBlock;
@@ -16,6 +19,7 @@ import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
 import com.moguang.ctnhbio.client.model.*;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
 import com.moguang.ctnhbio.machine.bioelectricforge.BioelectricForgeMachineBlock;
+import com.moguang.ctnhbio.machine.multiblock.part.ParabioticBridgePartMachine;
 import com.moguang.ctnhbio.utils.CBMachineNames.*;
 
 import net.minecraft.ChatFormatting;
@@ -34,10 +38,11 @@ import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Domain;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Suffix;
-
+import com.moguang.ctnhbio.machine.multiblock.part.NeuralModelAccessorMachine;
 import java.util.Locale;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
+import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.OVERLAY_ITEM_HATCH;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 import static com.moguang.ctnhbio.registry.CBMachines.brain_in_a_vat.story;
 import static com.moguang.ctnhbio.registry.CBMachines.brain_in_a_vat.tooltip;
@@ -50,7 +55,9 @@ public class CBMachines {
     public static final MachineDefinition[] DIGESTER = new MachineDefinition[GTValues.TIER_COUNT];
     public static final MachineDefinition[] BIOREACTOR = new MachineDefinition[GTValues.TIER_COUNT];
     public static final MachineDefinition[] BRAIN_IN_A_VAT = new MachineDefinition[GTValues.TIER_COUNT];
+    public static MachineDefinition NEURAL_MODEL_ACCESSOR;
 
+    public static MachineDefinition PARABIOTIC_BRIDGE;
 //    @CN("反应器")
 //    //@EN("reactor")
 //    static Lang bioreactor_tooltip;
@@ -65,6 +72,23 @@ public class CBMachines {
         registerDigester();
         registerBioreactor();
         registerBrainInAVat();
+        NEURAL_MODEL_ACCESSOR = REGISTRATE.machine("neural_model_accessor", NeuralModelAccessorMachine::new)
+                .langValue("Neural Model Accessor")
+                .tier(LuV)
+                .rotationState(RotationState.NON_Y_AXIS)
+                .abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR)
+                .model(GTMachineModels.createOverlayCasingMachineModel(GTCEu.id("block/casings/hpca/computer_casing/front"),GTCEu.id("block/machine/part/computation_data_hatch")))
+                .register();
+
+        PARABIOTIC_BRIDGE = REGISTRATE
+                .machine("parabiotic_bridge", ParabioticBridgePartMachine::new)
+                .langValue("Parabiotic Bridge")
+                .tier(ZPM)
+                .rotationState(RotationState.NON_Y_AXIS)
+                .abilities(PartAbility.IMPORT_ITEMS, PartAbility.EXPORT_ITEMS)
+                .colorOverlayTieredHullModel(GTCEu.id("block/overlay/machine/overlay_pipe_in_emissive"), null, GTCEu.id("block/overlay/machine/" + OVERLAY_ITEM_HATCH))
+                .register()
+        ;
     }
 
     private static void registerBioelectricForge() {
@@ -192,4 +216,6 @@ public class CBMachines {
                     .register();
         }
     }
+
+
 }

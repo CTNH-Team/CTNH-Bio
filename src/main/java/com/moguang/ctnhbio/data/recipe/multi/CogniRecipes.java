@@ -12,7 +12,7 @@ import net.minecraft.world.item.Items;
 import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.common.data.GTItems.*;
-import static com.moguang.ctnhbio.registry.CBItems.ADVANCED_RAM_CHIP;
+
 import static com.moguang.ctnhbio.registry.CBItems.WETWARE_DIODE;
 
 public class CogniRecipes {
@@ -33,7 +33,7 @@ public class CogniRecipes {
                 .addStep(step -> step
                         .inputItems(WETWARE_DIODE, 2))
                 .addStep(step -> step
-                        .inputItems(ADVANCED_RAM_CHIP, 2))
+                        .inputItems(RANDOM_ACCESS_MEMORY, 2))
                 .save(provider);
 
     }

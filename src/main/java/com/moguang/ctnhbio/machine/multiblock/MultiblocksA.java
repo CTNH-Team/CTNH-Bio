@@ -135,7 +135,7 @@ public class MultiblocksA {
                     MetaMachineItem::new
             )
             .cnLangValue("意识装配机")
-            .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES,CBRecipeTypes.CONSCIOUSNESS_ASSEMBLY)
+            .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES,CBRecipeTypes.COGNI_ASSEMBLE_STEP)
             .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCACB", "BDADB", "BCACB", "AAAAA")
@@ -215,9 +215,10 @@ public class MultiblocksA {
             .register();
 
     public static MultiblockMachineDefinition HOSTILE_OBSERVER = REGISTRATE
-            .multiblock("hostile_observer", WorkableElectricMultiblockMachine::new)
+            .multiblock("hostile_observer", HostileObserverMachine::new)
             .cnLangValue("敌意观测站")
-            .recipeType(CBRecipeTypes.GREAT_FLESH)
+            .recipeType(CBRecipeTypes.HOSTILE_OBSERVATION)
+            .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("################AAAAAAAAAAA################", "################AAAAAAAAAAA################", "################AAAAAAAAAAA################", "################AAABBBBBAAA################", "################ABBBCCCBBBA################", "################ABDDDDDDDBA################", "################ABBBCCCBBBA################", "################AAABBBBBAAA################", "################AAAAAAAAAAA################", "################AAAAAAAAAAA################", "################AAAAAAAAAAA################")
                     .aisle("################AAABACABAAA################", "################A#########A################", "################A#########A################", "################A#########A################", "################A#########A################", "################A#########A################", "################A#########A################", "################A#########A################", "################A#########A################", "################A#########A################", "################ABBBABABBBA################")
@@ -235,10 +236,15 @@ public class MultiblocksA {
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
                     .where("#", Predicates.any())
                     .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:consciousness_controller"))))
-                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:consciousness_sensor_glass"))))
-                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:neural_cooling_conduit")))
+                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:consciousness_sensor_glass")))
                             .or(Predicates.abilities(PartAbility.COMPUTATION_DATA_RECEPTION).setExactLimit(1))
-                            .or(Predicates.abilities(PartAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(2).setPreviewCount(1))
+                            .or(Predicates.autoAbilities(CBRecipeTypes.HOSTILE_OBSERVATION))
+                            .or(Predicates.autoAbilities(false, false, true))
+                            .or(Predicates.abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR).setMaxGlobalLimited(1)
+                            )
+                    )
+                    .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:neural_cooling_conduit")))
+
                     )
                     .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("minecraft:grass_block"))))
                     .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:neural_network_casing"))))
