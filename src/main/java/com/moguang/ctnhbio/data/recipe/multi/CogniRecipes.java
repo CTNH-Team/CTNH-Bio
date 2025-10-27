@@ -29,7 +29,8 @@ public class CogniRecipes {
                 .addStep(step -> step
                         .inputItems(WETWARE_PROCESSOR_ASSEMBLY_ZPM)
                         .inputItems(NOR_MEMORY_CHIP)
-                        .inputModel(ModelIngredient.of(ModelTier.SELF_AWARE,EntityType.COW)))
+                        //.inputModel(ModelIngredient.of(ModelTier.SELF_AWARE,EntityType.COW))
+                )
                 .addStep(step -> step
                         .inputItems(WETWARE_DIODE, 2))
                 .addStep(step -> step

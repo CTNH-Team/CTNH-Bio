@@ -1,5 +1,6 @@
 package com.moguang.ctnhbio.api.gui.widget;
 
+import com.lowdragmc.lowdraglib.gui.editor.configurator.IConfigurableWidget;
 import com.lowdragmc.lowdraglib.gui.ingredient.IRecipeIngredientSlot;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.jei.IngredientIO;
@@ -39,7 +40,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class EntityWidget extends Widget implements IRecipeIngredientSlot {
+public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConfigurableWidget {
     //basics
     @Setter @Nullable
     CycleEntityEntryHandler cycle;
@@ -53,6 +54,7 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot {
     public EntityWidget(){
         super(new Position(0, 0), new Size(18, 18));
     }
+
 
     //Render
     private void renderEntityModel(@NotNull Entity entity,GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {

@@ -117,9 +117,9 @@ public class CBRecipeTypes {
         HOSTILE_OBSERVATION = REGISTRATE.recipeType(CTNHBio.id("hostile_observation"), NUTRIENT)
                 .cnlang("敌意观测")
                 .setMaxSize(IO.IN, EntityRecipeCapability.CAP,1)
-                //.setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
-                //.setMaxSize(IO.OUT, ModelRecipeCapability.CAP,1)
-                .setMaxIOSize(1,1,1,1)
+                .setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
+                .setMaxSize(IO.OUT, ModelRecipeCapability.CAP,1)
+                .setMaxIOSize(1,0,0,0)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.UP_TO_DOWN);

@@ -7,43 +7,67 @@ import com.mojang.serialization.Codec;
 import dev.shadowsoffire.hostilenetworks.Hostile;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
+import lombok.Getter;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ModelIngredient extends StrictNBTIngredient {
+import java.util.stream.Stream;
+
+public class ModelIngredient extends Ingredient {
     public static Codec<ModelIngredient> CODEC = ExtraCodecs.JSON
             .xmap(ModelIngredient::fromJson, ModelIngredient::toJson);
     public static ResourceLocation TYPE = CTNHBio.id("model");
     public static ModelIngredient DEFAULT = of(0, getModelId(EntityType.PIG));
     final int requiredData;
     final ResourceLocation modelID;
+    @Getter
+    final ItemStack model;
     protected ModelIngredient(ItemStack modelStack){
-        super(modelStack);
+        super(Stream.of(new Ingredient.ItemValue(new ItemStack(Hostile.Items.DATA_MODEL.get()))));
+        model = modelStack;
         this.requiredData = DataModelItem.getData(modelStack);
         this.modelID = DataModelItem.getStoredModel(modelStack).getId();
     }
     protected ModelIngredient(int requiredData, ResourceLocation modelID) {
-        super(getModelStack(modelID, requiredData));
+        super(Stream.of(new Ingredient.ItemValue(new ItemStack(Hostile.Items.DATA_MODEL.get()))));
+        model = ModelIngredient.getModelStack(modelID, requiredData);
         this.requiredData = requiredData;
         this.modelID = modelID;
     }
+
 
     @Override
     public boolean test(@Nullable ItemStack target) {
         if(getItems().length == 0) return false;
         if(target == null) return true;
-        final ItemStack requirement = getItems()[0];
-        final int requiredData = DataModelItem.getData(requirement);
+        //final ItemStack requirement = getItems()[0];
+        //final int requiredData = DataModelItem.getData(requirement);
         final int targetData = DataModelItem.getData(target);
+        var targetID = DataModelItem.getStoredModel(target).getId();//target.getTagElement("data_model");
+
         return targetData >= requiredData &&
-                requirement.getTagElement("data_model").equals(target.getTagElement("data_model"));
+                modelID.equals(targetID);
     }
+
+    public boolean check(ItemStack target){
+        if(getItems().length == 0) return false;
+        if(target == null) return true;
+        //final ItemStack requirement = getItems()[0];
+        //final int requiredData = DataModelItem.getData(requirement);
+        final int targetData = DataModelItem.getData(target);
+        var targetID = DataModelItem.getStoredModel(target).getId();//target.getTagElement("data_model");
+
+        return targetData >= requiredData &&
+                modelID.equals(targetID);
+    }
+
 
     public static ResourceLocation getModelId(ResourceLocation type) {
         return type.getNamespace().equals("minecraft")?

@@ -6,7 +6,7 @@ import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
-import com.gregtechceu.gtceu.api.machine.multiblock.part.MultiblockPartMachine;
+import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.TieredIOPartMachine;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
@@ -17,6 +17,7 @@ import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import com.moguang.ctnhbio.utils.MetaMachineUtils;
 import lombok.Getter;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -33,7 +34,7 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
 
 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(ParabioticBridgePartMachine.class,
-            MultiblockPartMachine.MANAGED_FIELD_HOLDER);
+            TieredIOPartMachine.MANAGED_FIELD_HOLDER);
 
     @Getter
     @Persisted
@@ -41,8 +42,14 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
 
     @Getter
     @Persisted
-    private ResourceLocation lastRecipeID;
+    private ResourceLocation lastInputRecipeID;
 
+//    @Getter
+//    @Persisted
+//    private ResourceLocation lastOutputRecipeID;
+
+    @Persisted
+    private List<BlockPos> lastOutput = new ArrayList<>();
 
     @Override
     public ManagedFieldHolder getFieldHolder() {
@@ -53,6 +60,19 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
         super(holder, GTValues.ZPM, IO.BOTH);
         this.inventory = new ParabioticBridgeHandler(this);
     }
+
+
+    public void updateLastOutput(GTRecipe recipe){
+        getControllers().stream().filter(
+                m -> m instanceof IRecipeLogicMachine recipeLogicMachine &&
+                        recipeLogicMachine.getRecipeLogic().getLastRecipe() != null &&
+                        recipeLogicMachine.getRecipeLogic().getLastRecipe().id.equals(recipe.id)
+        ).forEach(p -> {
+            var pos = p.self().getPos();
+            if(!lastOutput.contains(pos)) lastOutput.add(pos);
+        });
+    }
+
 
     public ItemStack insertItemInternal(int slot, @NotNull ItemStack stack, boolean simulate) {
         return inventory.insertItemInternal(slot, stack, simulate);
@@ -71,12 +91,20 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
         @Override
         public List<Ingredient> handleRecipeInner(IO io, GTRecipe recipe, List<Ingredient> left, boolean simulate) {
             if (io == IO.IN){
+                if( getControllers().stream().filter(
+                        m -> m instanceof IRecipeLogicMachine recipeLogicMachine &&
+                                recipeLogicMachine.getRecipeLogic().getLastRecipe() != null &&
+                                recipeLogicMachine.getRecipeLogic().getLastRecipe().id.equals(recipe.id)
+                ).anyMatch(p -> lastOutput.contains(p.self().getPos())))
+                    return left;
                 List<Ingredient> result = handleRecipe(io, recipe, left, simulate, io, storage);
                 if(!(Objects.equals(result, left)))
-                    lastRecipeID = recipe.id;
+                    lastInputRecipeID = recipe.id;
                 return result;
             }
             else {
+
+                if(recipe.id.equals(lastInputRecipeID)) return left;
                 //不处理非步骤物品
                 List<Ingredient> intermediates = new ArrayList<>();
                 List<Ingredient> finalProducts = new ArrayList<>();
@@ -85,6 +113,8 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
                             .map(ItemStack::getOrCreateTag)
                             .anyMatch(nbt -> nbt.getTagType("cogin_assemble_step") == TAG_INT)) {
                         intermediates.add(ingredient);
+                        //lastOutputRecipeID = recipe.id;
+                        updateLastOutput(recipe);
                     }
                     else {
                         finalProducts.add(ingredient);

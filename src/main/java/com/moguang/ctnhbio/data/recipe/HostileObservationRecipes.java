@@ -1,5 +1,7 @@
 package com.moguang.ctnhbio.data.recipe;
 
+import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
+import com.gregtechceu.gtceu.api.recipe.ingredient.EnergyStack;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import dev.shadowsoffire.hostilenetworks.Hostile;
@@ -30,12 +32,10 @@ public class HostileObservationRecipes {
 
         CBRecipeBuilder.of(recipeId, HOSTILE_OBSERVATION)
                 .inputEntity(type, 1, 0)
-                //.inputModel(ModelIngredient.of(ModelTier.ADVANCED,type))
-                //.outputModel(ModelIngredient.of(ModelTier.SUPERIOR,type))
-//                .durationIsTotalCWU(true)
+                .inputModel(ModelIngredient.of(ModelTier.ADVANCED,type))
+                .outputModel(ModelIngredient.of(ModelTier.SUPERIOR,type), 100)
                 .inputItems(Items.WHEAT)
-                .outputItems(Items.BEEF)
-                //.CWUt(64)
+                //.inputItems()
                 .EUt(32)
                 .duration(10)
                 .save(provider);

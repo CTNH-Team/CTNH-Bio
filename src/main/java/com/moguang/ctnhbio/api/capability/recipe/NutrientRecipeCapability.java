@@ -1,6 +1,5 @@
-package com.moguang.ctnhbio.api.capability;
+package com.moguang.ctnhbio.api.capability.recipe;
 
-import com.gregtechceu.gtceu.api.capability.recipe.CWURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IRecipeCapabilityHolder;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
@@ -16,7 +15,7 @@ import java.util.List;
 public class NutrientRecipeCapability extends RecipeCapability<Double> {
     public static NutrientRecipeCapability CAP = new NutrientRecipeCapability();
     protected NutrientRecipeCapability() {
-        super("nutrient", 0xFEEE00, false, 4, SerializerDouble.INSTANCE);
+        super("nutrient", 0xFEEE00, false, 80802345, SerializerDouble.INSTANCE);
     }
     @Override
     public int limitMaxParallelByOutput(IRecipeCapabilityHolder holder, GTRecipe recipe, int maxMultiplier, boolean tick) {

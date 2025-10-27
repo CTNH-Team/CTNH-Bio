@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
     public static final EntityRecipeCapability CAP = new EntityRecipeCapability();
     protected EntityRecipeCapability() {
-        super("entity", 0xf5424200, true, 5, SerializerEntityIngredient.INSTANCE);
+        super("entity", 0xf5424200, true, 114514, SerializerEntityIngredient.INSTANCE);
     }
 
     @Override

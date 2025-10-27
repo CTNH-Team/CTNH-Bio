@@ -82,11 +82,6 @@ public class CBRegistrate extends CNRegistrate {
 //                .hasBER(false);
 //    }
 
-    @Override @NotNull @ParametersAreNonnullByDefault
-    public MachineBuilder<MachineDefinition> machine(String name, Function<IMachineBlockEntity, MetaMachine> metaMachine) {
-        return super.machine(name, metaMachine)
-                .hasBER(false);
-    }
 
     @NotNull @ParametersAreNonnullByDefault
     public CTNHMachineBuilder<MachineDefinition> livingMachine(int tier,

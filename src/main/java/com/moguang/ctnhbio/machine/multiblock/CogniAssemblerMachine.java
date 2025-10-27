@@ -3,6 +3,8 @@ package com.moguang.ctnhbio.machine.multiblock;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
+import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiPart;
+import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.api.recipe.ActionResult;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
@@ -14,10 +16,17 @@ import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
+import java.util.Comparator;
 
 public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
     public CogniAssemblerMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
+    }
+
+    public static Comparator<IMultiPart> partSorter(MultiblockControllerMachine mc) {
+        return Comparator.comparingInt(part ->
+                part instanceof ParabioticBridgePartMachine ? 0 : 1  // 优先类实例排前面
+        );
     }
 
     @Override
@@ -92,7 +101,7 @@ public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
         {
             return  getMachine().getParts().stream().filter(
                             m -> m instanceof ParabioticBridgePartMachine machine
-                                    && machine.getLastRecipeID() != recipe.id)
+                                    && machine.getLastInputRecipeID() != recipe.id)
                     .map(m -> (ParabioticBridgePartMachine)m)
                     .findFirst()
                     .orElse(null);

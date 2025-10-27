@@ -1,21 +1,16 @@
 package com.moguang.ctnhbio.data.recipe;
 
-import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
-import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
-import com.moguang.ctnhbio.api.capability.NutrientRecipeCapability;
+import com.moguang.ctnhbio.api.capability.recipe.NutrientRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.EntityIngredient;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import com.moguang.ctnhbio.common.condition.EffectCondition;
-import dev.shadowsoffire.hostilenetworks.Hostile;
-import dev.shadowsoffire.hostilenetworks.data.ModelTier;
-import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
@@ -131,6 +126,16 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
     public CBRecipeBuilder outputModel(ModelIngredient model){
         perTick = false;
         output(ModelRecipeCapability.CAP, model);
+        return this;
+
+    }
+
+    public CBRecipeBuilder outputModel(ModelIngredient model, int chance){
+        perTick = false;
+        int lastChance = this.chance;
+        this.chance = chance;
+        output(ModelRecipeCapability.CAP, model);
+        this.chance = lastChance;
         return this;
     }
 

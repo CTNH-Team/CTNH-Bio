@@ -21,8 +21,8 @@ public class HostileObserverMachine extends WorkableElectricMultiblockMachine{
         final Direction u = Direction.UP;
 
         return new AABB(
-                getPos().relative(b,1).relative(l,1).relative(u,1),
-                getPos().relative(b,7).relative(l,-1).relative(u,3)
+                getPos().relative(b,0).relative(l,5).relative(u,0),
+                getPos().relative(b,10).relative(l,-5).relative(u,10)
         );
     }
 }
