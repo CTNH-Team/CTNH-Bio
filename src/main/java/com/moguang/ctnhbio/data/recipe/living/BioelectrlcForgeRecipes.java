@@ -208,6 +208,7 @@ public class BioelectrlcForgeRecipes {
 // 培养皿支架
         CBRecipeBuilder.of(CTNHBio.id("vial_holder"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(12)
+                .circuitMeta(2)
                 .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 8)
                 .outputItems(ModItems.VIAL_HOLDER.get().getDefaultInstance())
                 .EUt(8)

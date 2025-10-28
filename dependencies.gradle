@@ -54,6 +54,7 @@ dependencies {
 
     modRuntimeOnly("curse.maven:constructionwand-399558:4684054")
     // lombok
+    modRuntimeOnly("curse.maven:just-enough-characters-250702:6680042")
     //compileOnly 'org.projectlombok:lombok:1.18.24'
     //annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }

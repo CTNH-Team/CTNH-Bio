@@ -41,6 +41,7 @@
   "block.ctnhbio.synaptic_casing": "神经突触机械方块",
   "block.ctnhbio.weatherer": "风化器",
   "config.jade.plugin_gtceu.living_machine_status_provider": "[CTNH]活体机器属性",
+  "creativemodetab.ctnhbio.itemgroup": "CTNH-Bio 物品",
   "ctnhbio.basic_living": "摄入营养",
   "ctnhbio.bioelectric_forge": "生物电炉",
   "ctnhbio.brain_in_a_vat": "缸中之脑",
@@ -53,7 +54,6 @@
   "ctnhbio.brain_in_a_vat.tooltip.2": "§r超频可提供双倍算力，但会对大脑造成不可逆损伤",
   "ctnhbio.consciousness_assembly": "意识装配",
   "ctnhbio.ctnhbio_reactor": "生物反应",
-  "ctnhbio.decomposer": "电力分解",
   "ctnhbio.digest": "电力消化",
   "ctnhbio.fluid_pipe.cannot_handle_organic": "§4生物活性流体可能失活！",
   "ctnhbio.great_flesh": "巨型肉块-分化",
@@ -62,7 +62,7 @@
   "ctnhbio.great_flesh.info.2": "§5他们将会向你展示最原初、最纯粹的生命形态",
   "ctnhbio.jade.nutrient_stored": "%s / %s u",
   "ctnhbio.living_machine": "living machine",
-  "ctnhbio.machine.bioreactor_tooltip": "反应器",
+  "ctnhbio.nuinfo": "营养:",
   "ctnhbio.nutrient_bar.info": "营养:",
   "ctnhbio.recipe.input_entity": "实体输入",
   "ctnhbio.recipe.nutrient_consume": "营养消耗：%d",
@@ -79,6 +79,7 @@
   "emi.category.ctnhbio.despoil_loot": "血肉掠夺",
   "entity.ctnhbio.living_machine": "活体机器",
   "fluid_type.biofactory.nutrients_fluid": "营养液",
+  "gtceu.decomposer": "电力分解",
   "item.ctnhbio.meta_core": "拓扑核心",
   "item.ctnhbio.nova_core": "灵蜕核心",
   "item.ctnhbio.omni_core": "终观核心",
@@ -148,6 +149,5 @@
   "organicmaterialsswinter.ctnhbio.organic.0": "§a生物活性流体",
   "organicmaterialsswinter.ctnhbio.organic.1": "§a可传输生物活性流体",
   "recipe.capability.nutrient.name": "营养",
-  "recipe.condition.ctnhbio.tooltip": "药水效果：%s",
-  "whatfk.basiclivingmachine.nuinfo": "营养xxx:"
+  "recipe.condition.ctnhbio.tooltip": "药水效果：%s"
 }

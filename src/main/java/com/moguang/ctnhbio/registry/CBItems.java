@@ -37,6 +37,9 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 @Suffix("tooltip")
 public class CBItems {
+    static {
+        REGISTRATE.creativeModeTab(() -> CBCreativeModeTabs.ITEM);
+    }
     public static void init() {
         CBMaterialItems.generateTools();
     }
