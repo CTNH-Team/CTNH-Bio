@@ -18,6 +18,7 @@ import com.moguang.ctnhbio.machine.multiblock.part.ParabioticBridgePartMachine;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -54,6 +55,17 @@ public class CBMachines {
         REGISTRATE.creativeModeTab(() -> CBCreativeModeTabs.ITEM);
     }
 
+
+    @CN({
+            "这不是一个常规容器，无法通过UI或物流手段输入或输出物品",
+            "被破坏时其中物品会消失"
+    })
+    @EN({
+            "This is not a regular container and cannot input or output items through the UI or logistics methods.",
+            "Items inside will disappear when destroyed."
+    })
+    static Lang[] parabiotic_bridge;
+
     public static void init() {
         registerBioelectricForge();
         registerDecomposer();
@@ -69,6 +81,7 @@ public class CBMachines {
                 .modelProperty(GTMachineModelProperties.IS_FORMED, false)
                 .workableCasingModel(CTNHBio.id("block/casings/neural_cooling_conduit"),
                         GTCEu.id("block/multiblock/central_monitor"))
+                .tooltips(Component.translatable("gtceu.part_sharing.disabled"))
                 .register();
 
         PARABIOTIC_BRIDGE = REGISTRATE
@@ -81,6 +94,11 @@ public class CBMachines {
                 .model(createOverlayCasingMachineModel(CTNHBio.id("block/casings/primal_flesh_casing"),
                         CTNHBio.id("block/item_passthrough_hatch")
                         ))
+                .tooltips(Component.translatable("gtceu.part_sharing.enabled"))
+                .tooltips(
+                        parabiotic_bridge[0].translate().withStyle(ChatFormatting.YELLOW),
+                        parabiotic_bridge[1].translate().withStyle(ChatFormatting.DARK_RED)
+                )
                 //.colorOverlayTieredHullModel(GTCEu.id("block/overlay/machine/overlay_pipe_in_emissive"), null, GTCEu.id("block/overlay/machine/" + OVERLAY_ITEM_HATCH))
                 .register()
         ;

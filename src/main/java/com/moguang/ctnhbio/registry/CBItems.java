@@ -15,6 +15,7 @@ import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
 import com.moguang.ctnhbio.api.item.component.StyleItem;
 import com.moguang.ctnhbio.common.item.OrganicVialItem;
+import com.moguang.ctnhbio.common.item.AssemblyStepItem;
 import com.moguang.ctnhbio.data.CBDatagen;
 import com.moguang.ctnhbio.utils.VialCraftingRemainingItem;
 import com.tterrag.registrate.providers.ProviderType;
@@ -179,24 +180,18 @@ public class CBItems {
                     cellName()))
             .register();
 
-    public static ItemEntry<ComponentItem> WETWARE_PROCESSOR_COMPUTER_UNFINISHED = REGISTRATE
-            .item("wetware_processor_computer_unfinished", ComponentItem::create)
-            .lang("wetware_processor_computer_unfinished")
-            //.properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
-            .onRegister(attach(new TooltipBehavior(list -> {
-;
-            })))
+    public static ItemEntry<AssemblyStepItem> WETWARE_PROCESSOR_COMPUTER_UNFINISHED = REGISTRATE
+            .item("wetware_processor_computer_unfinished", AssemblyStepItem::new)
+            .cnlang("未完成的湿件处理器超级计算机")
+            .lang("Unfinished Wetware Processor Supercomputer")
 
             .register();
 
-    public static ItemEntry<ComponentItem> WETWARE_PROCESSOR_MAINFRAME_UNFINISHED = REGISTRATE
-            .item("wetware_processor_mainframe_unfinished", ComponentItem::create)
-            .lang("wetware_processor_mainframe_unfinished")
-            //.properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
-//            .onRegister(attach(new TooltipBehavior(list -> {
-//                list.add(Component.translatable("ctnhbio.ev_machine.tooltip").withStyle(ChatFormatting.LIGHT_PURPLE));
-//                list.add(Component.translatable("ctnhbio.nova_core.tooltip").withStyle(ChatFormatting.GRAY));
-//            })))
+    public static ItemEntry<AssemblyStepItem> WETWARE_PROCESSOR_MAINFRAME_UNFINISHED = REGISTRATE
+            .item("wetware_processor_mainframe_unfinished", AssemblyStepItem::new)
+            .cnlang("未完成的湿件处理器主机")
+            .lang("Unfinished Wetware Processor Mainframe")
+
             .register();
 
     public static <T extends IComponentItem> NonNullConsumer<T> attach(IItemComponent components) {

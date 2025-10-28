@@ -106,12 +106,15 @@ public class CBRecipeTypes {
 //                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
         COGNI_ASSEMBLY = REGISTRATE.recipeType(CTNHBio.id("cogni_assembly"), GTRecipeTypes.ELECTRIC)
-                .cnlang("意识装配")
-                .setMaxIOSize(9, 10, 9, 9)
+                .cnlang("意识装配流程")
+                .setMaxIOSize(9, 9, 9, 9)
                 .setMaxSize(IO.IN, ModelRecipeCapability.CAP,9)
+
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+
+        //COGNI_ASSEMBLY.getRecipeUI().getJEISize()
 
         HOSTILE_OBSERVATION = REGISTRATE.recipeType(CTNHBio.id("hostile_observation"), NUTRIENT)
                 .cnlang("敌意观测")
@@ -124,7 +127,6 @@ public class CBRecipeTypes {
                 .setMaxTooltips(5)
                 .setSound(GTSoundEntries.COMPUTATION)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.UP_TO_DOWN);
-
 
         COGNI_ASSEMBLY_STEP = REGISTRATE.recipeType(CTNHBio.id("cogni_assembly_step"), GTRecipeTypes.ELECTRIC)
                 .cnlang("意识装配")

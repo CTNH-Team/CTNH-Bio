@@ -100,4 +100,9 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
     public @NotNull List<RecipeHandlerList> getRecipeHandlers() {
         return MetaMachineUtils.getRecipeHandlers(this, modelHolder);
     }
+
+    @Override
+    public boolean canShared() {
+        return false;
+    }
 }

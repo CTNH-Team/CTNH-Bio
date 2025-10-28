@@ -31,23 +31,22 @@ import java.util.function.Supplier;
 import static com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient.getModelId;
 import static dev.shadowsoffire.hostilenetworks.Hostile.Items.DATA_MODEL;
 
-public class CogniRecipeBuilder extends GTRecipeBuilder {
+public class CogniRecipeBuilder{
 
-    public static final String COGNI_ASSEMBLE_FIRST_STEP = "cogni_assemble_first";
-    public static final String COGNI_ASSEMBLE_LAST_STEP = "cogni_assemble_last";
-    public static final String COGNI_ASSEMBLE_INTERMEDIATE = "cogni_assemble_intermediate";
-
+    public static final String COGNI_AESSEMBLY_STEP = "cogin_assembly_step";
 
     private final List<SubRecipe> subRecipes = new ArrayList<>();
     private ItemStack intermediateItem;
     private ItemStack finalOutput;
-    private int currentStep = 0;
+
     private final GTRecipeType mainRecipeType;
     private final GTRecipeType subRecipeType;
     private long eut;
+    private ResourceLocation id;
+    private int duration;
 
     public CogniRecipeBuilder(ResourceLocation id, GTRecipeType mainRecipeType, GTRecipeType subRecipeType) {
-        super(id, mainRecipeType);
+        this.id = id;
         this.mainRecipeType = mainRecipeType;
         this.subRecipeType = subRecipeType;
     }
@@ -56,13 +55,11 @@ public class CogniRecipeBuilder extends GTRecipeBuilder {
         return new CogniRecipeBuilder(id, mainRecipeType, subRecipeType);
     }
 
-    @Override
     public CogniRecipeBuilder EUt(long eu) {
         this.eut = eu;
         return this;
     }
 
-    @Override
     public @NotNull CogniRecipeBuilder duration(int duration) {
         this.duration = duration;
         return this;
@@ -90,11 +87,11 @@ public class CogniRecipeBuilder extends GTRecipeBuilder {
         SubRecipe subRecipe = new SubRecipe(this);
         recipeConsumer.accept(subRecipe);
         subRecipes.add(subRecipe);
-        currentStep++;
+
         return this;
     }
 
-    @Override
+
     public void save(Consumer<FinishedRecipe> consumer) {
         if (subRecipes.isEmpty()) {
             GTCEu.LOGGER.error("Pipeline recipe {} has no sub recipes!", id);
@@ -176,6 +173,7 @@ public class CogniRecipeBuilder extends GTRecipeBuilder {
                 .inputFluids(allFluidInputs.toArray(FluidIngredient[]::new))
                 .outputItems(finalOutput) // 先输出最终产物
                 .outputItems(allItemOutputs.toArray(Ingredient[]::new))
+
                 .outputFluids(allFluidOutputs.toArray(FluidIngredient[]::new))
                 .EUt(eut)
                 .duration(this.duration * subRecipes.size()); // 总时间为各步骤时间之和
@@ -189,7 +187,7 @@ public class CogniRecipeBuilder extends GTRecipeBuilder {
     private ItemStack copyWithStep(ItemStack stack, int step) {
         ItemStack copy = stack.copy();
         CompoundTag tag = copy.getOrCreateTag();
-        tag.putInt("cogin_assemble_step", step);
+        tag.putInt(COGNI_AESSEMBLY_STEP, step);
         //tag.putBoolean(COGNI_ASSEMBLE_INTERMEDIATE, true);
         return copy;
     }
