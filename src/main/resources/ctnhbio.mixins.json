@@ -12,6 +12,7 @@
     "gtm.IThermalFluidHandlerItemStackMixin",
     "gtm.MultiblockDisplayText$BuilderMixin",
     "gtm.NotifiableFluidTankMixin",
+    "gtm.RecipeCapabilityAccessor",
     "gtm.RecipeRunnerMixin",
     "gtm.ThermalFluidStatsMixin",
     "gtm.WorkableMultiblockMachineMixin",
@@ -26,8 +27,8 @@
   ],
   "client": [
     "biomancy.InjectorScreenMixin",
-    "jei.RecipesGuiMixin",
-    "gtm.ThermalFluidStatsMixin"
+    "gtm.ThermalFluidStatsMixin",
+    "jei.RecipesGuiMixin"
   ],
   "minVersion": "0.8"
 }

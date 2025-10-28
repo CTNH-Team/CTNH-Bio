@@ -6,36 +6,27 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
-import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
-import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
-import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMultiMetaMachineBlock;
-import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
 import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
-import com.moguang.ctnhbio.client.Renderer.ColorableMachineBlockEntityRenderer;
-import com.moguang.ctnhbio.client.Renderer.ColorableMachineItemRenderer;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
-import com.moguang.ctnhbio.client.model.GreatFleshModel;
 import com.moguang.ctnhbio.machine.bioobservation.HostileObserverMachine;
 import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
 
 import com.moguang.ctnhbio.registry.CBBlocks;
-import com.moguang.ctnhbio.registry.CBPartAbility;
+import com.moguang.ctnhbio.api.machine.multiblock.CBPartAbility;
 import com.moguang.ctnhbio.registry.CBMachines;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -135,7 +126,7 @@ public class MultiblocksA {
                     MetaMachineItem::new
             )
             .cnLangValue("意识装配机")
-            .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES,CBRecipeTypes.COGNI_ASSEMBLE_STEP)
+            .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES,CBRecipeTypes.COGNI_ASSEMBLY_STEP)
             .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCACB", "BDADB", "BCACB", "AAAAA")
@@ -145,9 +136,9 @@ public class MultiblocksA {
                     .aisle("AAAAA", "B###B", "B###B", "B###B", "AAAAA")
                     .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("kubejs:flesh_casing_fence"))))
                     .where("B", Predicates.blocks(CBBlocks.SYNAPTIC_CASING.get()))
-                    .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing")))
-                            .or(Predicates.autoAbilities(definition.getRecipeTypes())
-                            .or(Predicates.abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR).setMaxGlobalLimited(1))))
+                    .where("E", Predicates.blocks(CBBlocks.PRIMAL_FLESH_CASING.get())
+                            .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+                    )
                     .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
                             .or(Predicates.blocks(CBMachines.PARABIOTIC_BRIDGE.get()))
                     )
@@ -158,7 +149,9 @@ public class MultiblocksA {
                     .where("#", Predicates.any())
                     .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:acid_flesh_casing"))))
                     .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:flesh_fence"))))
-                    .where("I", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
+                    .where("I", Predicates.abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR)
+                            .or(Predicates.blocks(CBBlocks.PRIMAL_FLESH_CASING.get()))
+                    )
                     .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:smooth_primal_flesh"))))
                     .build())
 

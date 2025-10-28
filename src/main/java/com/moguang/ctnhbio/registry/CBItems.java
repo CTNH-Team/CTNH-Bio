@@ -183,10 +183,10 @@ public class CBItems {
             .item("wetware_processor_computer_unfinished", ComponentItem::create)
             .lang("wetware_processor_computer_unfinished")
             //.properties(p -> new Item.Properties().rarity(ModRarities.VERY_RARE))
-//            .onRegister(attach(new TooltipBehavior(list -> {
-//                list.add(Component.translatable("ctnhbio.ev_machine.tooltip").withStyle(ChatFormatting.LIGHT_PURPLE));
-//                list.add(Component.translatable("ctnhbio.nova_core.tooltip").withStyle(ChatFormatting.GRAY));
-//            })))
+            .onRegister(attach(new TooltipBehavior(list -> {
+;
+            })))
+
             .register();
 
     public static ItemEntry<ComponentItem> WETWARE_PROCESSOR_MAINFRAME_UNFINISHED = REGISTRATE

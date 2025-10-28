@@ -2,6 +2,7 @@ package com.moguang.ctnhbio.machine.multiblock.part;
 
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
+import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
@@ -15,6 +16,8 @@ import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+import com.moguang.ctnhbio.api.capability.recipe.CogniItemRecipeCapability;
+import com.moguang.ctnhbio.machine.multiblock.CogniAssemblerMachine;
 import com.moguang.ctnhbio.utils.MetaMachineUtils;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
@@ -30,29 +33,27 @@ import java.util.Objects;
 
 import static net.minecraft.nbt.Tag.TAG_INT;
 
+@Getter
 public class ParabioticBridgePartMachine extends TieredIOPartMachine {
 
 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(ParabioticBridgePartMachine.class,
             TieredIOPartMachine.MANAGED_FIELD_HOLDER);
 
-    @Getter
     @Persisted
     private final ParabioticBridgeHandler inventory;
 
-    @Getter
     @Persisted
     private ResourceLocation lastInputRecipeID;
 
 //    @Getter
 //    @Persisted
 //    private ResourceLocation lastOutputRecipeID;
-
     @Persisted
-    private List<BlockPos> lastOutput = new ArrayList<>();
+    private final List<BlockPos> lastOutput = new ArrayList<>();
 
     @Override
-    public ManagedFieldHolder getFieldHolder() {
+    public @NotNull ManagedFieldHolder getFieldHolder() {
         return MANAGED_FIELD_HOLDER;
     }
 
@@ -85,16 +86,21 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
 
     public class ParabioticBridgeHandler extends NotifiableItemStackHandler {
         public ParabioticBridgeHandler(MetaMachine machine) {
-            super(machine, 1, IO.BOTH, IO.BOTH);
+            super(machine, 1, IO.BOTH, IO.NONE);
+        }
+
+        @Override
+        public RecipeCapability<Ingredient> getCapability() {
+            return CogniItemRecipeCapability.CAP;
         }
 
         @Override
         public List<Ingredient> handleRecipeInner(IO io, GTRecipe recipe, List<Ingredient> left, boolean simulate) {
             if (io == IO.IN){
                 if( getControllers().stream().filter(
-                        m -> m instanceof IRecipeLogicMachine recipeLogicMachine &&
-                                recipeLogicMachine.getRecipeLogic().getLastRecipe() != null &&
-                                recipeLogicMachine.getRecipeLogic().getLastRecipe().id.equals(recipe.id)
+                        m -> m instanceof CogniAssemblerMachine machine &&
+                                machine.tryingRecipe != null &&
+                                machine.tryingRecipe.id.equals(recipe.id)
                 ).anyMatch(p -> lastOutput.contains(p.self().getPos())))
                     return left;
                 List<Ingredient> result = handleRecipe(io, recipe, left, simulate, io, storage);
@@ -103,28 +109,11 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
                 return result;
             }
             else {
-
                 if(recipe.id.equals(lastInputRecipeID)) return left;
-                //不处理非步骤物品
-                List<Ingredient> intermediates = new ArrayList<>();
-                List<Ingredient> finalProducts = new ArrayList<>();
-                for (Ingredient ingredient : left) {
-                    if (Arrays.stream(ingredient.getItems())
-                            .map(ItemStack::getOrCreateTag)
-                            .anyMatch(nbt -> nbt.getTagType("cogin_assemble_step") == TAG_INT)) {
-                        intermediates.add(ingredient);
-                        //lastOutputRecipeID = recipe.id;
-                        updateLastOutput(recipe);
-                    }
-                    else {
-                        finalProducts.add(ingredient);
-                    }
-                }
-
-                List<Ingredient> result = handleRecipe(io, recipe, intermediates, simulate, io, storage);
-                if(finalProducts.isEmpty() && result == null) return null;
-                if(result != null) finalProducts.addAll(result);
-                return finalProducts;
+                List<Ingredient> result = handleRecipe(io, recipe, left, simulate, io, storage);
+                if(!(Objects.equals(result, left)))
+                    updateLastOutput(recipe);
+                return result;
             }
         }
 
@@ -141,7 +130,7 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
         var container = new WidgetGroup(4, 4, 26, 26);
 
         container.addWidget(
-                new SlotWidget(getInventory().storage, 0, 4, 4, false, true)
+                new SlotWidget(getInventory().storage, 0, 4, 4, false, false)
                         .setBackgroundTexture(GuiTextures.SLOT));
 
         container.setBackground(GuiTextures.BACKGROUND_INVERSE);

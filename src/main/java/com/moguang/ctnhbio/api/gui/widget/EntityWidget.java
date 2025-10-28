@@ -40,15 +40,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Setter
 public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConfigurableWidget {
     //basics
-    @Setter @Nullable
+    @Nullable
     CycleEntityEntryHandler cycle;
-    @Setter
     int count = 1;
-    @Setter
     float chance = 1;
-    @Getter @Setter
+    @Getter
     IngredientIO ingredientIO = IngredientIO.RENDER_ONLY;
 
     public EntityWidget(){

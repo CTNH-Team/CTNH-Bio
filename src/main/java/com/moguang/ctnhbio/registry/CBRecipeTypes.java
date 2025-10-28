@@ -7,11 +7,9 @@ import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.api.capability.recipe.CogniItemRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
@@ -26,8 +24,8 @@ public class CBRecipeTypes {
     public static GTRecipeType BRAIN_IN_A_VAT_RECIPES;
     public static GTRecipeType BASIC_LIVING_RECIPES;
     public static GTRecipeType GREAT_FLESH;
-    public static GTRecipeType COGNI_ASSEMBLE;
-    public static GTRecipeType COGNI_ASSEMBLE_STEP;
+    public static GTRecipeType COGNI_ASSEMBLY;
+    public static GTRecipeType COGNI_ASSEMBLY_STEP;
     public static GTRecipeType HOSTILE_OBSERVATION;
     //public static GTRecipeType CONSCIOUSNESS_ASSEMBLY;
 
@@ -107,15 +105,17 @@ public class CBRecipeTypes {
 //                .setMaxTooltips(5)
 //                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        COGNI_ASSEMBLE = REGISTRATE.recipeType(CTNHBio.id("cogni_assemble"), GTRecipeTypes.ELECTRIC)
+        COGNI_ASSEMBLY = REGISTRATE.recipeType(CTNHBio.id("cogni_assembly"), GTRecipeTypes.ELECTRIC)
                 .cnlang("意识装配")
-                .setMaxIOSize(16, 1, 8, 0)
+                .setMaxIOSize(9, 10, 9, 9)
+                .setMaxSize(IO.IN, ModelRecipeCapability.CAP,9)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
         HOSTILE_OBSERVATION = REGISTRATE.recipeType(CTNHBio.id("hostile_observation"), NUTRIENT)
                 .cnlang("敌意观测")
+                .lang("Hostile Observation")
                 .setMaxSize(IO.IN, EntityRecipeCapability.CAP,1)
                 .setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
                 .setMaxSize(IO.OUT, ModelRecipeCapability.CAP,1)
@@ -126,8 +126,13 @@ public class CBRecipeTypes {
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.UP_TO_DOWN);
 
 
-        COGNI_ASSEMBLE_STEP = REGISTRATE.recipeType(CTNHBio.id("cogni_assemble_step"), GTRecipeTypes.ELECTRIC)
-                .setMaxIOSize(3, 1, 1, 0)
+        COGNI_ASSEMBLY_STEP = REGISTRATE.recipeType(CTNHBio.id("cogni_assembly_step"), GTRecipeTypes.ELECTRIC)
+                .cnlang("意识装配")
+                .lang("Cogni Assembly")
+                .setMaxIOSize(1, 1, 1, 1)
+                .setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
+                .setMaxSize(IO.IN, CogniItemRecipeCapability.CAP,1)
+                .setMaxSize(IO.OUT, CogniItemRecipeCapability.CAP,1)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
