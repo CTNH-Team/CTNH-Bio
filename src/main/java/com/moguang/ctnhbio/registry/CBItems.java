@@ -15,6 +15,7 @@ import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
 import com.moguang.ctnhbio.api.item.component.StyleItem;
 import com.moguang.ctnhbio.common.item.OrganicVialItem;
+import com.moguang.ctnhbio.common.item.AssemblyStepItem;
 import com.moguang.ctnhbio.data.CBDatagen;
 import com.moguang.ctnhbio.utils.VialCraftingRemainingItem;
 import com.tterrag.registrate.providers.ProviderType;
@@ -32,7 +33,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 
-
+import static com.gregtechceu.gtceu.common.data.GTItems.attach;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 @Suffix("tooltip")
@@ -179,6 +180,19 @@ public class CBItems {
                     cellName()))
             .register();
 
+    public static ItemEntry<AssemblyStepItem> WETWARE_PROCESSOR_COMPUTER_UNFINISHED = REGISTRATE
+            .item("wetware_processor_computer_unfinished", AssemblyStepItem::new)
+            .cnlang("未完成的湿件处理器超级计算机")
+            .lang("Unfinished Wetware Processor Supercomputer")
+
+            .register();
+
+    public static ItemEntry<AssemblyStepItem> WETWARE_PROCESSOR_MAINFRAME_UNFINISHED = REGISTRATE
+            .item("wetware_processor_mainframe_unfinished", AssemblyStepItem::new)
+            .cnlang("未完成的湿件处理器主机")
+            .lang("Unfinished Wetware Processor Mainframe")
+
+            .register();
 
     public static <T extends IComponentItem> NonNullConsumer<T> attach(IItemComponent components) {
         return item -> item.attachComponents(components);

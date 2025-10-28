@@ -169,7 +169,7 @@ public class ChineseLangHandler {
         //replace(provider, CommonMaterials.WEIRD_PIXEL_DUST.getUnlocalizedName(), "富集营养");
 
         //Entity Properties
-        EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"实体输入","实体输出");
+        EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"实体输入","实体输出","接受实体: %s","要求:");
         epu.add(EntityProperties.FALL_DISTANCE, "落地距离");
         epu.add(EntityProperties.REMAINING_FIRE_TICKS, "剩余火焰");
         epu.add(EntityProperties.AIR_SUPPLY, "空气供应");

@@ -4,8 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.IBaseEntityProperty;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityPropertyDetector;
+import com.moguang.ctnhbio.integration.xei.entry.entity.EntityEntryList;
 import com.mojang.serialization.Codec;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -170,9 +170,12 @@ public class EntityIngredient implements Predicate<Entity> {
         return result;
     }
 
-    public interface Value extends Predicate<EntityType<?>> {
+    public sealed interface Value extends Predicate<EntityType<?>> permits TagValue, TypeValue {
         Collection<EntityType<?>> getEntityTypes();
         JsonObject serialize();
+
+        //Utils for xei
+        void appendEntryList(EntityEntryList list);
     }
 
     public record TagValue(TagKey<EntityType<?>> tag) implements Value{
@@ -188,6 +191,11 @@ public class EntityIngredient implements Predicate<Entity> {
             JsonObject json = new JsonObject();
             json.addProperty("tag", tag.location().toString());
             return json;
+        }
+
+        @Override
+        public void appendEntryList(EntityEntryList list) {
+            list.add(tag);
         }
 
         @Override
@@ -212,6 +220,11 @@ public class EntityIngredient implements Predicate<Entity> {
             JsonObject json = new JsonObject();
             json.addProperty("entityType", EntityType.getKey(type).toString());
             return json;
+        }
+
+        @Override
+        public void appendEntryList(EntityEntryList list) {
+            list.add(type);
         }
 
         @Override
@@ -298,7 +311,11 @@ public class EntityIngredient implements Predicate<Entity> {
         EntityType<?> type = values[0].getEntityTypes().iterator().next();
         var ret = type.create(level);
         assert ret!=null;
-        if(nbt!=null) ret.load(nbt);
+        if(nbt!=null) ret.load(getNormalizedNBT());
         return ret;
+    }
+    public CompoundTag getNormalizedNBT(){
+        assert nbt!=null;
+        return EntityPropertyDetector.getNormalizedNBT(nbt);
     }
 }

@@ -3,10 +3,11 @@ package com.moguang.ctnhbio;
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.gregtechceu.gtceu.api.addon.events.KJSRecipeKeyEvent;
-import com.gregtechceu.gtceu.common.data.GTRecipeCapabilities;
+import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.MapIngredientTypeManager;
+import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.item.StrictNBTItemStackMapIngredient;
 import com.gregtechceu.gtceu.integration.kjs.recipe.components.ContentJS;
-import com.moguang.ctnhbio.api.capability.NutrientRecipeCapability;
-import com.moguang.ctnhbio.data.recipe.RecipeRemoval;
+import com.moguang.ctnhbio.api.capability.recipe.NutrientRecipeCapability;
+import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import com.moguang.ctnhbio.registry.*;
 import com.mojang.datafixers.util.Pair;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
@@ -32,6 +33,9 @@ public class CTNHBioGTAddon implements IGTAddon {
     public void initializeAddon() {
         CBItems.init();
         CBBlocks.init();
+
+
+        MapIngredientTypeManager.registerMapIngredient(ModelIngredient.class, StrictNBTItemStackMapIngredient::from);
     }
 
     @Override

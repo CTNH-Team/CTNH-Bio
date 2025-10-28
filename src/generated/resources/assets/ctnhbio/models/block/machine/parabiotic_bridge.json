@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:block/block",
+  "loader": "gtceu:machine",
+  "machine": "ctnhbio:parabiotic_bridge",
+  "replaceable_textures": [
+    "all"
+  ],
+  "variants": {
+    "": {
+      "model": {
+        "parent": "ctnhbio:block/item_passthrough_hatch",
+        "textures": {
+          "all": "ctnhbio:block/casings/primal_flesh_casing"
+        }
+      }
+    }
+  }
+}

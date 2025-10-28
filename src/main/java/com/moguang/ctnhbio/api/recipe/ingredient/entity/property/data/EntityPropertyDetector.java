@@ -26,8 +26,17 @@ public class EntityPropertyDetector implements Predicate<CompoundTag> {
         return properties.stream().allMatch(p -> p.test(entityNBT));
     }
 
+    public CompoundTag getNormalizedNBT(){
+        CompoundTag nbt = new CompoundTag();
+        properties.forEach(p->p.putSlimNBT(nbt));
+        return nbt;
+    }
+
     //Util
     public static boolean test(CompoundTag requirementNBT, Entity entity){
         return new EntityPropertyDetector(requirementNBT).test(entity.saveWithoutId(new CompoundTag()));
+    }
+    public static CompoundTag getNormalizedNBT(CompoundTag originalNBT){
+        return new EntityPropertyDetector(originalNBT).getNormalizedNBT();
     }
 }

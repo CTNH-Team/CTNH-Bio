@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ctnhbio:block/machine/parabiotic_bridge",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ctnhbio:block/machine/parabiotic_bridge"
+    },
+    "facing=south": {
+      "model": "ctnhbio:block/machine/parabiotic_bridge",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ctnhbio:block/machine/parabiotic_bridge",
+      "y": 270
+    }
+  }
+}

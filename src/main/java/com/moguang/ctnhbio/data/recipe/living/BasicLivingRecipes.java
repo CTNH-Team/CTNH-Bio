@@ -33,6 +33,7 @@ public class BasicLivingRecipes {
                 .save(provider);
         CBRecipeBuilder.of(CTNHBio.id("potion"), CBRecipeTypes.BASIC_LIVING_RECIPES)
                 .inputFluids(FluidIngredient.of(CustomTags.POTION_FLUIDS, 250))
+
                 .duration(10)
                 .EUt(32)
                 .addData("potion", true)
