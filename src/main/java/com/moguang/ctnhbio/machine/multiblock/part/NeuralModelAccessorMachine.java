@@ -48,6 +48,11 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
         return MANAGED_FIELD_HOLDER;
     }
 
+    @Persisted
+    @DescSynced
+    @Getter
+    private final NeuralModelContainer modelHolder;
+
     @MustBeInvokedByOverriders
     @Override
     public void removedFromController(@NotNull IMultiController controller) {
@@ -61,10 +66,6 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
         setLocked(false);
         return super.afterWorking(controller);
     }
-
-    @Persisted
-    @Getter
-    private final NeuralModelContainer modelHolder;
 
 
     public NeuralModelAccessorMachine(IMachineBlockEntity holder) {

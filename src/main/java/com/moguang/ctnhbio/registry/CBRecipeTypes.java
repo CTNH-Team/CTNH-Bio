@@ -122,6 +122,7 @@ public class CBRecipeTypes {
                 .setMaxIOSize(1,0,0,0)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
+                .setSound(GTSoundEntries.COMPUTATION)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.UP_TO_DOWN);
 
 

@@ -104,7 +104,7 @@ public class NeuralModelContainer extends NotifiableRecipeHandlerTrait<ModelIngr
 
         Predicate<ModelIngredient> testAndAction =
                 io == IO.IN ? ingredient -> ingredient.test(getItemStack()) :   // input: only try to test the model
-                simulate? ingredient -> true                          // output: simulate do nothing and always passed
+                simulate? ingredient -> DataModelItem.getData(getItemStack()) < DataModelItem.getData(ingredient.getModel())                   // output: simulate do nothing and always passed
                         : ingredient -> {                                // output: no simulate: set data and model
                             var output = ingredient.getModel();
                             DataModelItem.setStoredModel(getItemStack(), DataModelItem.getStoredModel(output).get());
