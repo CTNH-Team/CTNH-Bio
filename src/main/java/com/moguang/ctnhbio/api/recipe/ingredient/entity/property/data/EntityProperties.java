@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data;
 
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.IBaseEntityProperty;
+import net.minecraft.network.chat.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ public abstract class EntityProperties{
     public static final IBaseEntityProperty<Boolean> ON_GROUND = new BooleanEntityProperty("OnGround");
     public static final IBaseEntityProperty<Boolean> INVULNERABLE = new BooleanEntityProperty("Invulnerable");
     public static final IBaseEntityProperty<Integer> PORTAL_COOLDOWN = new IntEntityProperty("PortalCooldown");
-    public static final IBaseEntityProperty<String> CUSTOM_NAME = new StringEntityProperty("CustomName");
+    public static final IBaseEntityProperty<Component> CUSTOM_NAME = new ComponentEntityProperty("CustomName");
     public static final IBaseEntityProperty<Boolean> CUSTOM_NAME_VISIBLE = new BooleanEntityProperty("CustomNameVisible");
     public static final IBaseEntityProperty<Boolean> SILENT = new BooleanEntityProperty("Silent");
     public static final IBaseEntityProperty<Boolean> NO_GRAVITY = new BooleanEntityProperty("NoGravity");

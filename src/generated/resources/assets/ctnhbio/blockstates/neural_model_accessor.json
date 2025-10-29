@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ctnhbio:block/machine/neural_model_accessor",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ctnhbio:block/machine/neural_model_accessor"
+    },
+    "facing=south": {
+      "model": "ctnhbio:block/machine/neural_model_accessor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ctnhbio:block/machine/neural_model_accessor",
+      "y": 270
+    }
+  }
+}

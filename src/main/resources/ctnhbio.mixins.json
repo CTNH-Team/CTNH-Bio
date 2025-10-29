@@ -10,8 +10,16 @@
     "create.CrushingWheelControllerBlockEntityMixin",
     "gtm.FluidBuilderMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
+    "gtm.MultiblockDisplayText$BuilderMixin",
     "gtm.NotifiableFluidTankMixin",
-
+    "gtm.RecipeCapabilityAccessor",
+    "gtm.RecipeRunnerMixin",
+    "gtm.ThermalFluidStatsMixin",
+    "gtm.WorkableMultiblockMachineMixin",
+    "gtm.WorkableTieredMachineMixin",
+    "hostilenetworks.CacheModelMixin",
+    "hostilenetworks.HostileEventsMixin",
+    "hostilenetworks.SimChamberTileEntityMixin",
     "jei.JeiBaseLootMixin",
     "jei.JeiGameplayLootMixin",
     "jei.LootTableMixin",
@@ -19,8 +27,8 @@
   ],
   "client": [
     "biomancy.InjectorScreenMixin",
-    "jei.RecipesGuiMixin",
-    "gtm.ThermalFluidStatsMixin"
+    "gtm.ThermalFluidStatsMixin",
+    "jei.RecipesGuiMixin"
   ],
   "minVersion": "0.8"
 }

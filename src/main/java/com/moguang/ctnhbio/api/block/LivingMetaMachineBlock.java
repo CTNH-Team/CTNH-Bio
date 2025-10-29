@@ -93,11 +93,12 @@ public class LivingMetaMachineBlock extends MetaMachineBlock implements ILivingE
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        InteractionResult result = onBlockUsed(state, level, pos, player);
-        if(result.consumesAction())
-        {
-            return result;
-        }
+//        暂时禁用生物实体的右键交互，等之后找到合适的解决方法
+//        InteractionResult result = onBlockUsed(state, level, pos, player);
+//        if(result.consumesAction())
+//        {
+//            return result;
+//        }
         return super.use(state, level, pos, player, hand, hit);
     }
 

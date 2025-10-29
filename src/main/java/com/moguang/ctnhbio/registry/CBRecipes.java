@@ -15,6 +15,7 @@ import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.data.recipe.*;
 import com.moguang.ctnhbio.data.recipe.living.*;
 import com.moguang.ctnhbio.data.recipe.multi.ConsciousnessAssemblyRecipes;
+import com.moguang.ctnhbio.data.recipe.multi.CogniRecipes;
 import com.moguang.ctnhbio.data.recipe.multi.GreatFleshRecipes;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;
@@ -35,9 +36,11 @@ public class CBRecipes {
         BioelectrlcForgeRecipes.init(provider);
         BioReactorRecipes.init(provider);
         DigesterRecipes.init(provider);
+        HostileObservationRecipes.init(provider);
         CommonRecipes.init(provider);
+
+        CogniRecipes.init(provider);
         ConsciousnessAssemblyRecipes.init(provider);
-        //VanillaRecipeProvider.init(provider);
         VanillaRecipes.init(provider);
         recipeAddition(provider);
     }

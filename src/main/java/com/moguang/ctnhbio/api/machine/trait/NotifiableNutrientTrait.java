@@ -1,16 +1,12 @@
 package com.moguang.ctnhbio.api.machine.trait;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
-import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
-import com.gregtechceu.gtceu.api.machine.trait.NotifiableEnergyContainer;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
-import com.moguang.ctnhbio.api.capability.NutrientRecipeCapability;
-import lombok.Getter;
-import lombok.Setter;
+import com.moguang.ctnhbio.api.capability.recipe.NutrientRecipeCapability;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
