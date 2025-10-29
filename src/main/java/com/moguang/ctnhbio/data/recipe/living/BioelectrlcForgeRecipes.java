@@ -64,6 +64,17 @@ public class BioelectrlcForgeRecipes {
                 .duration(80)
                 .save(provider);
 
+        //蜘蛛网
+        CBRecipeBuilder.of(CTNHBio.id("cobweb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+                .nutrient(5)
+                .inputItems(Items.STRING, 6)
+                .inputItems(Items.SLIME_BALL)
+                .outputItems(Items.COBWEB)
+                .EUt(12)
+                .duration(20)
+                .save(provider);
+        ;
+
 // 生物尖牙
         CBRecipeBuilder.of(CTNHBio.id("mob_fang"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(12)

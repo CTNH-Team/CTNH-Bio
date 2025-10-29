@@ -1,0 +1,7 @@
+{
+  "entity": "minecraft:cow",
+  "item": "minecraft:beef",
+  "chance": 1.0,
+  "min_amount": 5,
+  "max_amount": 15
+}

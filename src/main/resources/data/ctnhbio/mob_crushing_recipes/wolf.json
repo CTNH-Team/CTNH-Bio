@@ -1,0 +1,7 @@
+{
+  "entity": "minecraft:wolf",
+  "item": "biomancy:mob_fang",
+  "chance": 1.0,
+  "min_amount": 6,
+  "max_amount": 10
+}

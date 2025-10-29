@@ -17,6 +17,7 @@ import com.moguang.ctnhbio.data.recipe.living.*;
 import com.moguang.ctnhbio.data.recipe.multi.ConsciousnessAssemblyRecipes;
 import com.moguang.ctnhbio.data.recipe.multi.CogniRecipes;
 import com.moguang.ctnhbio.data.recipe.multi.GreatFleshRecipes;
+import com.moguang.ctnhbio.data.recipe.multi.HostileObservationRecipes;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

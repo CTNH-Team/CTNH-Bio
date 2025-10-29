@@ -8,11 +8,13 @@ import dev.shadowsoffire.hostilenetworks.Hostile;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
 import lombok.Getter;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +25,7 @@ import java.util.stream.Stream;
 public class ModelIngredient extends Ingredient {
     public static Codec<ModelIngredient> CODEC = ExtraCodecs.JSON
             .xmap(ModelIngredient::fromJson, ModelIngredient::toJson);
+    public static Value dummyDataModelIngredient = new Ingredient.ItemValue(new ItemStack(Hostile.Items.DATA_MODEL.get()));
     public static ResourceLocation TYPE = CTNHBio.id("model");
     public static ModelIngredient DEFAULT = of(0, getModelId(EntityType.PIG));
     final int requiredData;
@@ -30,13 +33,13 @@ public class ModelIngredient extends Ingredient {
     @Getter
     final ItemStack model;
     protected ModelIngredient(ItemStack modelStack){
-        super(Stream.of(new Ingredient.ItemValue(new ItemStack(Hostile.Items.DATA_MODEL.get()))));
+        super(Stream.of(dummyDataModelIngredient));
         model = modelStack;
         this.requiredData = DataModelItem.getData(modelStack);
         this.modelID = DataModelItem.getStoredModel(modelStack).getId();
     }
     protected ModelIngredient(int requiredData, ResourceLocation modelID) {
-        super(Stream.of(new Ingredient.ItemValue(new ItemStack(Hostile.Items.DATA_MODEL.get()))));
+        super(Stream.of(dummyDataModelIngredient));
         model = ModelIngredient.getModelStack(modelID, requiredData);
         this.requiredData = requiredData;
         this.modelID = modelID;
@@ -113,16 +116,48 @@ public class ModelIngredient extends Ingredient {
         return of(requiredTier, getModelId(type));
     }
 
+    @Override
+    public IIngredientSerializer<? extends Ingredient> getSerializer() {
+        return SERIALIZER;
+    }
+
     public JsonElement toJson() {
         JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("type", TYPE.toString());
         jsonObject.addProperty("model", modelID.toString());
         jsonObject.addProperty("data", requiredData);
         return jsonObject;
     }
+
     public static ModelIngredient fromJson(JsonElement json) {
-        JsonObject jsonObject = json.getAsJsonObject();
-        ResourceLocation modelID = ResourceLocation.tryParse(jsonObject.get("model").getAsString());
-        int requiredData = jsonObject.get("data").getAsInt();
-        return new ModelIngredient(requiredData, modelID);
+        return SERIALIZER.parse(json.getAsJsonObject());
     }
+
+
+    public static final IIngredientSerializer<ModelIngredient> SERIALIZER = new IIngredientSerializer<ModelIngredient>() {
+        @Override
+        @NotNull
+        public ModelIngredient parse(FriendlyByteBuf buffer) {
+            // 从网络数据包解析
+            ResourceLocation modelID = buffer.readResourceLocation();
+            int requiredData = buffer.readVarInt();
+            return ModelIngredient.of(requiredData, modelID);
+        }
+
+        @Override
+        @NotNull
+        public ModelIngredient parse(JsonObject json) {
+            // 从 JSON 解析
+            ResourceLocation modelID = ResourceLocation.tryParse(json.get("model").getAsString());
+            int requiredData = json.get("data").getAsInt();
+            return ModelIngredient.of(requiredData, modelID);
+        }
+
+        @Override
+        public void write(FriendlyByteBuf buffer, ModelIngredient ingredient) {
+            // 写入网络数据包
+            buffer.writeResourceLocation(ingredient.modelID);
+            buffer.writeVarInt(ingredient.requiredData);
+        }
+    };
 }

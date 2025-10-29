@@ -5,6 +5,7 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
+import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.capability.recipe.NutrientRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
@@ -31,6 +32,11 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
     public static CBRecipeBuilder of(ResourceLocation id, GTRecipeType recipeType) {
         return new CBRecipeBuilder(id, recipeType);
     }
+
+    public static CBRecipeBuilder of(String id, GTRecipeType recipeType) {
+        return new CBRecipeBuilder(CTNHBio.id(id), recipeType);
+    }
+
     @Override
     @SuppressWarnings("all")
     public final <T> CBRecipeBuilder input(RecipeCapability<T> capability, T... obj) {

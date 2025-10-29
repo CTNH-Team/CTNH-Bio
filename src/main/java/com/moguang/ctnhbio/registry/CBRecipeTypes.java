@@ -122,7 +122,7 @@ public class CBRecipeTypes {
                 .setMaxSize(IO.IN, EntityRecipeCapability.CAP,1)
                 .setMaxSize(IO.IN, ModelRecipeCapability.CAP,1)
                 .setMaxSize(IO.OUT, ModelRecipeCapability.CAP,1)
-                .setMaxIOSize(1,0,0,0)
+                .setMaxIOSize(2,0,0,0)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setSound(GTSoundEntries.COMPUTATION)

@@ -20,6 +20,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -130,7 +131,7 @@ public class NeuralModelContainer extends NotifiableRecipeHandlerTrait<ModelIngr
 
     @Override
     public @NotNull List<Object> getContents() {
-        return new ArrayList<>(getItemStack().isEmpty() ? List.of() : List.of(getItemStack()));
+        return Collections.singletonList(ModelIngredient.of(getItemStack()));
     }
 
     @Override

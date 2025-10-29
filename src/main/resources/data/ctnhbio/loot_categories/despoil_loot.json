@@ -1,0 +1,8 @@
+{
+  "type": "GAMEPLAY",
+  "key": "despoil_loot",
+  "icon": "biomancy:despoil_sickle",
+  "prefix": [
+    "^biomancy/despoil/"
+  ]
+}

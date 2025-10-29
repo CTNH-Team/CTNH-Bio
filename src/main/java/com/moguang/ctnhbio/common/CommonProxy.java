@@ -2,13 +2,16 @@ package com.moguang.ctnhbio.common;
 
 import com.gregtechceu.gtceu.api.item.tool.GTToolType;
 import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.MapIngredientTypeManager;
+import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.item.ItemStackMapIngredient;
 import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.item.StrictNBTItemStackMapIngredient;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.capability.forge.CBCapabilities;
+import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.api.recipe.content.SerializerModelIngredient;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
+import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelMapIngredient;
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.CBDatagen;
 import com.moguang.ctnhbio.data.materials.OrganicMaterials;
@@ -40,6 +43,18 @@ public class CommonProxy {
         IEventBus modEventBus = FMLJavaModLoadingContext
                 .get().getModEventBus();
         CBSerums.SERUMS.register(modEventBus);
+    }
+
+    @SubscribeEvent
+    public void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            CraftingHelper.register(ModelIngredient.TYPE, ModelIngredient.SERIALIZER);
+
+
+            MapIngredientTypeManager.registerMapIngredient(ModelIngredient.class,
+                    ModelMapIngredient::from);
+        });
+
     }
     public static void init() {
         CBEntities.init();
@@ -74,7 +89,6 @@ public class CommonProxy {
     @SubscribeEvent
     public void modConstruct(FMLConstructModEvent event) {
         // this is done to delay initialization of content to be after KJS has set up.
-
 
     }
 
