@@ -39,7 +39,12 @@ public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
         return (CogniAssemblerRecipeLogic)recipeLogic;
     }
 
-//    public static boolean isCogniAssemble(@Nullable GTRecipe recipe)
+    @Override
+    public boolean alwaysTryModifyRecipe() {
+        return super.alwaysTryModifyRecipe();
+    }
+
+    //    public static boolean isCogniAssemble(@Nullable GTRecipe recipe)
 //    {
 //        return recipe != null && recipe.recipeType == CBRecipeTypes.COGNI_ASSEMBLY_STEP;
 //    }

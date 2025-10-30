@@ -93,7 +93,6 @@ public class NeuralModelContainer extends NotifiableRecipeHandlerTrait<ModelIngr
         return this.getStackInSlot(0);
     }
 
-
     @Override
     public RecipeCapability<ModelIngredient> getCapability() {
         return ModelRecipeCapability.CAP;
@@ -104,8 +103,8 @@ public class NeuralModelContainer extends NotifiableRecipeHandlerTrait<ModelIngr
         if(io != IO.IN && io != IO.OUT) return left.isEmpty() ? null : left;
 
         Predicate<ModelIngredient> testAndAction =
-                io == IO.IN ? ingredient -> ingredient.test(getItemStack()) :   // input: only try to test the model
-                simulate? ingredient -> DataModelItem.getData(getItemStack()) < DataModelItem.getData(ingredient.getModel())                   // output: simulate do nothing and always passed
+                io == IO.IN ?  ingredient ->ingredient.test(getItemStack()) :   // input: only try to test the model
+                simulate? ingredient -> DataModelItem.getData(getItemStack()) < DataModelItem.getData(ingredient.getModel())
                         : ingredient -> {                                // output: no simulate: set data and model
                             var output = ingredient.getModel();
                             DataModelItem.setStoredModel(getItemStack(), DataModelItem.getStoredModel(output).get());

@@ -45,7 +45,7 @@ public class CBMachines {
     public static final MachineDefinition[] BIOREACTOR = new MachineDefinition[GTValues.TIER_COUNT];
     public static final MachineDefinition[] BRAIN_IN_A_VAT = new MachineDefinition[GTValues.TIER_COUNT];
     public static MachineDefinition NEURAL_MODEL_ACCESSOR;
-
+    public static MachineDefinition ADVANCED_NEURAL_MODEL_ACCESSOR;
     public static MachineDefinition PARABIOTIC_BRIDGE;
 //    @CN("反应器")
 //    //@EN("reactor")
@@ -66,13 +66,18 @@ public class CBMachines {
     })
     static Lang[] parabiotic_bridge;
 
+
+    @CN("可使机器在运行完配方后输出其中的数据模型")
+    @EN("Can make the machine output the data model in it after working.")
+    static Lang advanced_neural_model_accessor;
+
     public static void init() {
         registerBioelectricForge();
         registerDecomposer();
         registerDigester();
         registerBioreactor();
         registerBrainInAVat();
-        NEURAL_MODEL_ACCESSOR = REGISTRATE.machine("neural_model_accessor", NeuralModelAccessorMachine::new)
+        NEURAL_MODEL_ACCESSOR = REGISTRATE.machine("neural_model_accessor", b -> new NeuralModelAccessorMachine(b, false))
                 .cnLangValue("数据模型接口")
                 .langValue("Neural Model Accessor")
                 .tier(LuV)
@@ -82,6 +87,19 @@ public class CBMachines {
                 .workableCasingModel(CTNHBio.id("block/casings/neural_cooling_conduit"),
                         GTCEu.id("block/multiblock/central_monitor"))
                 .tooltips(Component.translatable("gtceu.part_sharing.disabled"))
+                .register();
+
+        ADVANCED_NEURAL_MODEL_ACCESSOR = REGISTRATE.machine("advanced_neural_model_accessor", b -> new NeuralModelAccessorMachine(b, true))
+                .cnLangValue("进阶数据模型接口")
+                .langValue("Advanced Neural Model Accessor")
+                .tier(LuV)
+                .rotationState(RotationState.NON_Y_AXIS)
+                .abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR)
+                .modelProperty(GTMachineModelProperties.IS_FORMED, false)
+                .workableCasingModel(CTNHBio.id("block/casings/consciousness_controller"),
+                        GTCEu.id("block/multiblock/central_monitor"))
+                .tooltips(Component.translatable("gtceu.part_sharing.disabled"),
+                        advanced_neural_model_accessor.translate())
                 .register();
 
         PARABIOTIC_BRIDGE = REGISTRATE
