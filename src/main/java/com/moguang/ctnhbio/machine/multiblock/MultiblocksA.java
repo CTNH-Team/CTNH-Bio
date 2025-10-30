@@ -258,24 +258,24 @@ public class MultiblocksA {
                         GTCEu.id("block/multiblock/research_station"))
                 .appearanceBlock(CBBlocks.NEURAL_COOLING_CONDUIT)
                 .additionalDisplay(ModelOutputLine::addModelOutputLine)
-//                .tooltips(
-//                        no_overclock.translate().withStyle(ChatFormatting.DARK_RED),
-//                        observer_info.translate().withStyle(ChatFormatting.WHITE),
-//                        observer_chance_boost.translate().withStyle(ChatFormatting.YELLOW)
-//                )
+                .tooltips(
+                        no_overclock.translate().withStyle(ChatFormatting.DARK_RED),
+                        observer_info.translate().withStyle(ChatFormatting.WHITE),
+                        observer_chance_boost.translate().withStyle(ChatFormatting.YELLOW)
+                )
                 .register();
     }
 
-//    @CN("观测实体来为数据模型收集数据,可通过并行控制仓同时观测多个相同实体")
-//    @EN("Observe entities to collect data for data model，and can execute parallel observations of multiple identical entities with Parallel Control Hatches")
-//    static Lang observer_info;
-//
-//    @CN("并行观测时，产出概率将乘以并行数")
-//    @EN("In parallel observation, the output chance is multiplied by parallel amount")
-//    static Lang observer_chance_boost;
-//
-//    @CN("无法超频")
-//    @EN("NO Overclock")
-//    static Lang no_overclock;
+    @CN("观测实体来为数据模型收集数据,可通过并行控制仓同时观测多个相同实体")
+    @EN("Observe entities to collect data for data model，and can execute parallel observations of multiple identical entities with Parallel Control Hatches")
+    static Lang observer_info;
+
+    @CN("并行观测时，产出概率将乘以并行数")
+    @EN("In parallel observation, the output chance is multiplied by parallel amount")
+    static Lang observer_chance_boost;
+
+    @CN("无法超频")
+    @EN("NO Overclock")
+    static Lang no_overclock;
 
 }

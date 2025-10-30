@@ -14,6 +14,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
 
 
 import java.util.function.Consumer;
@@ -26,7 +27,6 @@ import static com.gregtechceu.gtceu.api.GTValues.*;
 
 public class HostileObservationRecipes {
     public static void init(Consumer<FinishedRecipe> provider){
-
         addEntityTypeWithItem(EntityType.COW,WHEAT, provider);
         addEntityTypeWithItem(EntityType.IRON_GOLEM, IRON_INGOT, provider);
         addEntityTypeWithItem(EntityType.SLIME, SLIME_BALL, provider);
@@ -35,6 +35,7 @@ public class HostileObservationRecipes {
         addEntityTypeWithItem(EntityType.WITHER_SKELETON, SOUL_SAND, provider);
         addEntityTypeWithItem(EntityType.SHULKER, CHORUS_FRUIT, provider);
         addEntityTypeWithItem(EntityType.ELDER_GUARDIAN, PRISMARINE_CRYSTALS, provider);
+        addEntityTypeWithItem(EntityType.GLOW_SQUID, SEAGRASS, provider);
     }
     static ResourceLocation getRecipeId(EntityType<?> type, ModelTier tier) {
         ResourceLocation t = ForgeRegistries.ENTITY_TYPES.getKey(type);

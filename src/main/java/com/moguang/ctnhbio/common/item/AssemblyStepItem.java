@@ -25,8 +25,8 @@ public class AssemblyStepItem extends Item {
     @EN("Cogni Assembly Intermediate Product(Current Step: %s)")
     static Lang cogni_assemble_step;
 
-    @CN("该物品只能通过联体桥输入或输出")
-    @EN("This item can only be input or output through a Parabiotic Bridge.")
+    @CN("该物品必须通过联体桥输入或输出")
+    @EN("This item must be input or output through a Parabiotic Bridge.")
     static Lang io_constrain;
 
     @Override

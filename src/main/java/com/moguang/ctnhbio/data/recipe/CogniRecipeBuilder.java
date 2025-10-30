@@ -91,6 +91,53 @@ public class CogniRecipeBuilder{
         return this;
     }
 
+    public CogniRecipeBuilder MIFStep(ModelTier requiredTier, EntityType<?> type,
+                                      Supplier<? extends Item> input, int amount,
+                                      FluidStack fluids)
+    {
+        SubRecipe subRecipe = new SubRecipe(this);
+        subRecipe.inputItems(input, amount)
+                .inputFluids(fluids)
+                .inputModel(requiredTier, type);
+        subRecipes.add(subRecipe);
+
+        return this;
+    }
+
+    public CogniRecipeBuilder MIFStep(ModelTier requiredTier, EntityType<?> type,
+                                      ItemStack stack,
+                                      FluidStack fluids)
+    {
+        SubRecipe subRecipe = new SubRecipe(this);
+        subRecipe.inputItems(stack)
+                .inputFluids(fluids)
+                .inputModel(requiredTier, type);
+        subRecipes.add(subRecipe);
+
+        return this;
+    }
+
+    public CogniRecipeBuilder IFStep(Supplier<? extends Item> input, int amount,
+                                      FluidStack fluids)
+    {
+        SubRecipe subRecipe = new SubRecipe(this);
+        subRecipe.inputItems(input, amount)
+                .inputFluids(fluids);
+        subRecipes.add(subRecipe);
+
+        return this;
+    }
+
+    public CogniRecipeBuilder IFStep(ItemStack stack,
+                                     FluidStack fluids)
+    {
+        SubRecipe subRecipe = new SubRecipe(this);
+        subRecipe.inputItems(stack)
+                .inputFluids(fluids);
+        subRecipes.add(subRecipe);
+
+        return this;
+    }
 
     public void save(Consumer<FinishedRecipe> consumer) {
         if (subRecipes.isEmpty()) {
@@ -229,6 +276,11 @@ public class CogniRecipeBuilder{
 
         public SubRecipe inputModel(ModelIngredient... models){
             modelInputs.addAll(Arrays.asList(models));
+            return this;
+        }
+
+        public SubRecipe inputModel(ModelTier requiredTier, EntityType<?> type){
+            inputModel(ModelIngredient.of(requiredTier, type));
             return this;
         }
 
