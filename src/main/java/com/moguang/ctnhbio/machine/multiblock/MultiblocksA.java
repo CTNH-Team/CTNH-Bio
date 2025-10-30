@@ -16,6 +16,7 @@ import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
 import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
+import com.moguang.ctnhbio.client.Text.ModelOutputLine;
 import com.moguang.ctnhbio.machine.bioobservation.HostileObserverMachine;
 import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
 
@@ -256,6 +257,7 @@ public class MultiblocksA {
                 .workableCasingModel(CTNHBio.id("block/casings/neural_cooling_conduit"),
                         GTCEu.id("block/multiblock/research_station"))
                 .appearanceBlock(CBBlocks.NEURAL_COOLING_CONDUIT)
+                .additionalDisplay(ModelOutputLine::addModelOutputLine)
 //                .tooltips(
 //                        no_overclock.translate().withStyle(ChatFormatting.DARK_RED),
 //                        observer_info.translate().withStyle(ChatFormatting.WHITE),

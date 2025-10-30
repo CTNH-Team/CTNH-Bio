@@ -14,7 +14,6 @@ import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.moguang.ctnhbio.data.recipe.*;
 import com.moguang.ctnhbio.data.recipe.living.*;
-import com.moguang.ctnhbio.data.recipe.multi.ConsciousnessAssemblyRecipes;
 import com.moguang.ctnhbio.data.recipe.multi.CogniRecipes;
 import com.moguang.ctnhbio.data.recipe.multi.GreatFleshRecipes;
 import com.moguang.ctnhbio.data.recipe.multi.HostileObservationRecipes;
@@ -41,7 +40,6 @@ public class CBRecipes {
         CommonRecipes.init(provider);
 
         CogniRecipes.init(provider);
-        ConsciousnessAssemblyRecipes.init(provider);
         VanillaRecipes.init(provider);
         recipeAddition(provider);
     }

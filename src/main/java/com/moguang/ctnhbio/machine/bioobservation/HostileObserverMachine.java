@@ -31,6 +31,7 @@ public class HostileObserverMachine extends WorkableElectricMultiblockMachine{
         );
     }
 
+
     public static ModifierFunction hostileObserverMachineModifier(MetaMachine machine, GTRecipe gtRecipe){
         return recipe -> {
             Content model = recipe.outputs.get(ModelRecipeCapability.CAP).get(0);
