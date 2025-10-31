@@ -15,7 +15,7 @@ public class EnglishLangHandler {
         //replace(provider, );
         provider.add("emi.category.ctnhbio.despoil_loot", "Despoil");
         provider.add("ctnhbio.nutrient_bar.info", "Nutrient:");
-        provider.add("jade.nutrient.info", "Nutrient：");
+        provider.add("jade.nutrient.info", "Nutrient: %s");
 
         //provider.add("recipe.condition.effect.tooltip", "Potion Effect : %s");
         provider.add("ctnhbio.recipe.nutrient", "Nutrient Consumption: %d");

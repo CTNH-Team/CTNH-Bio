@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.BlastProperty
 import com.gregtechceu.gtceu.api.fluids.FluidBuilder;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.data.CBElements;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
@@ -19,6 +20,7 @@ public class CommonMaterials {
 
     public static Material WEIRD_PIXEL_DUST;
     public static Material BLOODSTEEL;
+    public static Material Ennea_Protoplasm;
 
     public static void register() {
         WEIRD_PIXEL_DUST = REGISTRATE.material(CTNHBio.id("weird_pixel_dust"))
@@ -46,5 +48,18 @@ public class CommonMaterials {
                         .vacuumStats(VA[HV]))
                 .buildAndRegister()
                 .setFormula("Fe3CrNd*C2O-V", true);  // 化学式标记
+
+        Ennea_Protoplasm = REGISTRATE.material(CTNHBio.id("ennea_protoplasm"))
+                .lang("Enneasilicon-based Protoplasm")
+                .cnlang("九硅基原生质")
+                .ingot().fluid()
+                .color(0x681624)
+                .secondaryColor(0x5a0816)
+                .iconSet(METALLIC)
+                .appendFlags(EXT2_METAL, GENERATE_DENSE, GENERATE_SMALL_GEAR)
+                .element(CBElements.Esi)
+                .buildAndRegister();
     }
+
+
 }

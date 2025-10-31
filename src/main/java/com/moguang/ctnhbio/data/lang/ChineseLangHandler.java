@@ -113,7 +113,7 @@ public class ChineseLangHandler {
 
         provider.add("ctnhbio.nutrient_bar.info", "营养:");
         provider.add("recipe.capability.nutrient.name", "营养");
-        provider.add("jade.nutrient.info", "营养值：");
+        provider.add("jade.nutrient.info", "营养值：%s");
 
         //provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
         provider.add("ctnhbio.recipe.nutrient_consume", "营养消耗：%d");

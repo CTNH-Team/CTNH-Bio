@@ -8,6 +8,7 @@ import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.item.StrictNBTItemStac
 import com.gregtechceu.gtceu.integration.kjs.recipe.components.ContentJS;
 import com.moguang.ctnhbio.api.capability.recipe.NutrientRecipeCapability;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
+import com.moguang.ctnhbio.data.CBElements;
 import com.moguang.ctnhbio.registry.*;
 import com.mojang.datafixers.util.Pair;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
@@ -59,6 +60,11 @@ public class CTNHBioGTAddon implements IGTAddon {
     @Override
     public void addRecipes(Consumer<FinishedRecipe> provider) {
         CBRecipes.init(provider);
+    }
+
+    @Override
+    public void registerElements() {
+        CBElements.init();
     }
 
     @Override

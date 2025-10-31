@@ -237,6 +237,7 @@ public class CBMultiblocks {
                         .where("F", Predicates.blocks(CBBlocks.NEURAL_COOLING_CONDUIT.get())
                                 .or(Predicates.autoAbilities(CBRecipeTypes.HOSTILE_OBSERVATION))
                                 .or(Predicates.autoAbilities(false, false, true))
+                                .or(Predicates.abilities(PartAbility.EXPORT_ITEMS).setPreviewCount(1))
                         )
                         .where("#", Predicates.any())
                         .where("C", Predicates.blocks(CBBlocks.CONSCIOUSNESS_LINKER.get()))
