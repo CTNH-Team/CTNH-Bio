@@ -40,7 +40,7 @@ import static com.gregtechceu.gtceu.api.pattern.Predicates.autoAbilities;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 @Suffix("tooltip")
-public class MultiblocksA {
+public class CBMultiblocks {
     public static MultiblockMachineDefinition GREAT_FLESH;
     public static MultiblockMachineDefinition CIRCULATORY_SYSTEM;
     public static MultiblockMachineDefinition COGNI_ASSEMBLER;

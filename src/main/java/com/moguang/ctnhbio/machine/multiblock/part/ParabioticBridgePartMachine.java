@@ -118,9 +118,6 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
         }
 
 
-        public List<Ingredient> handleRecipeManually(IO io, GTRecipe recipe, List<Ingredient> left, boolean simulate, IO handler) {
-            return handleRecipe(io, recipe, left, simulate, handler, storage);
-        }
     }
 
 

@@ -57,18 +57,18 @@ public class CBMachines {
 
 
     @CN({
-            "这不是一个常规容器，无法通过UI或物流手段输入或输出物品",
+            "这不是一个常规容器，无法通过UI或物流手段取出或放入物品",
             "被破坏时其中物品会消失"
     })
     @EN({
-            "This is not a regular container and cannot input or output items through the UI or logistics methods.",
-            "Items inside will disappear when destroyed."
+            "This is not a standard container. Items cannot be added or removed through the UI or logistics.",
+            "All contents will be lost upon destruction."
     })
     static Lang[] parabiotic_bridge;
 
 
-    @CN("可使机器在运行完配方后输出其中的数据模型")
-    @EN("Can make the machine output the data model in it after working.")
+    @CN("可使机器在执行配方后输出其中的数据模型")
+    @EN("Can make the controller output the data model in it after working.")
     static Lang advanced_neural_model_accessor;
 
     public static void init() {
