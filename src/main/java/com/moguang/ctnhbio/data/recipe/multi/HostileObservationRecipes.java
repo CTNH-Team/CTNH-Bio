@@ -74,6 +74,7 @@ public class HostileObservationRecipes {
                 .inputItems(item)
                 //.inputItems()
                 .EUt(VA[LuV])
+                .CWUt(8)
                 .duration(200)
                 .save(provider);
     }

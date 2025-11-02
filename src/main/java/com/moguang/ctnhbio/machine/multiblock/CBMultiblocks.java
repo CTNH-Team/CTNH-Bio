@@ -222,7 +222,7 @@ public class CBMultiblocks {
                 .multiblock("hostile_observer", HostileObserverMachine::new)
                 .cnLangValue("敌意观测站")
                 .recipeType(CBRecipeTypes.HOSTILE_OBSERVATION)
-                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH)
+                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, HostileObserverMachine::hostileObserverMachineModifier)
                 .pattern(definition -> FactoryBlockPattern.start()
                         .aisle("################AAAAAAAAAAA################", "################ABBBBBBBBBA################", "################ABBBBBBBBBA################", "################ABBCCCCCBBA################", "################ACCCDDDCCCA################", "################ACEEEEEEECA################", "################ACCCDDDCCCA################", "################ABBCCCCCBBA################", "################ABBBBBBBBBA################", "################ABBBBBBBBBA################", "################AAAAAAAAAAA################")
                         .aisle("################AAACADACAAA################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################ACCCACACCCA################")

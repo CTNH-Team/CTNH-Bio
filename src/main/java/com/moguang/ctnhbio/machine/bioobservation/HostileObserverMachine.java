@@ -12,6 +12,8 @@ import com.moguang.ctnhbio.api.machine.trait.NotifiableEntityContainer;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 
+import java.util.List;
+
 public class HostileObserverMachine extends WorkableElectricMultiblockMachine{
 
     public HostileObserverMachine(IMachineBlockEntity holder, Object... args) {
@@ -38,8 +40,9 @@ public class HostileObserverMachine extends WorkableElectricMultiblockMachine{
             if(model != null)
             {
                 GTRecipe newRecipe = recipe.copy();
+                model = newRecipe.outputs.get(ModelRecipeCapability.CAP).get(0);
                 Content newModel = new Content(model.content, model.chance*recipe.parallels, 10000, 0);
-                newRecipe.outputs.get(ModelRecipeCapability.CAP).set(0, newModel);
+                newRecipe.outputs.put(ModelRecipeCapability.CAP, List.of(newModel));//.set(0, newModel);
                 return newRecipe;
             }
             return recipe;
