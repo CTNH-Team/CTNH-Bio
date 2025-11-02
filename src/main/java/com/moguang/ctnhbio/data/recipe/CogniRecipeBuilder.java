@@ -3,6 +3,7 @@ package com.moguang.ctnhbio.data.recipe;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
+import com.gregtechceu.gtceu.api.recipe.ingredient.IntProviderIngredient;
 import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.moguang.ctnhbio.api.capability.recipe.CogniItemRecipeCapability;
@@ -13,6 +14,7 @@ import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,6 +40,9 @@ public class CogniRecipeBuilder{
     private final List<SubRecipe> subRecipes = new ArrayList<>();
     private ItemStack intermediateItem;
     private ItemStack finalOutput;
+
+    int minIntermediate = 0;
+    int maxIntermediate = 0;
 
     private final GTRecipeType mainRecipeType;
     private final GTRecipeType subRecipeType;
@@ -65,8 +70,16 @@ public class CogniRecipeBuilder{
         return this;
     }
 
+    public CogniRecipeBuilder setIntermediate(ItemStack item, int min, int max) {
+        this.intermediateItem = item;
+        minIntermediate = min;
+        maxIntermediate = max;
+        return this;
+    }
+
     public CogniRecipeBuilder setIntermediate(ItemStack item) {
         this.intermediateItem = item;
+
         return this;
     }
 
@@ -154,7 +167,11 @@ public class CogniRecipeBuilder{
             GTCEu.LOGGER.error("Pipeline recipe {} has no final output set!", id);
             return;
         }
-
+        UniformInt random = null;
+        if(minIntermediate != 0)
+        {
+            random = UniformInt.of(minIntermediate, maxIntermediate);
+        }
         // 创建主配方（用于JEI显示）
         createMainRecipe(consumer);
 
@@ -171,7 +188,15 @@ public class CogniRecipeBuilder{
 
             // 添加中间产物输入（除第一步外）
             if (step > 0) {
-                stepBuilder.input(CogniItemRecipeCapability.CAP, StrictNBTIngredient.of(copyWithStep(intermediateItem, step)));
+                Ingredient ingredient;
+                if(random == null)
+                {
+                    ingredient = StrictNBTIngredient.of(copyWithStep(intermediateItem, step));
+                }
+                else {
+                    ingredient = IntProviderIngredient.of(copyWithStep(intermediateItem, step), random);
+                }
+                stepBuilder.input(CogniItemRecipeCapability.CAP, ingredient);
             }
 
             // 添加配方特定输入
@@ -191,7 +216,16 @@ public class CogniRecipeBuilder{
             } else {
                 // 中间步骤输出带标记的中间产物
                 //stepBuilder.outputItems(copyWithStep(intermediateItem, step + 1));
-                stepBuilder.output(CogniItemRecipeCapability.CAP, StrictNBTIngredient.of(copyWithStep(intermediateItem, step + 1)));
+                Ingredient ingredient;
+                if(random == null)
+                {
+                    ingredient = StrictNBTIngredient.of(copyWithStep(intermediateItem, step+1));
+                }
+                else {
+                    ingredient = IntProviderIngredient.of(copyWithStep(intermediateItem, step+1), random);
+                }
+
+                stepBuilder.output(CogniItemRecipeCapability.CAP, ingredient);
             }
 
             stepBuilder.save(consumer);

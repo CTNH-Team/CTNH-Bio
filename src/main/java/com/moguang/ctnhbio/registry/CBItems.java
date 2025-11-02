@@ -194,6 +194,13 @@ public class CBItems {
 
             .register();
 
+    public static ItemEntry<AssemblyStepItem> SCULK_CELL_UNFINISHED = REGISTRATE
+            .item("sculk_cell_unfinished", AssemblyStepItem::new)
+            .cnlang("未完成的幽匿干细胞")
+            .lang("Unfinished SCULK CELL")
+
+            .register();
+
     public static <T extends IComponentItem> NonNullConsumer<T> attach(IItemComponent components) {
         return item -> item.attachComponents(components);
     }
