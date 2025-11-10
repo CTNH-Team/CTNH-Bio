@@ -21,13 +21,11 @@
     "hostilenetworks.SimChamberTileEntityMixin",
     "jei.JeiBaseLootMixin",
     "jei.JeiGameplayLootMixin",
-    "jei.LootTableMixin",
-    "jei.RecipeGuiLogicMixin"
+    "jei.LootTableMixin"
   ],
   "client": [
     "biomancy.InjectorScreenMixin",
-    "gtm.ThermalFluidStatsMixin",
-    "jei.RecipesGuiMixin"
+    "gtm.ThermalFluidStatsMixin"
   ],
   "minVersion": "0.8"
 }

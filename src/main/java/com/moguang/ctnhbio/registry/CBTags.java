@@ -18,6 +18,8 @@ public class CBTags {
 
 
     public static final TagKey<Item> FOOD_TAG = ItemTags.create(ResourceLocation.tryBuild("forge", "foods"));
+    public static final TagKey<Item> RAW_MEATS_TAG = ItemTags.create(ResourceLocation.tryBuild("biomancy", "raw_meats"));
+    public static final TagKey<Item> COOKED_MEATS_TAG = ItemTags.create(ResourceLocation.tryBuild("biomancy", "cooked_meats"));
 
     public static final TagKey<Fluid> NUTRIENT_FLUIDS_TAG = TagUtil.createFluidTag("nutrient");
     public static final TagKey<Fluid> ACID_FLUIDS_TAG = TagUtil.createFluidTag("stomach_acid");

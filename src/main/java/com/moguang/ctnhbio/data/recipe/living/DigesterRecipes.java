@@ -14,6 +14,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import static com.github.elenterius.biofactory.init.ModFluids.NUTRIENTS_FLUID;
 import static com.github.elenterius.biomancy.init.ModFluids.ACID;
@@ -24,7 +25,11 @@ public class DigesterRecipes {
         CBRecipeBuilder.of(CTNHBio.id("nutrient_solid"), CBRecipeTypes.DIGEST_RECIPES)
                 .nutrient(1)
                 .circuitMeta(1)
-                .inputItems(Ingredient.of(CBTags.FOOD_TAG))
+                .inputItems(Ingredient.fromValues(Stream.of(
+                        new Ingredient.TagValue(CBTags.FOOD_TAG),
+                        new Ingredient.TagValue(CBTags.RAW_MEATS_TAG),
+                        new Ingredient.TagValue(CBTags.COOKED_MEATS_TAG)
+                )))
                 .outputItems(new ItemStack(ModItems.NUTRIENT_PASTE.get(), 1) )
                 .outputItems(ModItems.NUTRIENT_BAR)
                 .duration(100)
@@ -32,10 +37,15 @@ public class DigesterRecipes {
                 .addData("circuit", 1)
                 .save(provider);
 
+
         CBRecipeBuilder.of(CTNHBio.id("nutrient_fluid"), CBRecipeTypes.DIGEST_RECIPES)
                 .nutrient(1)
                 .circuitMeta(2)
-                .inputItems(Ingredient.of(CBTags.FOOD_TAG))
+                .inputItems(Ingredient.fromValues(Stream.of(
+                        new Ingredient.TagValue(CBTags.FOOD_TAG),
+                        new Ingredient.TagValue(CBTags.RAW_MEATS_TAG),
+                        new Ingredient.TagValue(CBTags.COOKED_MEATS_TAG)
+                )))
                 .outputFluids(new FluidStack(NUTRIENTS_FLUID.get(), 1))
                 .duration(100)
                 .EUt(32)
