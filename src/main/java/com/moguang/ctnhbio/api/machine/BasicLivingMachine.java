@@ -129,7 +129,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         ItemStack stack = player.getItemInHand(hand);
 
         // 判断是否是食物
-        if (stack.isEdible()) {
+        if (stack.isEdible() && stack.getFoodProperties(null) != null) {
             if (!getLevel().isClientSide) {
 //                if (!player.getAbilities().instabuild && !stack.getFoodProperties(player).canAlwaysEat()) {
 //                    stack.shrink(1);
@@ -171,6 +171,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             {
                 this.energyContainer.changeEnergy(GTValues.V[tier + 1]);
                 this.machineEntity.hurt(GTDamageTypes.ELECTRIC.source(this.getLevel()), tier);
+                String a = "123";
             }
         }
     }

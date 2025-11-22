@@ -14,6 +14,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -33,7 +34,7 @@ public class BioReactorRecipes {
 // ORGANIC_COMPOUND
         CBRecipeBuilder.of(CTNHBio.id("organic_compound"), CBRecipeTypes.BIO_REACTOR_RECIPES)
                 .nutrient(12)
-                .effect()
+                //.effect(ForgeRegistries.MOB_EFFECTS.getValue(ResourceLocation.parse("legendarysurvivaloverhaul:temperature_immunity")))
                 .inputFluids(new FluidStack(Bile.getFluid(), 200))
                 .inputItems(GTItems.BIO_CHAFF)
                 .inputItems(ModItems.NUTRIENTS.get().asItem().getDefaultInstance())
