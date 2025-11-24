@@ -36,6 +36,7 @@ public class HostileObservationRecipes {
         addEntityTypeWithItem(EntityType.SHULKER, CHORUS_FRUIT, provider);
         addEntityTypeWithItem(EntityType.ELDER_GUARDIAN, PRISMARINE_CRYSTALS, provider);
         addEntityTypeWithItem(EntityType.GLOW_SQUID, SEAGRASS, provider);
+        addEntityTypeWithItem(EntityType.WARDEN, ECHO_SHARD, provider);
     }
     static ResourceLocation getRecipeId(EntityType<?> type, ModelTier tier) {
         ResourceLocation t = ForgeRegistries.ENTITY_TYPES.getKey(type);
@@ -50,7 +51,6 @@ public class HostileObservationRecipes {
                 .outputModel(ModelIngredient.of(ModelTier.BASIC,type), 3000)
                 .notConsumable(Ingredient.of(Tags.item(ResourceLocation.parse("minecraft:swords"))))
                 .inputItems(item)
-                //.inputItems()
                 .EUt(VA[EV])
                 .duration(200)
                 .save(provider);
@@ -61,7 +61,6 @@ public class HostileObservationRecipes {
                 .outputModel(ModelIngredient.of(ModelTier.ADVANCED,type), 1000)
                 .inputItems(PREDICTION_MATRIX)
                 .inputItems(item)
-                //.inputItems()
                 .EUt(VA[IV])
                 .duration(200)
                 .save(provider);
@@ -72,7 +71,6 @@ public class HostileObservationRecipes {
                 .outputModel(ModelIngredient.of(ModelTier.SUPERIOR,type), 500)
                 .inputItems(GTItems.TOOL_DATA_STICK)
                 .inputItems(item)
-                //.inputItems()
                 .EUt(VA[LuV])
                 .CWUt(8)
                 .duration(200)
