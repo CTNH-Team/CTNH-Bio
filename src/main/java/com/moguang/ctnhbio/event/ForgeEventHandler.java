@@ -6,7 +6,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.common.recipe.MobCrushingRecipeManager;
-import com.yanny.ali.registries.LootCategories;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -30,7 +29,7 @@ public class ForgeEventHandler {
 
     @SubscribeEvent
     public static void onDataReload(AddReloadListenerEvent event) {
-        event.addListener(LootCategories.getReloadListener(new Gson(), "loot_categories"));
+        //event.addListener(LootCategories.getReloadListener(new Gson(), "loot_categories"));
         event.addListener(new SimpleJsonResourceReloadListener(GSON, "mob_crushing_recipes") {
             @Override
             protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager, ProfilerFiller profiler) {

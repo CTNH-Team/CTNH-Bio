@@ -1,5 +1,7 @@
 package com.moguang.ctnhbio.api.gui.widget;
 
+import com.gregtechceu.gtceu.GTCEu;
+import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.lowdragmc.lowdraglib.gui.editor.configurator.IConfigurableWidget;
 import com.lowdragmc.lowdraglib.gui.ingredient.IRecipeIngredientSlot;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
@@ -11,6 +13,7 @@ import com.moguang.ctnhbio.integration.xei.handlers.entity.CycleEntityEntryHandl
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import dev.emi.emi.api.stack.EmiStack;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
@@ -192,6 +195,12 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
     }
     private Object mapToIngredient(EntityType<?> type) {
         ItemStack egg = getSpawnEgg(type);
-        return JEIPlugin.getItemIngredient(egg, getPosition().x, getPosition().y, getSize().width, getSize().height);
+        if (GTCEu.Mods.isJEILoaded() && !egg.isEmpty()) {
+            return SlotWidget.JEICallWrapper.getJEIStackClickable(egg, getPosition(), getSize());
+        }
+        else if(GTCEu.Mods.isEMILoaded()){
+            return EmiStack.of(egg).setChance(getXEIChance());
+        }
+        return egg;
     }
 }

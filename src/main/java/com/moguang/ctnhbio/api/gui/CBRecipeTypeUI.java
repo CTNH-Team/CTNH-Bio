@@ -27,6 +27,7 @@ import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.jei.JEIPlugin;
 import com.lowdragmc.lowdraglib.utils.Position;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
+import dev.emi.emi.api.EmiApi;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
@@ -168,6 +169,10 @@ public class CBRecipeTypeUI extends GTRecipeTypeUI {
                                                 Stream.of(new RecipeType<>(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory().registryKey, GTRecipe.class))
                                         ).collect(Collectors.toList())
                                 );
+                            }
+                            else if(GTCEu.Mods.isEMILoaded()){
+                                EmiApi.displayRecipeCategory(
+                                        GTRecipeEMICategory.machineCategory(gtRecipeType.getCategory()));
                             }
                         }
                     }).setHoverTooltips("gtceu.recipe_type.show_recipes"));

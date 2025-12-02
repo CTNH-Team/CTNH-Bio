@@ -19,8 +19,6 @@
     "hostilenetworks.CacheModelMixin",
     "hostilenetworks.HostileEventsMixin",
     "hostilenetworks.SimChamberTileEntityMixin",
-    "jei.JeiBaseLootMixin",
-    "jei.JeiGameplayLootMixin",
     "jei.LootTableMixin"
   ],
   "client": [

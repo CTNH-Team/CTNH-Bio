@@ -49,8 +49,7 @@ public class NutrientRecipeCapability extends RecipeCapability<Double> {
     public void addXEIInfo(WidgetGroup group, int xOffset, GTRecipe recipe, List<Content> contents, boolean perTick,
                            boolean isInput, MutableInt yOffset) {
         double nutrient = contents.stream().map(Content::getContent).mapToDouble(NutrientRecipeCapability.CAP::of).sum();
-        group.addWidget(new LabelWidget(3 - xOffset, yOffset.addAndGet(20),
+        group.addWidget(new LabelWidget(3 - xOffset, yOffset.addAndGet(10),
                 LocalizationUtils.format(isInput ? "ctnhbio.recipe.nutrient_consume": "ctnhbio.recipe.nutrient_generate", nutrient)));
-        yOffset.add(10);
     }
 }

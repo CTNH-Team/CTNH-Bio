@@ -51,7 +51,6 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
         return this;
     }
     public CBRecipeBuilder nutrient(double nutrient) {
-        this.addData("nutrient", (float) nutrient);
         if (nutrient >= 0) {
             input(NutrientRecipeCapability.CAP, nutrient);
         }
