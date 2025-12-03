@@ -5,6 +5,7 @@
   "refmap": "mixins.ctnhbio.refmap.json",
   "mixins": [
     "GTMixin",
+    "ali.EmiCompatibilityMixin",
     "ali.EmiGamePlayLootMixin",
     "ali.EmiScrollWidgetMixin",
     "biomancy.InjectorItemMixin",

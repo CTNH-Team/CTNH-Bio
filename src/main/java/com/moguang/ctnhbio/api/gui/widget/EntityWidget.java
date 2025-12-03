@@ -14,6 +14,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import dev.emi.emi.api.stack.EmiStack;
+import dev.emi.emi.api.stack.ItemEmiStack;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
@@ -195,11 +196,15 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
     }
     private Object mapToIngredient(EntityType<?> type) {
         ItemStack egg = getSpawnEgg(type);
-        if (GTCEu.Mods.isJEILoaded() && !egg.isEmpty()) {
-            return SlotWidget.JEICallWrapper.getJEIStackClickable(egg, getPosition(), getSize());
-        }
-        else if(GTCEu.Mods.isEMILoaded()){
-            return EmiStack.of(egg).setChance(getXEIChance());
+//        if (GTCEu.Mods.isJEILoaded() && !egg.isEmpty()) {
+//            return SlotWidget.JEICallWrapper.getJEIStackClickable(egg, getPosition(), getSize());
+//        }
+//        else
+        if(GTCEu.Mods.isEMILoaded()){
+            return new ItemEmiStack(egg) {
+                @Override
+                public void render(GuiGraphics draw, int x, int y, float delta, int flags) {}
+            };
         }
         return egg;
     }
