@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Iterator;
 import java.util.Map;
 
-import static com.moguang.ctnhbio.machine.multiblock.CBMultiblocks.GREAT_FLESH;
+import static com.moguang.ctnhbio.registry.CBMultiblocks.GREAT_FLESH;
 
 @Mod.EventBusSubscriber(modid = CTNHBio.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEventHandler {

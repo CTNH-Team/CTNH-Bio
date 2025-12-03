@@ -3,6 +3,7 @@ dependencies {
 
     // Mixin
     annotationProcessor('org.spongepowered:mixin:0.8.5:processor')
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.0-rc.3"))
 
     modImplementation(project(":modules:CTNH-Lib")){transitive = false}
     // JEI, EMI, Jade

@@ -26,15 +26,17 @@ import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.jei.JEIPlugin;
 import com.lowdragmc.lowdraglib.utils.Position;
+import com.moguang.ctnhbio.mixin.emi.EmiApiMixin;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import dev.emi.emi.api.EmiApi;
+import dev.emi.emi.api.recipe.EmiRecipe;
+import dev.emi.emi.api.recipe.EmiRecipeCategory;
+import dev.emi.emi.api.stack.EmiStack;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -171,8 +173,12 @@ public class CBRecipeTypeUI extends GTRecipeTypeUI {
                                 );
                             }
                             else if(GTCEu.Mods.isEMILoaded()){
-                                EmiApi.displayRecipeCategory(
-                                        GTRecipeEMICategory.machineCategory(gtRecipeType.getCategory()));
+                                var category1 = GTRecipeEMICategory.machineCategory(gtRecipeType.getCategory());
+                                var category2 = GTRecipeEMICategory.machineCategory(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory());
+                                Map<EmiRecipeCategory, List<EmiRecipe>> map = new HashMap<>();
+                                map.put(category1, EmiApi.getRecipeManager().getRecipes(category1));
+                                map.put(category2, EmiApi.getRecipeManager().getRecipes(category2));
+                                EmiApiMixin.setPages(map, EmiStack.EMPTY);
                             }
                         }
                     }).setHoverTooltips("gtceu.recipe_type.show_recipes"));

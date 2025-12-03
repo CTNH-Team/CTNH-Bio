@@ -8,7 +8,6 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
 import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
 import com.gregtechceu.gtceu.api.sound.SoundEntry;
-import com.gregtechceu.gtceu.common.unification.material.MaterialRegistryManager;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.VanillaRecipeProvider;
 import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
@@ -27,7 +26,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 public class EventHandler {
     public static void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {
         CBMachines.init();
-        CBMultiblockMachines.init();
+        CBMultiblocks.init();
     }
 
     public static void registerRecipeTypes(GTCEuAPI.RegisterEvent<ResourceLocation, GTRecipeType> event) {

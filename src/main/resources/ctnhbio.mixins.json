@@ -5,9 +5,12 @@
   "refmap": "mixins.ctnhbio.refmap.json",
   "mixins": [
     "GTMixin",
+    "ali.EmiGamePlayLootMixin",
+    "ali.EmiScrollWidgetMixin",
     "biomancy.InjectorItemMixin",
     "biomancy.VialHolderBlockEntityMixin",
     "create.CrushingWheelControllerBlockEntityMixin",
+    "emi.EmiApiMixin",
     "gtm.FluidBuilderMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
     "gtm.MultiblockDisplayText$BuilderMixin",
@@ -18,11 +21,11 @@
     "gtm.WorkableTieredMachineMixin",
     "hostilenetworks.CacheModelMixin",
     "hostilenetworks.HostileEventsMixin",
-    "hostilenetworks.SimChamberTileEntityMixin",
-    "jei.LootTableMixin"
+    "hostilenetworks.SimChamberTileEntityMixin"
   ],
   "client": [
     "biomancy.InjectorScreenMixin",
+    "emi.RecipeScreenMixin",
     "gtm.ThermalFluidStatsMixin"
   ],
   "minVersion": "0.8"

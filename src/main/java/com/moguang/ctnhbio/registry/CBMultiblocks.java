@@ -1,4 +1,4 @@
-package com.moguang.ctnhbio.machine.multiblock;
+package com.moguang.ctnhbio.registry;
 
 import com.github.elenterius.biomancy.BiomancyMod;
 import com.github.elenterius.biomancy.init.ModBlocks;
@@ -20,10 +20,8 @@ import com.moguang.ctnhbio.client.Text.ModelOutputLine;
 import com.moguang.ctnhbio.machine.bioobservation.HostileObserverMachine;
 import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
 
-import com.moguang.ctnhbio.registry.CBBlocks;
+import com.moguang.ctnhbio.machine.multiblock.CogniAssemblerMachine;
 import com.moguang.ctnhbio.api.machine.multiblock.CBPartAbility;
-import com.moguang.ctnhbio.registry.CBMachines;
-import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;

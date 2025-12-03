@@ -4,7 +4,7 @@ import com.github.elenterius.biomancy.init.ModBlocks;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.github.elenterius.biomancy.styles.TextStyles;
 import com.github.elenterius.biomancy.util.ComponentUtil;
-import com.moguang.ctnhbio.machine.multiblock.CBMultiblocks;
+import com.moguang.ctnhbio.registry.CBMultiblocks;
 import com.moguang.ctnhbio.registry.CBItems;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
