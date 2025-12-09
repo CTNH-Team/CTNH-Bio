@@ -50,9 +50,6 @@ public class CommonProxy {
         event.enqueueWork(() -> {
             CraftingHelper.register(ModelIngredient.TYPE, ModelIngredient.SERIALIZER);
 
-
-            MapIngredientTypeManager.registerMapIngredient(ModelIngredient.class,
-                    ModelMapIngredient::from);
         });
 
     }

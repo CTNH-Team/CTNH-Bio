@@ -18,6 +18,8 @@ public class ModelMapIngredient extends AbstractMapIngredient {
 
     protected ModelTier tier;
     protected ResourceLocation modelID;
+
+    static int[] VALUES = {0 ,6, 54, 354, 1254};
     @Override
     protected int hash() {
         return modelID.hashCode() * 31;
@@ -31,8 +33,13 @@ public class ModelMapIngredient extends AbstractMapIngredient {
     @NotNull
     public static List<AbstractMapIngredient> from(ModelIngredient ingredient) {
         List<AbstractMapIngredient> ingredients = new ObjectArrayList<>();
-        ModelTier modelTier = ModelTier.getByData(DataModelRegistry.INSTANCE.getForEntity(EntityType.COW),
-                ingredient.requiredData);
+        ModelTier modelTier = ModelTier.FAULTY;
+        var data = ingredient.requiredData;
+        for(int i = 4; i >= 0; --i) {
+            if (data >= VALUES[i]) {
+                modelTier = ModelTier.values()[i];
+            }
+        }
         ingredients.add(new ModelMapIngredient(modelTier, ingredient.modelID));
         return ingredients;
     }
