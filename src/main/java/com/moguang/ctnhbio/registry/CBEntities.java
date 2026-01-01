@@ -3,8 +3,8 @@ package com.moguang.ctnhbio.registry;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
 
+import com.moguang.ctnhbio.client.Renderer.ColorableEntityRenderer;
 import com.moguang.ctnhbio.machine.braininavat.Brain;
-import com.moguang.ctnhbio.machine.braininavat.BrainRenderer;
 
 import com.tterrag.registrate.util.entry.EntityEntry;
 import net.minecraft.world.entity.MobCategory;
@@ -29,7 +29,7 @@ public class CBEntities {
             .properties(props -> props.sized(0.25F, 0.2F))
             .attributes(Brain::createAttributes)
             .loot((lootTables, entityType) -> lootTables.add(entityType, LootTable.lootTable()))
-            .renderer(() -> BrainRenderer::new)
+            .renderer(() -> ColorableEntityRenderer::new)
             .lang("Brain")
             .register();
 

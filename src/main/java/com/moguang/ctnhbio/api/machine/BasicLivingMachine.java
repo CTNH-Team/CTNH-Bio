@@ -258,7 +258,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         }, (progressBar, machine) -> {
 
             progressBar.setProgressSupplier(
-                    () -> machine.getNutrientAmount() * 1d / machine.getNutrientCapacity());
+                    () -> machine.getNutrientAmount() / machine.getNutrientCapacity());
             progressBar.setHoverTooltips(
                     nutrient.translate());
             progressBar.setDynamicHoverTips(progress -> {

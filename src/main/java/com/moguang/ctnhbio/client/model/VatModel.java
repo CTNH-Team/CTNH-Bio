@@ -9,7 +9,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class VatModel extends GeoModel<GeoAnimatable> {
 
 	public static final ResourceLocation MODEL = CTNHBio.id("geo/entity/vat.geo.json");
-	protected static final ResourceLocation TEXTURE = CTNHBio.id("textures/block/brain_in_a_vat.png");
+	protected static final ResourceLocation TEXTURE = CTNHBio.id("textures/entity/brain_in_a_vat.png");
 
 	@Override
 	public ResourceLocation getModelResource(GeoAnimatable animatable)

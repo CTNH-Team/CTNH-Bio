@@ -7,8 +7,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class Brain extends LivingMetaMachineEntity {
+public class Brain extends LivingMetaMachineEntity implements GeoAnimatable {
     public Brain(EntityType<? extends LivingEntity> type, Level level) {
         super(type, level);
     }
@@ -27,5 +31,21 @@ public class Brain extends LivingMetaMachineEntity {
 
 
         return result;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+
+    }
+
+    protected final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public double getTick(Object o) {
+        return 0;
     }
 }

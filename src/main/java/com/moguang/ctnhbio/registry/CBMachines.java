@@ -234,7 +234,7 @@ public class CBMachines {
                             LivingMetaMachineBlock::new,
                             (type, pos, state) ->
                                     new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.BRAIN_IN_A_VAT_BRAIN.get())
-                                            .setEntityOffset(0.5, 0.6, 0.5),
+                                            .setEntityOffset(0.5, 0.45, 0.5),
                             CBRecipeTypes.BRAIN_IN_A_VAT_RECIPES,
                             true)
                     .editableUI(null)
