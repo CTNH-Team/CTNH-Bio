@@ -124,46 +124,9 @@ public class ChineseLangHandler {
         provider.add("jei.ctnhbio.tooltip.chance", "概率：");
         provider.add("jei.ctnhbio.tooltip.amount_range", "数量：%d-%d");
 
-//        provider.add("ctnhbio.mv_machine.tooltip", "MV生物芯片");
-//        provider.add("ctnhbio.hv_machine.tooltip", "HV生物芯片");
-//        provider.add("ctnhbio.ev_machine.tooltip", "EV生物芯片");
-//        provider.add("ctnhbio.iv_machine.tooltip", "IV生物芯片");
-//
-//
-//        provider.add("ctnhbio.synet_core.tooltip", "精密如血管回路的金属骨架，每一道凹槽都在规律脉动，仿佛在输送某种不可见的生命能量。");
-//        provider.add("ctnhbio.meta_core.tooltip", "不断自我折叠的几何结构，表面浮现出违反欧几里得定律的棱角，在静止中持续完成着不可能的空间变换。");
-//        provider.add("ctnhbio.nova_core.tooltip", "半透明外壳下悬浮着无数晶体碎片，它们持续剥落又再生，每次破碎都折射出不同的光谱。");
-//        provider.add("ctnhbio.omni_core.tooltip", "光滑如镜面的球体内部，有星云状物质在缓慢旋转，凝视越久越能看见其中浮现出观测者自身的轮廓。");
-
-//        provider.add("ctnhbio.fluid.type_organic.tooltip", "§a生物活性流体");
-//        provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§a可传输生物活性流体");
         provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4生物活性流体可能失活！");
 
-//        provider.add(OrganicMaterials.Regenerative_Fluid.getUnlocalizedName(), "再生粘液");
-//        //provider.add(OrganicMaterials.Withering_Ooze.getUnlocalizedName(), "凋灵软泥");
-//        provider.add(OrganicMaterials.Hormone_Secretion.getUnlocalizedName(), "内分泌激素");
-//        provider.add(OrganicMaterials.Toxin_Extract.getUnlocalizedName(), "毒素提取物");
-//        provider.add(OrganicMaterials.Bile.getUnlocalizedName(), "胆汁");
-//        provider.add(OrganicMaterials.Volatile_Fluid.getUnlocalizedName(), "激变分泌液");
-//        provider.add(OrganicMaterials.Organic_Compound.getUnlocalizedName(), "有机化合物");
-//        provider.add(OrganicMaterials.Unstable_Compound.getUnlocalizedName(), "不稳定化合物");
-//        provider.add(OrganicMaterials.Genetic_Compound.getUnlocalizedName(), "遗传化合物");
-//        provider.add(OrganicMaterials.Heterogeneous_Compound.getUnlocalizedName(), "异质化合物");
-//        provider.add(OrganicMaterials.Healing_Compound.getUnlocalizedName(), "治愈性原液");
-//        provider.add(OrganicMaterials.Decay_Essence.getUnlocalizedName(), "衰败原液");
-//        provider.add(OrganicMaterials.Rejuvenation_Serum.getUnlocalizedName(), "活力血清");
-//        provider.add(OrganicMaterials.Ageing_Serum.getUnlocalizedName(), "成长血清");
-//        provider.add(OrganicMaterials.Enlargement_Serum.getUnlocalizedName(), "巨化血清");
-//        provider.add(OrganicMaterials.Shrinking_Serum.getUnlocalizedName(), "缩小血清");
-//        provider.add(OrganicMaterials.Breeding_Stimulant.getUnlocalizedName(), "配种兴奋剂");
-//        provider.add(OrganicMaterials.Absorption_Boost.getUnlocalizedName(), "伤痛反应剂");
-//        provider.add(OrganicMaterials.Cleansing_Serum.getUnlocalizedName(), "净化血清");
-//        provider.add(OrganicMaterials.Frenzy_Serum.getUnlocalizedName(), "狂化血清");
-//        provider.add(OrganicMaterials.Insomnia_Cure.getUnlocalizedName(), "失眠治疗剂");
-//        provider.add(OrganicMaterials.Primordial_Serum.getUnlocalizedName(), "原初血清");
-
-        //replace(provider, CommonMaterials.BLOODSTEEL.getUnlocalizedName(), "血髓钢");
-        //replace(provider, CommonMaterials.WEIRD_PIXEL_DUST.getUnlocalizedName(), "富集营养");
+        provider.add("ctnhbio.copyright.info", "由CTNHBio添加");
 
         //Entity Properties
         EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"实体输入","实体输出","接受实体: %s","要求:");

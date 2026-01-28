@@ -10,6 +10,8 @@ import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.capability.recipe.CogniItemRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
+import com.moguang.ctnhbio.api.recipe.customlogic.DigestRecipeLogic;
+import net.minecraft.network.chat.Component;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
@@ -48,7 +50,7 @@ public class CBRecipeTypes {
         DECOMPOSER_RECIPES = REGISTRATE.recipeType("decomposer", NUTRIENT)
                 .cnlang("电力分解")
                 .lang("Decomposer")
-                .setMaxIOSize(2, 6, 1, 3)
+                .setMaxIOSize(2, 6, 3, 3)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setProgressBar(GuiTextures.PROGRESS_BAR_MACERATE, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
@@ -58,9 +60,16 @@ public class CBRecipeTypes {
                 .lang("Digest")
                 .setMaxIOSize(2, 2, 2, 2)
                 .setEUIO(IO.IN)
-                .setMaxTooltips(5)
+                .setMaxTooltips(6)
                 .setSound(CBSoundEntries.DIGESTER_CRAFTING)
-                .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+                .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
+                .addDataInfo(tag -> {
+                    if(tag.contains("info")){
+                        return DigestRecipeLogic.based_on_nutrition.translate().getString();
+                    }
+                    return "";
+                })
+                .addCustomRecipeLogic(new DigestRecipeLogic());
 
         BIO_REACTOR_RECIPES = REGISTRATE.recipeType(CTNHBio.id("ctnhbio_reactor"), NUTRIENT)
                 .cnlang("生物反应")

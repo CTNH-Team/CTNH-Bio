@@ -58,6 +58,7 @@
   "ctnhbio.brain_in_a_vat.tooltip.2": "§rOverclocking provides double compute power, but causes irreversible brain damage",
   "ctnhbio.cogni_assemble_step": "Cogni Assembly Intermediate Product(Current Step: %s)",
   "ctnhbio.cogni_assembly_step": "Cogni Assembly",
+  "ctnhbio.copyright.info": "Added By CTNHBio",
   "ctnhbio.ctnhbio_reactor": "Bio Reactor",
   "ctnhbio.digest": "Digest",
   "ctnhbio.fluid_pipe.cannot_handle_organic": "§4Bioactive Fluid may be inactivated",
@@ -163,5 +164,7 @@
   "material.ctnhbio.withering_ooze": "Withering Ooze",
   "organicmaterialsswinter.ctnhbio.organic.0": "§aBioactive Fluid",
   "organicmaterialsswinter.ctnhbio.organic.1": "§aCan handle Bioactive Fluid",
-  "recipe.condition.ctnhbio.tooltip": "Potion Effect : %s"
+  "recipe.condition.ctnhbio.tooltip": "Potion Effect : %s",
+  "recipe_logic.ctnhbio.any_food": "Any food",
+  "recipe_logic.ctnhbio.based_on_nutrition": "Recipe duration and output\nare determined by the food’s nutrition and saturation"
 }

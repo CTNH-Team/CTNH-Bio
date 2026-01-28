@@ -30,6 +30,7 @@ import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.plate;
 
 public class CBRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
+        LivingMachineRecipes.init(provider);
         DecomposerRecipes.init(provider);
         BasicLivingRecipes.init(provider);
         GreatFleshRecipes.init(provider);

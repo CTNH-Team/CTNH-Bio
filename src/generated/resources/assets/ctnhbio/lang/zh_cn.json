@@ -59,6 +59,7 @@
   "ctnhbio.cogni_assemble_step": "意识装配中间产物（当前步骤：%s）",
   "ctnhbio.cogni_assembly": "意识装配流程",
   "ctnhbio.cogni_assembly_step": "意识装配",
+  "ctnhbio.copyright.info": "由CTNHBio添加",
   "ctnhbio.ctnhbio_reactor": "生物反应",
   "ctnhbio.digest": "电力消化",
   "ctnhbio.fluid_pipe.cannot_handle_organic": "§4生物活性流体可能失活！",
@@ -171,5 +172,7 @@
   "organicmaterialsswinter.ctnhbio.organic.0": "§a生物活性流体",
   "organicmaterialsswinter.ctnhbio.organic.1": "§a可传输生物活性流体",
   "recipe.capability.nutrient.name": "营养",
-  "recipe.condition.ctnhbio.tooltip": "药水效果：%s"
+  "recipe.condition.ctnhbio.tooltip": "药水效果：%s",
+  "recipe_logic.ctnhbio.any_food": "任意食物",
+  "recipe_logic.ctnhbio.based_on_nutrition": "配方时间和产出\n由食物的饱食度和饱和度决定"
 }

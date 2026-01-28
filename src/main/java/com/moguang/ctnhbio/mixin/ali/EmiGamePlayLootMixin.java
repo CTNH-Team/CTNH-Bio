@@ -1,7 +1,6 @@
 package com.moguang.ctnhbio.mixin.ali;
 
-import com.yanny.ali.api.IDataNode;
-import com.yanny.ali.api.Rect;
+import com.yanny.ali.api.*;
 import com.yanny.ali.compatibility.common.GenericUtils;
 import com.yanny.ali.compatibility.emi.EmiBaseLoot;
 import com.yanny.ali.compatibility.emi.EmiGameplayLoot;
@@ -76,6 +75,13 @@ public abstract class EmiGamePlayLootMixin extends EmiBaseLoot{
     public int getDisplayHeight() {
         return (ctnhbio$isDespoil(location)? 48 : 10) + getItemsHeight();
     }
+
+//    @Inject(method = "getRootWidget", at = @At("HEAD"), cancellable = true)
+//    void hideEmpty(IWidgetUtils utils, IDataNode entry, RelativeRect rect, int maxWidth, CallbackInfoReturnable<IWidget> cir){
+//        if(ctnhbio$isDespoil(location) && ctnhbio$entityType == null){
+//            cir.setReturnValue(null);
+//        }
+//    }
 
     @Inject(
             method = "getAdditionalWidgets",

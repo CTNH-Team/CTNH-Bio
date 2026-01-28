@@ -172,10 +172,6 @@ public class CBMachines {
                             false)
                     .cnLangValue(getCNName(id, tier))
                     .langValue(getENName(id, tier))
-                    .recipeModifiers(
-                            CBRecipeModifier::digesterRecipeModifier,
-                            GTRecipeModifiers.OC_NON_PERFECT,
-                            CBRecipeModifier::batchMode)
                     .register();
         }
     }

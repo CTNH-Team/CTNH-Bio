@@ -1,11 +1,14 @@
 package com.moguang.ctnhbio.data.recipe;
 
+import com.github.elenterius.biomancy.datagen.recipes.builder.BioForgingRecipeBuilder;
+import com.github.elenterius.biomancy.init.ModBioForgeTabs;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.data.GTMachines;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.registry.CBItems;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -64,20 +67,11 @@ public class VanillaRecipes {
                 'I', GTMachines.HULL[LV]
         );
 
-        VanillaRecipeHelper.addShapedRecipe(provider, false, true,
-                CTNHBio.id("bio_forge_recipe"),
-                new ItemStack(ModItems.BIO_FORGE.get(), 1),
-                "AEA",
-                "BIB",
-                "CDC",
-                'A', ModItems.MOB_CLAW.get(),
-                'B', CustomTags.LV_CIRCUITS,
-                'C', GTItems.FLUID_CELL_LARGE_TUNGSTEN_STEEL.get(),
-                'D', ModItems.LIVING_FLESH,
-                'E', ModItems.PRIMORDIAL_CORE,
-                'I', GTMachines.HULL[LV]
-        );
-
-
+        BioForgingRecipeBuilder.create(CBItems.ORGANIC_VIAL)
+                .addIngredient(ModItems.ELASTIC_FIBERS.get(), 2)
+                .setCraftingCost(2)
+                .setCategory(ModBioForgeTabs.TOOLS)
+                .unlockedBy(ModItems.LIVING_FLESH.get())
+                .save(provider);
     }
 }

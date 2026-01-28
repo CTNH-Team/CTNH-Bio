@@ -1,6 +1,8 @@
 package com.moguang.ctnhbio.registry;
 
+import com.github.elenterius.biomancy.init.ModItems;
 import com.github.elenterius.biomancy.init.ModRarities;
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.item.ComponentItem;
 import com.gregtechceu.gtceu.api.item.IComponentItem;
 import com.gregtechceu.gtceu.api.item.component.ICustomDescriptionId;
@@ -27,12 +29,16 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 
+import java.util.function.Supplier;
+
+import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.common.data.GTItems.attach;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
@@ -43,7 +49,14 @@ public class CBItems {
     }
     public static void init() {
         CBMaterialItems.generateTools();
+        BIO_CORES[LV] = ModItems.PRIMORDIAL_CORE;
+        BIO_CORES[MV] = SYNET_CORE;
+        BIO_CORES[HV] = META_CORE;
+        BIO_CORES[EV] = NOVA_CORE;
+        BIO_CORES[IV] = OMNI_CORE;
     }
+    public static final Supplier<? extends Item>[] BIO_CORES = new Supplier[GTValues.TIER_COUNT];
+
     public static final ItemEntry<StyleItem> WETWARE_CAPACITOR = REGISTRATE.item("wetware_capacitor", StyleItem::new)
             .cnlang("湿件电容")
             .lang("Wetware-Capacitor")

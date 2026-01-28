@@ -38,6 +38,7 @@ public class EnglishLangHandler {
 
         provider.add("ctnhbio.recipe.datamodel.requirement", "§pAbove Are Minimum Requirement(s)");
 
+        provider.add("ctnhbio.copyright.info", "Added By CTNHBio");
         //EntityProperties
         EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"Input Entity","Output Entity","Available: %s","Requirement:");
 

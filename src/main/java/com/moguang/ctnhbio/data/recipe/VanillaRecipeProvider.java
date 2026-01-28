@@ -36,7 +36,7 @@ public class VanillaRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-        buildBioForgingRecipes(consumer);
+        //buildBioForgingRecipes(consumer);
 
     }
 
@@ -148,11 +148,6 @@ public class VanillaRecipeProvider extends RecipeProvider {
                 .unlockedBy(ModItems.FLESH_BITS.get())
                 .save(consumer);
 
-        BioForgingRecipeBuilder.create(CBItems.ORGANIC_VIAL)
-                .addIngredient(ModItems.ELASTIC_FIBERS.get(), 2)
-                .setCraftingCost(2)
-                .setCategory(ModBioForgeTabs.TOOLS)
-                .unlockedBy(ModItems.FLESH_BITS.get())
-                .save(consumer);
+
     }
 }
