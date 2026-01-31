@@ -10,6 +10,7 @@ import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.capability.recipe.CogniItemRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
+import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
 import com.moguang.ctnhbio.api.recipe.customlogic.DigestRecipeLogic;
 import net.minecraft.network.chat.Component;
 
@@ -29,11 +30,6 @@ public class CBRecipeTypes {
     public static GTRecipeType COGNI_ASSEMBLY;
     public static GTRecipeType COGNI_ASSEMBLY_STEP;
     public static GTRecipeType HOSTILE_OBSERVATION;
-    //public static GTRecipeType CONSCIOUSNESS_ASSEMBLY;
-
-
-//    @CN("意识装配")
-//    static Lang consciousness_assembly = new Lang("gtceu.consciousness_assembly");
 
     public static void init() {
         // 初始化所有配方类型

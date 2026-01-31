@@ -171,6 +171,7 @@
   "material.ctnhbio.withering_ooze": "凋灵软泥",
   "organicmaterialsswinter.ctnhbio.organic.0": "§a生物活性流体",
   "organicmaterialsswinter.ctnhbio.organic.1": "§a可传输生物活性流体",
+  "recipe.capability.entity.name": "实体",
   "recipe.capability.nutrient.name": "营养",
   "recipe.condition.ctnhbio.tooltip": "药水效果：%s",
   "recipe_logic.ctnhbio.any_food": "任意食物",

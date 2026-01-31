@@ -164,6 +164,7 @@
   "material.ctnhbio.withering_ooze": "Withering Ooze",
   "organicmaterialsswinter.ctnhbio.organic.0": "§aBioactive Fluid",
   "organicmaterialsswinter.ctnhbio.organic.1": "§aCan handle Bioactive Fluid",
+  "recipe.capability.entity.name": "Entity",
   "recipe.condition.ctnhbio.tooltip": "Potion Effect : %s",
   "recipe_logic.ctnhbio.any_food": "Any food",
   "recipe_logic.ctnhbio.based_on_nutrition": "Recipe duration and output\nare determined by the food’s nutrition and saturation"

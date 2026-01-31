@@ -40,8 +40,6 @@ public class EmiCompatibilityMixin {
                 c -> c.id.getPath().contains("despoil")
         ).findFirst().orElse(null);
 
-
-
         ItemStack enchantedBook = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ModEnchantments.DESPOIL.get(), 1));
         var list = new ArrayList<EmiIngredient>();
         for (ItemProviderEntry<IGTTool> entry : CB_TOOL_ITEMS.column(CBToolType.BONING_KNIFE).values()) {
