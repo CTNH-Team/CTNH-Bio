@@ -13,6 +13,7 @@ import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
 import com.gregtechceu.gtceu.api.machine.fancyconfigurator.CircuitFancyConfigurator;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
+import com.gregtechceu.gtceu.api.machine.trait.NotifiableEnergyContainer;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
@@ -33,6 +34,7 @@ import com.moguang.ctnhbio.api.gui.CBGuiTextures;
 import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
 import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
 import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
+import com.moguang.ctnhbio.api.machine.trait.LivingMachineEnergyContainer;
 import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
@@ -73,6 +75,10 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     @Setter
     private String name = null;
 
+    private long lastAcceptedNetworkVoltage = 0;
+    private long lastAcceptedNetworkVoltageTime = Long.MIN_VALUE;
+    private long lastOvervoltageHurtTime = Long.MIN_VALUE;
+
     public BasicLivingMachine(IMachineBlockEntity holder, int tier, Object... args) {
         super(holder, tier, (tiers) -> tiers * 32000, args);
         this.storage = new SynchronizedNutrientStorage(GTValues.V[tier] * 64);
@@ -80,6 +86,12 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         this.outputTrait = new NotifiableNutrientTrait(this, storage, IO.OUT);
 
         getMachineEntity();
+    }
+
+    @Override
+    protected NotifiableEnergyContainer createEnergyContainer(Object... args) {
+        long tierVoltage = GTValues.V[getTier()];
+        return LivingMachineEnergyContainer.makeReceiverContainer(this, tierVoltage * 64L, tierVoltage, 1L);
     }
 
     @Override
@@ -104,10 +116,12 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     public BasicLivingRecipeLogic getRecipeLogic() {
         return (BasicLivingRecipeLogic) super.getRecipeLogic();
     }
+
     @Override
     public double getNutrientAmount() {
         return storage.getAmount();
     }
+
     @Override
     public double getNutrientCapacity() {
         return storage.getCapacity();
@@ -125,28 +139,23 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     @Override
     public InteractionResult tryToOpenUI(Player player, InteractionHand hand, BlockHitResult hit) {
-
         ItemStack stack = player.getItemInHand(hand);
-
         // 判断是否是食物
         if (stack.isEdible() && stack.getFoodProperties(null) != null) {
             if (!getLevel().isClientSide) {
-//                if (!player.getAbilities().instabuild && !stack.getFoodProperties(player).canAlwaysEat()) {
-//                    stack.shrink(1);
-//                }
+                // if (!player.getAbilities().instabuild && !stack.getFoodProperties(player).canAlwaysEat()) {
+                //     stack.shrink(1);
+                // }
                 int nutrition = stack.getFoodProperties(null).getNutrition();
                 float saturation = stack.getFoodProperties(null).getSaturationModifier();
                 getMachineEntity().eat(getLevel(), stack);
                 storage.add(nutrition + 0.5 * saturation);
-
-//                getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
-//                        SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
-//                        1.0f, 1.0f);
+                // getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
+                //         SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
+                //         1.0f, 1.0f);
             }
-
             return InteractionResult.sidedSuccess(getLevel().isClientSide);
         }
-
         // 默认行为（打开 GUI）
         return super.tryToOpenUI(player, hand, hit);
     }
@@ -156,42 +165,85 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         return false;
     }
 
-
     @Override
     public void doExplosion(float explosionPower) {
-        float inputTier = explosionPower -1;
-        if(inputTier - tier >= 2) {
-            if(machineEntity != null && machineEntity.isAlive())
-            {
+        // Only a fallback explosion behavior for unexpected cases
+        float inputTier = explosionPower - 1;
+        if (inputTier - tier >= 2) {
+            if (machineEntity != null && machineEntity.isAlive()) {
                 machineEntity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()), machineEntity.getMaxHealth());
             }
-        }
-        else {
-            if(getMachineEntity() != null)
-            {
-                this.energyContainer.changeEnergy(GTValues.V[tier + 1]);
+        } else {
+            if (getMachineEntity() != null) {
                 this.machineEntity.hurt(GTDamageTypes.ELECTRIC.source(this.getLevel()), tier);
-                String a = "123";
             }
         }
     }
-
-//    @Override
-//    public int getTier() {
-//        return tier + 1;
-//    }
-//
-//    @Override
-//    public int getOverclockTier() {
-//        return 1;
-//    }
 
     @Override
     public int getMaxOverclockTier() {
-        //this.energyContainer.getInputVoltage()
-        return GTUtil.getTierByVoltage(4 * Math.max(energyContainer.getInputVoltage(), energyContainer.getOutputVoltage()));
-
+        return GTUtil.getTierByVoltage(getOverclockVoltage());
     }
+
+    @Override
+    public long getOverclockVoltage() {
+        long baseVoltage = Math.max(energyContainer.getInputVoltage(), energyContainer.getOutputVoltage());
+        long now = getOffsetTimer();
+
+        boolean allowHistory = getRecipeLogic() != null && getRecipeLogic().isActive();
+
+        long networkVoltage = (lastAcceptedNetworkVoltageTime == now || (allowHistory && lastAcceptedNetworkVoltageTime >= now - 5))
+                ? lastAcceptedNetworkVoltage
+                : 0;
+
+        long candidate = Math.max(baseVoltage, networkVoltage);
+        int baseTier = GTUtil.getTierByVoltage(baseVoltage);
+        int maxAllowedTier = Math.min(baseTier + 1, GTValues.V.length - 1);
+        long maxAllowedVoltage = GTValues.V[maxAllowedTier];
+        return Math.min(candidate, maxAllowedVoltage);
+    }
+
+    /**
+     * Called by LivingMachineEnergyContainer when a packet is seen from the network.
+     * This may happen even if the buffer is full and the packet isn't accepted.
+     */
+    public void onEnergyPacketSeen(long voltage, long timeStamp, int incomingTier) {
+        if (lastAcceptedNetworkVoltageTime == timeStamp) {
+            this.lastAcceptedNetworkVoltage = Math.max(this.lastAcceptedNetworkVoltage, voltage);
+        } else {
+            this.lastAcceptedNetworkVoltage = voltage;
+            this.lastAcceptedNetworkVoltageTime = timeStamp;
+        }
+
+        // Only hurt while an actual recipe is running.
+        if (!isRemote() && incomingTier > getTier() && lastOvervoltageHurtTime < timeStamp && getRecipeLogic() != null && getRecipeLogic().isActive()) {
+            lastOvervoltageHurtTime = timeStamp;
+            var entity = getMachineEntity();
+            if (entity != null && entity.isAlive()) {
+                entity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()), getTier());
+            }
+        }
+    }
+
+    /**
+     * Called by LivingMachineEnergyContainer when energy is accepted from the network.
+     */
+    public void onEnergyPacketAccepted(long voltage, long timeStamp, int incomingTier) {
+        this.lastAcceptedNetworkVoltage = voltage;
+        this.lastAcceptedNetworkVoltageTime = timeStamp;
+    }
+
+    /**
+     * Called by LivingMachineEnergyContainer when unsafe (tier+2 or higher) overvoltage is received.
+     */
+    public void onFatalOvervoltage(long timeStamp) {
+        this.lastAcceptedNetworkVoltageTime = timeStamp;
+        var entity = getMachineEntity();
+        if (!isRemote() && entity != null && entity.isAlive()) {
+            entity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()), entity.getMaxHealth());
+        }
+    }
+
     @Override
     public ManagedFieldHolder getFieldHolder() {
         return MANAGED_FIELD_HOLDER;
@@ -256,7 +308,6 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             progressBar.setBackground(CBGuiTextures.NUTRIENT_BAR);
             return progressBar;
         }, (progressBar, machine) -> {
-
             progressBar.setProgressSupplier(
                     () -> machine.getNutrientAmount() / machine.getNutrientCapacity());
             progressBar.setHoverTooltips(
@@ -265,10 +316,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                     double current = progress * machine.getNutrientCapacity();
                     double max = machine.getNutrientCapacity();
                     return String.format("%.0f / %.0f u", current, max);
-
             });
-
-
         });
     }
 
@@ -292,12 +340,11 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             configuratorPanel.attachConfigurators(new BioCircuitFancyConfigurator(circuitInventory.storage));
         }
     }
-    public static class BasicLivingRecipeLogic extends RecipeLogic {
 
+    public static class BasicLivingRecipeLogic extends RecipeLogic {
         public BasicLivingRecipeLogic(IRecipeLogicMachine machine) {
             super(machine);
         }
-
         @Override
         public @NotNull Iterator<GTRecipe> searchRecipe() {
             var recipes = CBRecipeTypes.BASIC_LIVING_RECIPES.searchRecipe(machine, r -> matchRecipe(r).isSuccess());
