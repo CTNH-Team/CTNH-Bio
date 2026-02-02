@@ -210,7 +210,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     public static BiFunction<ResourceLocation, GTRecipeType, EditableMachineUI> EDITABLE_UI_CREATOR_BIO = Util
             .memoize((path, recipeType) -> new EditableMachineUI("bio", path, () -> {
-                WidgetGroup template = new CBRecipeTypeUI(recipeType).createEditableUITemplate(false, false).createDefault();
+                WidgetGroup template = recipeType.getRecipeUI().createEditableUITemplate(false, false).createDefault();
                 ProgressWidget nutrientBar = createNutrientBar().createDefault();
                 WidgetGroup group = new WidgetGroup(0, 0, template.getSize().width,
                         Math.max(template.getSize().height, 78));
@@ -232,7 +232,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                     storages.put(IO.IN, CWURecipeCapability.CAP, livingMachine.importComputation);
                     storages.put(IO.OUT, CWURecipeCapability.CAP, livingMachine.exportComputation);
 
-                    new CBRecipeTypeUI(recipeType).createEditableUITemplate(false, false).setupUI(template,
+                    livingMachine.getRecipeType().getRecipeUI().createEditableUITemplate(false, false).setupUI(template,
                             new CBRecipeTypeUI.RecipeHolder(livingMachine.recipeLogic::getProgressPercent,
                                     storages,
                                     new CompoundTag(),

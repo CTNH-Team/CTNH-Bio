@@ -10,6 +10,7 @@ import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.capability.recipe.CogniItemRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
+import com.moguang.ctnhbio.api.gui.CBGuiTextures;
 import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
 import com.moguang.ctnhbio.api.recipe.customlogic.DigestRecipeLogic;
 import net.minecraft.network.chat.Component;
@@ -33,15 +34,14 @@ public class CBRecipeTypes {
 
     public static void init() {
         // 初始化所有配方类型
-        BIOELECTRIC_FORGE_RECIPES = REGISTRATE.recipeType(CTNHBio.id("bioelectric_forge"), NUTRIENT)
-                //GTRecipeTypes.register("bioelectric_forge", NUTRIENT)
+        BIOELECTRIC_FORGE_RECIPES = REGISTRATE.recipeType(CTNHBio.id("bioelectric_forge"), NUTRIENT, CBRecipeTypeUI::new)
                 .cnlang("生物电炉")
                 .lang("Bioelectric Forge")
                 .setMaxIOSize(6, 2, 3, 1)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setSound(GTSoundEntries.CHEMICAL)
-                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+                .setProgressBar(CBGuiTextures.PROGRESS_BAR_BIO, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
         DECOMPOSER_RECIPES = REGISTRATE.recipeType("decomposer", NUTRIENT)
                 .cnlang("电力分解")
@@ -49,16 +49,16 @@ public class CBRecipeTypes {
                 .setMaxIOSize(2, 6, 3, 3)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
-                .setProgressBar(GuiTextures.PROGRESS_BAR_MACERATE, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+                .setProgressBar(CBGuiTextures.PROGRESS_BAR_MACERATE_BIO, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        DIGEST_RECIPES = REGISTRATE.recipeType(CTNHBio.id("digest"), NUTRIENT)
+        DIGEST_RECIPES = REGISTRATE.recipeType(CTNHBio.id("digest"), NUTRIENT, CBRecipeTypeUI::new)
                 .cnlang("电力消化")
                 .lang("Digest")
                 .setMaxIOSize(2, 2, 2, 2)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(6)
                 .setSound(CBSoundEntries.DIGESTER_CRAFTING)
-                .setProgressBar(GuiTextures.PROGRESS_BAR_EXTRACT, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
+                .setProgressBar(CBGuiTextures.PROGRESS_BAR_EXTRACT_BIO, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
                 .addDataInfo(tag -> {
                     if(tag.contains("info")){
                         return DigestRecipeLogic.based_on_nutrition.translate().getString();
@@ -67,14 +67,14 @@ public class CBRecipeTypes {
                 })
                 .addCustomRecipeLogic(new DigestRecipeLogic());
 
-        BIO_REACTOR_RECIPES = REGISTRATE.recipeType(CTNHBio.id("ctnhbio_reactor"), NUTRIENT)
+        BIO_REACTOR_RECIPES = REGISTRATE.recipeType(CTNHBio.id("ctnhbio_reactor"), NUTRIENT, CBRecipeTypeUI::new)
                 .cnlang("生物反应")
                 .lang("Bio Reactor")
                 .setMaxIOSize(3, 3, 3, 3)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setSound(GTSoundEntries.CHEMICAL)
-                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW_MULTIPLE, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+                .setProgressBar(CBGuiTextures.PROGRESS_BAR_BIO, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
         BRAIN_IN_A_VAT_RECIPES = REGISTRATE.recipeType(CTNHBio.id("brain_in_a_vat"), NUTRIENT)
                 .cnlang("缸中之脑")
@@ -117,7 +117,7 @@ public class CBRecipeTypes {
 
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
-                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
+                .setProgressBar(CBGuiTextures.PROGRESS_BAR_BIO, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
         //COGNI_ASSEMBLY.getRecipeUI().getJEISize()
 

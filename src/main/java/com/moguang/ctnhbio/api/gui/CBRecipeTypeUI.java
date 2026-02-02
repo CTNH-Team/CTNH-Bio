@@ -14,12 +14,10 @@ import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.integration.emi.recipe.GTRecipeEMICategory;
 import com.gregtechceu.gtceu.integration.jei.recipe.GTRecipeJEICategory;
-import com.gregtechceu.gtceu.integration.rei.recipe.GTRecipeREICategory;
 import com.lowdragmc.lowdraglib.gui.editor.configurator.IConfigurableWidget;
 import com.lowdragmc.lowdraglib.gui.editor.data.Resources;
 import com.lowdragmc.lowdraglib.gui.texture.GuiTextureGroup;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
-import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
 import com.lowdragmc.lowdraglib.gui.widget.ButtonWidget;
 import com.lowdragmc.lowdraglib.gui.widget.ProgressWidget;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
@@ -84,7 +82,7 @@ public class CBRecipeTypeUI extends GTRecipeTypeUI {
             }
             int capCount = entry.getValue();
             for (int slotIndex = 0; slotIndex < capCount; slotIndex++) {
-                var slot = cap.createWidget().setBackground(CBGuiTextures.SLOT_BIO);
+                var slot = cap.createWidget().setBackground(CBGuiTextures.SLOT);
                 slot.setSelfPosition(new Position((index % 3) * 18 + 4, (index / 3) * 18 + 4));
                 slot.setBackground(
                         getOverlaysForSlot(isOutputs, cap, slotIndex == capCount - 1, isSteam, isHighPressure));
@@ -100,7 +98,7 @@ public class CBRecipeTypeUI extends GTRecipeTypeUI {
 
     @Override
     protected IGuiTexture getOverlaysForSlot(boolean isOutput, RecipeCapability<?> capability, boolean isLast, boolean isSteam, boolean isHighPressure) {
-        IGuiTexture base = capability == FluidRecipeCapability.CAP ? GuiTextures.FLUID_SLOT : (isSteam ? GuiTextures.SLOT_STEAM.get(isHighPressure) : CBGuiTextures.SLOT_BIO);
+        IGuiTexture base = capability == FluidRecipeCapability.CAP ? CBGuiTextures.FLUID_SLOT : (isSteam ? GuiTextures.SLOT_STEAM.get(isHighPressure) : CBGuiTextures.SLOT);
         byte overlayKey = (byte)((isOutput ? 2 : 0) + (capability == FluidRecipeCapability.CAP ? 1 : 0) + (isLast ? 4 : 0));
         return (IGuiTexture)(this.getSlotOverlays().containsKey(overlayKey) ? new GuiTextureGroup(new IGuiTexture[]{(IGuiTexture)base, (IGuiTexture)this.getSlotOverlays().get(overlayKey)}) : base);
     }

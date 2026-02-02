@@ -2,14 +2,13 @@ package com.moguang.ctnhbio.api.gui;
 
 import com.gregtechceu.gtceu.api.gui.fancy.FancyMachineUIWidget;
 import com.gregtechceu.gtceu.api.gui.fancy.IFancyUIProvider;
-import com.lowdragmc.lowdraglib.gui.texture.ResourceBorderTexture;
 
 public class LivingMachineUIWidget extends FancyMachineUIWidget {
     public LivingMachineUIWidget(IFancyUIProvider mainPage, int width, int height) {
         super(mainPage, width, height);;
         setBackground(CBGuiTextures.BACKGROUND_BIO);
         assert playerInventory != null;
-        playerInventory.setSlotBackground(CBGuiTextures.SLOT_BIO);
+        playerInventory.setSlotBackground(CBGuiTextures.SLOT);
         if (this.titleBar != null) {
             this.titleBar.widgets.forEach(widget -> widget.setBackground(CBGuiTextures.TITLE_BAR_BACKGROUND_BIO));
         }
