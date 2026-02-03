@@ -190,7 +190,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         long baseVoltage = Math.max(energyContainer.getInputVoltage(), energyContainer.getOutputVoltage());
         long now = getOffsetTimer();
 
-        boolean allowHistory = getRecipeLogic() != null && getRecipeLogic().isActive();
+        boolean allowHistory = allowNetworkVoltageHistory();
 
         long networkVoltage = (lastAcceptedNetworkVoltageTime == now || (allowHistory && lastAcceptedNetworkVoltageTime >= now - 5))
                 ? lastAcceptedNetworkVoltage
@@ -201,6 +201,34 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         int maxAllowedTier = Math.min(baseTier + 1, GTValues.V.length - 1);
         long maxAllowedVoltage = GTValues.V[maxAllowedTier];
         return Math.min(candidate, maxAllowedVoltage);
+    }
+
+    /**
+     * Whether this machine should allow a short "recent network voltage" history window.
+     * Default behavior only enables it while a normal GT recipe is running.
+     */
+    protected boolean allowNetworkVoltageHistory() {
+        return getRecipeLogic() != null && getRecipeLogic().isActive();
+    }
+
+    /**
+     * Whether this machine should take overvoltage damage automatically when higher-tier power is supplied.
+     * Default behavior only damages while a normal GT recipe is running.
+     */
+    protected boolean shouldApplyOvervoltageDamage() {
+        return getRecipeLogic() != null && getRecipeLogic().isActive();
+    }
+
+    /**
+     * Apply one-tier overvoltage damage at most once per machine tick.
+     */
+    protected void applyOvervoltageDamageOncePerTick(long timeStamp) {
+        if (isRemote() || lastOvervoltageHurtTime >= timeStamp) return;
+        lastOvervoltageHurtTime = timeStamp;
+        var entity = getMachineEntity();
+        if (entity != null && entity.isAlive()) {
+            entity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()), getTier());
+        }
     }
 
     /**
@@ -215,13 +243,8 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             this.lastAcceptedNetworkVoltageTime = timeStamp;
         }
 
-        // Only hurt while an actual recipe is running.
-        if (!isRemote() && incomingTier > getTier() && lastOvervoltageHurtTime < timeStamp && getRecipeLogic() != null && getRecipeLogic().isActive()) {
-            lastOvervoltageHurtTime = timeStamp;
-            var entity = getMachineEntity();
-            if (entity != null && entity.isAlive()) {
-                entity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()), getTier());
-            }
+        if (incomingTier > getTier() && shouldApplyOvervoltageDamage()) {
+            applyOvervoltageDamageOncePerTick(timeStamp);
         }
     }
 
