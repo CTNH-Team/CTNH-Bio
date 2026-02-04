@@ -370,7 +370,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         }
         @Override
         public @NotNull Iterator<GTRecipe> searchRecipe() {
-            var recipes = CBRecipeTypes.BASIC_LIVING_RECIPES.searchRecipe(machine, r -> matchRecipe(r).isSuccess());
+            var recipes = CBRecipeTypes.BASIC_LIVING_RECIPES.searchRecipe(machine, r -> true);
             if (!recipes.equals(Collections.emptyIterator())) {
                 return recipes;
             }
