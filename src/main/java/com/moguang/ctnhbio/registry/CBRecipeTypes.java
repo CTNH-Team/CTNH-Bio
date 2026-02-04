@@ -15,6 +15,7 @@ import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
 import com.moguang.ctnhbio.api.recipe.customlogic.DigestRecipeLogic;
 import net.minecraft.network.chat.Component;
 
+import static com.github.elenterius.biomancy.init.ModRecipes.DECOMPOSING_RECIPE_TYPE;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBRecipeTypes {
@@ -43,7 +44,7 @@ public class CBRecipeTypes {
                 .setSound(GTSoundEntries.CHEMICAL)
                 .setProgressBar(CBGuiTextures.PROGRESS_BAR_BIO, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
-        DECOMPOSER_RECIPES = REGISTRATE.recipeType("decomposer", NUTRIENT)
+        DECOMPOSER_RECIPES = REGISTRATE.recipeType(CTNHBio.id("decomposer"), NUTRIENT, CBRecipeTypeUI::new)
                 .cnlang("电力分解")
                 .lang("Decomposer")
                 .setMaxIOSize(2, 6, 3, 3)

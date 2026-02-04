@@ -23,7 +23,7 @@ public class VanillaRecipes {
 
     @SuppressWarnings("all")
     public static void init(Consumer<FinishedRecipe> provider) {
-        // 第一个配方：LIVING_FLESH
+        //LIVING_FLESH
         VanillaRecipeHelper.addShapedRecipe(provider, false, true,
                 CTNHBio.id("living_flesh_recipe"),
                 new ItemStack(ModItems.LIVING_FLESH.get(), 16),
@@ -40,7 +40,7 @@ public class VanillaRecipes {
                 'G', Items.CHICKEN
         );
 
-// 第二个配方：PRIMORDIAL_CORE
+//PRIMORDIAL_CORE
         VanillaRecipeHelper.addShapedRecipe(provider, false, true,
                 CTNHBio.id("primordial_core_recipe"),
                 new ItemStack(ModItems.PRIMORDIAL_CORE.get(), 1),
@@ -49,29 +49,7 @@ public class VanillaRecipes {
                 "ABA",
                 'A', ModItems.LIVING_FLESH.get(),
                 'B', Items.AMETHYST_SHARD,
-                'I', GTItems.SILICON_WAFER
+                'I', CustomTags.LV_CIRCUITS
         );
-
-// 第三个配方：BIO_FORGE
-        VanillaRecipeHelper.addShapedRecipe(provider, false, true,
-                CTNHBio.id("bio_forge_recipe"),
-                new ItemStack(ModItems.BIO_FORGE.get(), 1),
-                "AEA",
-                "BIB",
-                "CDC",
-                'A', ModItems.MOB_CLAW.get(),
-                'B', CustomTags.LV_CIRCUITS,
-                'C', GTItems.FLUID_CELL_LARGE_TUNGSTEN_STEEL.get(),
-                'D', ModItems.LIVING_FLESH,
-                'E', ModItems.PRIMORDIAL_CORE,
-                'I', GTMachines.HULL[LV]
-        );
-
-        BioForgingRecipeBuilder.create(CBItems.ORGANIC_VIAL)
-                .addIngredient(ModItems.ELASTIC_FIBERS.get(), 2)
-                .setCraftingCost(2)
-                .setCategory(ModBioForgeTabs.TOOLS)
-                .unlockedBy(ModItems.LIVING_FLESH.get())
-                .save(provider);
     }
 }

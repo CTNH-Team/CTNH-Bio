@@ -34,46 +34,13 @@ public class CTNHBio
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final CBRegistrate REGISTRATE = CBRegistrate.create();
 
-
-
     public CTNHBio()
     {
         LangProcessor langProcessor = new LangProcessor(REGISTRATE);
         langProcessor.processAll();
-
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::addCreative);
-        modEventBus.addListener(this::onRegisterEntityRenderers);
-
-        modEventBus.addGenericListener(MachineDefinition.class, EventHandler::registerMachines);
-        modEventBus.addGenericListener(GTRecipeType.class, EventHandler::registerRecipeTypes);
-        modEventBus.addGenericListener(RecipeConditionType.class, EventHandler::registerRecipeConditions);
-        modEventBus.addGenericListener(GTRecipeCategory.class, EventHandler::onRecipeCategoryRegister);
-        modEventBus.addGenericListener(SoundEntry.class, EventHandler::onSoundRegister);
-        //modEventBus.addGenericListener(ChanceLogic.class,EventHandler::registerChanceLogic);
-
         DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-
-
     }
 
     public static ResourceLocation id(String name) {return ResourceLocation.tryParse(MODID + ":" + name); }
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
-        event.enqueueWork(VanillaRecipeProvider::buildBrewingRecipes);
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
-//        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-//            event.accept(EXAMPLE_BLOCK_ITEM);
-    }
-
-    private void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-
-    }
-
 
 }

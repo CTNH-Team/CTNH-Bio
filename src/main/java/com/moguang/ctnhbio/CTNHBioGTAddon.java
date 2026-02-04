@@ -10,6 +10,7 @@ import com.moguang.ctnhbio.api.capability.recipe.NutrientRecipeCapability;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelMapIngredient;
 import com.moguang.ctnhbio.data.CBElements;
+import com.moguang.ctnhbio.data.recipe.RecipeRemoval;
 import com.moguang.ctnhbio.registry.*;
 import com.mojang.datafixers.util.Pair;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent;
@@ -68,6 +69,6 @@ public class CTNHBioGTAddon implements IGTAddon {
 
     @Override
     public void removeRecipes(Consumer<ResourceLocation> consumer) {
-        //RecipeRemoval.init(consumer);
+        RecipeRemoval.init(consumer);
     }
 }

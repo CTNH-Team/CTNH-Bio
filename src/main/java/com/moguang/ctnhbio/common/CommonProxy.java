@@ -1,9 +1,14 @@
 package com.moguang.ctnhbio.common;
 
 import com.gregtechceu.gtceu.api.item.tool.GTToolType;
+import com.gregtechceu.gtceu.api.machine.MachineDefinition;
+import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
+import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
 import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.MapIngredientTypeManager;
 import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.item.ItemStackMapIngredient;
 import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.item.StrictNBTItemStackMapIngredient;
+import com.gregtechceu.gtceu.api.sound.SoundEntry;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.capability.forge.CBCapabilities;
 import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
@@ -16,6 +21,7 @@ import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.CBDatagen;
 import com.moguang.ctnhbio.data.materials.OrganicMaterials;
 import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
+import com.moguang.ctnhbio.event.EventHandler;
 import com.moguang.ctnhbio.integration.jade.LivingMachineStatusProvider;
 import com.moguang.ctnhbio.registry.CBCreativeModeTabs;
 import com.moguang.ctnhbio.registry.CBEntities;
@@ -43,16 +49,15 @@ public class CommonProxy {
         IEventBus modEventBus = FMLJavaModLoadingContext
                 .get().getModEventBus();
         CBSerums.SERUMS.register(modEventBus);
+
+        modEventBus.addGenericListener(MachineDefinition.class, EventHandler::registerMachines);
+        modEventBus.addGenericListener(GTRecipeType.class, EventHandler::registerRecipeTypes);
+        modEventBus.addGenericListener(RecipeConditionType.class, EventHandler::registerRecipeConditions);
+        modEventBus.addGenericListener(GTRecipeCategory.class, EventHandler::onRecipeCategoryRegister);
+        modEventBus.addGenericListener(SoundEntry.class, EventHandler::onSoundRegister);
     }
 
-    @SubscribeEvent
-    public void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            CraftingHelper.register(ModelIngredient.TYPE, ModelIngredient.SERIALIZER);
 
-        });
-
-    }
     public static void init() {
         CBEntities.init();
 

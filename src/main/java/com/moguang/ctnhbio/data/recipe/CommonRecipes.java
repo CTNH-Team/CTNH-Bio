@@ -3,6 +3,7 @@ package com.moguang.ctnhbio.data.recipe;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.data.chemical.material.MarkerMaterials;
 import com.gregtechceu.gtceu.api.machine.multiblock.CleanroomType;
+import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.data.GTMachines;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
@@ -11,6 +12,7 @@ import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.materials.OrganicMaterials;
 import com.moguang.ctnhbio.registry.CBItems;
+import com.moguang.ctnhbio.registry.CBTags;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -105,7 +107,7 @@ public class CommonRecipes {
                 .duration(100)
                 .save(provider);
         //搅拌
-        CBRecipeBuilder.of(CTNHBio.id("weird_pixel_dust_recipe"), GTRecipeTypes.MIXER_RECIPES)
+        CBRecipeBuilder.of(CTNHBio.id("blood_steel"), GTRecipeTypes.MIXER_RECIPES)
                 .circuitMeta(5)
                 .inputItems(dust,Iron,3)
                 .inputItems(dust,Chromium)
@@ -115,6 +117,13 @@ public class CommonRecipes {
                 .outputItemsRanged(dust,BLOODSTEEL, UniformInt.of(8, 9))
                 .EUt(6144)
                 .duration(400)
+                .save(provider);
+
+        CBRecipeBuilder.of(CTNHBio.id("nutrients"), GTRecipeTypes.DISTILLERY_RECIPES)
+                .inputFluids(FluidIngredient.of(CBTags.NUTRIENT_FLUIDS_TAG, 100))
+                .outputItemsRanged(ModItems.NUTRIENTS, UniformInt.of(16, 32))
+                .EUt(VA[LV])
+                .duration(100)
                 .save(provider);
     }
 }

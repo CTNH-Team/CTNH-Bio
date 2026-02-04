@@ -14,11 +14,4 @@ public class ClientProxy extends CommonProxy {
 
     }
 
-    @SubscribeEvent
-    public void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-//        event.registerEntityRenderer(CBEntities.BASIC_MOB.get(),
-//                BasicLivingMachineEntityRenderer::new
-//        );
-
-    }
 }

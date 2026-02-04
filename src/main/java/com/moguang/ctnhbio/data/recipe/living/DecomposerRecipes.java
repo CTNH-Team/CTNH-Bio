@@ -33,6 +33,7 @@ import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
 public class DecomposerRecipes {
     public static void init(Consumer<FinishedRecipe> provider){
         registerRawOreDecompositionRecipes(provider);
+
     }
     private static void registerRawOreDecompositionRecipes(Consumer<FinishedRecipe> provider) {
         for (Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {

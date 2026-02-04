@@ -371,7 +371,7 @@ public class BioReactorRecipes {
                 .circuitMeta(1)
                 .inputItems(Items.SUGAR,24)
                 .outputFluidsRanged(new FluidStack(Ethanol.getFluid(), 1), UniformInt.of(1500, 3000))
-                .EUt(GTValues.V[GTValues.MV])
+                .EUt(GTValues.VA[GTValues.LV])
                 .duration(60 * 15)
                 .save(provider);
     }

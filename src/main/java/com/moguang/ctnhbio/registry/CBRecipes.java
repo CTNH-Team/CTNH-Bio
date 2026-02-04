@@ -34,7 +34,7 @@ public class CBRecipes {
         DecomposerRecipes.init(provider);
         BasicLivingRecipes.init(provider);
         GreatFleshRecipes.init(provider);
-        BioelectrlcForgeRecipes.init(provider);
+        BioelectricForgeRecipes.init(provider);
         BioReactorRecipes.init(provider);
         DigesterRecipes.init(provider);
         HostileObservationRecipes.init(provider);

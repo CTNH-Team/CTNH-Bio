@@ -18,6 +18,8 @@ import org.spongepowered.asm.mixin.Unique;
 
 import java.util.List;
 
+import static com.moguang.ctnhbio.data.materials.OrganicMaterials.ORGANIC;
+
 @Mixin(value = ThermalFluidStats.class, remap = false)
 public class ThermalFluidStatsMixin {
 
@@ -51,7 +53,7 @@ public class ThermalFluidStatsMixin {
             if (self.cryoProof) tooltipComponents.add(Component.translatable("gtceu.fluid_pipe.cryo_proof"));
             if (self.acidProof) tooltipComponents.add(Component.translatable("gtceu.fluid_pipe.acid_proof"));
 
-            if(self instanceof OrganicFluidStats) tooltipComponents.add(Component.translatable("ctnhbio.fluid_pipe.can_handle_organic"));
+            if(self instanceof OrganicFluidStats) ORGANIC.appendContainerTooltips(tooltipComponents::add);
             else tooltipComponents.add(Component.translatable("ctnhbio.fluid_pipe.cannot_handle_organic"));
 
         } else{
