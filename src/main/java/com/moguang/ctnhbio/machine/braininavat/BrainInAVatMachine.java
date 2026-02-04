@@ -14,6 +14,7 @@ import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.annotation.RequireRerender;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+import com.gregtechceu.gtceu.utils.GTUtil;
 import dev.toma.configuration.config.Configurable;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import net.minecraft.core.BlockPos;
@@ -32,17 +33,13 @@ import static com.gregtechceu.gtceu.api.GTValues.RNG;
 
 public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalComputationProvider, IDropSaveMachine {
 
-    public record Quad(int CWUt,
-                       double NUt,
-                       long EUt,
-                       byte chanceToDoubt //自我怀疑的概率,0~128
-    ){
-        public static Quad tier(int tier){
-            int CWUt = (tier>= GTValues.HV?1<<(tier-GTValues.HV):0);
+    public record Quad(int CWUt, double NUt, long EUt, byte chanceToDoubt) {
+        public static Quad tier(int tier) {
+            int CWUt = (tier >= GTValues.HV ? 1 << (tier - GTValues.HV) : 0);
             double NUt = CWUt / 20.0;
             long EUt = GTValues.VA[tier];
-            byte chanceToDoubt = (byte) (tier>=GTValues.IV?(tier-GTValues.IV+1):0);
-            return new Quad(CWUt,NUt,EUt,chanceToDoubt);
+            byte chanceToDoubt = (byte)(tier >= GTValues.IV ? (tier - GTValues.IV + 1) : 0);
+            return new Quad(CWUt, NUt, EUt, chanceToDoubt);
         }
     }
 
@@ -57,15 +54,17 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
 
     public boolean oc = false;
 
+    private boolean isOverclockedNow() {
+        return GTUtil.getTierByVoltage(getOverclockVoltage()) > getTier();
+    }
+
     @Override
     public void saveToItem(CompoundTag tag) {
-        if(holder instanceof LivingMetaMachineBlockEntity<?> blockEntity
-        && blockEntity.getMachineEntity() != null)
-        {
+        if (holder instanceof LivingMetaMachineBlockEntity<?> blockEntity
+                && blockEntity.getMachineEntity() != null) {
             maxHealth = blockEntity.getMachineEntity().getMaxHealth();
         }
-        if(maxHealth != 0)
-        {
+        if (maxHealth != 0) {
             tag.putFloat("maxHealth", maxHealth);
         }
         IDropSaveMachine.super.saveToItem(tag);
@@ -74,23 +73,14 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     @Override
     public void loadFromItem(CompoundTag tag) {
         IDropSaveMachine.super.loadFromItem(tag);
-        if(tag.contains("maxHealth"))
-        {
+        if (tag.contains("maxHealth")) {
             maxHealth = tag.getFloat("maxHealth");
         }
-        if( maxHealth != 0 &&
+        if (maxHealth != 0 &&
                 holder instanceof LivingMetaMachineBlockEntity<?> blockEntity
-                && blockEntity.getMachineEntity() != null)
-        {
+                && blockEntity.getMachineEntity() != null) {
             blockEntity.getMachineEntity().getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
         }
-
-    }
-
-    @Override
-    public void doExplosion(float explosionPower) {
-        super.doExplosion(explosionPower);
-        oc = true;
     }
 
     public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Object... args) {
@@ -130,37 +120,38 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
         updateSound();
     }
 
-
-
     @Override
     public int requestCWUt(int cwut, boolean simulate, @NotNull Collection<IOpticalComputationProvider> seen) {
         seen.add(this);
-        var ret = isWorkingEnabled() && consume(simulate);
-        if(!ret ) return 0;
+        boolean overclocked = isOverclockedNow();
+        var ret = isWorkingEnabled() && consume(simulate, overclocked);
+        if (!ret) return 0;
 
-        if(!simulate){
-            if(getLevel()!=null) {
+        if (!simulate) {
+            if (getLevel() != null) {
                 lastWorkingTime = getLevel().getGameTime();
                 onChanged();
             }
-            if(!isDoubted && q.chanceToDoubt > 0 && RNG.nextInt(Byte.MAX_VALUE) <= q.chanceToDoubt) isDoubted = true;
+            if (!isDoubted && q.chanceToDoubt > 0 && RNG.nextInt(Byte.MAX_VALUE) <= q.chanceToDoubt) isDoubted = true;
+
+            if (overclocked) {
+                applyOvervoltageDamageOncePerTick(getOffsetTimer());
+            }
         }
         int output;
-        if(oc)
-        {
-            output = 2*q.CWUt;
+        if (overclocked) {
+            output = 2 * q.CWUt;
+        } else {
+            output = q.CWUt / (isDoubted ? 2 : 1);
         }
-        else {
-            output = q.CWUt  / (isDoubted? 2 : 1);
-        }
-        if(!simulate) oc = false;
-        return  output;
+        return output;
     }
 
     @Override
     public int getMaxCWUt(@NotNull Collection<IOpticalComputationProvider> seen) {
         seen.add(this);
-        int output = oc ? 2*q.CWUt : (isDoubted ? q.CWUt/2 : q.CWUt);
+        boolean overclocked = isOverclockedNow();
+        int output = overclocked ? 2 * q.CWUt : (isDoubted ? q.CWUt / 2 : q.CWUt);
         return isWorkingEnabled() ? output : 0;
     }
 
@@ -172,7 +163,17 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
 
     @Override
     public boolean isActive() {
-        return getLevel()!=null && lastWorkingTime >= getLevel().getGameTime();
+        return getLevel() != null && lastWorkingTime >= getLevel().getGameTime();
+    }
+
+    @Override
+    protected boolean allowNetworkVoltageHistory() {
+        return true;
+    }
+
+    @Override
+    protected boolean shouldApplyOvervoltageDamage() {
+        return false;
     }
 
     @Override
@@ -182,9 +183,9 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     }
 
     //Utils
-    private boolean consume(boolean simulate){
-        var nut = oc ? 4*q.NUt : q.NUt;
-        var eut = oc ? 4*q.EUt : q.EUt;
+    private boolean consume(boolean simulate, boolean overclocked){
+        var nut = overclocked ? 4*q.NUt : q.NUt;
+        var eut = overclocked ? 4*q.EUt : q.EUt;
 
         return simulate ? getStorage().getAmount() >= nut && energyContainer.getEnergyStored() >= eut :
                 getStorage().extract(nut) >= nut && energyContainer.removeEnergy(eut) >= eut;
