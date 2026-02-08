@@ -38,7 +38,7 @@ public class CBRecipeTypes {
         BIOELECTRIC_FORGE_RECIPES = REGISTRATE.recipeType(CTNHBio.id("bioelectric_forge"), NUTRIENT, CBRecipeTypeUI::new)
                 .cnlang("生物电炉")
                 .lang("Bioelectric Forge")
-                .setMaxIOSize(6, 2, 3, 1)
+                .setMaxIOSize(9, 2, 3, 1)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setSound(GTSoundEntries.CHEMICAL)
