@@ -65,16 +65,6 @@ public class BioelectricForgeRecipes {
                 .duration(80)
                 .save(provider);
 
-        //蜘蛛网
-        CBRecipeBuilder.of(CTNHBio.id("cobweb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                .nutrient(5)
-                .inputItems(Items.STRING, 6)
-                .inputItems(Items.SLIME_BALL)
-                .outputItems(Items.COBWEB)
-                .EUt(12)
-                .duration(20)
-                .save(provider);
-        ;
 
 // 生物尖牙
         CBRecipeBuilder.of(CTNHBio.id("mob_fang"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
@@ -119,25 +109,25 @@ public class BioelectricForgeRecipes {
                 .duration(50)
                 .save(provider);
 
-// 线（原版）
-        CBRecipeBuilder.of(CTNHBio.id("string"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                .nutrient(12)
-                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 2)
-                .inputItems(TagPrefix.dust,Steel, 1)
-                .outputItems(Items.STRING.getDefaultInstance())
-                .EUt(8)
-                .duration(40)
-                .save(provider);
+//// 线（原版）
+//        CBRecipeBuilder.of(CTNHBio.id("string"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+//                .nutrient(12)
+//                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 2)
+//                .inputItems(TagPrefix.dust,Steel, 1)
+//                .outputItems(Items.STRING.getDefaultInstance())
+//                .EUt(8)
+//                .duration(40)
+//                .save(provider);
 
-// 蜘蛛网（原版）
-        CBRecipeBuilder.of(CTNHBio.id("cobweb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                .nutrient(12)
-                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 8)
-                .inputItems(TagPrefix.dust,Steel, 4)
-                .outputItems(Items.COBWEB.getDefaultInstance())
-                .EUt(12)
-                .duration(60)
-                .save(provider);
+//// 蜘蛛网（原版）
+//        CBRecipeBuilder.of(CTNHBio.id("cobweb"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
+//                .nutrient(12)
+//                .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 8)
+//                .inputItems(TagPrefix.dust,Steel, 4)
+//                .outputItems(Items.COBWEB.getDefaultInstance())
+//                .EUt(12)
+//                .duration(60)
+//                .save(provider);
 
 // 鳞甲（原版）
         CBRecipeBuilder.of(CTNHBio.id("scute"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
@@ -150,15 +140,6 @@ public class BioelectricForgeRecipes {
                 .duration(80)
                 .save(provider);
 
-// 骷髅头颅（原版）
-        CBRecipeBuilder.of(CTNHBio.id("skeleton_skull"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                .nutrient(4)
-                .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 50)
-                .inputItems(TagPrefix.dust,Steel, 9)
-                .outputItems(Items.SKELETON_SKULL.getDefaultInstance())
-                .EUt(32)
-                .duration(150)
-                .save(provider);
 
 // 凋灵骷髅头颅（原版）
         CBRecipeBuilder.of(CTNHBio.id("wither_skeleton_skull"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)

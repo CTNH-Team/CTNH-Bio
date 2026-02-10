@@ -202,8 +202,8 @@ public class CogniRecipeBuilder{
             // 添加配方特定输入
             stepBuilder.inputItems(currentRecipe.itemInputs.toArray(Ingredient[]::new))
                     .inputFluids(currentRecipe.fluidInputs.toArray(FluidIngredient[]::new))
-                    .outputItems(currentRecipe.itemOutputs.toArray(Ingredient[]::new))
-                    .outputFluids(currentRecipe.fluidOutputs.toArray(FluidIngredient[]::new))
+                    //.outputItems(currentRecipe.itemOutputs.toArray(Ingredient[]::new))
+                    //.outputFluids(currentRecipe.fluidOutputs.toArray(FluidIngredient[]::new))
             ;
             if(!currentRecipe.modelInputs.isEmpty())
                 stepBuilder.input(ModelRecipeCapability.CAP, currentRecipe.modelInputs.get(0));
