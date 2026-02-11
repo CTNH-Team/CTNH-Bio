@@ -34,12 +34,12 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
 
     @Override
     public @Nullable GTRecipe createCustomRecipe(IRecipeCapabilityHolder holder) {
-        var itemInputs = holder.getCapabilitiesFlat(IO.IN, ItemRecipeCapability.CAP).stream()
+        var itemHandlers = holder.getCapabilitiesFlat(IO.IN, ItemRecipeCapability.CAP).stream()
                 .filter(IItemHandlerModifiable.class::isInstance)
                 .map(IItemHandlerModifiable.class::cast)
                 .toArray(IItemHandlerModifiable[]::new);
 
-        var inputItems = new CombinedInvWrapper(itemInputs);
+        var inputItems = new CombinedInvWrapper(itemHandlers);
         List<ItemStack> foods = new ArrayList<>();
         int circuit = 0;
 

@@ -1,6 +1,8 @@
 package com.moguang.ctnhbio.api.machine.multiblock;
 
+import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
+import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
@@ -15,15 +17,22 @@ import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
 import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
 import com.moguang.ctnhbio.api.pattern.GrowingBlockPattern;
 import lombok.Getter;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
+
+import static com.moguang.ctnhbio.api.machine.BasicLivingMachine.appendEffect;
 
 
 public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockMachine implements ILivingMachine {
@@ -159,6 +168,29 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
             if(growingBlockPattern.growPlan.isCompleted()) checkPattern();
         }
         //updatePartPositions();
+    }
+
+    @Override
+    public void afterWorking() {
+        super.afterWorking();
+        var recipe = getRecipeLogic().getLastRecipe();
+        if(recipe != null && recipe.data.contains("effects")){
+            var tag = recipe.data.get("effects");
+            if(tag instanceof ListTag listTag){
+                listTag.stream()
+                        .filter(CompoundTag.class::isInstance)
+                        .map(CompoundTag.class::cast)
+                        .map(MobEffectInstance::load)
+                        .filter(Objects::nonNull)
+                        .forEach(effect -> appendEffect(getMachineEntity(), effect));
+            }
+
+        }
+    }
+
+    @Override
+    public boolean canVoidRecipeOutputs(RecipeCapability<?> capability) {
+        return capability == EURecipeCapability.CAP;
     }
 
     @Override

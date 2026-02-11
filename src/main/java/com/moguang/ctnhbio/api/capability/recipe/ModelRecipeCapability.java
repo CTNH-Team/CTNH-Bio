@@ -74,7 +74,12 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
         }
     }
 
-//    @Override
+    @Override
+    public int getMaxParallelByInput(IRecipeCapabilityHolder holder, GTRecipe recipe, int limit, boolean tick) {
+        return super.getMaxParallelByInput(holder, recipe, limit, tick);
+    }
+
+    //    @Override
 //    public void addXEIInfo(WidgetGroup group, int xOffset, GTRecipe recipe, List<Content> contents, boolean perTick, boolean isInput, MutableInt yOffset) {
 //        ItemCAP.addXEIInfo(group, xOffset, recipe, contents, perTick, isInput, yOffset);
 //    }

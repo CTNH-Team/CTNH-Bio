@@ -133,7 +133,6 @@ public class ModelIngredient extends Ingredient {
         return SERIALIZER.parse(json.getAsJsonObject());
     }
 
-
     public static final IIngredientSerializer<ModelIngredient> SERIALIZER = new IIngredientSerializer<ModelIngredient>() {
         @Override
         @NotNull

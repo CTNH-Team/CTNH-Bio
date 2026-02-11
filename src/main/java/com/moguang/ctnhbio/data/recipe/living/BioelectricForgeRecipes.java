@@ -40,17 +40,6 @@ public class BioelectricForgeRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
         //生物锻炉
         //组件类
-// 创造者混合物
-        CBRecipeBuilder.of(CTNHBio.id("creator_mix"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
-                .nutrient(12)
-                .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 4)
-                .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 3)
-                .inputItems(ModItems.EXOTIC_DUST.get().getDefaultInstance(), 2)
-                .inputItems(ModItems.NUTRIENTS.get().getDefaultInstance(), 15)
-                .outputItems(ModItems.FLESH_BITS.get().getDefaultInstance(),1)
-                .EUt(12)
-                .duration(80)
-                .save(provider);
 
 // 肥料
         CBRecipeBuilder.of(CTNHBio.id("fertilizer"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
@@ -144,9 +133,9 @@ public class BioelectricForgeRecipes {
 // 凋灵骷髅头颅（原版）
         CBRecipeBuilder.of(CTNHBio.id("wither_skeleton_skull"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(4)
-                .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 50)
+                .inputItems(ModItems.BONE_FRAGMENTS.get().getDefaultInstance(), 20)
                 .inputItems(TagPrefix.dust,Steel, 9)
-                .inputFluids(new FluidStack(Withering_Ooze.getFluid(), 1800))
+                .inputFluids(new FluidStack(Withering_Ooze.getFluid(), 180))
                 .outputItems(Items.WITHER_SKELETON_SKULL.getDefaultInstance())
                 .EUt(32)
                 .duration(150)
@@ -156,7 +145,6 @@ public class BioelectricForgeRecipes {
         CBRecipeBuilder.of(CTNHBio.id("player_head"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(4)
                 .inputItems(Items.SKELETON_SKULL.getDefaultInstance())
-                .inputItems(EssenceIngredient.of(EntityType.PLAYER))
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 34)
                 .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 11)
                 .outputItems(Items.PLAYER_HEAD.getDefaultInstance())
@@ -168,7 +156,6 @@ public class BioelectricForgeRecipes {
         CBRecipeBuilder.of(CTNHBio.id("piglin_head"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(4)
                 .inputItems(Items.SKELETON_SKULL.getDefaultInstance())
-                .inputItems(EssenceIngredient.of(EntityType.PIGLIN))
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(), 38)
                 .inputItems(ModItems.ELASTIC_FIBERS.get().getDefaultInstance(), 14)
                 .outputItems(Items.PIGLIN_HEAD.getDefaultInstance())
@@ -571,7 +558,8 @@ public class BioelectricForgeRecipes {
                 .inputItems(TagKey.create(Registries.ITEM, ResourceLocation.tryBuild("forge", "dyes/yellow")))
                 .outputItems(ModItems.YELLOW_BIO_LANTERN)
                 .EUt(VA[LV])
-                .duration(20);
+                .duration(20)
+                .save(provider);
 
         CBRecipeBuilder.of(CTNHBio.id("bio_lantern_blue"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
                 .nutrient(1)
@@ -581,7 +569,8 @@ public class BioelectricForgeRecipes {
                 .inputItems(TagKey.create(Registries.ITEM, ResourceLocation.tryBuild("forge", "dyes/blue")))
                 .outputItems(ModItems.BLUE_BIO_LANTERN)
                 .EUt(VA[LV])
-                .duration(20);
+                .duration(20)
+                .save(provider);
 
 
         CBRecipeBuilder.of(CTNHBio.id("flesh_spike"), CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES)
@@ -591,6 +580,7 @@ public class BioelectricForgeRecipes {
                 .inputItems(ModItems.TOUGH_FIBERS, 2)
                 .outputItems(ModItems.FLESH_SPIKE)
                 .EUt(VA[LV])
-                .duration(20);
+                .duration(20)
+                .save(provider);
     }
 }

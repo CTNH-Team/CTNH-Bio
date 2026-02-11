@@ -17,7 +17,6 @@
     "gtm.GTRecipeTypeMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
     "gtm.MultiblockDisplayText$BuilderMixin",
-    "gtm.NotifiableFluidTankMixin",
     "gtm.RecipeCapabilityAccessor",
     "gtm.RecipeRunnerMixin",
     "gtm.WorkableMultiblockMachineMixin",

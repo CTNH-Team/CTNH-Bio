@@ -31,13 +31,13 @@ public class BasicLivingRecipes {
                 .duration(1)
                 .EUt(32)
                 .save(provider);
-        CBRecipeBuilder.of(CTNHBio.id("potion"), CBRecipeTypes.BASIC_LIVING_RECIPES)
-                .inputFluids(FluidIngredient.of(CustomTags.POTION_FLUIDS, 250))
-
-                .duration(10)
-                .EUt(32)
-                .addData("potion", true)
-                .save(provider);
+//        CBRecipeBuilder.of(CTNHBio.id("potion"), CBRecipeTypes.BASIC_LIVING_RECIPES)
+//                .inputFluids(FluidIngredient.of(CustomTags.POTION_FLUIDS, 250))
+//
+//                .duration(10)
+//                .EUt(32)
+//                .addData("potion", true)
+//                .save(provider);
 //        CBRecipeBuilder.of(CTNHBio.id("potion_test"), CBRecipeTypes.BASIC_LIVING_RECIPES)
 //                .inputFluids(FluidIngredient.of(Fluids.WATER, 250))
 //                .duration(10)

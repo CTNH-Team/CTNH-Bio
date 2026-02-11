@@ -41,7 +41,7 @@ public class GreatFleshRecipes {
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 6000))
                 .inputFluids(new FluidStack(Heterogeneous_Compound.getFluid(), 6000))
                 .duration(1000)
-                .EUt(GTValues.V[GTValues.UV])
+                .EUt(GTValues.V[GTValues.ZPM])
                 .save(provider);
 
         CBRecipeBuilder.of(CTNHBio.id("circulatory_system"), CBRecipeTypes.GREAT_FLESH)
@@ -56,7 +56,7 @@ public class GreatFleshRecipes {
                 .inputFluids(new FluidStack(Withering_Ooze.getFluid(), 6000))
                 .inputFluids(new FluidStack(Healing_Compound.getFluid(), 6000))
                 .duration(1000)
-                .EUt(GTValues.V[GTValues.UV])
+                .EUt(GTValues.V[GTValues.ZPM])
                 .save(provider);
 
         CBRecipeBuilder.of(CTNHBio.id("weatherer"), CBRecipeTypes.GREAT_FLESH)
@@ -71,7 +71,7 @@ public class GreatFleshRecipes {
                 .inputFluids(new FluidStack(Decay_Essence.getFluid(), 6000))
                 .inputFluids(new FluidStack(Bile.getFluid(), 6000))
                 .duration(1000)
-                .EUt(GTValues.V[GTValues.UV])
+                .EUt(GTValues.V[GTValues.ZPM])
                 .save(provider);
 //.inputFluids(new FluidStack(Organic_Compound.getFluid(), 100))
     }
