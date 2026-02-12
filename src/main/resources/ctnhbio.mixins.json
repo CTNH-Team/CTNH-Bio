@@ -23,6 +23,7 @@
     "gtm.WorkableTieredMachineMixin",
     "hostilenetworks.CacheModelMixin",
     "hostilenetworks.HostileEventsMixin",
+    "hostilenetworks.HostileJeiPluginMixin",
     "hostilenetworks.SimChamberTileEntityMixin"
   ],
   "client": [

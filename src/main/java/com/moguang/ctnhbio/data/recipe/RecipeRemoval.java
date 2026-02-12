@@ -19,7 +19,8 @@ public class RecipeRemoval {
                 "biomancy:crafting/primordial_cradle",
                 "biomancy:crafting/primordial_core",
                 "biomancy:crafting/despoil_sickle",
-                "biomancy:crafting/bio_forge"
+                "biomancy:crafting/bio_forge",
+                "hostilenetworks:loot_fabricator"
         };
         for(var recipe: recipes) {
             registry.accept(ResourceLocation.tryParse(recipe));

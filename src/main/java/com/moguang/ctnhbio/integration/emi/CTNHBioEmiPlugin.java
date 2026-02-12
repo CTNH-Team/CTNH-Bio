@@ -7,6 +7,7 @@ import com.yanny.ali.configuration.GameplayLootCategory;
 import dev.emi.emi.api.*;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.registry.EmiStackList;
+import dev.shadowsoffire.hostilenetworks.Hostile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
 import static com.github.elenterius.biomancy.init.ModItems.*;
+import static dev.shadowsoffire.hostilenetworks.Hostile.Items.SIM_CHAMBER;
 
 @EmiEntrypoint
 public class CTNHBioEmiPlugin implements EmiPlugin {
@@ -62,7 +64,8 @@ public class CTNHBioEmiPlugin implements EmiPlugin {
                 ABSORPTION_BOOST,
                 CLEANSING_SERUM,
                 INSOMNIA_CURE,
-                FRENZY_SERUM
+                FRENZY_SERUM,
+                SIM_CHAMBER
 
         );
         for(var item:disabled){

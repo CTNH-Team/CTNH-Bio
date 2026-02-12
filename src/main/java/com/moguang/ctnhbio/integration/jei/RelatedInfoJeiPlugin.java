@@ -4,6 +4,7 @@ import com.github.elenterius.biomancy.init.ModBlocks;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.github.elenterius.biomancy.styles.TextStyles;
 import com.github.elenterius.biomancy.util.ComponentUtil;
+import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.registry.CBMultiblocks;
 import com.moguang.ctnhbio.registry.CBItems;
 import mezz.jei.api.IModPlugin;
@@ -13,14 +14,15 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 @JeiPlugin
 public class RelatedInfoJeiPlugin implements IModPlugin {
     @Override
-    public ResourceLocation getPluginUid() {
-        return null;
+    public @NotNull ResourceLocation getPluginUid() {
+        return CTNHBio.id("flesh_info");
     }
 
     @Override
