@@ -3,15 +3,25 @@ package com.moguang.ctnhbio.api.machine.multiblock;
 import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
+import com.gregtechceu.gtceu.api.gui.GuiTextures;
+import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
+import com.gregtechceu.gtceu.api.gui.fancy.FancyMachineUIWidget;
+import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
+import com.gregtechceu.gtceu.api.machine.fancyconfigurator.FancySelectorConfigurator;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
+import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
+import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
+import com.moguang.ctnhbio.api.gui.CBGuiTextures;
+import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
 import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
@@ -19,6 +29,7 @@ import com.moguang.ctnhbio.api.pattern.GrowingBlockPattern;
 import lombok.Getter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -28,8 +39,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Objects;
 
 import static com.moguang.ctnhbio.api.machine.BasicLivingMachine.appendEffect;
@@ -123,7 +136,31 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
         return MANAGED_FIELD_HOLDER;
     }
 
+    @Override
+    public @NotNull ModularUI createUI(@NotNull Player entityPlayer) {
+        return new ModularUI(198, 208, this, entityPlayer).widget(new LivingMachineUIWidget(this, 198, 208));
+    }
 
+    @Override
+    public void attachConfigurators(ConfiguratorPanel configuratorPanel) {
+        configuratorPanel.attachConfigurators(new FancySelectorConfigurator<>(VoidingMode.VALUES, getVoidingMode(),
+                        this::setVoidingMode)
+                        .setTooltip(m -> List.of(Component.translatable("gtceu.gui.multiblock.voiding_mode"),
+                                Component.translatable(m.getSerializedName()))));
+
+        configuratorPanel.attachConfigurators(new IFancyConfiguratorButton.Toggle(
+                CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0, 1, 0.5),
+                CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0.5, 1, 0.5),
+                this::isWorkingEnabled, (clickData, pressed) -> setWorkingEnabled(pressed))
+                .setTooltipsSupplier(pressed -> List.of(
+                        Component.translatable(
+                                pressed ? "behaviour.soft_hammer.enabled" : "behaviour.soft_hammer.disabled"))));
+    }
+
+    @Override
+    public IGuiTexture getScreenTexture() {
+        return CBGuiTextures.DISPLAY_BIO;
+    }
 
     @Override
     public void onLoad() {
