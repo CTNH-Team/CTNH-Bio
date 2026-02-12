@@ -72,7 +72,7 @@ public class CBRecipeTypes {
         BIO_REACTOR_RECIPES = REGISTRATE.recipeType(CTNHBio.id("ctnhbio_reactor"), NUTRIENT, CBRecipeTypeUI::new)
                 .cnlang("生物反应")
                 .lang("Bio Reactor")
-                .setMaxIOSize(3, 3, 3, 3)
+                .setMaxIOSize(3, 3, 5, 3)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setSound(GTSoundEntries.CHEMICAL)
