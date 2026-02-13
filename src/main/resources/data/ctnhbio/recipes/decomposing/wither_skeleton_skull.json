@@ -1,0 +1,68 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 1880,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 120
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 2.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:wither_skeleton_skull"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 28,
+              "max_inclusive": 48
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:bone_fragments"
+          },
+          "sampledCount": -1
+        }
+      }
+    ],
+    "fluid": [
+      {
+        "content": {
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 200,
+              "max_inclusive": 400
+            }
+          },
+          "inner": {
+            "amount": 1,
+            "value": [
+              {
+                "fluid": "gtceu:withering_ooze"
+              }
+            ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

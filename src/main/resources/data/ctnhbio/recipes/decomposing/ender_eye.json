@@ -1,0 +1,46 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 300,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:ender_eye"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 5,
+              "max_inclusive": 6
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:exotic_dust"
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

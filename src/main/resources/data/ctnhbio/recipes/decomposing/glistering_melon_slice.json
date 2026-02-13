@@ -1,0 +1,39 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 280,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 2.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:glistering_melon_slice"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 2,
+          "ingredient": {
+            "item": "biomancy:organic_matter"
+          }
+        }
+      }
+    ]
+  }
+}

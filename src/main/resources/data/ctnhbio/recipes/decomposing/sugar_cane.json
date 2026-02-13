@@ -1,0 +1,62 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 80,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:sugar_cane"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 1,
+              "max_inclusive": 2
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:organic_matter"
+          },
+          "sampledCount": -1
+        }
+      },
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 1,
+              "max_inclusive": 2
+            }
+          },
+          "ingredient": {
+            "item": "minecraft:sugar"
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

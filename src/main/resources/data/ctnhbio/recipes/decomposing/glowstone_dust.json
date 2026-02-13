@@ -1,0 +1,62 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 102,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:glowstone_dust"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 1,
+              "max_inclusive": 1
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:exotic_dust"
+          },
+          "sampledCount": -1
+        }
+      },
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 1,
+              "max_inclusive": 1
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:bio_lumens"
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

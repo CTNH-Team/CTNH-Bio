@@ -1,0 +1,62 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 120,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "alexscaves:curly_fern"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 2,
+              "max_inclusive": 4
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:organic_matter"
+          },
+          "sampledCount": -1
+        }
+      },
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 1,
+              "max_inclusive": 2
+            }
+          },
+          "ingredient": {
+            "item": "minecraft:lime_dye"
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

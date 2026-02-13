@@ -1,0 +1,68 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 60,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 120
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "tag": "forge:eggs"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 1,
+              "max_inclusive": 2
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:organic_matter"
+          },
+          "sampledCount": -1
+        }
+      }
+    ],
+    "fluid": [
+      {
+        "content": {
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 25,
+              "max_inclusive": 25
+            }
+          },
+          "inner": {
+            "amount": 1,
+            "value": [
+              {
+                "fluid": "gtceu:hormone_secretion"
+              }
+            ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

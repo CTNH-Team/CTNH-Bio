@@ -1,0 +1,66 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 6200,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 6.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:dragon_head"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 50,
+          "ingredient": {
+            "item": "biomancy:flesh_bits"
+          }
+        }
+      },
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 50,
+          "ingredient": {
+            "item": "biomancy:exotic_dust"
+          }
+        }
+      },
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 25,
+          "ingredient": {
+            "item": "biomancy:tough_fibers"
+          }
+        }
+      },
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 50,
+          "ingredient": {
+            "item": "biomancy:bone_fragments"
+          }
+        }
+      }
+    ]
+  }
+}

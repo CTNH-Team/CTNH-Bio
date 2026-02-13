@@ -61,10 +61,10 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            CraftingHelper.register(ModelIngredient.TYPE, ModelIngredient.SERIALIZER);
-            CBRecipeTypes.DECOMPOSER_RECIPES.getProxyRecipes().put(DECOMPOSING_RECIPE_TYPE.get(), new ArrayList<>());
-        });
+//        event.enqueueWork(() -> {
+//            CraftingHelper.register(ModelIngredient.TYPE, ModelIngredient.SERIALIZER);
+//            CBRecipeTypes.DECOMPOSER_RECIPES.getProxyRecipes().put(DECOMPOSING_RECIPE_TYPE.get(), new ArrayList<>());
+//        });
 
     }
 

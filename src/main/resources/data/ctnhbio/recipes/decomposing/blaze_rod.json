@@ -1,0 +1,55 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 188,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:blaze_rod"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 2,
+              "max_inclusive": 4
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:bio_lumens"
+          },
+          "sampledCount": -1
+        }
+      },
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 2,
+          "ingredient": {
+            "item": "biomancy:exotic_dust"
+          }
+        }
+      }
+    ]
+  }
+}

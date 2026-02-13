@@ -1,0 +1,77 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 260,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 120
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:chorus_fruit"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 1,
+              "max_inclusive": 2
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:exotic_dust"
+          },
+          "sampledCount": -1
+        }
+      },
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 1,
+          "ingredient": {
+            "item": "biomancy:organic_matter"
+          }
+        }
+      }
+    ],
+    "fluid": [
+      {
+        "content": {
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 25,
+              "max_inclusive": 25
+            }
+          },
+          "inner": {
+            "amount": 1,
+            "value": [
+              {
+                "fluid": "gtceu:bile"
+              }
+            ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

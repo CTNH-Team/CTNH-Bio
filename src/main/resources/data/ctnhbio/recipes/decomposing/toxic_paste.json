@@ -1,0 +1,50 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 80,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 120
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "alexscaves:toxic_paste"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "fluid": [
+      {
+        "content": {
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 50,
+              "max_inclusive": 100
+            }
+          },
+          "inner": {
+            "amount": 1,
+            "value": [
+              {
+                "fluid": "gtceu:toxin_extract"
+              }
+            ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 610,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:nautilus_shell"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 4,
+              "max_inclusive": 7
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:tough_fibers"
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

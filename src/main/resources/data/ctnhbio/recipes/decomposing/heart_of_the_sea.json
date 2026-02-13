@@ -1,0 +1,39 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 1350,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 2.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:heart_of_the_sea"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 15,
+          "ingredient": {
+            "item": "biomancy:exotic_dust"
+          }
+        }
+      }
+    ]
+  }
+}

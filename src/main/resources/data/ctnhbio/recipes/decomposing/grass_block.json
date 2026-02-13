@@ -1,0 +1,39 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 110,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 2.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:grass_block"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 1,
+          "ingredient": {
+            "item": "biomancy:organic_matter"
+          }
+        }
+      }
+    ]
+  }
+}

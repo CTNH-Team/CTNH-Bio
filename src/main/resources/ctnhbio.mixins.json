@@ -14,7 +14,6 @@
     "create.CrushingWheelControllerBlockEntityMixin",
     "emi.EmiApiMixin",
     "gtm.FluidBuilderMixin",
-    "gtm.GTRecipeTypeMixin",
     "gtm.IThermalFluidHandlerItemStackMixin",
     "gtm.MultiblockDisplayText$BuilderMixin",
     "gtm.RecipeCapabilityAccessor",

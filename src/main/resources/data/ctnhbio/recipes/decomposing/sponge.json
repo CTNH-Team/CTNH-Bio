@@ -1,0 +1,46 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 80,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:sponge"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 2,
+              "max_inclusive": 4
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:organic_matter"
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

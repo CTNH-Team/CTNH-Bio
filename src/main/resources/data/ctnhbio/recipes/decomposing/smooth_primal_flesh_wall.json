@@ -1,0 +1,46 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 36,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "biomancy:smooth_primal_flesh_wall"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 1,
+              "max_inclusive": 2
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:flesh_bits"
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

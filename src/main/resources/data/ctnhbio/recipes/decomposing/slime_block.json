@@ -1,0 +1,70 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 1305,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 120
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 5.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:slime_block"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "fluid": [
+      {
+        "content": {
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 450,
+              "max_inclusive": 675
+            }
+          },
+          "inner": {
+            "amount": 1,
+            "value": [
+              {
+                "fluid": "gtceu:bile"
+              }
+            ]
+          },
+          "sampledCount": -1
+        }
+      },
+      {
+        "content": {
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 250,
+              "max_inclusive": 450
+            }
+          },
+          "inner": {
+            "amount": 1,
+            "value": [
+              {
+                "fluid": "gtceu:bile"
+              }
+            ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

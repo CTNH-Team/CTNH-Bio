@@ -1,0 +1,39 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 2400,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 5.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:totem_of_undying"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 25,
+          "ingredient": {
+            "item": "biomancy:exotic_dust"
+          }
+        }
+      }
+    ]
+  }
+}

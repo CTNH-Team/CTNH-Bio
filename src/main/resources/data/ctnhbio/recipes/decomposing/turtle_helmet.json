@@ -1,0 +1,46 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 1350,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 2.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "minecraft:turtle_helmet"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 15,
+              "max_inclusive": 25
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:tough_fibers"
+          },
+          "sampledCount": -1
+        }
+      }
+    ]
+  }
+}

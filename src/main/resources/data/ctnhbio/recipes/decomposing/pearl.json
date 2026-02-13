@@ -1,0 +1,39 @@
+{
+  "type": "ctnhbio:decomposer",
+  "duration": 750,
+  "category": "ctnhbio:decomposer",
+  "tickInputs": {
+    "eu": [
+      {
+        "content": 30
+      }
+    ]
+  },
+  "inputs": {
+    "nutrient": [
+      {
+        "content": 1.0
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "item": "alexscaves:pearl"
+        }
+      }
+    ]
+  },
+  "outputs": {
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 7,
+          "ingredient": {
+            "item": "biomancy:exotic_dust"
+          }
+        }
+      }
+    ]
+  }
+}
