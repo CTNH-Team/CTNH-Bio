@@ -132,7 +132,9 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
                 lastWorkingTime = getLevel().getGameTime();
                 onChanged();
             }
-            if (!isDoubted && q.chanceToDoubt > 0 && RNG.nextInt(Byte.MAX_VALUE) <= q.chanceToDoubt) isDoubted = true;
+            long nowTick = getLevel() != null ? getLevel().getGameTime() : getOffsetTimer();
+            if (nowTick % 20 == 0 && !isDoubted && q.chanceToDoubt > 0 && 
+                    RNG.nextInt(Byte.MAX_VALUE) <= q.chanceToDoubt) isDoubted = true;
 
             if (overclocked) {
                 applyOvervoltageDamageOncePerTick(getOffsetTimer());
