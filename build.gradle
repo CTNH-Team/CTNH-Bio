@@ -87,15 +87,12 @@ legacyForge {
         }
     }
 }
+
 jar {
     manifest.attributes([
             "MixinConfigs": "${mod_id}.mixins.json"
     ])
 }
-
-//apply from: "$rootDir/gradle/scripts/spotless.gradle"
-
-
 
 // See com.example.examplemod.mixin.DummyMixin for information about mixins
 mixin {
