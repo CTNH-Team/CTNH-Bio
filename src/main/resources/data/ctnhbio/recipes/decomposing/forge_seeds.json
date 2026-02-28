@@ -10,16 +10,16 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 1.0
-      }
-    ],
     "item": [
       {
         "content": {
           "tag": "forge:seeds"
         }
+      }
+    ],
+    "nutrient": [
+      {
+        "content": 1.0
       }
     ]
   },

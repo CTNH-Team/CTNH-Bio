@@ -10,16 +10,16 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 1.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:beef"
         }
+      }
+    ],
+    "nutrient": [
+      {
+        "content": 1.0
       }
     ]
   },

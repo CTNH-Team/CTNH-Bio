@@ -2,6 +2,7 @@ package com.moguang.ctnhbio.utils;
 
 import com.github.elenterius.biomancy.crafting.ItemCountRange;
 import com.github.elenterius.biomancy.crafting.recipe.DecomposingRecipe;
+import com.google.gson.JsonObject;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.ingredient.IntProviderIngredient;
@@ -36,7 +37,7 @@ public class DecomposingRecipeHandler {
     );
 
     private static final Map<Item, Fluid> FLUID_CONVERSIONS = Map.of(
-            REGENERATIVE_FLUID.get(), Bile.getFluid(),
+            REGENERATIVE_FLUID.get(), Regenerative_Fluid.getFluid(),
             WITHERING_OOZE.get(), Withering_Ooze.getFluid(),
             HORMONE_SECRETION.get(), Hormone_Secretion.getFluid(),
             TOXIN_EXTRACT.get(), Toxin_Extract.getFluid(),
@@ -73,6 +74,17 @@ public class DecomposingRecipeHandler {
             });
         }
         builder.EUt(hasFluid.get() ? VA[MV] : VA[LV]);
+        JsonObject js = builder.build().serializeRecipe();
+
+        try {
+            java.nio.file.Path outputPath = java.nio.file.Paths.get("resources/data/ctnhbio/recipes/decomposing/" + recipe.getId().getPath() + ".json");
+            java.nio.file.Files.createDirectories(outputPath.getParent());
+            com.google.gson.Gson gson = new com.google.gson.GsonBuilder().setPrettyPrinting().create();
+            String prettyJson = gson.toJson(js);
+            java.nio.file.Files.writeString(outputPath, prettyJson);
+        } catch (Exception e) {
+
+        }
         return builder.buildRawRecipe();
     }
 

@@ -10,38 +10,20 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 4.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:golden_apple"
         }
       }
+    ],
+    "nutrient": [
+      {
+        "content": 4.0
+      }
     ]
   },
   "outputs": {
-    "item": [
-      {
-        "content": {
-          "type": "gtceu:int_provider",
-          "count_provider": {
-            "type": "minecraft:uniform",
-            "value": {
-              "min_inclusive": 4,
-              "max_inclusive": 6
-            }
-          },
-          "ingredient": {
-            "item": "biomancy:organic_matter"
-          },
-          "sampledCount": -1
-        }
-      }
-    ],
     "fluid": [
       {
         "content": {
@@ -56,9 +38,27 @@
             "amount": 1,
             "value": [
               {
-                "fluid": "gtceu:bile"
+                "fluid": "gtceu:regenerative_fluid"
               }
             ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 4,
+              "max_inclusive": 6
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:organic_matter"
           },
           "sampledCount": -1
         }

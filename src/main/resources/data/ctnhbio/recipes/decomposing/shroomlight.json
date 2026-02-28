@@ -10,16 +10,16 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 2.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:shroomlight"
         }
+      }
+    ],
+    "nutrient": [
+      {
+        "content": 2.0
       }
     ]
   },

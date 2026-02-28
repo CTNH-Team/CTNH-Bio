@@ -10,38 +10,20 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 1.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "alexscaves:heavy_bone"
         }
       }
+    ],
+    "nutrient": [
+      {
+        "content": 1.0
+      }
     ]
   },
   "outputs": {
-    "item": [
-      {
-        "content": {
-          "type": "gtceu:int_provider",
-          "count_provider": {
-            "type": "minecraft:uniform",
-            "value": {
-              "min_inclusive": 6,
-              "max_inclusive": 12
-            }
-          },
-          "ingredient": {
-            "item": "biomancy:bone_fragments"
-          },
-          "sampledCount": -1
-        }
-      }
-    ],
     "fluid": [
       {
         "content": {
@@ -59,6 +41,24 @@
                 "fluid": "gtceu:hormone_secretion"
               }
             ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 6,
+              "max_inclusive": 12
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:bone_fragments"
           },
           "sampledCount": -1
         }

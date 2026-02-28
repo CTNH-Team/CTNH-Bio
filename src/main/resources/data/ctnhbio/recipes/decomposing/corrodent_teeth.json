@@ -10,16 +10,16 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 1.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "alexscaves:corrodent_teeth"
         }
+      }
+    ],
+    "nutrient": [
+      {
+        "content": 1.0
       }
     ]
   },

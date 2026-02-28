@@ -10,20 +10,42 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 10.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:dragon_egg"
         }
       }
+    ],
+    "nutrient": [
+      {
+        "content": 10.0
+      }
     ]
   },
   "outputs": {
+    "fluid": [
+      {
+        "content": {
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 425,
+              "max_inclusive": 575
+            }
+          },
+          "inner": {
+            "amount": 1,
+            "value": [
+              {
+                "fluid": "gtceu:hormone_secretion"
+              }
+            ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ],
     "item": [
       {
         "content": {
@@ -53,28 +75,6 @@
           },
           "ingredient": {
             "item": "biomancy:bio_lumens"
-          },
-          "sampledCount": -1
-        }
-      }
-    ],
-    "fluid": [
-      {
-        "content": {
-          "count_provider": {
-            "type": "minecraft:uniform",
-            "value": {
-              "min_inclusive": 425,
-              "max_inclusive": 575
-            }
-          },
-          "inner": {
-            "amount": 1,
-            "value": [
-              {
-                "fluid": "gtceu:hormone_secretion"
-              }
-            ]
           },
           "sampledCount": -1
         }

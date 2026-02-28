@@ -10,38 +10,20 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 1.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:magma_cream"
         }
       }
+    ],
+    "nutrient": [
+      {
+        "content": 1.0
+      }
     ]
   },
   "outputs": {
-    "item": [
-      {
-        "content": {
-          "type": "gtceu:int_provider",
-          "count_provider": {
-            "type": "minecraft:uniform",
-            "value": {
-              "min_inclusive": 1,
-              "max_inclusive": 3
-            }
-          },
-          "ingredient": {
-            "item": "biomancy:bio_lumens"
-          },
-          "sampledCount": -1
-        }
-      }
-    ],
     "fluid": [
       {
         "content": {
@@ -56,7 +38,7 @@
             "amount": 1,
             "value": [
               {
-                "fluid": "gtceu:bile"
+                "fluid": "gtceu:regenerative_fluid"
               }
             ]
           },
@@ -99,6 +81,24 @@
                 "fluid": "gtceu:volatile_fluid"
               }
             ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 1,
+              "max_inclusive": 3
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:bio_lumens"
           },
           "sampledCount": -1
         }

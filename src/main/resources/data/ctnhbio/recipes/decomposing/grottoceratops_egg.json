@@ -10,20 +10,42 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 1.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "alexscaves:grottoceratops_egg"
         }
       }
+    ],
+    "nutrient": [
+      {
+        "content": 1.0
+      }
     ]
   },
   "outputs": {
+    "fluid": [
+      {
+        "content": {
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 25,
+              "max_inclusive": 100
+            }
+          },
+          "inner": {
+            "amount": 1,
+            "value": [
+              {
+                "fluid": "gtceu:hormone_secretion"
+              }
+            ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ],
     "item": [
       {
         "content": {
@@ -53,28 +75,6 @@
           },
           "ingredient": {
             "item": "biomancy:exotic_dust"
-          },
-          "sampledCount": -1
-        }
-      }
-    ],
-    "fluid": [
-      {
-        "content": {
-          "count_provider": {
-            "type": "minecraft:uniform",
-            "value": {
-              "min_inclusive": 25,
-              "max_inclusive": 100
-            }
-          },
-          "inner": {
-            "amount": 1,
-            "value": [
-              {
-                "fluid": "gtceu:hormone_secretion"
-              }
-            ]
           },
           "sampledCount": -1
         }

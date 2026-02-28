@@ -10,31 +10,20 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 1.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:fire_coral"
         }
       }
+    ],
+    "nutrient": [
+      {
+        "content": 1.0
+      }
     ]
   },
   "outputs": {
-    "item": [
-      {
-        "content": {
-          "type": "gtceu:sized",
-          "count": 1,
-          "ingredient": {
-            "item": "biomancy:organic_matter"
-          }
-        }
-      }
-    ],
     "fluid": [
       {
         "content": {
@@ -49,11 +38,22 @@
             "amount": 1,
             "value": [
               {
-                "fluid": "gtceu:bile"
+                "fluid": "gtceu:regenerative_fluid"
               }
             ]
           },
           "sampledCount": -1
+        }
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:sized",
+          "count": 1,
+          "ingredient": {
+            "item": "biomancy:organic_matter"
+          }
         }
       }
     ]

@@ -10,16 +10,16 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 6.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:dragon_head"
         }
+      }
+    ],
+    "nutrient": [
+      {
+        "content": 6.0
       }
     ]
   },

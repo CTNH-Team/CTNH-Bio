@@ -10,16 +10,16 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 2.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:coarse_dirt"
         }
+      }
+    ],
+    "nutrient": [
+      {
+        "content": 2.0
       }
     ]
   },

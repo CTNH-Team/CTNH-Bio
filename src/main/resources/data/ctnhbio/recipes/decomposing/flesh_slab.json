@@ -10,16 +10,16 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 2.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "biomancy:flesh_slab"
         }
+      }
+    ],
+    "nutrient": [
+      {
+        "content": 2.0
       }
     ]
   },

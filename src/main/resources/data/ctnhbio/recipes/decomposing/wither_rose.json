@@ -10,20 +10,42 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 1.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:wither_rose"
         }
       }
+    ],
+    "nutrient": [
+      {
+        "content": 1.0
+      }
     ]
   },
   "outputs": {
+    "fluid": [
+      {
+        "content": {
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 75,
+              "max_inclusive": 125
+            }
+          },
+          "inner": {
+            "amount": 1,
+            "value": [
+              {
+                "fluid": "gtceu:withering_ooze"
+              }
+            ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ],
     "item": [
       {
         "content": {
@@ -53,28 +75,6 @@
           },
           "ingredient": {
             "item": "biomancy:exotic_dust"
-          },
-          "sampledCount": -1
-        }
-      }
-    ],
-    "fluid": [
-      {
-        "content": {
-          "count_provider": {
-            "type": "minecraft:uniform",
-            "value": {
-              "min_inclusive": 75,
-              "max_inclusive": 125
-            }
-          },
-          "inner": {
-            "amount": 1,
-            "value": [
-              {
-                "fluid": "gtceu:withering_ooze"
-              }
-            ]
           },
           "sampledCount": -1
         }

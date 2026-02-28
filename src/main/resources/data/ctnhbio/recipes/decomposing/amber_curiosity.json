@@ -10,20 +10,42 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 1.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "alexscaves:amber_curiosity"
         }
       }
+    ],
+    "nutrient": [
+      {
+        "content": 1.0
+      }
     ]
   },
   "outputs": {
+    "fluid": [
+      {
+        "content": {
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 75,
+              "max_inclusive": 150
+            }
+          },
+          "inner": {
+            "amount": 1,
+            "value": [
+              {
+                "fluid": "gtceu:bile"
+              }
+            ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ],
     "item": [
       {
         "content": {
@@ -53,28 +75,6 @@
           },
           "ingredient": {
             "item": "biomancy:organic_matter"
-          },
-          "sampledCount": -1
-        }
-      }
-    ],
-    "fluid": [
-      {
-        "content": {
-          "count_provider": {
-            "type": "minecraft:uniform",
-            "value": {
-              "min_inclusive": 75,
-              "max_inclusive": 150
-            }
-          },
-          "inner": {
-            "amount": 1,
-            "value": [
-              {
-                "fluid": "gtceu:bile"
-              }
-            ]
           },
           "sampledCount": -1
         }

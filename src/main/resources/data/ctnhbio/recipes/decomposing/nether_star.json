@@ -10,16 +10,16 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 4.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:nether_star"
         }
+      }
+    ],
+    "nutrient": [
+      {
+        "content": 4.0
       }
     ]
   },

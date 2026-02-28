@@ -10,38 +10,20 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 2.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:ochre_froglight"
         }
       }
+    ],
+    "nutrient": [
+      {
+        "content": 2.0
+      }
     ]
   },
   "outputs": {
-    "item": [
-      {
-        "content": {
-          "type": "gtceu:int_provider",
-          "count_provider": {
-            "type": "minecraft:uniform",
-            "value": {
-              "min_inclusive": 5,
-              "max_inclusive": 9
-            }
-          },
-          "ingredient": {
-            "item": "biomancy:bio_lumens"
-          },
-          "sampledCount": -1
-        }
-      }
-    ],
     "fluid": [
       {
         "content": {
@@ -59,6 +41,24 @@
                 "fluid": "gtceu:bile"
               }
             ]
+          },
+          "sampledCount": -1
+        }
+      }
+    ],
+    "item": [
+      {
+        "content": {
+          "type": "gtceu:int_provider",
+          "count_provider": {
+            "type": "minecraft:uniform",
+            "value": {
+              "min_inclusive": 5,
+              "max_inclusive": 9
+            }
+          },
+          "ingredient": {
+            "item": "biomancy:bio_lumens"
           },
           "sampledCount": -1
         }

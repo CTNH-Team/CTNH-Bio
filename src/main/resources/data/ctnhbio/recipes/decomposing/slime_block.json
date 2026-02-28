@@ -10,16 +10,16 @@
     ]
   },
   "inputs": {
-    "nutrient": [
-      {
-        "content": 5.0
-      }
-    ],
     "item": [
       {
         "content": {
           "item": "minecraft:slime_block"
         }
+      }
+    ],
+    "nutrient": [
+      {
+        "content": 5.0
       }
     ]
   },
@@ -38,7 +38,7 @@
             "amount": 1,
             "value": [
               {
-                "fluid": "gtceu:bile"
+                "fluid": "gtceu:regenerative_fluid"
               }
             ]
           },
