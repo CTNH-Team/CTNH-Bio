@@ -31,6 +31,7 @@ import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ASSEMBLY_LINE_RECI
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.CIRCUIT_ASSEMBLER_RECIPES;
 import static com.moguang.ctnhbio.data.materials.CommonMaterials.*;
 import static com.moguang.ctnhbio.registry.CBItems.*;
+import static com.moguang.ctnhbio.registry.CBMachines.BIOELECTRIC_FORGE;
 
 public class CommonRecipes {
     public static void init(Consumer<FinishedRecipe> provider) {
@@ -78,7 +79,7 @@ public class CommonRecipes {
                 .EUt(24000)
                 .save(provider);
         CBRecipeBuilder.of(CTNHBio.id("primordial_cradle_recipe"), ASSEMBLY_LINE_RECIPES)
-                .inputItems(ModItems.BIO_FORGE.get().getDefaultInstance(),1)
+                .inputItems(BIOELECTRIC_FORGE[IV],1)
                 .inputItems(ModItems.CREATOR_MIX.get().getDefaultInstance(),8)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(),64)
                 .inputItems(ModItems.FLESH_BITS.get().getDefaultInstance(),32)
