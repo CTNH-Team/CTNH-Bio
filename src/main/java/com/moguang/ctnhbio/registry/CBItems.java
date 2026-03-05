@@ -1,38 +1,31 @@
 package com.moguang.ctnhbio.registry;
 
-import com.github.elenterius.biomancy.init.ModItems;
-import com.github.elenterius.biomancy.init.ModRarities;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.item.ComponentItem;
 import com.gregtechceu.gtceu.api.item.IComponentItem;
 import com.gregtechceu.gtceu.api.item.component.ICustomDescriptionId;
 import com.gregtechceu.gtceu.api.item.component.IItemComponent;
-import com.gregtechceu.gtceu.api.item.component.IRecipeRemainder;
-import com.gregtechceu.gtceu.api.item.component.ThermalFluidStats;
 import com.gregtechceu.gtceu.common.data.GTItems;
-import com.gregtechceu.gtceu.common.item.ItemFluidContainer;
 import com.gregtechceu.gtceu.common.item.TooltipBehavior;
-import com.gregtechceu.gtceu.common.registry.GTRegistration;
-import com.gregtechceu.gtceu.data.recipe.CustomTags;
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.fluids.FluidUtil;
+
+import com.github.elenterius.biomancy.init.ModItems;
+import com.github.elenterius.biomancy.init.ModRarities;
 import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
 import com.moguang.ctnhbio.api.item.component.StyleItem;
-import com.moguang.ctnhbio.common.item.OrganicVialItem;
 import com.moguang.ctnhbio.common.item.AssemblyStepItem;
-import com.moguang.ctnhbio.data.CBDatagen;
+import com.moguang.ctnhbio.common.item.OrganicVialItem;
 import com.moguang.ctnhbio.utils.VialCraftingRemainingItem;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
-import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.FluidUtil;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 
@@ -44,9 +37,11 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 @Suffix("tooltip")
 public class CBItems {
+
     static {
         REGISTRATE.creativeModeTab(() -> CBCreativeModeTabs.ITEM);
     }
+
     public static void init() {
         CBMaterialItems.generateTools();
         BIO_CORES[LV] = ModItems.PRIMORDIAL_CORE;
@@ -55,6 +50,7 @@ public class CBItems {
         BIO_CORES[EV] = NOVA_CORE;
         BIO_CORES[IV] = OMNI_CORE;
     }
+
     public static final Supplier<? extends Item>[] BIO_CORES = new Supplier[GTValues.TIER_COUNT];
 
     public static final ItemEntry<StyleItem> WETWARE_CAPACITOR = REGISTRATE.item("wetware_capacitor", StyleItem::new)
@@ -82,12 +78,14 @@ public class CBItems {
             .lang("Wetware-Diode")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
-    public static final ItemEntry<StyleItem> WETWARE_CIRCUIT_BOARD = REGISTRATE.item("wetware_circuit_board", StyleItem::new)
+    public static final ItemEntry<StyleItem> WETWARE_CIRCUIT_BOARD = REGISTRATE
+            .item("wetware_circuit_board", StyleItem::new)
             .cnlang("湿件电路基板")
             .lang("Wet Circuit Board")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
             .register();
-    public static final ItemEntry<StyleItem> WETWARE_PRINTED_CIRCUIT_BOARD = REGISTRATE.item("wetware_printed_circuit_board", StyleItem::new)
+    public static final ItemEntry<StyleItem> WETWARE_PRINTED_CIRCUIT_BOARD = REGISTRATE
+            .item("wetware_printed_circuit_board", StyleItem::new)
             .cnlang("湿件印刷电路基板")
             .lang("Wet Printed Circuit Board")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
@@ -178,8 +176,7 @@ public class CBItems {
             .onRegister(attach(
                     OrganicFluidStats.create(FluidType.BUCKET_VOLUME / 10, 310, false, false, false, false, false),
                     new VialCraftingRemainingItem(),
-                    cellName()
-                    ))
+                    cellName()))
             .register();
 
     public static ItemEntry<ComponentItem> ORGANIC_BEAKER = REGISTRATE.item("organic_beaker", ComponentItem::create)

@@ -1,13 +1,15 @@
 package com.moguang.ctnhbio.common.item;
 
-import com.github.elenterius.biomancy.api.serum.Serum;
-import com.github.elenterius.biomancy.api.serum.SerumContainer;
-import com.github.elenterius.biomancy.init.ModSerums;
 import com.gregtechceu.gtceu.api.item.ComponentItem;
-import com.moguang.ctnhbio.registry.CBSerums;
+
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+
+import com.github.elenterius.biomancy.api.serum.Serum;
+import com.github.elenterius.biomancy.api.serum.SerumContainer;
+import com.github.elenterius.biomancy.init.ModSerums;
+import com.moguang.ctnhbio.registry.CBSerums;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -17,6 +19,7 @@ import static com.moguang.ctnhbio.data.materials.OrganicMaterials.*;
 import static net.minecraftforge.fluids.FluidUtil.getFluidContained;
 
 public class OrganicVialItem extends ComponentItem implements SerumContainer {
+
     public static final HashMap<Fluid, Supplier<? extends Serum>> SERUM_FLUID_MAP = new HashMap<>();
 
     static {
@@ -32,19 +35,16 @@ public class OrganicVialItem extends ComponentItem implements SerumContainer {
         SERUM_FLUID_MAP.put(Primordial_Serum.getFluid(), CBSerums.PRIMORDIAL_SERUM);
     }
 
-
     public OrganicVialItem(Properties properties) {
         super(properties);
     }
 
     public static Serum getSerumFromStack(ItemStack stack) {
-            return ((Optional<Serum>)(getFluidContained(stack)
-                    .map(FluidStack::getFluid)
-                    .map(SERUM_FLUID_MAP::get)
-                    .map(Supplier::get))).orElse(Serum.EMPTY);
-
+        return ((Optional<Serum>) (getFluidContained(stack)
+                .map(FluidStack::getFluid)
+                .map(SERUM_FLUID_MAP::get)
+                .map(Supplier::get))).orElse(Serum.EMPTY);
     }
-
 
     @Override
     public Serum getSerum() {

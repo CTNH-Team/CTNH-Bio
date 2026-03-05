@@ -1,12 +1,14 @@
 package com.moguang.ctnhbio.common.recipe;
 
-import fr.lucreeper74.createmetallurgy.content.blocks.industrial_crucible.foundry.recipes.EntityIngredient;
-import lombok.Getter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 
+import fr.lucreeper74.createmetallurgy.content.blocks.industrial_crucible.foundry.recipes.EntityIngredient;
+import lombok.Getter;
+
 import java.util.Optional;
+
 @Getter
 public class MobCrushingRecipe {
 
@@ -41,7 +43,6 @@ public class MobCrushingRecipe {
     }
 
     public EntityIngredient.EntityInput getDisplay() {
-
         return new EntityIngredient.EntityInput(entityType);
     }
 }

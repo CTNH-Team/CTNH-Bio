@@ -4,19 +4,23 @@ import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+
 import com.moguang.ctnhbio.api.capability.recipe.NutrientRecipeCapability;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class NotifiableNutrientTrait extends NotifiableRecipeHandlerTrait<Double> {
+
     @Persisted
     private final SynchronizedNutrientStorage sharedStorage;
     public static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
             NotifiableNutrientTrait.class, NotifiableRecipeHandlerTrait.MANAGED_FIELD_HOLDER);
     public IO io;
+
     public NotifiableNutrientTrait(MetaMachine machine, SynchronizedNutrientStorage sharedStorage, IO io) {
         super(machine);
         this.sharedStorage = sharedStorage;
@@ -27,6 +31,7 @@ public class NotifiableNutrientTrait extends NotifiableRecipeHandlerTrait<Double
     public IO getHandlerIO() {
         return io;
     }
+
     @Override
     public ManagedFieldHolder getFieldHolder() {
         return MANAGED_FIELD_HOLDER;
@@ -51,8 +56,7 @@ public class NotifiableNutrientTrait extends NotifiableRecipeHandlerTrait<Double
                 }
                 it.set(trait - consume);
             }
-        }
-        else if (io == IO.IN){
+        } else if (io == IO.IN) {
             for (var it = list.listIterator(); it.hasNext();) {
                 double trait = it.next();
                 if (trait == 0) {
@@ -70,7 +74,7 @@ public class NotifiableNutrientTrait extends NotifiableRecipeHandlerTrait<Double
                 it.set(trait - cost);
             }
         }
-        return list.isEmpty()? null : list;
+        return list.isEmpty() ? null : list;
     }
 
     @Override

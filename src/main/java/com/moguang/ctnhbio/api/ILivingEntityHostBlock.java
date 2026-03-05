@@ -1,14 +1,15 @@
 package com.moguang.ctnhbio.api;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.Level;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public interface ILivingEntityHostBlock<T extends LivingEntity> {
+
     T getHostedEntity(Level level, BlockPos pos, BlockState state);
 
     // 当玩家左击方块时触发

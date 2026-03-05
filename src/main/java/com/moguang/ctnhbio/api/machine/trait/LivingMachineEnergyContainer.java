@@ -2,23 +2,24 @@ package com.moguang.ctnhbio.api.machine.trait;
 
 import com.gregtechceu.gtceu.api.machine.trait.RecipeAmperageEnergyContainer;
 import com.gregtechceu.gtceu.utils.GTUtil;
-import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 
 import net.minecraft.core.Direction;
+
+import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 
 public class LivingMachineEnergyContainer extends RecipeAmperageEnergyContainer {
 
     private final BasicLivingMachine livingMachine;
 
     public LivingMachineEnergyContainer(BasicLivingMachine machine, long maxCapacity,
-                                               long maxInputVoltage, long maxInputAmperage,
-                                               long maxOutputVoltage, long maxOutputAmperage) {
+                                        long maxInputVoltage, long maxInputAmperage,
+                                        long maxOutputVoltage, long maxOutputAmperage) {
         super(machine, maxCapacity, maxInputVoltage, maxInputAmperage, maxOutputVoltage, maxOutputAmperage);
         this.livingMachine = machine;
     }
 
     public static LivingMachineEnergyContainer makeReceiverContainer(BasicLivingMachine machine, long maxCapacity,
-                                                                            long maxInputVoltage, long maxInputAmperage) {
+                                                                     long maxInputVoltage, long maxInputAmperage) {
         return new LivingMachineEnergyContainer(machine, maxCapacity, maxInputVoltage, maxInputAmperage, 0L, 0L);
     }
 

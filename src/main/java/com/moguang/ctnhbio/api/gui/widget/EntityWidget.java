@@ -1,26 +1,17 @@
 package com.moguang.ctnhbio.api.gui.widget;
 
 import com.gregtechceu.gtceu.GTCEu;
-import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
+
 import com.lowdragmc.lowdraglib.gui.editor.configurator.IConfigurableWidget;
 import com.lowdragmc.lowdraglib.gui.ingredient.IRecipeIngredientSlot;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.jei.IngredientIO;
-import com.lowdragmc.lowdraglib.jei.JEIPlugin;
 import com.lowdragmc.lowdraglib.utils.Position;
 import com.lowdragmc.lowdraglib.utils.Size;
-import com.moguang.ctnhbio.integration.xei.handlers.entity.CycleEntityEntryHandler;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import dev.emi.emi.api.stack.EmiStack;
-import dev.emi.emi.api.stack.ItemEmiStack;
-import lombok.Getter;
-import lombok.Setter;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -34,19 +25,25 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import com.moguang.ctnhbio.integration.xei.handlers.entity.CycleEntityEntryHandler;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import dev.emi.emi.api.stack.ItemEmiStack;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Quaternionf;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Setter
 public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConfigurableWidget {
-    //basics
+
+    // basics
     @Nullable
     CycleEntityEntryHandler cycle;
     int count = 1;
@@ -54,45 +51,44 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
     @Getter
     IngredientIO ingredientIO = IngredientIO.RENDER_ONLY;
 
-    public EntityWidget(){
+    public EntityWidget() {
         super(new Position(0, 0), new Size(18, 18));
     }
 
-
-    //Render
-    private void renderEntityModel(@NotNull Entity entity,GuiGraphics graphics, float partialTicks, int mouseX, int mouseY) {
+    // Render
+    private void renderEntityModel(@NotNull Entity entity, GuiGraphics graphics, float partialTicks, int mouseX,
+                                   int mouseY) {
         Minecraft mc = Minecraft.getInstance();
         Level level = mc.level;
         if (level == null) return;
 
-
-        //center
+        // center
         int centerX = getPosition().x + 9;
         int centerY = getPosition().y + 16;
 
-        //Reference to Create Metallurgy :: EntityIngredientRenderer
+        // Reference to Create Metallurgy :: EntityIngredientRenderer
         PoseStack matrixStack = graphics.pose();
         matrixStack.pushPose();
         if (entity instanceof LivingEntity livingEntity) {
-            int entityScale = Integer.max(getSizeHeight(),getSizeWidth());
+            int entityScale = Integer.max(getSizeHeight(), getSizeWidth());
             float maxSize = entity.getBbHeight() + entity.getBbWidth();
-            entityScale = (int)((float)entityScale / maxSize);
+            entityScale = (int) ((float) entityScale / maxSize);
             PoseStack modelView = RenderSystem.getModelViewStack();
             modelView.pushPose();
             modelView.mulPoseMatrix(matrixStack.last().pose());
             livingEntity.setYHeadRot(0.0F);
-            InventoryScreen.renderEntityInInventoryFollowsMouse(graphics,centerX,centerY,entityScale,centerX-mouseX,centerY-mouseY,livingEntity);
+            InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, centerX, centerY, entityScale,
+                    centerX - mouseX, centerY - mouseY, livingEntity);
             modelView.popPose();
             RenderSystem.applyModelViewMatrix();
-        }
-        else{
+        } else {
 
             float scale = calculateEntityScale(entity);
             matrixStack.translate(centerX, centerY, 50);
             matrixStack.scale(scale, -scale, scale); // 反转Y轴
 
-            //rot
-            matrixStack.mulPose(Axis.YP.rotationDegrees( (level.getGameTime() + partialTicks ) * 2));
+            // rot
+            matrixStack.mulPose(Axis.YP.rotationDegrees((level.getGameTime() + partialTicks) * 2));
 
             EntityRenderDispatcher dispatcher = mc.getEntityRenderDispatcher();
             MultiBufferSource.BufferSource buffer = graphics.bufferSource();
@@ -102,8 +98,8 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
         }
 
         matrixStack.popPose();
-
     }
+
     // 根据实体大小动态调整缩放
     private float calculateEntityScale(Entity entity) {
         float baseScale = 12.0f;
@@ -118,10 +114,10 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
 
     @Override
     public void drawInBackground(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        if(cycle==null || cycle.isEmpty()) return;
+        if (cycle == null || cycle.isEmpty()) return;
         var mc = Minecraft.getInstance();
 
-        //render entity
+        // render entity
         Entity entity = cycle.currentEntity(mc);
         if (entity == null) return;
         renderEntityModel(entity, graphics, partialTicks, mouseX, mouseY);
@@ -141,13 +137,12 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
                     getPosition().x + 1 + width, getPosition().y + 18,
                     0xFF00FF00);
         }
-
     }
 
     @Override
     public void drawInForeground(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        if(isMouseOverElement(mouseX, mouseY) && getHoverElement(mouseX, mouseY) == this){
-            if (gui != null && cycle!= null) {
+        if (isMouseOverElement(mouseX, mouseY) && getHoverElement(mouseX, mouseY) == this) {
+            if (gui != null && cycle != null) {
                 gui.getModularUIGui().setHoverTooltip(cycle.tooltips, ItemStack.EMPTY, null, null);
             }
             RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1f);
@@ -156,7 +151,7 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
 
     @Override
     public List<Component> getFullTooltipTexts() {
-        return cycle!= null? cycle.tooltips : List.of();
+        return cycle != null ? cycle.tooltips : List.of();
     }
 
     @Override
@@ -165,12 +160,11 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
     }
 
     @Override
-    //only for jei
+    // only for jei
     public List<Object> getXEIIngredients() {
-        return cycle !=null ? cycle.getEntries().stream()
-                                .map(this::mapToIngredient)
-                                .collect(Collectors.toList())
-                            : Collections.emptyList();
+        return cycle != null ? cycle.getEntries().stream()
+                .map(this::mapToIngredient)
+                .collect(Collectors.toList()) : Collections.emptyList();
     }
 
     @Override
@@ -180,10 +174,10 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
 
     @Override
     public @Nullable Object getXEICurrentIngredient() {
-        return cycle !=null ? mapToIngredient(cycle.currentType()) : null;
+        return cycle != null ? mapToIngredient(cycle.currentType()) : null;
     }
 
-    public static ItemStack getSpawnEgg(EntityType<?> type){
+    public static ItemStack getSpawnEgg(EntityType<?> type) {
         return ForgeRegistries.ITEMS.getValues().stream()
                 .filter(item -> item instanceof SpawnEggItem && ((SpawnEggItem) item).getType(null) == type)
                 .findFirst()
@@ -194,14 +188,16 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
                     return stack;
                 });
     }
+
     private Object mapToIngredient(EntityType<?> type) {
         ItemStack egg = getSpawnEgg(type);
-//        if (GTCEu.Mods.isJEILoaded() && !egg.isEmpty()) {
-//            return SlotWidget.JEICallWrapper.getJEIStackClickable(egg, getPosition(), getSize());
-//        }
-//        else
-        if(GTCEu.Mods.isEMILoaded()){
+        // if (GTCEu.Mods.isJEILoaded() && !egg.isEmpty()) {
+        // return SlotWidget.JEICallWrapper.getJEIStackClickable(egg, getPosition(), getSize());
+        // }
+        // else
+        if (GTCEu.Mods.isEMILoaded()) {
             return new ItemEmiStack(egg) {
+
                 @Override
                 public void render(GuiGraphics draw, int x, int y, float delta, int flags) {}
             };

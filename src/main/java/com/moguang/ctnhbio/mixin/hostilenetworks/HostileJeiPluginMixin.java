@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin(value = HostileJeiPlugin.class, remap = false)
 public class HostileJeiPluginMixin {
+
     /**
      * @author
      * @reason

@@ -6,11 +6,7 @@ import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.api.recipe.ingredient.IntProviderIngredient;
 import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
-import com.moguang.ctnhbio.api.capability.recipe.CogniItemRecipeCapability;
-import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
-import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
-import dev.shadowsoffire.hostilenetworks.data.ModelTier;
-import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
+
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -21,19 +17,20 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.fluids.FluidStack;
+
+import com.moguang.ctnhbio.api.capability.recipe.CogniItemRecipeCapability;
+import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
+import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
+import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import static com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient.getModelId;
-import static dev.shadowsoffire.hostilenetworks.Hostile.Items.DATA_MODEL;
-
-public class CogniRecipeBuilder{
+public class CogniRecipeBuilder {
 
     public static final String COGNI_AESSEMBLY_STEP = "cogin_assembly_step";
 
@@ -56,7 +53,8 @@ public class CogniRecipeBuilder{
         this.subRecipeType = subRecipeType;
     }
 
-    public static CogniRecipeBuilder start(ResourceLocation id, GTRecipeType mainRecipeType, GTRecipeType subRecipeType) {
+    public static CogniRecipeBuilder start(ResourceLocation id, GTRecipeType mainRecipeType,
+                                           GTRecipeType subRecipeType) {
         return new CogniRecipeBuilder(id, mainRecipeType, subRecipeType);
     }
 
@@ -106,8 +104,7 @@ public class CogniRecipeBuilder{
 
     public CogniRecipeBuilder MIFStep(ModelTier requiredTier, EntityType<?> type,
                                       Supplier<? extends Item> input, int amount,
-                                      FluidStack fluids)
-    {
+                                      FluidStack fluids) {
         SubRecipe subRecipe = new SubRecipe(this);
         subRecipe.inputItems(input, amount)
                 .inputFluids(fluids)
@@ -119,8 +116,7 @@ public class CogniRecipeBuilder{
 
     public CogniRecipeBuilder MIFStep(ModelTier requiredTier, EntityType<?> type,
                                       ItemStack stack,
-                                      FluidStack fluids)
-    {
+                                      FluidStack fluids) {
         SubRecipe subRecipe = new SubRecipe(this);
         subRecipe.inputItems(stack)
                 .inputFluids(fluids)
@@ -131,8 +127,7 @@ public class CogniRecipeBuilder{
     }
 
     public CogniRecipeBuilder IFStep(Supplier<? extends Item> input, int amount,
-                                      FluidStack fluids)
-    {
+                                     FluidStack fluids) {
         SubRecipe subRecipe = new SubRecipe(this);
         subRecipe.inputItems(input, amount)
                 .inputFluids(fluids);
@@ -142,8 +137,7 @@ public class CogniRecipeBuilder{
     }
 
     public CogniRecipeBuilder IFStep(ItemStack stack,
-                                     FluidStack fluids)
-    {
+                                     FluidStack fluids) {
         SubRecipe subRecipe = new SubRecipe(this);
         subRecipe.inputItems(stack)
                 .inputFluids(fluids);
@@ -168,8 +162,7 @@ public class CogniRecipeBuilder{
             return;
         }
         UniformInt random = null;
-        if(minIntermediate != 0)
-        {
+        if (minIntermediate != 0) {
             random = UniformInt.of(minIntermediate, maxIntermediate);
         }
         // 创建主配方（用于JEI显示）
@@ -181,19 +174,17 @@ public class CogniRecipeBuilder{
             String stepName = (step == subRecipes.size() - 1) ? "_final_step" : "_step_" + (step + 1);
 
             GTRecipeBuilder stepBuilder = GTRecipeBuilder.of(
-                            ResourceLocation.fromNamespaceAndPath(id.getNamespace(), id.getPath() + stepName),
-                            subRecipeType)
+                    ResourceLocation.fromNamespaceAndPath(id.getNamespace(), id.getPath() + stepName),
+                    subRecipeType)
                     .EUt(eut)
                     .duration(this.duration);
 
             // 添加中间产物输入（除第一步外）
             if (step > 0) {
                 Ingredient ingredient;
-                if(random == null)
-                {
+                if (random == null) {
                     ingredient = StrictNBTIngredient.of(copyWithStep(intermediateItem, step));
-                }
-                else {
+                } else {
                     ingredient = IntProviderIngredient.of(copyWithStep(intermediateItem, step), random);
                 }
                 stepBuilder.input(CogniItemRecipeCapability.CAP, ingredient);
@@ -202,12 +193,11 @@ public class CogniRecipeBuilder{
             // 添加配方特定输入
             stepBuilder.inputItems(currentRecipe.itemInputs.toArray(Ingredient[]::new))
                     .inputFluids(currentRecipe.fluidInputs.toArray(FluidIngredient[]::new))
-                    //.outputItems(currentRecipe.itemOutputs.toArray(Ingredient[]::new))
-                    //.outputFluids(currentRecipe.fluidOutputs.toArray(FluidIngredient[]::new))
+            // .outputItems(currentRecipe.itemOutputs.toArray(Ingredient[]::new))
+            // .outputFluids(currentRecipe.fluidOutputs.toArray(FluidIngredient[]::new))
             ;
-            if(!currentRecipe.modelInputs.isEmpty())
+            if (!currentRecipe.modelInputs.isEmpty())
                 stepBuilder.input(ModelRecipeCapability.CAP, currentRecipe.modelInputs.get(0));
-
 
             // 设置输出
             if (step == subRecipes.size() - 1) {
@@ -215,14 +205,12 @@ public class CogniRecipeBuilder{
                 stepBuilder.outputItems(finalOutput);
             } else {
                 // 中间步骤输出带标记的中间产物
-                //stepBuilder.outputItems(copyWithStep(intermediateItem, step + 1));
+                // stepBuilder.outputItems(copyWithStep(intermediateItem, step + 1));
                 Ingredient ingredient;
-                if(random == null)
-                {
-                    ingredient = StrictNBTIngredient.of(copyWithStep(intermediateItem, step+1));
-                }
-                else {
-                    ingredient = IntProviderIngredient.of(copyWithStep(intermediateItem, step+1), random);
+                if (random == null) {
+                    ingredient = StrictNBTIngredient.of(copyWithStep(intermediateItem, step + 1));
+                } else {
+                    ingredient = IntProviderIngredient.of(copyWithStep(intermediateItem, step + 1), random);
                 }
 
                 stepBuilder.output(CogniItemRecipeCapability.CAP, ingredient);
@@ -258,7 +246,7 @@ public class CogniRecipeBuilder{
                 .outputFluids(allFluidOutputs.toArray(FluidIngredient[]::new))
                 .EUt(eut)
                 .duration(this.duration * subRecipes.size()); // 总时间为各步骤时间之和
-        for(var model: allModels){
+        for (var model : allModels) {
             mainBuilder.input(ModelRecipeCapability.CAP, model);
         }
 
@@ -269,12 +257,12 @@ public class CogniRecipeBuilder{
         ItemStack copy = stack.copy();
         CompoundTag tag = copy.getOrCreateTag();
         tag.putInt(COGNI_AESSEMBLY_STEP, step);
-        //tag.putBoolean(COGNI_ASSEMBLE_INTERMEDIATE, true);
+        // tag.putBoolean(COGNI_ASSEMBLE_INTERMEDIATE, true);
         return copy;
     }
 
-
     public static class SubRecipe {
+
         private final CogniRecipeBuilder parent;
         private final List<Ingredient> itemInputs = new ArrayList<>();
         private final List<ModelIngredient> modelInputs = new ArrayList<>();
@@ -308,12 +296,12 @@ public class CogniRecipeBuilder{
             return this;
         }
 
-        public SubRecipe inputModel(ModelIngredient... models){
+        public SubRecipe inputModel(ModelIngredient... models) {
             modelInputs.addAll(Arrays.asList(models));
             return this;
         }
 
-        public SubRecipe inputModel(ModelTier requiredTier, EntityType<?> type){
+        public SubRecipe inputModel(ModelTier requiredTier, EntityType<?> type) {
             inputModel(ModelIngredient.of(requiredTier, type));
             return this;
         }

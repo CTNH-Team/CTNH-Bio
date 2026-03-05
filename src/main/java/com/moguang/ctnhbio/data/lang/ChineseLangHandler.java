@@ -1,10 +1,11 @@
 package com.moguang.ctnhbio.data.lang;
 
+import net.minecraftforge.common.data.LanguageProvider;
+
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.lang.utils.EntityPropertyLangUtil;
 import com.moguang.ctnhbio.registry.*;
-import net.minecraftforge.common.data.LanguageProvider;
 import org.jetbrains.annotations.NotNull;
 import tech.vixhentx.mcmod.ctnhlib.registrate.lang.RegistrateCNLangProvider;
 
@@ -13,10 +14,9 @@ import java.util.Map;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 
-
 public class ChineseLangHandler {
-    public static void init(RegistrateCNLangProvider provider){
 
+    public static void init(RegistrateCNLangProvider provider) {
         provider.add(CBMachines.BRAIN_IN_A_VAT[HV].getBlock(), "§6HV 缸中之脑§r");
         provider.add(CBMachines.BRAIN_IN_A_VAT[EV].getBlock(), "§5EV 缸中之脑§r");
         provider.add(CBMachines.BRAIN_IN_A_VAT[IV].getBlock(), "§9IV 缸中之脑§r");
@@ -30,7 +30,7 @@ public class ChineseLangHandler {
         provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH]活体机器属性");
         provider.add("ctnhbio.living_machine", "living machine");
 
-        //replace(provider, "fluid_type.biofactory.nutrients_fluid", "营养液");
+        // replace(provider, "fluid_type.biofactory.nutrients_fluid", "营养液");
         provider.add("fluid_type.biofactory.nutrients_fluid", "营养液");
 
         provider.add("emi.category.ctnhbio.despoil_loot", "血肉掠夺");
@@ -39,7 +39,7 @@ public class ChineseLangHandler {
         provider.add("recipe.capability.nutrient.name", "营养");
         provider.add("jade.nutrient.info", "营养值：%s");
 
-        //provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
+        // provider.add("recipe.condition.effect.tooltip", "药水效果：%s");
         provider.add("ctnhbio.recipe.nutrient_consume", "营养消耗：%d");
         provider.add("ctnhbio.recipe.nutrient_generate", "营养获取：%d");
         provider.add("ctnhbio.jade.nutrient_stored", "%s / %s u");
@@ -54,8 +54,8 @@ public class ChineseLangHandler {
 
         provider.add("ctnhbio.copyright.info", "由CTNHBio添加");
 
-        //Entity Properties
-        EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"实体输入","实体输出","接受实体: %s","要求:");
+        // Entity Properties
+        EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider, "实体输入", "实体输出", "接受实体: %s", "要求:");
         epu.add(EntityProperties.FALL_DISTANCE, "落地距离");
         epu.add(EntityProperties.REMAINING_FIRE_TICKS, "剩余火焰");
         epu.add(EntityProperties.AIR_SUPPLY, "空气供应");
@@ -81,7 +81,6 @@ public class ChineseLangHandler {
         epu.add(PropertyOperators.GREATER, "大于");
         epu.add(PropertyOperators.LESSER, "小于");
         epu.add(PropertyOperators.CONTAIN, "包含");
-
     }
 
     public static void replace(@NotNull RegistrateCNLangProvider provider, @NotNull String key,
@@ -95,16 +94,16 @@ public class ChineseLangHandler {
             map.put(key, value);
 
             // upside-down lang mappings
-//            Field upsideDownField = RegistrateLangProvider.class.getDeclaredField("upsideDown");
-//            upsideDownField.setAccessible(true);
-//            // noinspection unchecked
-//            map = (Map<String, String>) field.get(upsideDownField.get(provider));
-//
-//            Method toUpsideDown = RegistrateLangProvider.class.getDeclaredMethod("toUpsideDown",
-//                    String.class);
-//            toUpsideDown.setAccessible(true);
-//
-//            map.put(key, (String) toUpsideDown.invoke(provider, value));
+            // Field upsideDownField = RegistrateLangProvider.class.getDeclaredField("upsideDown");
+            // upsideDownField.setAccessible(true);
+            // // noinspection unchecked
+            // map = (Map<String, String>) field.get(upsideDownField.get(provider));
+            //
+            // Method toUpsideDown = RegistrateLangProvider.class.getDeclaredMethod("toUpsideDown",
+            // String.class);
+            // toUpsideDown.setAccessible(true);
+            //
+            // map.put(key, (String) toUpsideDown.invoke(provider, value));
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException("Error replacing entry in datagen.", e);
         }

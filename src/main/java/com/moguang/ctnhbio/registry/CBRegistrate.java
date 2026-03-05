@@ -10,18 +10,8 @@ import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.registry.registrate.MachineBuilder;
 import com.gregtechceu.gtceu.api.registry.registrate.MultiblockMachineBuilder;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
-import com.moguang.ctnhbio.CTNHBio;
-import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
-import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
-
-import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
-import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
-import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
-
-import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -31,29 +21,42 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+
+import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
+import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
+import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
+import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
 import org.apache.commons.lang3.function.TriFunction;
 import org.jetbrains.annotations.NotNull;
 import tech.vixhentx.mcmod.ctnhlib.registrate.CNRegistrate;
 import tech.vixhentx.mcmod.ctnhlib.registrate.builders.CTNHMachineBuilder;
 import tech.vixhentx.mcmod.ctnhlib.registrate.builders.CTNHMultiblockMachineBuilder;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 public class CBRegistrate extends CNRegistrate {
+
     protected CBRegistrate() {
         super(CTNHBio.MODID);
     }
+
     public static CBRegistrate create() {
         return new CBRegistrate();
     }
-    public MultiblockMachineBuilder biomultiblock(String name, Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine
-    ) {
+
+    public MultiblockMachineBuilder biomultiblock(String name,
+                                                  Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine) {
         return new MultiblockMachineBuilder(this, name, metaMachine,
                 LivingMetaMachineBlock::new, MetaMachineItem::new,
-                (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get()));
+                (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state,
+                        CBEntities.LIVING_META_MACHINE_ENTITY.get()));
     }
 
     public CTNHMultiblockMachineBuilder biomultiblock(String name,
@@ -65,46 +68,45 @@ public class CBRegistrate extends CNRegistrate {
                 metaMachine,
                 blockFactory,
                 itemFactory,
-                (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get())
-        ).allowFlip(false).allowExtendedFacing(false);
+                (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state,
+                        CBEntities.LIVING_META_MACHINE_ENTITY.get()))
+                .allowFlip(false).allowExtendedFacing(false);
     }
 
+    // @Override
+    // @ParametersAreNonnullByDefault
+    // public <DEFINITION extends MachineDefinition> CTNHMachineBuilder<DEFINITION> machine(String name,
+    // Function<ResourceLocation, DEFINITION> definitionFactory,
+    // Function<IMachineBlockEntity, MetaMachine> metaMachine,
+    // BiFunction<BlockBehaviour.Properties, DEFINITION, IMachineBlock> blockFactory,
+    // BiFunction<IMachineBlock, Item.Properties, MetaMachineItem> itemFactory,
+    // TriFunction<BlockEntityType<?>, BlockPos, BlockState, IMachineBlockEntity> blockEntityFactory) {
+    // return super.machine(name, definitionFactory, metaMachine, blockFactory, itemFactory, blockEntityFactory)
+    // .hasBER(false);
+    // }
 
-//    @Override
-//    @ParametersAreNonnullByDefault
-//    public <DEFINITION extends MachineDefinition> CTNHMachineBuilder<DEFINITION> machine(String name,
-//                                                                                         Function<ResourceLocation, DEFINITION> definitionFactory,
-//                                                                                         Function<IMachineBlockEntity, MetaMachine> metaMachine,
-//                                                                                         BiFunction<BlockBehaviour.Properties, DEFINITION, IMachineBlock> blockFactory,
-//                                                                                         BiFunction<IMachineBlock, Item.Properties, MetaMachineItem> itemFactory,
-//                                                                                         TriFunction<BlockEntityType<?>, BlockPos, BlockState, IMachineBlockEntity> blockEntityFactory) {
-//        return super.machine(name, definitionFactory, metaMachine, blockFactory, itemFactory, blockEntityFactory)
-//                .hasBER(false);
-//    }
-
-
-    @NotNull @ParametersAreNonnullByDefault
+    @NotNull
+    @ParametersAreNonnullByDefault
     public CTNHMachineBuilder<MachineDefinition> livingMachine(int tier,
-                                                           String name,
-                                                           BiFunction<IMachineBlockEntity, Integer, MetaMachine> metaMachine,
-                                                           BiFunction<BlockBehaviour.Properties, MachineDefinition, IMachineBlock> blockFactory,
-                                                           TriFunction<BlockEntityType<?>, BlockPos, BlockState, IMachineBlockEntity> blockEntityFactory,
-                                                           GTRecipeType recipeType,
-                                                           boolean transparent
-    ) {
-        return (CTNHMachineBuilder<MachineDefinition>)super.machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + '_' + name,
-                        MachineDefinition::new,
-                        holder -> metaMachine.apply(holder, tier),
-                        blockFactory,
-                        (b, p) -> new LivingMetaMachineItem(b, p, name),
-                        blockEntityFactory
-                )
+                                                               String name,
+                                                               BiFunction<IMachineBlockEntity, Integer, MetaMachine> metaMachine,
+                                                               BiFunction<BlockBehaviour.Properties, MachineDefinition, IMachineBlock> blockFactory,
+                                                               TriFunction<BlockEntityType<?>, BlockPos, BlockState, IMachineBlockEntity> blockEntityFactory,
+                                                               GTRecipeType recipeType,
+                                                               boolean transparent) {
+        return (CTNHMachineBuilder<MachineDefinition>) super.machine(
+                GTValues.VN[tier].toLowerCase(Locale.ROOT) + '_' + name,
+                MachineDefinition::new,
+                holder -> metaMachine.apply(holder, tier),
+                blockFactory,
+                (b, p) -> new LivingMetaMachineItem(b, p, name),
+                blockEntityFactory)
 
                 .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
                 .tier(tier)
                 .hasBER(false)
                 .recipeType(recipeType)
-                .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id(name),recipeType))
+                .editableUI(BasicLivingMachine.EDITABLE_UI_CREATOR_BIO.apply(CTNHBio.id(name), recipeType))
                 .rotationState(RotationState.NON_Y_AXIS)
 
                 .onBlockEntityRegister(beType -> {
@@ -113,26 +115,26 @@ public class CBRegistrate extends CNRegistrate {
                     }
 
                 })
-                //for particle
-                .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"))
-                ;
+                // for particle
+                .simpleModel(ResourceLocation.tryBuild("biomancy", "block/flesh"));
     }
-    @NotNull @ParametersAreNonnullByDefault
-    public CTNHMachineBuilder<MachineDefinition>  livingMachine(int tier,
-                                                           String name,
-                                                           BiFunction<IMachineBlockEntity, Integer, MetaMachine> metaMachine,
-                                                           BiFunction<BlockBehaviour.Properties, MachineDefinition, IMachineBlock> blockFactory,
-                                                           GTRecipeType recipeType,
-                                                           boolean transparent) {
+
+    @NotNull
+    @ParametersAreNonnullByDefault
+    public CTNHMachineBuilder<MachineDefinition> livingMachine(int tier,
+                                                               String name,
+                                                               BiFunction<IMachineBlockEntity, Integer, MetaMachine> metaMachine,
+                                                               BiFunction<BlockBehaviour.Properties, MachineDefinition, IMachineBlock> blockFactory,
+                                                               GTRecipeType recipeType,
+                                                               boolean transparent) {
         return livingMachine(
                 tier,
                 name,
                 metaMachine,
                 blockFactory,
-                (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state, CBEntities.LIVING_META_MACHINE_ENTITY.get()),
+                (type, pos, state) -> LivingMetaMachineBlockEntity.create(type, pos, state,
+                        CBEntities.LIVING_META_MACHINE_ENTITY.get()),
                 recipeType,
-                transparent
-        );
+                transparent);
     }
-
 }

@@ -4,10 +4,13 @@ import com.lowdragmc.lowdraglib.syncdata.IManaged;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.FieldManagedStorage;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
+
 import lombok.Getter;
 
 public class SynchronizedNutrientStorage implements IManaged {
-    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(SynchronizedNutrientStorage.class);
+
+    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
+            SynchronizedNutrientStorage.class);
     @Getter
     private final FieldManagedStorage syncStorage = new FieldManagedStorage(this);
     @Persisted
@@ -24,6 +27,7 @@ public class SynchronizedNutrientStorage implements IManaged {
     public double getAmount() {
         return amount;
     }
+
     public double getLeft() {
         return capacity - amount;
     }
@@ -44,8 +48,7 @@ public class SynchronizedNutrientStorage implements IManaged {
     public ManagedFieldHolder getFieldHolder() {
         return MANAGED_FIELD_HOLDER;
     }
-    @Override
-    public void onChanged() {
 
-    }
+    @Override
+    public void onChanged() {}
 }

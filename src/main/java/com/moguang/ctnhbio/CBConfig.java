@@ -6,6 +6,7 @@ import dev.toma.configuration.config.format.ConfigFormats;
 
 @Config(id = CTNHBio.MODID)
 public class CBConfig {
+
     public static CBConfig INSTANCE;
     private static final Object LOCK = new Object();
 

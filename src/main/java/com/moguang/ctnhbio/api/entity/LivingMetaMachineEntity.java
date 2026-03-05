@@ -1,10 +1,5 @@
 package com.moguang.ctnhbio.api.entity;
 
-import com.moguang.ctnhbio.api.IHostAwareEntity;
-import com.moguang.ctnhbio.api.ILivingEntityHost;
-import com.moguang.ctnhbio.api.ILivingMachine;
-import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
-import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,6 +11,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+
+import com.moguang.ctnhbio.api.IHostAwareEntity;
+import com.moguang.ctnhbio.api.ILivingEntityHost;
+import com.moguang.ctnhbio.api.ILivingMachine;
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
+import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +29,6 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
 
     public LivingMetaMachineEntity(EntityType<? extends LivingEntity> type, Level level) {
         super(type, level);
-
     }
 
     public static LivingMetaMachineEntity create(EntityType<? extends LivingEntity> type, Level level) {
@@ -45,17 +45,15 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
         holder = (ILivingEntityHost<LivingMetaMachineEntity>) host;
     }
 
-
     public void setPos(BlockPos pos, Vec3 offset) {
-        super.setPos(pos.getX()+offset.x, pos.getY()+offset.y, pos.getZ()+offset.z);
+        super.setPos(pos.getX() + offset.x, pos.getY() + offset.y, pos.getZ() + offset.z);
     }
 
     @Override
     public void setCustomName(@Nullable Component name) {
         super.setCustomName(name);
         if (holder instanceof LivingMetaMachineBlockEntity blockEntity &&
-                blockEntity.getMetaMachine() instanceof BasicLivingMachine machine)
-        {
+                blockEntity.getMetaMachine() instanceof BasicLivingMachine machine) {
             assert name != null;
             machine.setName(name.getString());
         }
@@ -76,15 +74,13 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
                 .add(Attributes.ARMOR, 0.0D);
     }
 
-    public void initAttributes(double maxHealth, double armor){
-        if(!ifInit)
-        {
+    public void initAttributes(double maxHealth, double armor) {
+        if (!ifInit) {
             ifInit = true;
             getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
             setHealth((float) maxHealth);
             getAttribute(Attributes.ARMOR).setBaseValue(armor);
         }
-
     }
 
     @Override
@@ -98,10 +94,14 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     }
 
     @Override
-    protected boolean updateInWaterStateAndDoFluidPushing() {return false;}
+    protected boolean updateInWaterStateAndDoFluidPushing() {
+        return false;
+    }
 
     @Override
-    public boolean isCustomNameVisible() {return true;}
+    public boolean isCustomNameVisible() {
+        return true;
+    }
 
     @Override
     public @NotNull HumanoidArm getMainArm() {
@@ -129,19 +129,15 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     }
 
     @Override
-    public void setItemSlot(EquipmentSlot equipmentSlot, ItemStack itemStack) {
-
-    }
+    public void setItemSlot(EquipmentSlot equipmentSlot, ItemStack itemStack) {}
 
     @Override
     public void aiStep() {
         super.aiStep();
-//        this.hurtTime = 0;
-//        this.hurtMarked = false;
+        // this.hurtTime = 0;
+        // this.hurtMarked = false;
 
-
-        //this.setDeltaMovement(0, 0, 0);
-
+        // this.setDeltaMovement(0, 0, 0);
     }
 
     @Override
@@ -165,28 +161,27 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     }
 
     @Override
-    public void checkInsideBlocks() {
-    }
+    public void checkInsideBlocks() {}
 
     @Override
     public void tick() {
         super.tick();
         if (tickCount % 40 == 0)
-        if (getHealth() < getMaxHealth()) {
-            if (getHost() != null && getHost().getHostMachine() instanceof ILivingMachine livingMachine) {
-                if (livingMachine.getNutrientAmount() >= 2) {
-                    livingMachine.extractNutrient(2);
-                    heal(1);
-                    var pos = getHost().getHostPos().getCenter();
-                    Vec3 v = pos.add(0, 1f, 0)
-                            .add(VecHelper.offsetRandomly(Vec3.ZERO, level().random, 1)
-                                    .multiply(1, 0.2f, 1)
-                                    .normalize()
-                                    .scale(1f));
-                    level().addParticle(ParticleTypes.HEART, v.x, v.y, v.z, 0, 0.1f, 0);
+            if (getHealth() < getMaxHealth()) {
+                if (getHost() != null && getHost().getHostMachine() instanceof ILivingMachine livingMachine) {
+                    if (livingMachine.getNutrientAmount() >= 2) {
+                        livingMachine.extractNutrient(2);
+                        heal(1);
+                        var pos = getHost().getHostPos().getCenter();
+                        Vec3 v = pos.add(0, 1f, 0)
+                                .add(VecHelper.offsetRandomly(Vec3.ZERO, level().random, 1)
+                                        .multiply(1, 0.2f, 1)
+                                        .normalize()
+                                        .scale(1f));
+                        level().addParticle(ParticleTypes.HEART, v.x, v.y, v.z, 0, 0.1f, 0);
+                    }
                 }
             }
-        }
     }
 
     @Override

@@ -1,26 +1,27 @@
 package com.moguang.ctnhbio.registry;
 
-import com.google.common.collect.ArrayTable;
-import com.google.common.collect.Table;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.registry.MaterialRegistry;
 import com.gregtechceu.gtceu.api.item.IGTTool;
 import com.gregtechceu.gtceu.api.item.tool.GTToolType;
+
+import net.minecraft.world.item.Items;
+
+import com.google.common.collect.ArrayTable;
+import com.google.common.collect.Table;
 import com.moguang.ctnhbio.api.item.tool.CBToolType;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import net.minecraft.world.item.Items;
 
 import java.util.List;
 
 import static com.gregtechceu.gtceu.common.data.GTCreativeModeTabs.TOOL;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
-import static com.moguang.ctnhbio.registry.CBCreativeModeTabs.ITEM;
 
-public class CBMaterialItems{
+public class CBMaterialItems {
 
     public final static Table<Material, GTToolType, ItemProviderEntry<IGTTool>> CB_TOOL_ITEMS = ArrayTable.create(
             GTCEuAPI.materialManager.getRegisteredMaterials().stream()
@@ -29,8 +30,8 @@ public class CBMaterialItems{
             List.of(CBToolType.BONING_KNIFE));
 
     public static void generateTools() {
-        //System.out.println("CBMaterialItems.generateTools()");
-        //REGISTRATE.creativeModeTab(() -> ITEM);
+        // System.out.println("CBMaterialItems.generateTools()");
+        // REGISTRATE.creativeModeTab(() -> ITEM);
         GTToolType toolType = CBToolType.BONING_KNIFE;
         for (MaterialRegistry registry : GTCEuAPI.materialManager.getRegistries()) {
             for (Material material : registry.getAllMaterials()) {

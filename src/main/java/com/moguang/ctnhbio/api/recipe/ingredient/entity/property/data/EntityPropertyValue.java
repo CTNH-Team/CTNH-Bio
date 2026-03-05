@@ -1,48 +1,48 @@
 package com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.*;
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperator;
 import lombok.Builder;
 import lombok.NonNull;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Predicate;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 import static com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators.*;
 import static net.minecraft.nbt.Tag.*;
 
 @Builder
-public record EntityPropertyValue<T>
-        (IBaseEntityProperty<T> property, T value, PropertyOperator<? super T> operator) implements Predicate<CompoundTag> {
+public record EntityPropertyValue<T>(IBaseEntityProperty<T> property, T value, PropertyOperator<? super T> operator)
+        implements Predicate<CompoundTag> {
 
-    //jei
-    public Component getDescription(){
-        return Component.translatable(property.getLanguageKey()) //text
+    // jei
+    public Component getDescription() {
+        return Component.translatable(property.getLanguageKey()) // text
                 .append(" ")
-                .append(Component.translatable(operator.getVerbKey())) //verb
+                .append(Component.translatable(operator.getVerbKey())) // verb
                 .append(" ")
-                .append(property.showValue(value)); //value
+                .append(property.showValue(value)); // value
     }
 
     @Override
     public boolean test(@NonNull CompoundTag entityNBT) {
         var tag = entityNBT.get(property.getSection());
-        if(tag == null) return false;
+        if (tag == null) return false;
 
         var e = property.valueFromTag(tag);
         return operator.test(e, value);
     }
 
-
-
-    //serialization
+    // serialization
     @NonNull
-    public CompoundTag tag(){
+    public CompoundTag tag() {
         Tag v = property.writeTag(value);
         Tag o = operator.serialize();
 
@@ -51,9 +51,10 @@ public record EntityPropertyValue<T>
         nbt.put("o", o);
         return nbt;
     }
+
     @SuppressWarnings("unchecked")
     @ParametersAreNonnullByDefault
-    private static <T> EntityPropertyValue<T> fromCompound(IBaseEntityProperty<T> property, CompoundTag compound){
+    private static <T> EntityPropertyValue<T> fromCompound(IBaseEntityProperty<T> property, CompoundTag compound) {
         var otag = compound.get("o");
         var vtag = compound.get("v");
 
@@ -61,10 +62,11 @@ public record EntityPropertyValue<T>
         T value = property.valueFromTag(vtag);
         return new EntityPropertyValue<>(property, value, (PropertyOperator<? super T>) operator);
     }
+
     @Nullable
     @ParametersAreNonnullByDefault
     public static <T> EntityPropertyValue<T> fromNBT(@Nullable IBaseEntityProperty<T> property, CompoundTag nbt) {
-        if(property == null) return null;
+        if (property == null) return null;
 
         var type = nbt.getTagType(property.getSection());
         return switch (type) {
@@ -77,10 +79,11 @@ public record EntityPropertyValue<T>
         };
     }
 
-    public void putNBT(@NotNull CompoundTag nbt){
-        nbt.put(property.getSection(),tag());
+    public void putNBT(@NotNull CompoundTag nbt) {
+        nbt.put(property.getSection(), tag());
     }
-    public void putSlimNBT(@NotNull CompoundTag nbt){
-        nbt.put(property.getSection(),property.writeTag(value));
+
+    public void putSlimNBT(@NotNull CompoundTag nbt) {
+        nbt.put(property.getSection(), property.writeTag(value));
     }
 }

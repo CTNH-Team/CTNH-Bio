@@ -6,15 +6,6 @@ import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties;
-import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
-import com.moguang.ctnhbio.CTNHBio;
-import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
-import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
-import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
-import com.moguang.ctnhbio.api.machine.multiblock.CBPartAbility;
-import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
-import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
-import com.moguang.ctnhbio.machine.multiblock.part.ParabioticBridgePartMachine;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -24,11 +15,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
+import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+import com.moguang.ctnhbio.api.machine.multiblock.CBPartAbility;
+import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
+import com.moguang.ctnhbio.machine.multiblock.part.NeuralModelAccessorMachine;
+import com.moguang.ctnhbio.machine.multiblock.part.ParabioticBridgePartMachine;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Suffix;
-import com.moguang.ctnhbio.machine.multiblock.part.NeuralModelAccessorMachine;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createOverlayCasingMachineModel;
@@ -39,6 +38,7 @@ import static com.moguang.ctnhbio.utils.CBMachineNames.*;
 
 @Suffix("machine")
 public class CBMachines {
+
     public static final MachineDefinition[] BIOELECTRIC_FORGE = new MachineDefinition[GTValues.TIER_COUNT];
     public static final MachineDefinition[] DECOMPOSER = new MachineDefinition[GTValues.TIER_COUNT];
     public static final MachineDefinition[] DIGESTER = new MachineDefinition[GTValues.TIER_COUNT];
@@ -47,14 +47,13 @@ public class CBMachines {
     public static MachineDefinition NEURAL_MODEL_ACCESSOR;
     public static MachineDefinition ADVANCED_NEURAL_MODEL_ACCESSOR;
     public static MachineDefinition PARABIOTIC_BRIDGE;
-//    @CN("反应器")
-//    //@EN("reactor")
-//    static Lang bioreactor_tooltip;
+    // @CN("反应器")
+    // //@EN("reactor")
+    // static Lang bioreactor_tooltip;
 
     static {
         REGISTRATE.creativeModeTab(() -> CBCreativeModeTabs.ITEM);
     }
-
 
     @CN({
             "这不是一个常规容器，无法通过UI或物流手段取出或放入物品",
@@ -66,7 +65,6 @@ public class CBMachines {
     })
     static Lang[] parabiotic_bridge;
 
-
     @CN("可使机器在执行配方后输出其中的数据模型")
     @EN("Can make the controller output the data model in it after working.")
     static Lang advanced_neural_model_accessor;
@@ -77,7 +75,8 @@ public class CBMachines {
         registerDigester();
         registerBioreactor();
         registerBrainInAVat();
-        NEURAL_MODEL_ACCESSOR = REGISTRATE.machine("neural_model_accessor", b -> new NeuralModelAccessorMachine(b, false))
+        NEURAL_MODEL_ACCESSOR = REGISTRATE
+                .machine("neural_model_accessor", b -> new NeuralModelAccessorMachine(b, false))
                 .cnLangValue("数据模型接口")
                 .langValue("Neural Model Accessor")
                 .tier(LuV)
@@ -89,7 +88,8 @@ public class CBMachines {
                 .tooltips(Component.translatable("gtceu.part_sharing.disabled"))
                 .register();
 
-        ADVANCED_NEURAL_MODEL_ACCESSOR = REGISTRATE.machine("advanced_neural_model_accessor", b -> new NeuralModelAccessorMachine(b, true))
+        ADVANCED_NEURAL_MODEL_ACCESSOR = REGISTRATE
+                .machine("advanced_neural_model_accessor", b -> new NeuralModelAccessorMachine(b, true))
                 .cnLangValue("进阶数据模型接口")
                 .langValue("Advanced Neural Model Accessor")
                 .tier(LuV)
@@ -110,20 +110,17 @@ public class CBMachines {
                 .rotationState(RotationState.NON_Y_AXIS)
                 .abilities(PartAbility.IMPORT_ITEMS, PartAbility.EXPORT_ITEMS)
                 .model(createOverlayCasingMachineModel(CTNHBio.id("block/casings/primal_flesh_casing"),
-                        CTNHBio.id("block/item_passthrough_hatch")
-                        ))
+                        CTNHBio.id("block/item_passthrough_hatch")))
                 .tooltips(Component.translatable("gtceu.part_sharing.enabled"))
                 .tooltips(
                         parabiotic_bridge[0].translate().withStyle(ChatFormatting.YELLOW),
-                        parabiotic_bridge[1].translate().withStyle(ChatFormatting.DARK_RED)
-                )
-                //.colorOverlayTieredHullModel(GTCEu.id("block/overlay/machine/overlay_pipe_in_emissive"), null, GTCEu.id("block/overlay/machine/" + OVERLAY_ITEM_HATCH))
-                .register()
-        ;
+                        parabiotic_bridge[1].translate().withStyle(ChatFormatting.DARK_RED))
+                // .colorOverlayTieredHullModel(GTCEu.id("block/overlay/machine/overlay_pipe_in_emissive"), null,
+                // GTCEu.id("block/overlay/machine/" + OVERLAY_ITEM_HATCH))
+                .register();
     }
 
     private static void registerBioelectricForge() {
-
         for (int tier : GTValues.tiersBetween(LV, IV)) {
             String id = "bioelectric_forge";
             BIOELECTRIC_FORGE[tier] = REGISTRATE
@@ -131,8 +128,10 @@ public class CBMachines {
                             id,
                             BasicLivingMachine::new,
                             (p, d) -> new LivingMetaMachineBlock(p, d) {
+
                                 @Override
-                                public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+                                public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos,
+                                                           CollisionContext pContext) {
                                     return Shapes.box(0, 0, 0, 1, 1.5, 1);
                                 }
                             },
@@ -146,7 +145,7 @@ public class CBMachines {
 
     private static void registerDecomposer() {
         for (int tier : GTValues.tiersBetween(LV, IV)) {
-            String id  = "decomposer";
+            String id = "decomposer";
             DECOMPOSER[tier] = REGISTRATE
                     .livingMachine(tier,
                             id,
@@ -191,8 +190,10 @@ public class CBMachines {
                     .register();
         }
     }
+
     @Suffix("brain_in_a_vat")
-    static class brain_in_a_vat{
+    static class brain_in_a_vat {
+
         @CN({
                 "§3自动化思考",
                 "§r电量和营养充足时,提供%d算力",
@@ -220,7 +221,6 @@ public class CBMachines {
         static Lang[] story;
     }
 
-
     private static void registerBrainInAVat() {
         for (int tier : GTValues.tiersBetween(HV, LuV)) {
             BRAIN_IN_A_VAT[tier] = REGISTRATE
@@ -228,21 +228,19 @@ public class CBMachines {
                             "brain_in_a_vat",
                             BrainInAVatMachine::new,
                             LivingMetaMachineBlock::new,
-                            (type, pos, state) ->
-                                    new LivingMetaMachineBlockEntity<>(type, pos, state, CBEntities.BRAIN_IN_A_VAT_BRAIN.get())
-                                            .setEntityOffset(0.5, 0.45, 0.5),
+                            (type, pos,
+                             state) -> new LivingMetaMachineBlockEntity<>(type, pos, state,
+                                     CBEntities.BRAIN_IN_A_VAT_BRAIN.get())
+                                     .setEntityOffset(0.5, 0.45, 0.5),
                             CBRecipeTypes.BRAIN_IN_A_VAT_RECIPES,
                             true)
                     .editableUI(null)
                     .tooltips(
                             tooltip[0].translate(),
                             tooltip[1].translate(tier >= GTValues.HV ? 1 << (tier - GTValues.HV) : 0),
-                            tooltip[2].translate()
-                    )
+                            tooltip[2].translate())
                     .tooltips(story[tier - 3].translate().withStyle(ChatFormatting.GRAY))
                     .register();
         }
     }
-
-
 }

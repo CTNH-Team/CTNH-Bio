@@ -1,35 +1,34 @@
 package com.moguang.ctnhbio.mixin.hostilenetworks;
 
 import com.gregtechceu.gtceu.api.GTValues;
-import dev.shadowsoffire.hostilenetworks.HostileConfig;
-import dev.shadowsoffire.hostilenetworks.data.CachedModel;
-import dev.shadowsoffire.hostilenetworks.data.ModelTier;
-import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
-import dev.shadowsoffire.hostilenetworks.tile.SimChamberTileEntity;
-import dev.shadowsoffire.placebo.cap.ModifiableEnergyStorage;
-import dev.shadowsoffire.placebo.menu.SimpleDataSlots;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+
+import dev.shadowsoffire.hostilenetworks.data.CachedModel;
+import dev.shadowsoffire.hostilenetworks.data.ModelTier;
+import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
+import dev.shadowsoffire.hostilenetworks.tile.SimChamberTileEntity;
+import dev.shadowsoffire.placebo.cap.ModifiableEnergyStorage;
+import dev.shadowsoffire.placebo.menu.SimpleDataSlots;
 import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(value = SimChamberTileEntity.class, remap = false)
 abstract class SimChamberTileEntityMixin extends BlockEntity {
+
     @Final
     @Shadow
-    protected  SimChamberTileEntity.SimItemHandler inventory ;
+    protected SimChamberTileEntity.SimItemHandler inventory;
     @Final
     @Shadow
-    protected  ModifiableEnergyStorage energy;
+    protected ModifiableEnergyStorage energy;
     @Final
     @Shadow
-    protected  SimpleDataSlots data;
+    protected SimpleDataSlots data;
     @Shadow
     protected CachedModel currentModel;
     @Shadow
@@ -47,10 +46,11 @@ abstract class SimChamberTileEntityMixin extends BlockEntity {
     protected abstract CachedModel getOrLoadModel(ItemStack stack);
 
     @Unique
-    SimChamberTileEntity self = (SimChamberTileEntity)(Object)this;
+    SimChamberTileEntity self = (SimChamberTileEntity) (Object) this;
 
     @Unique
-    private static int SIM_COST = 4 * (int)GTValues.V[GTValues.IV];
+    private static int SIM_COST = 4 * (int) GTValues.V[GTValues.IV];
+
     /**
      * @author
      * @reason

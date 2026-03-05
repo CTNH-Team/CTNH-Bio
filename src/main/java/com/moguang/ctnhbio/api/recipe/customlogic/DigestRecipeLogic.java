@@ -1,7 +1,5 @@
 package com.moguang.ctnhbio.api.recipe.customlogic;
 
-import com.github.elenterius.biofactory.init.ModFluids;
-import com.github.elenterius.biomancy.init.ModItems;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.IRecipeCapabilityHolder;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
@@ -9,10 +7,7 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
-import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
-import com.moguang.ctnhbio.CTNHBio;
-import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
-import com.moguang.ctnhbio.registry.CBRecipeTypes;
+
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +15,12 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
+
+import com.github.elenterius.biofactory.init.ModFluids;
+import com.github.elenterius.biomancy.init.ModItems;
+import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
+import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import org.jetbrains.annotations.Nullable;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
@@ -59,7 +60,7 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
             totalNutrition += getFoodNutritionValue(stack) * stack.getCount() * 2; // 营养值乘以2
         }
 
-        if(circuit == 1){
+        if (circuit == 1) {
             int totalPaste = Math.round(totalNutrition / 3);
             int barCount = totalPaste / 9;
             int remainingPaste = totalPaste % 9;
@@ -76,11 +77,10 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
                     .nutrient(1)
                     .inputItems(foods.stream().map(SizedIngredient::create).toArray(SizedIngredient[]::new))
                     .outputItems(newOutputs.toArray(new ItemStack[0]))
-                    .duration((int)totalNutrition) // 持续时间基于总营养值
+                    .duration((int) totalNutrition) // 持续时间基于总营养值
                     .EUt(32)
                     .buildRawRecipe();
-        }
-        else if(circuit == 2){
+        } else if (circuit == 2) {
             int fluidAmount = Math.round(totalNutrition); // 1营养值 = 1mB流体
             return CBRecipeBuilder.of(CTNHBio.id("nutrient_fluid"), CBRecipeTypes.DIGEST_RECIPES)
                     .nutrient(1)

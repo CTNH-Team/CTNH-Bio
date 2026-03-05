@@ -1,24 +1,21 @@
 package com.moguang.ctnhbio.api.machine;
 
-import com.google.common.collect.Tables;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.*;
 import com.gregtechceu.gtceu.api.gui.editor.EditableMachineUI;
 import com.gregtechceu.gtceu.api.gui.editor.EditableUI;
 import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
 import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
-import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
-import com.gregtechceu.gtceu.api.machine.fancyconfigurator.CircuitFancyConfigurator;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
-import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableEnergyContainer;
+import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
 import com.gregtechceu.gtceu.utils.GTUtil;
+
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture;
@@ -27,27 +24,13 @@ import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 import com.lowdragmc.lowdraglib.utils.Position;
-import com.moguang.ctnhbio.api.ILivingMachine;
-import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
-import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
-import com.moguang.ctnhbio.api.gui.CBGuiTextures;
-import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
-import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
-import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
-import com.moguang.ctnhbio.api.machine.trait.LivingMachineEnergyContainer;
-import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
-import com.moguang.ctnhbio.registry.CBRecipeTypes;
-import it.unimi.dsi.fastutil.ints.Int2IntFunction;
-import lombok.Getter;
-import lombok.Setter;
+
 import net.minecraft.Util;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -55,6 +38,20 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
+
+import com.google.common.collect.Tables;
+import com.moguang.ctnhbio.api.ILivingMachine;
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
+import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
+import com.moguang.ctnhbio.api.gui.CBGuiTextures;
+import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
+import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
+import com.moguang.ctnhbio.api.machine.trait.LivingMachineEnergyContainer;
+import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
+import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
+import com.moguang.ctnhbio.registry.CBRecipeTypes;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
@@ -62,10 +59,11 @@ import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 
 import java.util.*;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 
 public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMachine {
-    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(BasicLivingMachine.class, SimpleTieredMachine.MANAGED_FIELD_HOLDER);
+
+    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(BasicLivingMachine.class,
+            SimpleTieredMachine.MANAGED_FIELD_HOLDER);
     @Persisted
     @Getter
     private final NotifiableNutrientTrait inputTrait;
@@ -101,7 +99,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     @Override
     public LivingMetaMachineEntity getMachineEntity() {
-        if(machineEntity == null) {
+        if (machineEntity == null) {
             machineEntity = ((LivingMetaMachineBlockEntity) holder).getHostedEntity();
         }
         return machineEntity;
@@ -149,15 +147,15 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         if (stack.isEdible() && stack.getFoodProperties(null) != null) {
             if (!getLevel().isClientSide) {
                 // if (!player.getAbilities().instabuild && !stack.getFoodProperties(player).canAlwaysEat()) {
-                //     stack.shrink(1);
+                // stack.shrink(1);
                 // }
                 int nutrition = stack.getFoodProperties(null).getNutrition();
                 float saturation = stack.getFoodProperties(null).getSaturationModifier();
                 getMachineEntity().eat(getLevel(), stack);
                 storage.add(nutrition + 0.5 * saturation);
                 // getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
-                //         SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
-                //         1.0f, 1.0f);
+                // SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
+                // 1.0f, 1.0f);
             }
             return InteractionResult.sidedSuccess(getLevel().isClientSide);
         }
@@ -197,9 +195,8 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
         boolean allowHistory = allowNetworkVoltageHistory();
 
-        long networkVoltage = (lastAcceptedNetworkVoltageTime == now || (allowHistory && lastAcceptedNetworkVoltageTime >= now - 5))
-                ? lastAcceptedNetworkVoltage
-                : 0;
+        long networkVoltage = (lastAcceptedNetworkVoltageTime == now ||
+                (allowHistory && lastAcceptedNetworkVoltageTime >= now - 5)) ? lastAcceptedNetworkVoltage : 0;
 
         long candidate = Math.max(baseVoltage, networkVoltage);
         int baseTier = GTUtil.getTierByVoltage(baseVoltage);
@@ -277,15 +274,13 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         return MANAGED_FIELD_HOLDER;
     }
 
-
     //////////////////////////////////////
     // ************ GUI ****************//
     //////////////////////////////////////
 
-
     @Override
     public ModularUI createUI(Player entityPlayer) {
-         return new ModularUI(176, 166, this, entityPlayer).widget(new LivingMachineUIWidget(this, 176, 166));
+        return new ModularUI(176, 166, this, entityPlayer).widget(new LivingMachineUIWidget(this, 176, 166));
     }
 
     public static BiFunction<ResourceLocation, GTRecipeType, EditableMachineUI> EDITABLE_UI_CREATOR_BIO = Util
@@ -295,8 +290,9 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                 WidgetGroup group = new WidgetGroup(0, 0, template.getSize().width,
                         Math.max(template.getSize().height, 78));
                 template.setSelfPosition(new Position(0, (group.getSize().height - template.getSize().height) / 2));
-                nutrientBar.setSelfPosition(new Position(group.getSize().width / 2 - 20, template.getPositionY() + (template.getSizeHeight() - nutrientBar.getSizeHeight()) / 2));
-                //nutrientBar.setHoverTooltips(Component.translatable("ctnhbio.nutrient_bar.info"));
+                nutrientBar.setSelfPosition(new Position(group.getSize().width / 2 - 20,
+                        template.getPositionY() + (template.getSizeHeight() - nutrientBar.getSizeHeight()) / 2));
+                // nutrientBar.setHoverTooltips(Component.translatable("ctnhbio.nutrient_bar.info"));
                 group.addWidget(nutrientBar);
                 group.addWidget(template);
 
@@ -341,9 +337,9 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             progressBar.setHoverTooltips(
                     nutrient.translate());
             progressBar.setDynamicHoverTips(progress -> {
-                    double current = progress * machine.getNutrientCapacity();
-                    double max = machine.getNutrientCapacity();
-                    return String.format("%.0f / %.0f u", current, max);
+                double current = progress * machine.getNutrientCapacity();
+                double max = machine.getNutrientCapacity();
+                return String.format("%.0f / %.0f u", current, max);
             });
         });
     }
@@ -373,9 +369,9 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     public void afterWorking() {
         super.afterWorking();
         var recipe = getRecipeLogic().getLastRecipe();
-        if(recipe != null && recipe.data.contains("effects")){
+        if (recipe != null && recipe.data.contains("effects")) {
             var tag = recipe.data.get("effects");
-            if(tag instanceof ListTag listTag){
+            if (tag instanceof ListTag listTag) {
                 listTag.stream()
                         .filter(CompoundTag.class::isInstance)
                         .map(CompoundTag.class::cast)
@@ -390,18 +386,21 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     public static void appendEffect(LivingEntity entity, MobEffectInstance mobEffect) {
         MobEffectInstance existEffect = entity.getEffect(mobEffect.getEffect());
         if (existEffect != null) {
-            MobEffectInstance newEffect = new MobEffectInstance(existEffect.getEffect(), existEffect.getDuration() + mobEffect.getDuration(), existEffect.getAmplifier(), existEffect.isAmbient(), existEffect.isVisible(), existEffect.showIcon());
+            MobEffectInstance newEffect = new MobEffectInstance(existEffect.getEffect(),
+                    existEffect.getDuration() + mobEffect.getDuration(), existEffect.getAmplifier(),
+                    existEffect.isAmbient(), existEffect.isVisible(), existEffect.showIcon());
             entity.addEffect(newEffect);
-        }
-        else {
+        } else {
             entity.addEffect(mobEffect);
         }
     }
 
     public static class BasicLivingRecipeLogic extends RecipeLogic {
+
         public BasicLivingRecipeLogic(IRecipeLogicMachine machine) {
             super(machine);
         }
+
         @Override
         public @NotNull Iterator<GTRecipe> searchRecipe() {
             var recipes = CBRecipeTypes.BASIC_LIVING_RECIPES.searchRecipe(machine, r -> matchRecipe(r).isSuccess());

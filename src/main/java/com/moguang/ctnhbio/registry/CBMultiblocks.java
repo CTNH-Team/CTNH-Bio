@@ -1,7 +1,5 @@
 package com.moguang.ctnhbio.registry;
 
-import com.github.elenterius.biomancy.BiomancyMod;
-import com.github.elenterius.biomancy.init.ModBlocks;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
@@ -10,18 +8,7 @@ import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
-import com.moguang.ctnhbio.CTNHBio;
-import com.moguang.ctnhbio.api.block.LivingMultiMetaMachineBlock;
-import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
-import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
-import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
-import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
-import com.moguang.ctnhbio.client.Text.ModelOutputLine;
-import com.moguang.ctnhbio.machine.bioobservation.HostileObserverMachine;
-import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
 
-import com.moguang.ctnhbio.machine.multiblock.CogniAssemblerMachine;
-import com.moguang.ctnhbio.api.machine.multiblock.CBPartAbility;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
@@ -29,6 +16,20 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import com.github.elenterius.biomancy.BiomancyMod;
+import com.github.elenterius.biomancy.init.ModBlocks;
+import com.moguang.ctnhbio.CTNHBio;
+import com.moguang.ctnhbio.api.block.LivingMultiMetaMachineBlock;
+import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
+import com.moguang.ctnhbio.api.machine.multiblock.CBPartAbility;
+import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
+import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
+import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
+import com.moguang.ctnhbio.client.Text.ModelOutputLine;
+import com.moguang.ctnhbio.machine.bioobservation.HostileObserverMachine;
+import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
+import com.moguang.ctnhbio.machine.multiblock.CogniAssemblerMachine;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
@@ -39,6 +40,7 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 @Suffix("tooltip")
 public class CBMultiblocks {
+
     public static MultiblockMachineDefinition GREAT_FLESH;
     public static MultiblockMachineDefinition CIRCULATORY_SYSTEM;
     public static MultiblockMachineDefinition COGNI_ASSEMBLER;
@@ -59,9 +61,8 @@ public class CBMultiblocks {
                         .aisle("AAA", "AAA", "AAA")
                         .aisle("AAA", "A@A", "AAA")
                         .where("A", Predicates.blocks(ModBlocks.FLESH.get()).setMinGlobalLimited(10)
-                                        .or(Predicates.autoAbilities(definition.getRecipeTypes()))
-                                //.or(Predicates.blocks(Blocks.AIR))
-
+                                .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+                        // .or(Predicates.blocks(Blocks.AIR))
 
                         )
                         .where("@", Predicates.controller(Predicates.blocks(definition.get())))
@@ -69,11 +70,12 @@ public class CBMultiblocks {
                         .build())
 
                 .workableCasingModel(BiomancyMod.createRL("block/flesh"), GTCEu.id("block/multiblock/assembly_line"))
-                //.simpleModel(ResourceLocation.tryBuild("minecraft", "block/air"))
+                // .simpleModel(ResourceLocation.tryBuild("minecraft", "block/air"))
                 .additionalDisplay((controller, components) -> {
-                    if(controller instanceof WorkableLivingMultiblockMachine machine){
+                    if (controller instanceof WorkableLivingMultiblockMachine machine) {
                         components.add(Component.translatable("jade.nutrient.info",
-                                Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
+                                Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount()))
+                                        .setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
                     }
                 })
                 .hasBER(false)
@@ -88,39 +90,50 @@ public class CBMultiblocks {
                 .biomultiblock("circulatory_system",
                         WorkableLivingMultiblockMachine::new,
                         LivingMultiMetaMachineBlock::new,
-                        MetaMachineItem::new
-                )
+                        MetaMachineItem::new)
                 .cnLangValue("循环系统")
                 .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
-                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
+                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
+                        CBRecipeModifier::batchMode)
                 .pattern(definition -> FactoryBlockPattern.start()
                         .aisle("AAAAA", "BCCCB", "BCCCB", "BCCCB", "AAAAA")
                         .aisle("ADDDA", "CEEEC", "C###C", "C###C", "ADDDA")
                         .aisle("ADDDA", "CEFEC", "C#G#C", "C#F#C", "ADDDA")
                         .aisle("ADDDA", "CEEEC", "C###C", "C###C", "ADDDA")
                         .aisle("AAAAA", "BC@CB", "BCCCB", "BCCCB", "AAAAA")
-                        .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:acid_fluid_block"))))
+                        .where("E",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("biomancy:acid_fluid_block"))))
                         .where("C", Predicates.blocks(CBBlocks.IMPERMEABLE_MEMBRANE.get()))
-                        .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
+                        .where("F",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
                         .where("@", Predicates.controller(Predicates.blocks(definition.get())))
                         .where("G", Predicates.heatingCoils())
-                        .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:bio_acid_casing"))))
-                        .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
-                                .or(Predicates.autoAbilities(definition.getRecipeTypes()))
-                                .or(Predicates.autoAbilities(false, false, true))
-                        )
+                        .where("D",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("ctnhbio:bio_acid_casing"))))
+                        .where("A",
+                                Predicates
+                                        .blocks(ForgeRegistries.BLOCKS
+                                                .getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
+                                        .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+                                        .or(Predicates.autoAbilities(false, false, true)))
                         .where("#", Predicates.any())
-                        .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:flesh_casing"))))
+                        .where("B",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("ctnhbio:flesh_casing"))))
                         .build())
 
                 .workableCasingModel(CTNHBio.id("block/casings/ornate_flesh_casing"),
                         CTNHBio.id("block/multiblock/red"))
                 .appearanceBlock(CBBlocks.ORNATE_FLESH_CASING)
-                //.simpleModel(ResourceLocation.tryBuild("minecraft", "block/acacia_log"))
+                // .simpleModel(ResourceLocation.tryBuild("minecraft", "block/acacia_log"))
                 .additionalDisplay((controller, components) -> {
-                    if(controller instanceof WorkableLivingMultiblockMachine machine){
+                    if (controller instanceof WorkableLivingMultiblockMachine machine) {
                         components.add(Component.translatable("jade.nutrient.info",
-                                Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
+                                Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount()))
+                                        .setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
                     }
                 })
                 .register();
@@ -129,47 +142,58 @@ public class CBMultiblocks {
                 .biomultiblock("cogni_assembler",
                         CogniAssemblerMachine::new,
                         LivingMultiMetaMachineBlock::new,
-                        MetaMachineItem::new
-                )
+                        MetaMachineItem::new)
                 .cnLangValue("意识装配机")
-                .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES,CBRecipeTypes.COGNI_ASSEMBLY_STEP)
-                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
+                .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES, CBRecipeTypes.COGNI_ASSEMBLY_STEP)
+                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
+                        CBRecipeModifier::batchMode)
                 .pattern(definition -> FactoryBlockPattern.start()
                         .aisle("AAAAA", "BCACB", "BDADB", "BCACB", "AAAAA")
                         .aisle("AEEEA", "CFGFC", "DFGFD", "CFGFC", "AEEEA")
                         .aisle("AEEEA", "AGGGA", "HGGGH", "AGGGA", "AEEEA")
                         .aisle("AEEEA", "CE@EC", "DEIED", "CEEEC", "AEEEA")
                         .aisle("AAAAA", "B###B", "B###B", "B###B", "AAAAA")
-                        .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("kubejs:flesh_casing_fence"))))
+                        .where("C",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("kubejs:flesh_casing_fence"))))
                         .where("B", Predicates.blocks(CBBlocks.SYNAPTIC_CASING.get()))
                         .where("E", Predicates.blocks(CBBlocks.PRIMAL_FLESH_CASING.get())
-                                .or(Predicates.autoAbilities(definition.getRecipeTypes(), false, false, true, true, true, true))
+                                .or(Predicates.autoAbilities(definition.getRecipeTypes(), false, false, true, true,
+                                        true, true))
                                 .or(Predicates.abilities(PartAbility.INPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
-                                .or(Predicates.autoAbilities(false, false, true))
-                        )
-                        .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
-                                .or(Predicates.blocks(CBMachines.PARABIOTIC_BRIDGE.get()))
-                        )
+                                .or(Predicates.autoAbilities(false, false, true)))
+                        .where("H",
+                                Predicates
+                                        .blocks(ForgeRegistries.BLOCKS
+                                                .getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
+                                        .or(Predicates.blocks(CBMachines.PARABIOTIC_BRIDGE.get())))
                         .where("@", Predicates.controller(Predicates.blocks(definition.get())))
-                        .where("A", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
+                        .where("A", Predicates.blocks(
+                                ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
 
                         )
                         .where("#", Predicates.any())
-                        .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:acid_flesh_casing"))))
-                        .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:flesh_fence"))))
+                        .where("F",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("ctnhbio:acid_flesh_casing"))))
+                        .where("D",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("biomancy:flesh_fence"))))
                         .where("I", Predicates.abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR)
-                                .or(Predicates.blocks(CBBlocks.PRIMAL_FLESH_CASING.get()))
-                        )
-                        .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:smooth_primal_flesh"))))
+                                .or(Predicates.blocks(CBBlocks.PRIMAL_FLESH_CASING.get())))
+                        .where("G",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("biomancy:smooth_primal_flesh"))))
                         .build())
 
                 .workableCasingModel(CTNHBio.id("block/casings/primal_flesh_casing"),
                         CTNHBio.id("block/multiblock/red"))
                 .appearanceBlock(CBBlocks.PRIMAL_FLESH_CASING)
                 .additionalDisplay((controller, components) -> {
-                    if(controller instanceof WorkableLivingMultiblockMachine machine){
+                    if (controller instanceof WorkableLivingMultiblockMachine machine) {
                         components.add(Component.translatable("jade.nutrient.info",
-                                Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
+                                Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount()))
+                                        .setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
                     }
                 })
                 .partSorter(CogniAssemblerMachine::partSorter)
@@ -179,11 +203,11 @@ public class CBMultiblocks {
                 .biomultiblock("weatherer",
                         WorkableLivingMultiblockMachine::new,
                         LivingMultiMetaMachineBlock::new,
-                        MetaMachineItem::new
-                )
+                        MetaMachineItem::new)
                 .cnLangValue("风化器")
                 .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
-                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
+                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
+                        CBRecipeModifier::batchMode)
                 .pattern(definition -> FactoryBlockPattern.start()
                         .aisle("#BBBBB#", "#######", "#######", "#######", "#######", "#######", "#######", "#######")
                         .aisle("BCCCCCB", "#CDDDC#", "#C###C#", "#E###E#", "#E###E#", "#E###E#", "#EE#EE#", "#######")
@@ -192,27 +216,42 @@ public class CBMultiblocks {
                         .aisle("BCFGFCB", "#DFFFD#", "##F#F##", "##F#F##", "##F#F##", "##F#F##", "#EF#FE#", "##H#H##")
                         .aisle("BCCCCCB", "#CD@DC#", "#C###C#", "#E###E#", "#E###E#", "#E###E#", "#EE#EE#", "#######")
                         .aisle("#BBBBB#", "#######", "#######", "#######", "#######", "#######", "#######", "#######")
-                        .where("B", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:ornate_flesh_slab"))))
-                        .where("H", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:flesh_spike"))))
-                        .where("G", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
+                        .where("B",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("biomancy:ornate_flesh_slab"))))
+                        .where("H",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("biomancy:flesh_spike"))))
+                        .where("G",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
                         .where("@", Predicates.controller(Predicates.blocks(definition.get())))
                         .where("#", Predicates.any())
-                        .where("C", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
-                                .or(Predicates.autoAbilities(definition.getRecipeTypes()))
-                                .or(Predicates.autoAbilities(false, false, true))
-                        )
-                        .where("F", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:acid_flesh_casing"))))
-                        .where("E", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("biomancy:flesh_fence"))))
-                        .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:flesh_casing"))))
+                        .where("C",
+                                Predicates
+                                        .blocks(ForgeRegistries.BLOCKS
+                                                .getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
+                                        .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+                                        .or(Predicates.autoAbilities(false, false, true)))
+                        .where("F",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("ctnhbio:acid_flesh_casing"))))
+                        .where("E",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("biomancy:flesh_fence"))))
+                        .where("D",
+                                Predicates.blocks(ForgeRegistries.BLOCKS
+                                        .getValue(ResourceLocation.parse("ctnhbio:flesh_casing"))))
                         .build())
 
                 .workableCasingModel(CTNHBio.id("block/casings/flesh_casing"),
                         CTNHBio.id("block/multiblock/red"))
                 .appearanceBlock(CBBlocks.FLESH_CASING)
                 .additionalDisplay((controller, components) -> {
-                    if(controller instanceof WorkableLivingMultiblockMachine machine){
+                    if (controller instanceof WorkableLivingMultiblockMachine machine) {
                         components.add(Component.translatable("jade.nutrient.info",
-                                Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount())).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
+                                Component.translatable(FormattingUtil.formatNumbers(machine.getNutrientAmount()))
+                                        .setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
                     }
                 })
                 .register();
@@ -221,24 +260,134 @@ public class CBMultiblocks {
                 .multiblock("hostile_observer", HostileObserverMachine::new)
                 .cnLangValue("敌意观测站")
                 .recipeType(CBRecipeTypes.HOSTILE_OBSERVATION)
-                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, HostileObserverMachine::hostileObserverMachineModifier)
+                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH,
+                        HostileObserverMachine::hostileObserverMachineModifier)
                 .pattern(definition -> FactoryBlockPattern.start()
-                        .aisle("################AAAAAAAAAAA################", "################ABBBBBBBBBA################", "################ABBBBBBBBBA################", "################ABBCCCCCBBA################", "################ACCCDDDCCCA################", "################ACEEEEEEECA################", "################ACCCDDDCCCA################", "################ABBCCCCCBBA################", "################ABBBBBBBBBA################", "################ABBBBBBBBBA################", "################AAAAAAAAAAA################")
-                        .aisle("################AAACADACAAA################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################ACCCACACCCA################")
-                        .aisle("################AAACADACAAA################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################ACBBBCBBBCA################")
-                        .aisle("AAAAAAA#########ACCCADACCCA#########AAAAAAA", "ADDDDDA#########B#########B#########ADDDDDA", "ADCCCDA#########B#########B#########ADBBBDA", "ADCEEDA#########B#########B#########ADBBBDA", "ADCEEDA#########B#########B#########ADBBBDA", "ADCCCDA#########B#########B#########ADBBBDA", "ADEECDA#########B#########B#########ADBBBDA", "ADEECDA#########B#########B#########ADBBBDA", "ADCCCDA#########B#########B#########ADBBBDA", "ADDDDDA#########B#########B#########ADDDDDA", "AAAAAAA#########ACBBBCBBBCA#########AAAAAAA")
-                        .aisle("AAAAAAA#########AAAAADAAAAA#########AAAAAAA", "F#####D#########A#########A#########DDDDDDD", "F###C#D#########A#########A#########DCCCCCD", "D#####DAAAAAAAAAA#########AAAAAAAAAADC###CD", "D#####DABBBBBBBAD#########DABBBBBBBADC###CD", "D#C#C#DABBBBBBBAD#########DABBBBBBBADC###CD", "D#####DABBBBBBBAD#########DABBBBBBBADC###CD", "D#####DAAAAAAAAAA#########AAAAAAAAAADC###CD", "D#C###D#########A#########A#########DCCCCCD", "D#####D#########A#########A#########DDDDDDD", "AGGGGGA#########AABBBCBBBAA#########AGGGGGA")
-                        .aisle("AAAAAAA#########AEEEEEEEEEA#########AAAAAAA", "F#####D#########A#########A#########DDDDDDD", "FCCCCCD#########A#########A#########DCEEECD", "DDEDCCCBBBBBBBBAA#########AABBBBBBBACCEEE#D", "DDCDEDCDDDDDDDDAD#########DADDDDDDDDC#EEE#D", "DCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC#EEE#D", "DDEDCDCDDDDDDDDDD#########DDDDDDDDDAC#EEE#D", "DDCDECCBBBBBBBBBA#########AABBBBBBBACCEEE#D", "DCCCCCD#########A#########A#########DCEEECD", "D#####D#########A#########A#########DDDDDDD", "AGAGAGA#########AEEEEEEEEEA#########AGAGAGA")
-                        .aisle("AAAAAAA#########AAAAADAAAAA#########AAAAAAA", "F#####D#########A#########A#########DDDDDDD", "F###C#D#########A#########A#########DCCCCCD", "D#####DAAAAAAAAAA#########AAAAAAAAAADC###CD", "D#####DABBBBBBBAD#########DABBBBBBBADC###CD", "D#C#C#DABBBBBBBAD#########DABBBBBBBADC###CD", "D#####DABBBBBBBAD#########DABBBBBBBADC###CD", "D#####DAAAAAAAAAA#########AAAAAAAAAADC###CD", "D#C###D#########A#########A#########DCCCCCD", "D#####D#########A#########A#########DDDDDDD", "AGGGGGA#########AABBBCBBBAA#########AGGGGGA")
-                        .aisle("AAAAAAA#########ACCCADACCCA#########AAAAAAA", "ADDHDDA#########B#########B#########ADDIDDA", "ADCCCDA#########B#########B#########ADBBBDA", "ADCEEDA#########B#########B#########ADBBBDA", "ADCEEDA#########B#########B#########ADBBBDA", "ADCCCDA#########B#########B#########ADBBBDA", "ADEECDA#########B#########B#########ADBBBDA", "ADEECDA#########B#########B#########ADBBBDA", "ADCCCDA#########B#########B#########ADBBBDA", "ADDDDDA#########B#########B#########ADDDDDA", "AAAAAAA#########ACBBBCBBBCA#########AAAAAAA")
-                        .aisle("################AAACADACAAA################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################ACBBBCBBBCA################")
-                        .aisle("################AAACADACAAA################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################B#########B################", "################ACCCACACCCA################")
-                        .aisle("################AFFFF@FFFFA################", "################ABBBBCBBBBA################", "################ABBBBCBBBBA################", "################ABBBBCBBBBA################", "################ABBBBCBBBBA################", "################ABBBBCBBBBA################", "################ACCCCCCCCCA################", "################ACEECBCEECA################", "################ACEECBCEECA################", "################ACCCCCCCCCA################", "################AAAAAAAAAAA################")
+                        .aisle("################AAAAAAAAAAA################",
+                                "################ABBBBBBBBBA################",
+                                "################ABBBBBBBBBA################",
+                                "################ABBCCCCCBBA################",
+                                "################ACCCDDDCCCA################",
+                                "################ACEEEEEEECA################",
+                                "################ACCCDDDCCCA################",
+                                "################ABBCCCCCBBA################",
+                                "################ABBBBBBBBBA################",
+                                "################ABBBBBBBBBA################",
+                                "################AAAAAAAAAAA################")
+                        .aisle("################AAACADACAAA################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################ACCCACACCCA################")
+                        .aisle("################AAACADACAAA################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################ACBBBCBBBCA################")
+                        .aisle("AAAAAAA#########ACCCADACCCA#########AAAAAAA",
+                                "ADDDDDA#########B#########B#########ADDDDDA",
+                                "ADCCCDA#########B#########B#########ADBBBDA",
+                                "ADCEEDA#########B#########B#########ADBBBDA",
+                                "ADCEEDA#########B#########B#########ADBBBDA",
+                                "ADCCCDA#########B#########B#########ADBBBDA",
+                                "ADEECDA#########B#########B#########ADBBBDA",
+                                "ADEECDA#########B#########B#########ADBBBDA",
+                                "ADCCCDA#########B#########B#########ADBBBDA",
+                                "ADDDDDA#########B#########B#########ADDDDDA",
+                                "AAAAAAA#########ACBBBCBBBCA#########AAAAAAA")
+                        .aisle("AAAAAAA#########AAAAADAAAAA#########AAAAAAA",
+                                "F#####D#########A#########A#########DDDDDDD",
+                                "F###C#D#########A#########A#########DCCCCCD",
+                                "D#####DAAAAAAAAAA#########AAAAAAAAAADC###CD",
+                                "D#####DABBBBBBBAD#########DABBBBBBBADC###CD",
+                                "D#C#C#DABBBBBBBAD#########DABBBBBBBADC###CD",
+                                "D#####DABBBBBBBAD#########DABBBBBBBADC###CD",
+                                "D#####DAAAAAAAAAA#########AAAAAAAAAADC###CD",
+                                "D#C###D#########A#########A#########DCCCCCD",
+                                "D#####D#########A#########A#########DDDDDDD",
+                                "AGGGGGA#########AABBBCBBBAA#########AGGGGGA")
+                        .aisle("AAAAAAA#########AEEEEEEEEEA#########AAAAAAA",
+                                "F#####D#########A#########A#########DDDDDDD",
+                                "FCCCCCD#########A#########A#########DCEEECD",
+                                "DDEDCCCBBBBBBBBAA#########AABBBBBBBACCEEE#D",
+                                "DDCDEDCDDDDDDDDAD#########DADDDDDDDDC#EEE#D",
+                                "DCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC#EEE#D",
+                                "DDEDCDCDDDDDDDDDD#########DDDDDDDDDAC#EEE#D",
+                                "DDCDECCBBBBBBBBBA#########AABBBBBBBACCEEE#D",
+                                "DCCCCCD#########A#########A#########DCEEECD",
+                                "D#####D#########A#########A#########DDDDDDD",
+                                "AGAGAGA#########AEEEEEEEEEA#########AGAGAGA")
+                        .aisle("AAAAAAA#########AAAAADAAAAA#########AAAAAAA",
+                                "F#####D#########A#########A#########DDDDDDD",
+                                "F###C#D#########A#########A#########DCCCCCD",
+                                "D#####DAAAAAAAAAA#########AAAAAAAAAADC###CD",
+                                "D#####DABBBBBBBAD#########DABBBBBBBADC###CD",
+                                "D#C#C#DABBBBBBBAD#########DABBBBBBBADC###CD",
+                                "D#####DABBBBBBBAD#########DABBBBBBBADC###CD",
+                                "D#####DAAAAAAAAAA#########AAAAAAAAAADC###CD",
+                                "D#C###D#########A#########A#########DCCCCCD",
+                                "D#####D#########A#########A#########DDDDDDD",
+                                "AGGGGGA#########AABBBCBBBAA#########AGGGGGA")
+                        .aisle("AAAAAAA#########ACCCADACCCA#########AAAAAAA",
+                                "ADDHDDA#########B#########B#########ADDIDDA",
+                                "ADCCCDA#########B#########B#########ADBBBDA",
+                                "ADCEEDA#########B#########B#########ADBBBDA",
+                                "ADCEEDA#########B#########B#########ADBBBDA",
+                                "ADCCCDA#########B#########B#########ADBBBDA",
+                                "ADEECDA#########B#########B#########ADBBBDA",
+                                "ADEECDA#########B#########B#########ADBBBDA",
+                                "ADCCCDA#########B#########B#########ADBBBDA",
+                                "ADDDDDA#########B#########B#########ADDDDDA",
+                                "AAAAAAA#########ACBBBCBBBCA#########AAAAAAA")
+                        .aisle("################AAACADACAAA################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################ACBBBCBBBCA################")
+                        .aisle("################AAACADACAAA################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################B#########B################",
+                                "################ACCCACACCCA################")
+                        .aisle("################AFFFF@FFFFA################",
+                                "################ABBBBCBBBBA################",
+                                "################ABBBBCBBBBA################",
+                                "################ABBBBCBBBBA################",
+                                "################ABBBBCBBBBA################",
+                                "################ABBBBCBBBBA################",
+                                "################ACCCCCCCCCA################",
+                                "################ACEECBCEECA################",
+                                "################ACEECBCEECA################",
+                                "################ACCCCCCCCCA################",
+                                "################AAAAAAAAAAA################")
                         .where("F", Predicates.blocks(CBBlocks.NEURAL_COOLING_CONDUIT.get())
                                 .or(Predicates.autoAbilities(CBRecipeTypes.HOSTILE_OBSERVATION))
                                 .or(Predicates.autoAbilities(false, false, true))
-                                .or(Predicates.abilities(PartAbility.EXPORT_ITEMS).setPreviewCount(1))
-                        )
+                                .or(Predicates.abilities(PartAbility.EXPORT_ITEMS).setPreviewCount(1)))
                         .where("#", Predicates.any())
                         .where("C", Predicates.blocks(CBBlocks.CONSCIOUSNESS_LINKER.get()))
                         .where("D", Predicates.blocks(CBBlocks.NEURAL_COOLING_CONDUIT.get()))
@@ -246,8 +395,7 @@ public class CBMultiblocks {
                         .where("H", Predicates.abilities(PartAbility.COMPUTATION_DATA_RECEPTION))
                         .where("I", Predicates.abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR))
                         .where("G", Predicates.blocks(CBBlocks.CONSCIOUSNESS_LINKER.get())
-                                .or(Predicates.blocks(CBBlocks.NEURAL_NETWORK_CASING.get()))
-                        )
+                                .or(Predicates.blocks(CBBlocks.NEURAL_NETWORK_CASING.get())))
                         .where("#", Predicates.any())
                         .where("E", Predicates.blocks(CBBlocks.CONSCIOUSNESS_CONTROLLER.get()))
                         .where("B", Predicates.blocks(CBBlocks.CONSCIOUSNESS_SENSOR_GLASS.get()))
@@ -262,8 +410,7 @@ public class CBMultiblocks {
                 .tooltips(
                         no_overclock.translate().withStyle(ChatFormatting.DARK_RED),
                         observer_info.translate().withStyle(ChatFormatting.WHITE),
-                        observer_chance_boost.translate().withStyle(ChatFormatting.YELLOW)
-                )
+                        observer_chance_boost.translate().withStyle(ChatFormatting.YELLOW))
                 .register();
     }
 
@@ -278,5 +425,4 @@ public class CBMultiblocks {
     @CN("无法超频")
     @EN("NO Overclock")
     static Lang no_overclock;
-
 }

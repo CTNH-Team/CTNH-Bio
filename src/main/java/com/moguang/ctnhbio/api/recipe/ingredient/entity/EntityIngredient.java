@@ -1,14 +1,5 @@
 package com.moguang.ctnhbio.api.recipe.ingredient.entity;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityPropertyDetector;
-import com.moguang.ctnhbio.integration.xei.entry.entity.EntityEntryList;
-import com.mojang.serialization.Codec;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -20,6 +11,16 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityPropertyDetector;
+import com.moguang.ctnhbio.integration.xei.entry.entity.EntityEntryList;
+import com.mojang.serialization.Codec;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,7 +35,7 @@ public class EntityIngredient implements Predicate<Entity> {
     public static final Codec<EntityIngredient> CODEC = ExtraCodecs.JSON
             .xmap(EntityIngredient::fromJson, EntityIngredient::toJson);
 
-    //Contents
+    // Contents
     @NotNull
     public Value[] values;
 
@@ -45,121 +46,138 @@ public class EntityIngredient implements Predicate<Entity> {
     @Builder.Default
     public CompoundTag nbt = null;
 
-    /*Constructors*/
-    public EntityIngredient(@NotNull Value value){
-        this(new Value[]{value},1,null);
-    }
-    public EntityIngredient(@NotNull Value value,int count){
-        this(new Value[]{value},count,null);
-    }
-    public EntityIngredient(@NotNull Value value,int count,CompoundTag nbt){
-        this(new Value[]{value},count,nbt);
+    /* Constructors */
+    public EntityIngredient(@NotNull Value value) {
+        this(new Value[] { value }, 1, null);
     }
 
-    public EntityIngredient(@NotNull Value[] values){
-        this(values,1,null);
-    }
-    public EntityIngredient(@NotNull Value[] values,int count){
-        this(values,count,null);
+    public EntityIngredient(@NotNull Value value, int count) {
+        this(new Value[] { value }, count, null);
     }
 
-    public EntityIngredient(List<Value> values){
+    public EntityIngredient(@NotNull Value value, int count, CompoundTag nbt) {
+        this(new Value[] { value }, count, nbt);
+    }
+
+    public EntityIngredient(@NotNull Value[] values) {
+        this(values, 1, null);
+    }
+
+    public EntityIngredient(@NotNull Value[] values, int count) {
+        this(values, count, null);
+    }
+
+    public EntityIngredient(List<Value> values) {
         this(values.toArray(Value[]::new));
     }
-    public EntityIngredient(List<Value> values,int count){
-        this(values.toArray(Value[]::new),count,null);
-    }
-    public EntityIngredient(List<Value> values,int count,CompoundTag nbt){
-        this(values.toArray(Value[]::new),count,nbt);
+
+    public EntityIngredient(List<Value> values, int count) {
+        this(values.toArray(Value[]::new), count, null);
     }
 
-    //from value
-    public static EntityIngredient of(@Nullable Value value){
-         return value == null ? EMPTY: new EntityIngredient(value);
+    public EntityIngredient(List<Value> values, int count, CompoundTag nbt) {
+        this(values.toArray(Value[]::new), count, nbt);
     }
-    public static EntityIngredient of(@Nullable Value value,int count){
+
+    // from value
+    public static EntityIngredient of(@Nullable Value value) {
+        return value == null ? EMPTY : new EntityIngredient(value);
+    }
+
+    public static EntityIngredient of(@Nullable Value value, int count) {
         var ret = of(value);
-         ret.count = count;
-         return ret;
+        ret.count = count;
+        return ret;
     }
-    public static EntityIngredient of(@Nullable Value value,int count,CompoundTag nbt){
-        var ret = of(value,count);
-         ret.nbt = nbt;
-         return ret;
+
+    public static EntityIngredient of(@Nullable Value value, int count, CompoundTag nbt) {
+        var ret = of(value, count);
+        ret.nbt = nbt;
+        return ret;
     }
-    //from entity
-    public static EntityIngredient of(Entity entity,int count) {
+
+    // from entity
+    public static EntityIngredient of(Entity entity, int count) {
         CompoundTag nbt = new CompoundTag();
         entity.saveWithoutId(nbt);
-        return new EntityIngredient(new TypeValue(entity.getType()),count,nbt);
+        return new EntityIngredient(new TypeValue(entity.getType()), count, nbt);
     }
-    public static EntityIngredient of(Entity entity){
-        return of(entity,1);
+
+    public static EntityIngredient of(Entity entity) {
+        return of(entity, 1);
     }
-    //from entity type
-    public static EntityIngredient of(EntityType<?> type){
-         return new EntityIngredient(new TypeValue(type));
+
+    // from entity type
+    public static EntityIngredient of(EntityType<?> type) {
+        return new EntityIngredient(new TypeValue(type));
     }
-    public static EntityIngredient of(EntityType<?> type,int count){
+
+    public static EntityIngredient of(EntityType<?> type, int count) {
         var ret = of(type);
         ret.count = count;
         return ret;
     }
-    public static EntityIngredient of(EntityType<?> type,int count,CompoundTag nbt){
-        var ret = of(type,count);
+
+    public static EntityIngredient of(EntityType<?> type, int count, CompoundTag nbt) {
+        var ret = of(type, count);
         ret.nbt = nbt;
         return ret;
     }
-    //from tag
-    public static EntityIngredient of(TagKey<EntityType<?>> tag){
+
+    // from tag
+    public static EntityIngredient of(TagKey<EntityType<?>> tag) {
         return new EntityIngredient(new TagValue(tag));
     }
-    public static EntityIngredient of(TagKey<EntityType<?>> tag,int count){
+
+    public static EntityIngredient of(TagKey<EntityType<?>> tag, int count) {
         var ret = of(tag);
         ret.count = count;
         return ret;
     }
-    public static EntityIngredient of(TagKey<EntityType<?>> tag,int count,CompoundTag nbt){
-        var ret = of(tag,count);
+
+    public static EntityIngredient of(TagKey<EntityType<?>> tag, int count, CompoundTag nbt) {
+        var ret = of(tag, count);
         ret.nbt = nbt;
         return ret;
     }
-    //from id
-    public static EntityIngredient of(String id){
-        if(id.startsWith("#")){
+
+    // from id
+    public static EntityIngredient of(String id) {
+        if (id.startsWith("#")) {
             ResourceLocation tag = ResourceLocation.tryParse(id.substring(1));
             TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, tag);
             return new EntityIngredient(new TagValue(tagKey));
-        }else{
+        } else {
             ResourceLocation type = ResourceLocation.tryParse(id);
             EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(type);
-            if(entityType==null){
-                throw new JsonSyntaxException("Unknown entity type '"+ type +"'");
+            if (entityType == null) {
+                throw new JsonSyntaxException("Unknown entity type '" + type + "'");
             }
             return new EntityIngredient(new TypeValue(entityType));
         }
     }
-    public static EntityIngredient of(String id,int count){
+
+    public static EntityIngredient of(String id, int count) {
         var ret = of(id);
         ret.count = count;
         return ret;
     }
-    public static EntityIngredient of(String id,int count,CompoundTag nbt){
-        var ret = of(id,count);
+
+    public static EntityIngredient of(String id, int count, CompoundTag nbt) {
+        var ret = of(id, count);
         ret.nbt = nbt;
         return ret;
     }
 
-
     @Override
     public boolean test(@Nullable Entity entity) {
-        return entity!=null && values.length!=0 &&
+        return entity != null && values.length != 0 &&
                 Arrays.stream(values).anyMatch(v -> v.test(entity.getType())) &&
-                    ( nbt==null || EntityPropertyDetector.test(nbt,entity));
+                (nbt == null || EntityPropertyDetector.test(nbt, entity));
     }
 
-    public EntityIngredient copy(){
-        return new EntityIngredient(values,count,nbt==null?null:nbt.copy());
+    public EntityIngredient copy() {
+        return new EntityIngredient(values, count, nbt == null ? null : nbt.copy());
     }
 
     @Override
@@ -171,14 +189,16 @@ public class EntityIngredient implements Predicate<Entity> {
     }
 
     public sealed interface Value extends Predicate<EntityType<?>> permits TagValue, TypeValue {
+
         Collection<EntityType<?>> getEntityTypes();
+
         JsonObject serialize();
 
-        //Utils for xei
+        // Utils for xei
         void appendEntryList(EntityEntryList list);
     }
 
-    public record TagValue(TagKey<EntityType<?>> tag) implements Value{
+    public record TagValue(TagKey<EntityType<?>> tag) implements Value {
 
         @Override
         public Collection<EntityType<?>> getEntityTypes() {
@@ -208,7 +228,8 @@ public class EntityIngredient implements Predicate<Entity> {
             return entityType.getTags().toList().contains(tag);
         }
     }
-    public record TypeValue(EntityType<?> type) implements Value{
+
+    public record TypeValue(EntityType<?> type) implements Value {
 
         @Override
         public Collection<EntityType<?>> getEntityTypes() {
@@ -233,8 +254,8 @@ public class EntityIngredient implements Predicate<Entity> {
         }
     }
 
-    //Serialization
-    public static Value valueFromJson(JsonObject json){
+    // Serialization
+    public static Value valueFromJson(JsonObject json) {
         if (json.has("entityType") && json.has("tag")) {
             throw new JsonSyntaxException("Expected either 'entityType' or 'tag', not both");
         }
@@ -253,11 +274,13 @@ public class EntityIngredient implements Predicate<Entity> {
         }
         throw new JsonSyntaxException("Expected either 'entityType' or 'tag'");
     }
-    public static EntityIngredient fromJson(@Nullable JsonElement json){
-        return fromJson(json,true);
+
+    public static EntityIngredient fromJson(@Nullable JsonElement json) {
+        return fromJson(json, true);
     }
-    public static EntityIngredient fromJson(@Nullable JsonElement json,boolean allowEmpty){
-        if(json == null || json.isJsonNull()){
+
+    public static EntityIngredient fromJson(@Nullable JsonElement json, boolean allowEmpty) {
+        if (json == null || json.isJsonNull()) {
             throw new JsonSyntaxException("Expected entity ingredient to be non-null, but was null");
         }
 
@@ -268,29 +291,30 @@ public class EntityIngredient implements Predicate<Entity> {
 
         if (GsonHelper.isObjectNode(jsonObject, "value")) {
             Value value = valueFromJson(jsonObject.get("value").getAsJsonObject());
-            return new EntityIngredient(value,count,nbt);
-        } else if (GsonHelper.isArrayNode(jsonObject, "value")){
+            return new EntityIngredient(value, count, nbt);
+        } else if (GsonHelper.isArrayNode(jsonObject, "value")) {
             JsonArray jsonArray = GsonHelper.getAsJsonArray(jsonObject, "value");
-            if (jsonArray.isEmpty() && !allowEmpty){
+            if (jsonArray.isEmpty() && !allowEmpty) {
                 throw new JsonSyntaxException("Entity ingredient array cannot be empty");
             }
             List<Value> values = new ArrayList<>();
             for (JsonElement element : jsonArray) {
                 values.add(valueFromJson(element.getAsJsonObject()));
             }
-            return new EntityIngredient(values,count,nbt);
-        } else if(GsonHelper.isStringValue(jsonObject, "value")){
+            return new EntityIngredient(values, count, nbt);
+        } else if (GsonHelper.isStringValue(jsonObject, "value")) {
             String value = GsonHelper.getAsString(jsonObject, "value");
             return of(value);
         } else {
             throw new JsonSyntaxException("Expected either 'value' or 'values'");
         }
     }
+
     public JsonElement toJson() {
         JsonObject jsonObject = new JsonObject();
 
         jsonObject.addProperty("count", count);
-        if(nbt!=null){
+        if (nbt != null) {
             jsonObject.addProperty("nbt", nbt.getAsString());
         }
 
@@ -302,20 +326,22 @@ public class EntityIngredient implements Predicate<Entity> {
         return jsonObject;
     }
 
-    //Utils
-    public boolean isEmpty(){
-        return values==null || values.length==0;
+    // Utils
+    public boolean isEmpty() {
+        return values == null || values.length == 0;
     }
-    public Entity createEntity(@NotNull Level level){
-        assert values!=null && values.length>0;
+
+    public Entity createEntity(@NotNull Level level) {
+        assert values != null && values.length > 0;
         EntityType<?> type = values[0].getEntityTypes().iterator().next();
         var ret = type.create(level);
-        assert ret!=null;
-        if(nbt!=null) ret.load(getNormalizedNBT());
+        assert ret != null;
+        if (nbt != null) ret.load(getNormalizedNBT());
         return ret;
     }
-    public CompoundTag getNormalizedNBT(){
-        assert nbt!=null;
+
+    public CompoundTag getNormalizedNBT() {
+        assert nbt != null;
         return EntityPropertyDetector.getNormalizedNBT(nbt);
     }
 }

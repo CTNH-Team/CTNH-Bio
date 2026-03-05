@@ -2,27 +2,26 @@ package com.moguang.ctnhbio.client.Text;
 
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiController;
-import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockDisplayText;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
-import com.gregtechceu.gtceu.api.recipe.chance.boost.ChanceBoostFunction;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
+
+import net.minecraft.network.chat.Component;
+
 import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
-import net.minecraft.network.chat.Component;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
 public class ModelOutputLine {
-    public static void addModelOutputLine(IMultiController machine, List<Component> textList){
-        if(machine instanceof IRecipeLogicMachine recipeLogicMachine)
-        {
+
+    public static void addModelOutputLine(IMultiController machine, List<Component> textList) {
+        if (machine instanceof IRecipeLogicMachine recipeLogicMachine) {
             GTRecipe recipe = recipeLogicMachine.getRecipeLogic().getLastRecipe();
-            if(recipe == null) return;
+            if (recipe == null) return;
             var modelOutputs = recipe.getOutputContents(ModelRecipeCapability.CAP);
-            for (var model : modelOutputs){
-                var stack = ((ModelIngredient)model.content).getModel();
+            for (var model : modelOutputs) {
+                var stack = ((ModelIngredient) model.content).getModel();
                 int recipeTier = RecipeHelper.getPreOCRecipeEuTier(recipe);
                 int chanceTier = recipeTier + recipe.ocLevel;
                 var function = recipe.getType().getChanceFunction();
@@ -45,6 +44,5 @@ public class ModelOutputLine {
                 }
             }
         }
-
     }
 }

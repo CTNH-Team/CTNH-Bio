@@ -5,24 +5,23 @@ import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.lang.utils.*;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
-
 public class EnglishLangHandler {
-    public static void init(RegistrateLangProvider provider){
 
+    public static void init(RegistrateLangProvider provider) {
         provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH] Living Machine Status");
         provider.add("ctnhbio.living_machine", "living machine");
         provider.add("item.gtceu.tool.boning_knife", "%s Boning Knife");
-        //replace(provider, );
+        // replace(provider, );
         provider.add("emi.category.ctnhbio.despoil_loot", "Despoil");
         provider.add("ctnhbio.nutrient_bar.info", "Nutrient:");
         provider.add("jade.nutrient.info", "Nutrient: %s");
 
-        //provider.add("recipe.condition.effect.tooltip", "Potion Effect : %s");
+        // provider.add("recipe.condition.effect.tooltip", "Potion Effect : %s");
         provider.add("ctnhbio.recipe.nutrient", "Nutrient Consumption: %d");
         provider.add("ctnhbio.jade.nutrient_stored", "%s / %s");
 
-//        provider.add("ctnhbio.fluid.type_organic.tooltip", "§aBioactive Fluid");
-//        provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§aCan handle Bioactive Fluid");
+        // provider.add("ctnhbio.fluid.type_organic.tooltip", "§aBioactive Fluid");
+        // provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§aCan handle Bioactive Fluid");
         provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4Bioactive Fluid may be inactivated");
 
         provider.add("ctnhbio.recipe.datamodel.requirement", "§pAbove Are Minimum Requirement(s)");
@@ -30,8 +29,9 @@ public class EnglishLangHandler {
         provider.add("recipe.capability.entity.name", "Entity");
 
         provider.add("ctnhbio.copyright.info", "Added By CTNHBio");
-        //EntityProperties
-        EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider,"Input Entity","Output Entity","Available: %s","Requirement:");
+        // EntityProperties
+        EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider, "Input Entity", "Output Entity",
+                "Available: %s", "Requirement:");
 
         epu.add(EntityProperties.FALL_DISTANCE, "Fall Distance");
         epu.add(EntityProperties.REMAINING_FIRE_TICKS, "Remaining Fire Ticks");
@@ -58,6 +58,5 @@ public class EnglishLangHandler {
         epu.add(PropertyOperators.GREATER, "Greater Than");
         epu.add(PropertyOperators.LESSER, "Lesser Than");
         epu.add(PropertyOperators.CONTAIN, "Contains");
-
     }
 }

@@ -1,16 +1,7 @@
 package com.moguang.ctnhbio.registry;
 
-import com.github.elenterius.biomancy.block.membrane.IgnoreEntityCollisionPredicate;
-import com.github.elenterius.biomancy.block.membrane.MembraneBlock;
-import com.github.elenterius.biomancy.init.ModBlocks;
-import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.common.data.models.GTModels;
-import com.gregtechceu.gtceu.common.registry.GTRegistration;
-import com.moguang.ctnhbio.CTNHBio;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -21,6 +12,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+
+import com.github.elenterius.biomancy.block.membrane.IgnoreEntityCollisionPredicate;
+import com.github.elenterius.biomancy.block.membrane.MembraneBlock;
+import com.github.elenterius.biomancy.init.ModBlocks;
+import com.moguang.ctnhbio.CTNHBio;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 
 import java.util.function.Supplier;
 
@@ -56,18 +56,18 @@ public class CBBlocks {
             "神经冷却导管",
             CTNHBio.id("block/casings/neural_cooling_conduit"));
 
-    public static final BlockEntry<Block> CONSCIOUSNESS_CONTROLLER =
-            createCasingBlockWithProperties("consciousness_controller",
+    public static final BlockEntry<Block> CONSCIOUSNESS_CONTROLLER = createCasingBlockWithProperties(
+            "consciousness_controller",
             "意识控制器",
-                    p -> p.isValidSpawn((state, level, pos, ent) -> false)
-                            .lightLevel(s ->15),
+            p -> p.isValidSpawn((state, level, pos, ent) -> false)
+                    .lightLevel(s -> 15),
             CTNHBio.id("block/casings/consciousness_controller"));
 
-    public static final BlockEntry<Block> CONSCIOUSNESS_SENSOR_GLASS =
-            createGlassCasingBlockWithProperties("consciousness_sensor_glass",
+    public static final BlockEntry<Block> CONSCIOUSNESS_SENSOR_GLASS = createGlassCasingBlockWithProperties(
+            "consciousness_sensor_glass",
             "意识传感玻璃",
-                    p -> p.isValidSpawn((state, level, pos, ent) -> false)
-                            .lightLevel(s ->10),
+            p -> p.isValidSpawn((state, level, pos, ent) -> false)
+                    .lightLevel(s -> 10),
             CTNHBio.id("block/casings/consciousness_sensor_glass"),
             () -> RenderType::translucent);
 
@@ -76,22 +76,24 @@ public class CBBlocks {
             CTNHBio.id("block/membrane/impermeable_membrane"),
             () -> RenderType::translucent);
 
-//    //联体桥
-//    public static final BlockEntry<Block> PARABIOTIC_BRIDGE = REGISTRATE.block("parabiotic_bridge", Block::new)
-//            .item(BlockItem::new)
-//            .build()
-//            .register();
+    // //联体桥
+    // public static final BlockEntry<Block> PARABIOTIC_BRIDGE = REGISTRATE.block("parabiotic_bridge", Block::new)
+    // .item(BlockItem::new)
+    // .build()
+    // .register();
 
-//    public static BlockEntry<Block> createCasingBlock(String name, ResourceLocation texture) {
-//        return createCasingBlock(name, Block::new, texture, () -> Blocks.IRON_BLOCK,
-//                () -> RenderType::cutoutMipped);
-//    }
+    // public static BlockEntry<Block> createCasingBlock(String name, ResourceLocation texture) {
+    // return createCasingBlock(name, Block::new, texture, () -> Blocks.IRON_BLOCK,
+    // () -> RenderType::cutoutMipped);
+    // }
     public static BlockEntry<Block> createCasingBlock(String name, String cnname, ResourceLocation texture) {
-        return createCasingBlock(name, cnname,  Block::new, texture, () -> Blocks.IRON_BLOCK,
+        return createCasingBlock(name, cnname, Block::new, texture, () -> Blocks.IRON_BLOCK,
                 () -> RenderType::cutoutMipped);
     }
 
-    public static BlockEntry<Block> createCasingBlockWithProperties(String name, String cnname, NonNullUnaryOperator<BlockBehaviour.Properties> properties,ResourceLocation texture) {
+    public static BlockEntry<Block> createCasingBlockWithProperties(String name, String cnname,
+                                                                    NonNullUnaryOperator<BlockBehaviour.Properties> properties,
+                                                                    ResourceLocation texture) {
         return createCasingBlock(
                 name,
                 cnname,
@@ -102,12 +104,16 @@ public class CBBlocks {
                 () -> RenderType::cutoutMipped);
     }
 
-    private static BlockEntry<Block> createGlassCasingBlock(String name, String cnname, ResourceLocation texture, Supplier<Supplier<RenderType>> type) {
-        return createCasingBlock(name, cnname,  GlassBlock::new, texture, () -> Blocks.GLASS, type);
+    private static BlockEntry<Block> createGlassCasingBlock(String name, String cnname, ResourceLocation texture,
+                                                            Supplier<Supplier<RenderType>> type) {
+        return createCasingBlock(name, cnname, GlassBlock::new, texture, () -> Blocks.GLASS, type);
     }
 
-    private static BlockEntry<Block> createGlassCasingBlockWithProperties(String name, String cnname, NonNullUnaryOperator<BlockBehaviour.Properties> properties,ResourceLocation texture, Supplier<Supplier<RenderType>> type) {
-        return createCasingBlock(name, cnname,  GlassBlock::new, texture, () -> Blocks.GLASS, properties, type);
+    private static BlockEntry<Block> createGlassCasingBlockWithProperties(String name, String cnname,
+                                                                          NonNullUnaryOperator<BlockBehaviour.Properties> properties,
+                                                                          ResourceLocation texture,
+                                                                          Supplier<Supplier<RenderType>> type) {
+        return createCasingBlock(name, cnname, GlassBlock::new, texture, () -> Blocks.GLASS, properties, type);
     }
 
     private static BlockEntry<MembraneBlock> createMembraneBlock(String name, String cnname, ResourceLocation texture,
@@ -115,13 +121,11 @@ public class CBBlocks {
         return REGISTRATE.block(name, p -> new MembraneBlock(p, IgnoreEntityCollisionPredicate.NEVER))
                 .cnlang(cnname)
                 .initialProperties(() -> Blocks.GLASS)
-                .properties(p ->
-                        p.isValidSpawn((state, level, pos, ent) -> false)
+                .properties(p -> p.isValidSpawn((state, level, pos, ent) -> false)
                         .noOcclusion()
                         .isRedstoneConductor(ModBlocks::neverValid)
                         .isSuffocating(ModBlocks::neverValid)
-                        .isViewBlocking(ModBlocks::neverValid)
-                )
+                        .isViewBlocking(ModBlocks::neverValid))
                 .addLayer(type)
                 .exBlockstate(GTModels.cubeAllModel(texture))
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -145,7 +149,8 @@ public class CBBlocks {
                 .blockstate((ctx, prov) -> {
                     prov.simpleBlock(ctx.getEntry(), prov.models().cubeAll(name, texture));
                 })
-                .tag(TagKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.tryBuild("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
+                .tag(TagKey.create(BuiltInRegistries.BLOCK.key(),
+                        ResourceLocation.tryBuild("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
                 .item(BlockItem::new)
                 .build()
                 .register();
@@ -165,7 +170,8 @@ public class CBBlocks {
                 .blockstate((ctx, prov) -> {
                     prov.simpleBlock(ctx.getEntry(), prov.models().cubeAll(name, texture));
                 })
-                .tag(TagKey.create(BuiltInRegistries.BLOCK.key(), ResourceLocation.tryBuild("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
+                .tag(TagKey.create(BuiltInRegistries.BLOCK.key(),
+                        ResourceLocation.tryBuild("forge", "mineable/wrench")), BlockTags.MINEABLE_WITH_PICKAXE)
                 .item(BlockItem::new)
                 .build()
                 .register();

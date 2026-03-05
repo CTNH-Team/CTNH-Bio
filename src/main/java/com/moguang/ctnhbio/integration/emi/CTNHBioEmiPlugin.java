@@ -1,35 +1,28 @@
 package com.moguang.ctnhbio.integration.emi;
 
-import com.github.elenterius.biomancy.init.ModItems;
+import net.minecraft.world.item.Item;
+
 import com.mojang.logging.LogUtils;
-import com.yanny.ali.Utils;
 import com.yanny.ali.configuration.GameplayLootCategory;
 import dev.emi.emi.api.*;
 import dev.emi.emi.api.stack.EmiStack;
-import dev.emi.emi.registry.EmiStackList;
-import dev.shadowsoffire.hostilenetworks.Hostile;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import org.slf4j.Logger;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.regex.Pattern;
 
 import static com.github.elenterius.biomancy.init.ModItems.*;
 import static dev.shadowsoffire.hostilenetworks.Hostile.Items.SIM_CHAMBER;
 
 @EmiEntrypoint
 public class CTNHBioEmiPlugin implements EmiPlugin {
+
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public List<GameplayLootCategory> gameplayCategories;
 
     @Override
-    public void register(EmiRegistry registry) {
-
-    }
+    public void register(EmiRegistry registry) {}
 
     @Override
     public void initialize(EmiInitRegistry registry) {
@@ -68,10 +61,8 @@ public class CTNHBioEmiPlugin implements EmiPlugin {
                 SIM_CHAMBER
 
         );
-        for(var item:disabled){
+        for (var item : disabled) {
             registry.disableStack(EmiStack.of(item.get()));
         }
-
-
     }
 }

@@ -8,14 +8,14 @@ spotless {
         target '.gitignore'
 
         trimTrailingWhitespace()
-        indentWithSpaces(4)
+        leadingTabsToSpaces(4)
         endWithNewline()
     }
     java {
         target 'src/main/java/**/*.java', 'src/test/java/**/*.java'
 
-        def orderFile = file("$rootDir/spotless/spotless.importorder")
-        def formatFile = file("$rootDir/spotless/spotless.eclipseformat.xml")
+        def orderFile = file("$projectDir/spotless/spotless.importorder")
+        def formatFile = file("$projectDir/spotless/spotless.eclipseformat.xml")
 
         toggleOffOn()
         importOrderFile(orderFile)

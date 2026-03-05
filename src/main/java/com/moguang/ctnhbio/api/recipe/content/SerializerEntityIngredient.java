@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.api.recipe.content;
 
 import com.gregtechceu.gtceu.api.recipe.content.IContentSerializer;
+
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.EntityIngredient;
 import com.mojang.serialization.Codec;
 
@@ -10,7 +11,7 @@ public enum SerializerEntityIngredient implements IContentSerializer<EntityIngre
 
     @Override
     public EntityIngredient of(Object o) {
-        if(o instanceof EntityIngredient ingredient){
+        if (o instanceof EntityIngredient ingredient) {
             return ingredient.copy();
         }
         return defaultValue();

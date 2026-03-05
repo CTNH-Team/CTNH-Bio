@@ -3,8 +3,7 @@ package com.moguang.ctnhbio.data.materials;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.BlastProperty;
-import com.gregtechceu.gtceu.api.fluids.FluidBuilder;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
+
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.CBElements;
 
@@ -12,11 +11,9 @@ import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CommonMaterials {
-
 
     public static Material WEIRD_PIXEL_DUST;
     public static Material BLOODSTEEL;
@@ -42,7 +39,8 @@ public class CommonMaterials {
                 .color(0x8B0000)
                 .secondaryColor(0x5E1914)
                 .iconSet(METALLIC)
-                .flags(GENERATE_PLATE, GENERATE_GEAR, DISABLE_DECOMPOSITION, GENERATE_ROD, GENERATE_FRAME, GENERATE_DENSE)
+                .flags(GENERATE_PLATE, GENERATE_GEAR, DISABLE_DECOMPOSITION, GENERATE_ROD, GENERATE_FRAME,
+                        GENERATE_DENSE)
                 .blast(b -> b.temp(7300, BlastProperty.GasTier.HIGH)
                         .blastStats(VA[GTValues.EV], 700)
                         .vacuumStats(VA[HV]))
@@ -60,6 +58,4 @@ public class CommonMaterials {
                 .element(CBElements.Esi)
                 .buildAndRegister();
     }
-
-
 }

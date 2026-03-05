@@ -13,13 +13,13 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Consumer;
 
 public class DespoilLootHelper {
+
     public static List<ItemStack> generateDespsoilLoot(
-            int despoilLevel, Entity entity, DamageSource source, ServerLevel level, float despoilChance
-    ) {
+                                                       int despoilLevel, Entity entity, DamageSource source,
+                                                       ServerLevel level, float despoilChance) {
         List<ItemStack> loot = new ArrayList<>();
         ResourceLocation lootTableId = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType())
                 .withPrefix("biomancy/despoil/");

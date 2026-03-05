@@ -1,16 +1,17 @@
 package com.moguang.ctnhbio.mixin.biomancy;
 
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+
 import com.github.elenterius.biomancy.api.serum.Serum;
 import com.github.elenterius.biomancy.api.serum.SerumContainer;
 import com.github.elenterius.biomancy.client.gui.InjectorScreen;
 import com.moguang.ctnhbio.common.item.OrganicVialItem;
 import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -19,6 +20,7 @@ import static com.github.elenterius.biomancy.client.gui.InjectorScreen.CLEAR_ID;
 
 @Mixin(value = InjectorScreen.class, remap = false)
 public class InjectorScreenMixin {
+
     /**
      * @author
      * @reason
@@ -37,7 +39,7 @@ public class InjectorScreenMixin {
             Item item = stack.getItem();
             if (item instanceof SerumContainer vial) {
                 Serum serum = vial.getSerum();
-                if(serum.isEmpty()) serum = OrganicVialItem.getSerumFromStack(stack);
+                if (serum.isEmpty()) serum = OrganicVialItem.getSerumFromStack(stack);
                 if (!serum.isEmpty()) {
                     if (!foundSerums.containsKey(serum)) {
                         foundStacks.put(stack, idx);
@@ -47,12 +49,12 @@ public class InjectorScreenMixin {
             }
         }
 
-        //		if (foundStacks.size() > 1) {
+        // if (foundStacks.size() > 1) {
         foundStacks.put(ItemStack.EMPTY, CLEAR_ID);
         return foundStacks;
-        //		}
+        // }
 
-        //not items were found
-        //		return Object2IntMaps.emptyMap();
+        // not items were found
+        // return Object2IntMaps.emptyMap();
     }
 }

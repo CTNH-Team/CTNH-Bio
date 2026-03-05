@@ -1,21 +1,25 @@
 package com.moguang.ctnhbio.api;
 
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
 public interface ILivingEntityHost<T extends LivingEntity> {
     // 核心方法（需实现）
-    //CompoundTag entityTag = null;
+    // CompoundTag entityTag = null;
 
     T getHostedEntity();
+
     void setHostedEntity(T entity);
+
     BlockPos getHostPos();
+
     MetaMachine getHostMachine();
 
     default boolean isEntityHostAware(T entity) {
@@ -26,8 +30,7 @@ public interface ILivingEntityHost<T extends LivingEntity> {
     default void spawnHostedEntity(Level level) {
         if (getHostedEntity() == null) {
             T entity = createHostedEntity(level);
-            if(entity != null)
-            {
+            if (entity != null) {
                 setHostedEntity(entity);
                 if (isEntityHostAware(entity)) {
                     ((IHostAwareEntity) entity).bindToHost(this);
@@ -44,9 +47,9 @@ public interface ILivingEntityHost<T extends LivingEntity> {
         }
     }
 
-//    default void bindEntityToHost(T entity) {
-//        entity.getPersistentData().putLong("HostID", getHostPos().asLong());
-//    }
+    // default void bindEntityToHost(T entity) {
+    // entity.getPersistentData().putLong("HostID", getHostPos().asLong());
+    // }
 
     // 持久化默认实现
     default void saveHostedEntityData(CompoundTag nbt) {
@@ -67,23 +70,23 @@ public interface ILivingEntityHost<T extends LivingEntity> {
                 ((IHostAwareEntity) entity).bindToHost(this);
             }
         }
-//        if (nbt.contains("HostedEntity")) {
-            //CompoundTag entityTag = nbt.getCompound("HostedEntity");
+        // if (nbt.contains("HostedEntity")) {
+        // CompoundTag entityTag = nbt.getCompound("HostedEntity");
 
-//        }
-
+        // }
     }
 
     // 生成生物时自动绑定宿主
-//    default T createAndBindEntity(Level level) {
-//        T entity = createHostedEntity(level);
-//
-//        return entity;
-//    }
+    // default T createAndBindEntity(Level level) {
+    // T entity = createHostedEntity(level);
+    //
+    // return entity;
+    // }
 
-   void onHostedEntityRemoved(T entity, DamageSource source);
+    void onHostedEntityRemoved(T entity, DamageSource source);
 
     // 子类需实现的方法 ---
     T createHostedEntity(Level level);
+
     Class<T> getEntityClass(); // 用于NBT加载时类型检查
 }

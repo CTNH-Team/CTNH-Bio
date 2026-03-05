@@ -5,6 +5,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 
 public interface IComponentEntityProperty extends IAutoGetValueEntityProperty<Component> {
+
     @Override
     default Component valueFromTag(Tag tag) {
         return Component.Serializer.fromJson(tag.getAsString());

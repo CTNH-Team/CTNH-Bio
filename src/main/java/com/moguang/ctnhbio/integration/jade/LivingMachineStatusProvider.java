@@ -3,8 +3,7 @@ package com.moguang.ctnhbio.integration.jade;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.integration.jade.provider.CapabilityBlockProvider;
-import com.moguang.ctnhbio.api.ILivingMachine;
-import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+
 import net.minecraft.Util;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
@@ -20,6 +19,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+
+import com.moguang.ctnhbio.api.ILivingMachine;
+import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import org.jetbrains.annotations.Nullable;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.ITooltip;
@@ -36,7 +38,6 @@ import static snownee.jade.addon.vanilla.StatusEffectsProvider.getEffectName;
 
 public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILivingMachine> {
 
-
     public LivingMachineStatusProvider() {
         super(GTCEu.id("living_machine_status_provider"));
     }
@@ -44,8 +45,8 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILiving
     @Nullable
     @Override
     protected ILivingMachine getCapability(Level level, BlockPos pos, @Nullable Direction side) {
-        //return GTCapabilityHelper.getControllable(level, pos, side);
-        if(BasicLivingMachine.getMachine(level, pos) instanceof ILivingMachine machine)
+        // return GTCapabilityHelper.getControllable(level, pos, side);
+        if (BasicLivingMachine.getMachine(level, pos) instanceof ILivingMachine machine)
             return machine;
         else
             return null;
@@ -68,7 +69,7 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILiving
         if (!effects.isEmpty()) {
             ListTag list = new ListTag();
 
-            for(MobEffectInstance effect : effects) {
+            for (MobEffectInstance effect : effects) {
                 CompoundTag compound = new CompoundTag();
                 compound.putString("Name", Component.Serializer.toJson(getEffectName(effect)));
                 if (effect.isInfiniteDuration()) {
@@ -83,7 +84,7 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILiving
 
             data.put("StatusEffects", list);
         }
-        //data.putBoolean("WorkingEnabled", machine.isWorkingEnabled());
+        // data.putBoolean("WorkingEnabled", machine.isWorkingEnabled());
     }
 
     @Override
@@ -102,7 +103,9 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILiving
             tooltip.add(
                     helper.progress(
                             progress,
-                            Component.translatable("ctnhbio.jade.nutrient_stored", DisplayHelper.dfCommas.format(nutrientAmount), DisplayHelper.dfCommas.format(nutrientCapacity)),
+                            Component.translatable("ctnhbio.jade.nutrient_stored",
+                                    DisplayHelper.dfCommas.format(nutrientAmount),
+                                    DisplayHelper.dfCommas.format(nutrientCapacity)),
                             helper.progressStyle().color(0xFF5fe04e, 0xFF5fe04e).textColor(-1),
                             Util.make(BoxStyle.DEFAULT, style -> style.borderColor = 0xFF555555),
                             true));
@@ -113,7 +116,7 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILiving
             ListTag list = capData.getList("StatusEffects", 10);
             Component[] lines = new Component[list.size()];
 
-            for(int i = 0; i < lines.length; ++i) {
+            for (int i = 0; i < lines.length; ++i) {
                 CompoundTag compound = list.getCompound(i);
                 MutableComponent name = Component.Serializer.fromJsonLenient(compound.getString("Name"));
                 if (name != null) {
@@ -124,7 +127,7 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILiving
                         duration = StringUtil.formatTickDuration(compound.getInt("Duration"));
                     }
 
-                    MutableComponent s = Component.translatable("jade.potion", new Object[]{name, duration});
+                    MutableComponent s = Component.translatable("jade.potion", new Object[] { name, duration });
                     IThemeHelper t = IThemeHelper.get();
                     box.add(compound.getBoolean("Bad") ? t.danger(s) : t.success(s));
                 }
@@ -132,13 +135,11 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILiving
 
             tooltip.add(helper.box(box, BoxStyle.DEFAULT));
         }
-        if(MetaMachine.getMachine(blockEntity.getLevel(), block.getPosition()) instanceof ILivingMachine machine)
-        {
-
+        if (MetaMachine.getMachine(blockEntity.getLevel(), block.getPosition()) instanceof ILivingMachine machine) {
 
         }
-//        if (capData.contains("WorkingEnabled") && !capData.getBoolean("WorkingEnabled")) {
-//            tooltip.add(Component.translatable("gtceu.top.working_disabled").withStyle(ChatFormatting.YELLOW));
-//        }
+        // if (capData.contains("WorkingEnabled") && !capData.getBoolean("WorkingEnabled")) {
+        // tooltip.add(Component.translatable("gtceu.top.working_disabled").withStyle(ChatFormatting.YELLOW));
+        // }
     }
 }

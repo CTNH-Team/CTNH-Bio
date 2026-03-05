@@ -1,6 +1,5 @@
 package com.moguang.ctnhbio.api.pattern;
 
-
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiController;
 import com.gregtechceu.gtceu.api.pattern.BlockPattern;
 import com.gregtechceu.gtceu.api.pattern.MultiblockState;
@@ -10,23 +9,17 @@ import com.gregtechceu.gtceu.api.pattern.util.RelativeDirection;
 
 import com.lowdragmc.lowdraglib.utils.BlockInfo;
 
-import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
-import com.moguang.ctnhbio.registry.CBTags;
-import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
-
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 
+import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
+import com.moguang.ctnhbio.registry.CBTags;
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -37,7 +30,6 @@ import static com.lowdragmc.lowdraglib.LDLib.random;
 import static net.minecraft.world.level.block.Block.UPDATE_CLIENTS;
 
 public class GrowingBlockPattern extends BlockPattern {
-
 
     private final BuildContext context = new BuildContext();
 
@@ -55,7 +47,8 @@ public class GrowingBlockPattern extends BlockPattern {
     protected final int palmLength; // x size
     protected final int[] centerOffset; // x, y, z, minZ, maxZ
 
-    public GrowingBlockPattern(TraceabilityPredicate[][][] predicatesIn, RelativeDirection[] structureDir, int[][] aisleRepetitions, int[] centerOffset) {
+    public GrowingBlockPattern(TraceabilityPredicate[][][] predicatesIn, RelativeDirection[] structureDir,
+                               int[][] aisleRepetitions, int[] centerOffset) {
         super(predicatesIn, structureDir, aisleRepetitions, centerOffset);
         this.blockMatches = predicatesIn;
         this.fingerLength = predicatesIn.length;
@@ -76,8 +69,6 @@ public class GrowingBlockPattern extends BlockPattern {
         }
 
         this.centerOffset = centerOffset;
-
-
     }
 
     public static GrowingBlockPattern getGrowingBlockPattern(BlockPattern blockPattern) {
@@ -86,7 +77,8 @@ public class GrowingBlockPattern extends BlockPattern {
             // blockMatches
             Field blockMatchesField = clazz.getDeclaredField("blockMatches");
             blockMatchesField.setAccessible(true);
-            TraceabilityPredicate[][][] blockMatches = (TraceabilityPredicate[][][]) blockMatchesField.get(blockPattern);
+            TraceabilityPredicate[][][] blockMatches = (TraceabilityPredicate[][][]) blockMatchesField
+                    .get(blockPattern);
             // structureDir
             Field structureDirField = clazz.getDeclaredField("structureDir");
             structureDirField.setAccessible(true);
@@ -104,9 +96,6 @@ public class GrowingBlockPattern extends BlockPattern {
         } catch (Exception ignored) {}
         return null;
     }
-
-
-
 
     public void generateGrowPlan(@NotNull IMultiController controller, GrowSetting setting) {
         // 初始化阶段
@@ -126,6 +115,7 @@ public class GrowingBlockPattern extends BlockPattern {
 
         growPlan.generateGrowOrder(context.centerPos);
     }
+
     private void generateLayerTasks(int layerIndex, int z) {
         for (int b = 0, y = -centerOffset[1]; b < this.thumbLength; b++, y++) {
             for (int a = 0, x = -centerOffset[0]; a < this.palmLength; a++, x++) {
@@ -135,7 +125,6 @@ public class GrowingBlockPattern extends BlockPattern {
                 growPlan.add(new BuildTask(pos, predicate));
             }
         }
-
     }
 
     public class BuildTask {
@@ -145,13 +134,11 @@ public class GrowingBlockPattern extends BlockPattern {
         public int generation = 0;
 
         public BuildTask(BlockPos pos, TraceabilityPredicate predicate) {
-
             this.pos = pos;
             this.predicate = predicate;
         }
 
         public boolean execute() {
-
             updateWorldState(context.worldState, pos, predicate);
 
             if (!canReplaceExistingBlock(pos, predicate))
@@ -162,19 +149,17 @@ public class GrowingBlockPattern extends BlockPattern {
                 return false;
 
             return placeBlock(pos, infos);
-
         }
-        public boolean isFluid()
-        {
+
+        public boolean isFluid() {
             BlockInfo[] infos = determineRequiredBlockInfo(predicate);
-            if(infos == null) return false;
+            if (infos == null) return false;
             return infos[0].getBlockState().liquid();
         }
-
-
     }
 
     public class BuildPlan {
+
         private static final int BLOCKS_PER_TICK = 1; // 每tick放置的方块数量
 
         @Getter
@@ -182,13 +167,13 @@ public class GrowingBlockPattern extends BlockPattern {
         private final Queue<BuildTask> fluidQueue = new ArrayDeque<>();
         private final List<BuildTask> buildTaskList = new ArrayList<>();
 
-
-        public boolean isCompleted()
-        {
+        public boolean isCompleted() {
             return buildQueue.isEmpty() && fluidQueue.isEmpty();
         }
 
-        public void add(BuildTask task) {buildTaskList.add(task);}
+        public void add(BuildTask task) {
+            buildTaskList.add(task);
+        }
 
         public boolean tick() {
             if (isCompleted()) return false;
@@ -197,16 +182,14 @@ public class GrowingBlockPattern extends BlockPattern {
             try {
                 for (int i = 0; i < BLOCKS_PER_TICK && !isCompleted(); i++) {
                     BuildTask task = buildQueue.poll();
-                    while(task != null) {
-                        if(task.isFluid())
-                        {
+                    while (task != null) {
+                        if (task.isFluid()) {
                             fluidQueue.add(task);
-                        }
-                        else if(task.execute()) return true;
+                        } else if (task.execute()) return true;
                         task = buildQueue.poll();
                     }
                     task = fluidQueue.poll();
-                    if(task != null) {
+                    if (task != null) {
                         return task.execute();
                     }
                 }
@@ -283,14 +266,10 @@ public class GrowingBlockPattern extends BlockPattern {
             }
             return tasks.get(0); // 理论上不会到这里
         }
-
-
-
     }
 
     private void initializeBuildContext(@NotNull IMultiController controller, GrowSetting setting) {
-        //IMultiController controller = worldState.getController();
-
+        // IMultiController controller = worldState.getController();
 
         context.world = controller.self().getLevel();
 
@@ -304,8 +283,7 @@ public class GrowingBlockPattern extends BlockPattern {
         context.minZ = -centerOffset[4];
 
         clearWorldState(context.worldState);
-        //context.blocks.put(context.centerPos, controller);
-
+        // context.blocks.put(context.centerPos, controller);
     }
 
     private int[] calculateLayerRepeatCounts(GrowSetting settings) {
@@ -320,28 +298,26 @@ public class GrowingBlockPattern extends BlockPattern {
         return repeat;
     }
 
-
     private BlockPos calculateBlockPosition(int x, int y, int z) {
         return setActualRelativeOffset(x, y, z, context.facing, context.upwardsFacing, context.isFlipped)
                 .offset(context.centerPos.getX(), context.centerPos.getY(), context.centerPos.getZ());
     }
 
     private boolean canReplaceExistingBlock(BlockPos pos, TraceabilityPredicate predicate) {
-
         context.inFluid = false;
         if (!context.world.isEmptyBlock(pos)) {
             BlockState existingState = context.world.getBlockState(pos);
 
-            if(existingState.canBeReplaced())
+            if (existingState.canBeReplaced())
                 return true;
 
-            if(existingState.liquid()){
+            if (existingState.liquid()) {
                 context.inFluid = true;
                 return true;
             }
 
-            if(!(context.controller instanceof GreatFleshMachine) && existingState.is(CBTags.GROWING_REPLACEABLE_TAG))
-            {
+            if (!(context.controller instanceof GreatFleshMachine) &&
+                    existingState.is(CBTags.GROWING_REPLACEABLE_TAG)) {
                 context.world.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
                 return true;
             }
@@ -383,9 +359,9 @@ public class GrowingBlockPattern extends BlockPattern {
                     return limit.candidates.get();
                 } else if (cacheLayer.get(limit) < limit.minLayerCount &&
                         (limit.maxLayerCount == -1 || cacheLayer.get(limit) < limit.maxLayerCount)) {
-                    cacheLayer.put(limit, cacheLayer.get(limit) + 1);
-                    return limit.candidates.get();
-                }
+                            cacheLayer.put(limit, cacheLayer.get(limit) + 1);
+                            return limit.candidates.get();
+                        }
             }
         }
 
@@ -397,9 +373,9 @@ public class GrowingBlockPattern extends BlockPattern {
                     return limit.candidates.get();
                 } else if (cacheGlobal.get(limit) < limit.minCount &&
                         (limit.maxCount == -1 || cacheGlobal.get(limit) < limit.maxCount)) {
-                    cacheGlobal.put(limit, cacheGlobal.get(limit) + 1);
-                    return limit.candidates.get();
-                }
+                            cacheGlobal.put(limit, cacheGlobal.get(limit) + 1);
+                            return limit.candidates.get();
+                        }
             }
         }
 
@@ -413,13 +389,15 @@ public class GrowingBlockPattern extends BlockPattern {
 
         // 无限制谓词处理
         for (SimplePredicate limit : predicate.limited) {
-            if(!isPlaceHatch(limit.candidates.get())) continue;
+            if (!isPlaceHatch(limit.candidates.get())) continue;
 
             if (limit.maxLayerCount != -1 &&
-                    cacheLayer.getOrDefault(limit, Integer.MAX_VALUE) == limit.maxLayerCount) continue;
+                    cacheLayer.getOrDefault(limit, Integer.MAX_VALUE) == limit.maxLayerCount)
+                continue;
 
             if (limit.maxCount != -1 &&
-                    cacheGlobal.getOrDefault(limit, Integer.MAX_VALUE) == limit.maxCount) continue;
+                    cacheGlobal.getOrDefault(limit, Integer.MAX_VALUE) == limit.maxCount)
+                continue;
 
             if (cacheLayer.containsKey(limit)) {
                 cacheLayer.put(limit, cacheLayer.get(limit) + 1);
@@ -452,39 +430,33 @@ public class GrowingBlockPattern extends BlockPattern {
         return infos.isEmpty() ? null : infos.toArray(new BlockInfo[0]);
     }
 
-
-
     private boolean placeBlock(BlockPos pos, BlockInfo[] infos) {
-
         BlockInfo info = Arrays.stream(infos)
-                .filter(i ->i.getBlockState().is(CBTags.GROWABLE_BLOCK_TAG))
+                .filter(i -> i.getBlockState().is(CBTags.GROWABLE_BLOCK_TAG))
                 .findFirst()
                 .orElse(null);
-        if(info != null)
-        {
+        if (info != null) {
             var blockState = info.getBlockState();
-            if(blockState.liquid())
-            {
-                if(!context.inFluid)
+            if (blockState.liquid()) {
+                if (!context.inFluid)
                     return context.world.setBlock(pos, blockState, UPDATE_CLIENTS);
                 else
                     return false;
-            }
-            else
+            } else
                 return context.world.setBlock(pos, blockState, UPDATE_CLIENTS);
         }
         return false;
     }
 
-
     @Getter
     public static class GrowSetting {
+
         int repeatCount = 0;
     }
 
-
     // 用于保存构建过程中的上下文数据
     public static class BuildContext {
+
         Level world;
         MultiblockState worldState;
         GrowSetting settings;
@@ -495,12 +467,8 @@ public class GrowingBlockPattern extends BlockPattern {
         boolean isFlipped;
         int minZ;
 
-
         boolean inFluid;
-
-
     }
-
 
     private void clearWorldState(MultiblockState worldState) {
         try {
@@ -603,5 +571,4 @@ public class GrowingBlockPattern extends BlockPattern {
         }
         return new BlockPos(c1[0], c1[1], c1[2]);
     }
-
 }

@@ -3,7 +3,9 @@ package com.moguang.ctnhbio.mixin.gtm;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.fluids.FluidBuilder;
 import com.gregtechceu.gtceu.api.fluids.store.FluidStorageKey;
+
 import net.minecraft.resources.ResourceLocation;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,13 +25,14 @@ public class FluidBuilderMixin {
     private boolean hasCustomFlowing = false;
     @Shadow
     private String name = null;
+
     /**
      * @author luckyblock
      * @reason fix custom still texture
      */
     @Overwrite
-    private void determineTextures(@NotNull Material material, @Nullable FluidStorageKey key, @NotNull String modid){
-        if(still == null){
+    private void determineTextures(@NotNull Material material, @Nullable FluidStorageKey key, @NotNull String modid) {
+        if (still == null) {
             if (!material.isNull() && key != null) {
                 if (hasCustomStill) {
                     still = ResourceLocation.tryBuild(modid, "block/fluids/fluid." + name);

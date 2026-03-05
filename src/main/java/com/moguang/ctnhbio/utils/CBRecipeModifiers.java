@@ -2,10 +2,13 @@ package com.moguang.ctnhbio.utils;
 
 import com.gregtechceu.gtceu.api.recipe.modifier.ModifierFunction;
 import com.gregtechceu.gtceu.api.recipe.modifier.RecipeModifier;
-import com.moguang.ctnhbio.api.ILivingMachine;
+
 import net.minecraft.world.effect.MobEffects;
 
+import com.moguang.ctnhbio.api.ILivingMachine;
+
 public class CBRecipeModifiers {
+
     public static RecipeModifier BASIC_LIVING_MODIFIER = ((machine, recipe) -> {
         if (machine instanceof ILivingMachine livingMachine) {
             var builder = ModifierFunction.builder();

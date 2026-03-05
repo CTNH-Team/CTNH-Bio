@@ -1,28 +1,20 @@
 package com.moguang.ctnhbio.data.recipe.living;
 
-import com.github.elenterius.biofactory.init.ModFluids;
-import com.github.elenterius.biomancy.init.ModItems;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraftforge.fluids.FluidStack;
+
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
-import com.moguang.ctnhbio.registry.CBTags;
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
-import static com.github.elenterius.biofactory.init.ModFluids.NUTRIENTS_FLUID;
 import static com.github.elenterius.biomancy.init.ModFluids.ACID;
 
-
 public class DigesterRecipes {
-    public static void init(Consumer<FinishedRecipe> provider) {
 
+    public static void init(Consumer<FinishedRecipe> provider) {
         CBRecipeBuilder.of(CTNHBio.id("acid"), CBRecipeTypes.DIGEST_RECIPES)
                 .nutrient(10)
                 .circuitMeta(3)

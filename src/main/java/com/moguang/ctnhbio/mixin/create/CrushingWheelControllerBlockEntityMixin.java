@@ -1,16 +1,5 @@
 package com.moguang.ctnhbio.mixin.create;
 
-import com.moguang.ctnhbio.common.recipe.MobCrushingRecipe;
-import com.moguang.ctnhbio.common.recipe.MobCrushingRecipeManager;
-import com.moguang.ctnhbio.registry.CBItems;
-import com.moguang.ctnhbio.utils.DespoilLootHelper;
-import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
-import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock;
-import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity;
-import com.simibubi.create.content.processing.recipe.ProcessingInventory;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
-import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.damageTypes.CreateDamageSources;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -20,8 +9,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+
+import com.moguang.ctnhbio.common.recipe.MobCrushingRecipe;
+import com.moguang.ctnhbio.common.recipe.MobCrushingRecipeManager;
+import com.moguang.ctnhbio.utils.DespoilLootHelper;
+import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
+import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock;
+import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity;
+import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.damageTypes.CreateDamageSources;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -33,23 +31,21 @@ import java.util.Optional;
 @Mixin(value = CrushingWheelControllerBlockEntity.class)
 public abstract class CrushingWheelControllerBlockEntityMixin extends SmartBlockEntity {
 
-    private CrushingWheelControllerBlockEntity self = (CrushingWheelControllerBlockEntity)(Object)this;
+    private CrushingWheelControllerBlockEntity self = (CrushingWheelControllerBlockEntity) (Object) this;
+
     public CrushingWheelControllerBlockEntityMixin(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Redirect(
-            method = "tick",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"
-            )
-    )
+              method = "tick",
+              at = @At(
+                       value = "INVOKE",
+                       target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
     public boolean hurt(Entity entity, DamageSource source, float originalDamage) {
-        float damage = 10*self.crushingspeed;
-        if(entity instanceof LivingEntity livingEntity)
-        {
-            damage = Math.min(damage, livingEntity.getMaxHealth()/4);
+        float damage = 10 * self.crushingspeed;
+        if (entity instanceof LivingEntity livingEntity) {
+            damage = Math.min(damage, livingEntity.getMaxHealth() / 4);
         }
 
         if (entity.hurt(CreateDamageSources.crush(level), damage) && !entity.isAlive()) {
@@ -60,11 +56,10 @@ public abstract class CrushingWheelControllerBlockEntityMixin extends SmartBlock
             // 2. 生成掠夺战利品（仅对生物实体且服务端生效）
             List<ItemStack> despoilLoot = new ArrayList<>();
             if (entity instanceof LivingEntity && level instanceof ServerLevel serverLevel) {
-                int despoilLevel = Math.max((int)(self.crushingspeed), 1);
+                int despoilLevel = Math.max((int) (self.crushingspeed), 1);
                 float despoilChance = 1.0f;
                 despoilLoot = DespoilLootHelper.generateDespsoilLoot(
-                        despoilLevel, entity, source,serverLevel, despoilChance
-                );
+                        despoilLevel, entity, source, serverLevel, despoilChance);
             }
 
             // 3. 处理所有掉落物
@@ -89,8 +84,7 @@ public abstract class CrushingWheelControllerBlockEntityMixin extends SmartBlock
     }
 
     @Unique
-    private void outPut()
-    {
+    private void outPut() {
         Direction facing = getBlockState().getValue(CrushingWheelControllerBlock.FACING);
         var inventory = self.inventory;
 
@@ -98,8 +92,8 @@ public abstract class CrushingWheelControllerBlockEntityMixin extends SmartBlock
             BlockPos nextPos = worldPosition.below()
                     .relative(facing, facing.getAxis() == Direction.Axis.Y ? 0 : 1);
 
-            DirectBeltInputBehaviour behaviour =
-                    BlockEntityBehaviour.get(level, nextPos, DirectBeltInputBehaviour.TYPE);
+            DirectBeltInputBehaviour behaviour = BlockEntityBehaviour.get(level, nextPos,
+                    DirectBeltInputBehaviour.TYPE);
             if (behaviour != null) {
                 boolean changed = false;
                 if (!behaviour.canInsertFromSide(facing))

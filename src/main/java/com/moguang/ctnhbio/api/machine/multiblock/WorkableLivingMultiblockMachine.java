@@ -3,30 +3,17 @@ package com.moguang.ctnhbio.api.machine.multiblock;
 import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
-import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
-import com.gregtechceu.gtceu.api.gui.fancy.FancyMachineUIWidget;
 import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
-import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.fancyconfigurator.FancySelectorConfigurator;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
-import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
-import com.moguang.ctnhbio.api.ILivingMachine;
-import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
-import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
-import com.moguang.ctnhbio.api.gui.CBGuiTextures;
-import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
-import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
-import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
-import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
-import com.moguang.ctnhbio.api.pattern.GrowingBlockPattern;
-import lombok.Getter;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -39,17 +26,28 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
+
+import com.moguang.ctnhbio.api.ILivingMachine;
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
+import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
+import com.moguang.ctnhbio.api.gui.CBGuiTextures;
+import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
+import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
+import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
+import com.moguang.ctnhbio.api.pattern.GrowingBlockPattern;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
 
 import static com.moguang.ctnhbio.api.machine.BasicLivingMachine.appendEffect;
 
-
 public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockMachine implements ILivingMachine {
-    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(WorkableLivingMultiblockMachine.class, WorkableElectricMultiblockMachine.MANAGED_FIELD_HOLDER);
+
+    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
+            WorkableLivingMultiblockMachine.class, WorkableElectricMultiblockMachine.MANAGED_FIELD_HOLDER);
     @Persisted
     @Getter
     protected final NotifiableNutrientTrait inputTrait;
@@ -61,7 +59,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     protected final SynchronizedNutrientStorage nutrientStorage;
 
     protected static final double capacity = 1000000;
-    protected static final double  NUTRIENT_NEEDED_FOR_GROWTH = 1;
+    protected static final double NUTRIENT_NEEDED_FOR_GROWTH = 1;
 
     protected GrowingBlockPattern growingBlockPattern;
 
@@ -69,6 +67,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     protected ResourceLocation lastRecipeId;
 
     protected LivingMetaMachineEntity machineEntity;
+
     public WorkableLivingMultiblockMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
         this.nutrientStorage = new SynchronizedNutrientStorage(capacity);
@@ -76,9 +75,10 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
         this.outputTrait = new NotifiableNutrientTrait(this, nutrientStorage, IO.OUT);
         nutrientStorage.add(1000);
     }
+
     @Override
     public LivingMetaMachineEntity getMachineEntity() {
-        if(machineEntity == null) {
+        if (machineEntity == null) {
             machineEntity = ((LivingMetaMachineBlockEntity) holder).getHostedEntity();
         }
         return machineEntity;
@@ -88,6 +88,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     public double getNutrientAmount() {
         return nutrientStorage.getAmount();
     }
+
     @Override
     public double getNutrientCapacity() {
         return nutrientStorage.getCapacity();
@@ -121,7 +122,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
                 getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
                         SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
                         1.0f, 1.0f);
-                if(!isFormed()) checkGrow();
+                if (!isFormed()) checkGrow();
             }
 
             return InteractionResult.sidedSuccess(getLevel().isClientSide);
@@ -144,9 +145,9 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     @Override
     public void attachConfigurators(ConfiguratorPanel configuratorPanel) {
         configuratorPanel.attachConfigurators(new FancySelectorConfigurator<>(VoidingMode.VALUES, getVoidingMode(),
-                        this::setVoidingMode)
-                        .setTooltip(m -> List.of(Component.translatable("gtceu.gui.multiblock.voiding_mode"),
-                                Component.translatable(m.getSerializedName()))));
+                this::setVoidingMode)
+                .setTooltip(m -> List.of(Component.translatable("gtceu.gui.multiblock.voiding_mode"),
+                        Component.translatable(m.getSerializedName()))));
 
         configuratorPanel.attachConfigurators(new IFancyConfiguratorButton.Toggle(
                 CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0, 1, 0.5),
@@ -165,55 +166,48 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     @Override
     public void onLoad() {
         super.onLoad();
-        //subscribeServerTick(this::checkGrow);
+        // subscribeServerTick(this::checkGrow);
         checkGrow();
         subscribeServerTick(this::tickGrow);
     }
 
-    public boolean shouldTick(int interval)
-    {
-        return (!isFormed() && getOffsetTimer()% interval == 0) || getOffsetTimer()% 10*interval == 0;
+    public boolean shouldTick(int interval) {
+        return (!isFormed() && getOffsetTimer() % interval == 0) || getOffsetTimer() % 10 * interval == 0;
     }
 
-    public void checkGrow(){
-
-        if(true || shouldTick(20))
-        {
+    public void checkGrow() {
+        if (true || shouldTick(20)) {
             isFormed = false;
             checkPattern();
-            if(!isFormed())
-            {
-                if(growingBlockPattern == null)
+            if (!isFormed()) {
+                if (growingBlockPattern == null)
                     growingBlockPattern = GrowingBlockPattern.getGrowingBlockPattern(getPattern());
 
-                if(growingBlockPattern.growPlan.isCompleted())
+                if (growingBlockPattern.growPlan.isCompleted())
                     growingBlockPattern.generateGrowPlan(this, new GrowingBlockPattern.GrowSetting());
             }
 
         }
-
     }
 
-    public void tickGrow()
-    {
-        if(shouldTick(2) &&
+    public void tickGrow() {
+        if (shouldTick(2) &&
                 getNutrientAmount() >= NUTRIENT_NEEDED_FOR_GROWTH &&
                 growingBlockPattern != null &&
-                growingBlockPattern.growPlan.tick())
-        {
+                growingBlockPattern.growPlan.tick()) {
             nutrientStorage.extract(NUTRIENT_NEEDED_FOR_GROWTH);
-            if(growingBlockPattern.growPlan.isCompleted()) checkPattern();
+            if (growingBlockPattern.growPlan.isCompleted()) checkPattern();
         }
-        //updatePartPositions();
+        // updatePartPositions();
     }
 
     @Override
     public void afterWorking() {
         super.afterWorking();
         var recipe = getRecipeLogic().getLastRecipe();
-        if(recipe != null && recipe.data.contains("effects")){
+        if (recipe != null && recipe.data.contains("effects")) {
             var tag = recipe.data.get("effects");
-            if(tag instanceof ListTag listTag){
+            if (tag instanceof ListTag listTag) {
                 listTag.stream()
                         .filter(CompoundTag.class::isInstance)
                         .map(CompoundTag.class::cast)

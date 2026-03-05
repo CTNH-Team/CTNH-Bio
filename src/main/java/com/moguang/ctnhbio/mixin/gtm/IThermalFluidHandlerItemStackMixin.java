@@ -1,18 +1,20 @@
 package com.moguang.ctnhbio.mixin.gtm;
 
+import com.gregtechceu.gtceu.api.capability.IThermalFluidHandlerItemStack;
 import com.gregtechceu.gtceu.api.fluids.FluidConstants;
 import com.gregtechceu.gtceu.api.fluids.FluidState;
 import com.gregtechceu.gtceu.api.fluids.attribute.FluidAttribute;
 import com.gregtechceu.gtceu.api.fluids.attribute.FluidAttributes;
 import com.gregtechceu.gtceu.api.fluids.attribute.IAttributedFluid;
+
+import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidType;
+
 import com.moguang.ctnhbio.api.item.component.IOrganicFluidHandler;
 import com.moguang.ctnhbio.data.materials.OrganicMaterials;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import net.minecraftforge.fluids.FluidStack;
-import com.gregtechceu.gtceu.api.capability.IThermalFluidHandlerItemStack;
 
 import java.util.Collection;
 
@@ -49,7 +51,6 @@ public interface IThermalFluidHandlerItemStackMixin {
                 return false;
             }
 
-
             FluidState fluidState = attributedFluid.getState();
             if (fluidState == FluidState.PLASMA && !((IThermalFluidHandlerItemStack) this).isPlasmaProof()) {
                 return false;
@@ -65,12 +66,12 @@ public interface IThermalFluidHandlerItemStackMixin {
 
         // 3. 温度检查
         int temperature = fluidType.getTemperature(stack);
-        if (temperature < FluidConstants.CRYOGENIC_FLUID_THRESHOLD && !((IThermalFluidHandlerItemStack) this).isCryoProof()) {
+        if (temperature < FluidConstants.CRYOGENIC_FLUID_THRESHOLD &&
+                !((IThermalFluidHandlerItemStack) this).isCryoProof()) {
             return false;
         }
 
         // 4. 最终温度上限验证
         return temperature <= ((IThermalFluidHandlerItemStack) this).getMaxFluidTemperature();
     }
-
 }

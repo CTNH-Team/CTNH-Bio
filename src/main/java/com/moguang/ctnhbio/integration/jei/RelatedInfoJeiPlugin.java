@@ -1,25 +1,26 @@
 package com.moguang.ctnhbio.integration.jei;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+
 import com.github.elenterius.biomancy.init.ModBlocks;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.github.elenterius.biomancy.styles.TextStyles;
 import com.github.elenterius.biomancy.util.ComponentUtil;
 import com.moguang.ctnhbio.CTNHBio;
-import com.moguang.ctnhbio.registry.CBMultiblocks;
 import com.moguang.ctnhbio.registry.CBItems;
+import com.moguang.ctnhbio.registry.CBMultiblocks;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-//import mezz.jei.
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 @JeiPlugin
 public class RelatedInfoJeiPlugin implements IModPlugin {
+
     @Override
     public @NotNull ResourceLocation getPluginUid() {
         return CTNHBio.id("flesh_info");
@@ -32,18 +33,14 @@ public class RelatedInfoJeiPlugin implements IModPlugin {
                         new ItemStack(ModBlocks.PRIMORDIAL_CRADLE.get()),
                         new ItemStack(ModItems.INJECTOR.get()),
                         new ItemStack(CBItems.ORGANIC_VIAL),
-                        new ItemStack(CBMultiblocks.GREAT_FLESH.getItem())
-                ),
+                        new ItemStack(CBMultiblocks.GREAT_FLESH.getItem())),
                 ComponentUtil.literal("SWINTER").withStyle(TextStyles.PRIMORDIAL_RUNES_MUTED_PURPLE),
                 Component.translatable("ctnhbio.great_flesh.info.0"),
                 ComponentUtil.literal("MO_GUANG").withStyle(TextStyles.PRIMORDIAL_RUNES_MUTED_PURPLE),
                 Component.translatable("ctnhbio.great_flesh.info.1"),
                 ComponentUtil.literal("LUCKY_BLOCK").withStyle(TextStyles.PRIMORDIAL_RUNES_MUTED_PURPLE),
                 Component.translatable("ctnhbio.great_flesh.info.2"),
-                ComponentUtil.literal("VIX_HENTX").withStyle(TextStyles.PRIMORDIAL_RUNES_MUTED_PURPLE)
-        );
-
-
+                ComponentUtil.literal("VIX_HENTX").withStyle(TextStyles.PRIMORDIAL_RUNES_MUTED_PURPLE));
 
         IModPlugin.super.registerRecipes(registration);
     }

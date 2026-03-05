@@ -3,42 +3,34 @@ package com.moguang.ctnhbio.machine.braininavat;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.IOpticalComputationProvider;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
-import com.gregtechceu.gtceu.api.machine.MetaMachine;
-import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.feature.IDropSaveMachine;
-import com.gregtechceu.gtceu.api.sound.AutoReleasedSound;
-import com.lowdragmc.lowdraglib.syncdata.IFieldUpdateListener;
-import com.lowdragmc.lowdraglib.syncdata.ISubscription;
+import com.gregtechceu.gtceu.utils.GTUtil;
+
 import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
-import com.lowdragmc.lowdraglib.syncdata.annotation.RequireRerender;
-import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
-import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
-import com.gregtechceu.gtceu.utils.GTUtil;
-import dev.toma.configuration.config.Configurable;
-import it.unimi.dsi.fastutil.ints.Int2IntFunction;
-import net.minecraft.core.BlockPos;
+
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
+import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.List;
 
 import static com.gregtechceu.gtceu.api.GTValues.RNG;
 
 public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalComputationProvider, IDropSaveMachine {
 
     public record Quad(int CWUt, double NUt, long EUt, byte chanceToDoubt) {
+
         public static Quad tier(int tier) {
             int CWUt = (tier >= GTValues.HV ? 1 << (tier - GTValues.HV) : 0);
             double NUt = CWUt / 20.0;
             long EUt = GTValues.VA[tier];
-            byte chanceToDoubt = (byte)(tier >= GTValues.IV ? (tier - GTValues.IV + 1) : 0);
+            byte chanceToDoubt = (byte) (tier >= GTValues.IV ? (tier - GTValues.IV + 1) : 0);
             return new Quad(CWUt, NUt, EUt, chanceToDoubt);
         }
     }
@@ -60,8 +52,7 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
 
     @Override
     public void saveToItem(CompoundTag tag) {
-        if (holder instanceof LivingMetaMachineBlockEntity<?> blockEntity
-                && blockEntity.getMachineEntity() != null) {
+        if (holder instanceof LivingMetaMachineBlockEntity<?> blockEntity && blockEntity.getMachineEntity() != null) {
             maxHealth = blockEntity.getMachineEntity().getMaxHealth();
         }
         if (maxHealth != 0) {
@@ -77,8 +68,8 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
             maxHealth = tag.getFloat("maxHealth");
         }
         if (maxHealth != 0 &&
-                holder instanceof LivingMetaMachineBlockEntity<?> blockEntity
-                && blockEntity.getMachineEntity() != null) {
+                holder instanceof LivingMetaMachineBlockEntity<?> blockEntity &&
+                blockEntity.getMachineEntity() != null) {
             blockEntity.getMachineEntity().getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
         }
     }
@@ -92,26 +83,26 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
 
     @OnlyIn(Dist.CLIENT)
     public void updateSound() {
-//        if (isActive() && shouldWorkingPlaySound()) {
-//            var sound = getRecipeType().getSound();
-//            if (workingSound instanceof AutoReleasedSound soundEntry) {
-//                if (soundEntry.soundEntry == sound && !soundEntry.isStopped()) {
-//                    return;
-//                }
-//                soundEntry.release();
-//                workingSound = null;
-//            }
-//            if (sound != null) {
-//                workingSound = sound.playAutoReleasedSound(
-//                        () -> shouldWorkingPlaySound() && isActive() && !isInValid() &&
-//                                getLevel().isLoaded(getPos()) &&
-//                                MetaMachine.getMachine(getLevel(), getPos()) == this,
-//                        getPos(), true, 0, 1, 1);
-//            }
-//        } else if (workingSound instanceof AutoReleasedSound soundEntry) {
-//            soundEntry.release();
-//            workingSound = null;
-//        }
+        // if (isActive() && shouldWorkingPlaySound()) {
+        // var sound = getRecipeType().getSound();
+        // if (workingSound instanceof AutoReleasedSound soundEntry) {
+        // if (soundEntry.soundEntry == sound && !soundEntry.isStopped()) {
+        // return;
+        // }
+        // soundEntry.release();
+        // workingSound = null;
+        // }
+        // if (sound != null) {
+        // workingSound = sound.playAutoReleasedSound(
+        // () -> shouldWorkingPlaySound() && isActive() && !isInValid() &&
+        // getLevel().isLoaded(getPos()) &&
+        // MetaMachine.getMachine(getLevel(), getPos()) == this,
+        // getPos(), true, 0, 1, 1);
+        // }
+        // } else if (workingSound instanceof AutoReleasedSound soundEntry) {
+        // soundEntry.release();
+        // workingSound = null;
+        // }
     }
 
     @Override
@@ -133,8 +124,9 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
                 onChanged();
             }
             long nowTick = getLevel() != null ? getLevel().getGameTime() : getOffsetTimer();
-            if (nowTick % 20 == 0 && !isDoubted && q.chanceToDoubt > 0 && 
-                    RNG.nextInt(Byte.MAX_VALUE) <= q.chanceToDoubt) isDoubted = true;
+            if (nowTick % 20 == 0 && !isDoubted && q.chanceToDoubt > 0 &&
+                    RNG.nextInt(Byte.MAX_VALUE) <= q.chanceToDoubt)
+                isDoubted = true;
 
             if (overclocked) {
                 applyOvervoltageDamageOncePerTick(getOffsetTimer());
@@ -184,14 +176,12 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
         isDoubted = false;
     }
 
-    //Utils
-    private boolean consume(boolean simulate, boolean overclocked){
-        var nut = overclocked ? 4*q.NUt : q.NUt;
-        var eut = overclocked ? 4*q.EUt : q.EUt;
+    // Utils
+    private boolean consume(boolean simulate, boolean overclocked) {
+        var nut = overclocked ? 4 * q.NUt : q.NUt;
+        var eut = overclocked ? 4 * q.EUt : q.EUt;
 
         return simulate ? getStorage().getAmount() >= nut && energyContainer.getEnergyStored() >= eut :
                 getStorage().extract(nut) >= nut && energyContainer.removeEnergy(eut) >= eut;
     }
-
-
 }

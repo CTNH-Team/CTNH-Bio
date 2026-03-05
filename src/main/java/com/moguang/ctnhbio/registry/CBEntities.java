@@ -1,18 +1,18 @@
 package com.moguang.ctnhbio.registry;
 
-import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
-import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
-
-import com.moguang.ctnhbio.client.Renderer.ColorableEntityRenderer;
-import com.moguang.ctnhbio.machine.braininavat.Brain;
-
-import com.tterrag.registrate.util.entry.EntityEntry;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.storage.loot.LootTable;
+
+import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
+import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
+import com.moguang.ctnhbio.client.Renderer.ColorableEntityRenderer;
+import com.moguang.ctnhbio.machine.braininavat.Brain;
+import com.tterrag.registrate.util.entry.EntityEntry;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
 public class CBEntities {
+
     public static EntityEntry<LivingMetaMachineEntity> LIVING_META_MACHINE_ENTITY = REGISTRATE
             .entity("living_machine", LivingMetaMachineEntity::create, MobCategory.CREATURE)
             .cnlang("活体机器")
@@ -32,9 +32,6 @@ public class CBEntities {
             .renderer(() -> ColorableEntityRenderer::new)
             .lang("Brain")
             .register();
-
-
-
 
     public static void init() {}
 }

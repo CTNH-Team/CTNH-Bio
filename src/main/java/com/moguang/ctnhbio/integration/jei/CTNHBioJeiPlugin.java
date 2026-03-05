@@ -1,117 +1,120 @@
-//package com.moguang.ctnhbio.integration.jei;
+// package com.moguang.ctnhbio.integration.jei;
 //
-//import com.github.elenterius.biomancy.init.ModEnchantments;
-//import com.github.elenterius.biomancy.init.ModItems;
-//import com.gregtechceu.gtceu.api.item.IGTTool;
-//import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-//import com.lowdragmc.lowdraglib.gui.texture.ItemStackTexture;
-//import com.moguang.ctnhbio.api.item.tool.CBToolType;
-//import com.moguang.ctnhbio.api.recipe.CBRecipeType;
-//import com.moguang.ctnhbio.common.recipe.MobCrushingRecipe;
-//import com.moguang.ctnhbio.common.recipe.MobCrushingRecipeManager;
-//import com.moguang.ctnhbio.registry.CBRecipeTypes;
-//import com.moguang.ctnhbio.utils.LootTableAccess;
-//import com.simibubi.create.AllBlocks;
-//import com.tterrag.registrate.util.entry.ItemProviderEntry;
-//import com.yanny.ali.compatibility.common.GameplayLootType;
-//import mezz.jei.api.IModPlugin;
-//import mezz.jei.api.JeiPlugin;
-//import mezz.jei.api.recipe.IFocus;
-//import mezz.jei.api.recipe.IFocusFactory;
-//import mezz.jei.api.recipe.IRecipeManager;
-//import mezz.jei.api.recipe.RecipeType;
-//import mezz.jei.api.registration.IRecipeCatalystRegistration;
-//import mezz.jei.api.registration.IRecipeCategoryRegistration;
-//import mezz.jei.api.registration.IRecipeRegistration;
-//import mezz.jei.api.runtime.IJeiRuntime;
-//import net.minecraft.core.registries.BuiltInRegistries;
-//import net.minecraft.resources.ResourceLocation;
-//import net.minecraft.world.item.EnchantedBookItem;
-//import net.minecraft.world.item.ItemStack;
-//import com.moguang.ctnhbio.CTNHBio;
-//import net.minecraft.world.item.enchantment.EnchantmentInstance;
-//import org.jetbrains.annotations.NotNull;
+// import com.github.elenterius.biomancy.init.ModEnchantments;
+// import com.github.elenterius.biomancy.init.ModItems;
+// import com.gregtechceu.gtceu.api.item.IGTTool;
+// import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+// import com.lowdragmc.lowdraglib.gui.texture.ItemStackTexture;
+// import com.moguang.ctnhbio.api.item.tool.CBToolType;
+// import com.moguang.ctnhbio.api.recipe.CBRecipeType;
+// import com.moguang.ctnhbio.common.recipe.MobCrushingRecipe;
+// import com.moguang.ctnhbio.common.recipe.MobCrushingRecipeManager;
+// import com.moguang.ctnhbio.registry.CBRecipeTypes;
+// import com.moguang.ctnhbio.utils.LootTableAccess;
+// import com.simibubi.create.AllBlocks;
+// import com.tterrag.registrate.util.entry.ItemProviderEntry;
+// import com.yanny.ali.compatibility.common.GameplayLootType;
+// import mezz.jei.api.IModPlugin;
+// import mezz.jei.api.JeiPlugin;
+// import mezz.jei.api.recipe.IFocus;
+// import mezz.jei.api.recipe.IFocusFactory;
+// import mezz.jei.api.recipe.IRecipeManager;
+// import mezz.jei.api.recipe.RecipeType;
+// import mezz.jei.api.registration.IRecipeCatalystRegistration;
+// import mezz.jei.api.registration.IRecipeCategoryRegistration;
+// import mezz.jei.api.registration.IRecipeRegistration;
+// import mezz.jei.api.runtime.IJeiRuntime;
+// import net.minecraft.core.registries.BuiltInRegistries;
+// import net.minecraft.resources.ResourceLocation;
+// import net.minecraft.world.item.EnchantedBookItem;
+// import net.minecraft.world.item.ItemStack;
+// import com.moguang.ctnhbio.CTNHBio;
+// import net.minecraft.world.item.enchantment.EnchantmentInstance;
+// import org.jetbrains.annotations.NotNull;
 //
-//import java.util.List;
+// import java.util.List;
 //
-//import static com.github.elenterius.biomancy.init.ModItems.DESPOIL_SICKLE;
-//import static com.moguang.ctnhbio.registry.CBMaterialItems.CB_TOOL_ITEMS;
+// import static com.github.elenterius.biomancy.init.ModItems.DESPOIL_SICKLE;
+// import static com.moguang.ctnhbio.registry.CBMaterialItems.CB_TOOL_ITEMS;
 //
-//@JeiPlugin
-//public class CTNHBioJeiPlugin implements IModPlugin {
+// @JeiPlugin
+// public class CTNHBioJeiPlugin implements IModPlugin {
 //
-//    //private static final ResourceLocation ID = ResourceLocation.tryBuild(CTNHBio.MODID, "jei_plugin");
+// //private static final ResourceLocation ID = ResourceLocation.tryBuild(CTNHBio.MODID, "jei_plugin");
 //
-//    @Override
-//    public ResourceLocation getPluginUid() {
-//        return CTNHBio.id("jei_plugin");
-//    }
+// @Override
+// public ResourceLocation getPluginUid() {
+// return CTNHBio.id("jei_plugin");
+// }
 //
-//    @Override
-//    public void registerCategories(IRecipeCategoryRegistration registration) {
-//        System.out.println("已加载配方类型: ");
-//        registration.addRecipeCategories(new MobCrushingCategory(registration.getJeiHelpers().getGuiHelper()));
-//    }
+// @Override
+// public void registerCategories(IRecipeCategoryRegistration registration) {
+// System.out.println("已加载配方类型: ");
+// registration.addRecipeCategories(new MobCrushingCategory(registration.getJeiHelpers().getGuiHelper()));
+// }
 //
-//    @Override
-//    public void registerRecipes(IRecipeRegistration registration) {
-//        List<MobCrushingRecipe> recipes = MobCrushingRecipeManager.getAllRecipes();
-//        //System.out.println("已加载配方数量: " + recipes.size());
-//        registration.addRecipes(
-//                CBRecipeType.MOB_CRUSHING,
-//                recipes
-//        );
+// @Override
+// public void registerRecipes(IRecipeRegistration registration) {
+// List<MobCrushingRecipe> recipes = MobCrushingRecipeManager.getAllRecipes();
+// //System.out.println("已加载配方数量: " + recipes.size());
+// registration.addRecipes(
+// CBRecipeType.MOB_CRUSHING,
+// recipes
+// );
 //
-//    }
+// }
 //
-//    @Override
-//    public void onRuntimeAvailable(@NotNull IJeiRuntime jeiRuntime) {
-//        IRecipeManager recipeManager = jeiRuntime.getRecipeManager();
-//        RecipeType<GameplayLootType> aliGameplayType = new RecipeType<>(ResourceLocation.tryBuild("ctnhbio", "despoil_loot"), GameplayLootType.class);
-//
-//
-//        var allRecipes = recipeManager.createRecipeLookup(aliGameplayType).get();
+// @Override
+// public void onRuntimeAvailable(@NotNull IJeiRuntime jeiRuntime) {
+// IRecipeManager recipeManager = jeiRuntime.getRecipeManager();
+// RecipeType<GameplayLootType> aliGameplayType = new RecipeType<>(ResourceLocation.tryBuild("ctnhbio", "despoil_loot"),
+// GameplayLootType.class);
 //
 //
-//        List<GameplayLootType> toHide = allRecipes
-//                .filter(recipe -> {
-//                    ResourceLocation seq = ((LootTableAccess)recipe.entry()).getRandomSequence();
-//                    if (seq == null) return true;
-//
-//                    String[] parts = seq.getPath().split("/");
-//                    if (parts.length < 3) return true;
-//
-//                    ResourceLocation id = ResourceLocation.tryBuild(seq.getNamespace(), parts[2]);
-//                    return !BuiltInRegistries.ENTITY_TYPE.containsKey(id);
-//                })
-//                .toList();
-//
-//        // 隐藏所有无效实体对应的配方
-//        recipeManager.hideRecipes(aliGameplayType, toHide);
-//    }
-//
-//    @Override
-//    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-//        //System.out.println("催化剂 ");
-//        registration.addRecipeCatalyst(AllBlocks.CRUSHING_WHEEL.asStack(), CBRecipeType.MOB_CRUSHING);
-//
-////        registration.addRecipeCatalyst(ModItems.NUTRIENT_PASTE.get(),
-////                new RecipeType<>(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory().registryKey, GTRecipe.class)
-////                );
-//
-//        RecipeType<GameplayLootType> type = new RecipeType<>(ResourceLocation.tryBuild("ctnhbio", "despoil_loot"), GameplayLootType.class);
-//
-//        registration.addRecipeCatalyst(new ItemStack(DESPOIL_SICKLE.get()), type);
-//        ItemStack enchantedBook = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(ModEnchantments.DESPOIL.get(), 1));
-//        registration.addRecipeCatalyst(enchantedBook, type);
-//        for (ItemProviderEntry<IGTTool> entry : CB_TOOL_ITEMS.column(CBToolType.BONING_KNIFE).values()) {
-//            if(entry == null) continue;
-//            ItemStack stack = new ItemStack(entry.get());
-//            registration.addRecipeCatalyst(stack, type);
-//        }
+// var allRecipes = recipeManager.createRecipeLookup(aliGameplayType).get();
 //
 //
+// List<GameplayLootType> toHide = allRecipes
+// .filter(recipe -> {
+// ResourceLocation seq = ((LootTableAccess)recipe.entry()).getRandomSequence();
+// if (seq == null) return true;
+//
+// String[] parts = seq.getPath().split("/");
+// if (parts.length < 3) return true;
+//
+// ResourceLocation id = ResourceLocation.tryBuild(seq.getNamespace(), parts[2]);
+// return !BuiltInRegistries.ENTITY_TYPE.containsKey(id);
+// })
+// .toList();
+//
+// // 隐藏所有无效实体对应的配方
+// recipeManager.hideRecipes(aliGameplayType, toHide);
+// }
+//
+// @Override
+// public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+// //System.out.println("催化剂 ");
+// registration.addRecipeCatalyst(AllBlocks.CRUSHING_WHEEL.asStack(), CBRecipeType.MOB_CRUSHING);
+//
+//// registration.addRecipeCatalyst(ModItems.NUTRIENT_PASTE.get(),
+//// new RecipeType<>(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory().registryKey, GTRecipe.class)
+//// );
+//
+// RecipeType<GameplayLootType> type = new RecipeType<>(ResourceLocation.tryBuild("ctnhbio", "despoil_loot"),
+// GameplayLootType.class);
+//
+// registration.addRecipeCatalyst(new ItemStack(DESPOIL_SICKLE.get()), type);
+// ItemStack enchantedBook = EnchantedBookItem.createForEnchantment(new
+// EnchantmentInstance(ModEnchantments.DESPOIL.get(), 1));
+// registration.addRecipeCatalyst(enchantedBook, type);
+// for (ItemProviderEntry<IGTTool> entry : CB_TOOL_ITEMS.column(CBToolType.BONING_KNIFE).values()) {
+// if(entry == null) continue;
+// ItemStack stack = new ItemStack(entry.get());
+// registration.addRecipeCatalyst(stack, type);
+// }
 //
 //
-//    }
-//}
+//
+//
+// }
+// }

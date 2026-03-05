@@ -1,12 +1,12 @@
 package com.moguang.ctnhbio.data.tags;
 
-import com.github.elenterius.biomancy.init.ModBlocks;
-import com.moguang.ctnhbio.registry.CBBlocks;
-import com.moguang.ctnhbio.registry.CBTags;
-import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import com.moguang.ctnhbio.registry.CBBlocks;
+import com.moguang.ctnhbio.registry.CBTags;
+import com.tterrag.registrate.providers.RegistrateTagsProvider;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -15,8 +15,8 @@ import static com.github.elenterius.biomancy.init.ModBlocks.*;
 import static com.moguang.ctnhbio.registry.CBBlocks.*;
 import static com.moguang.ctnhbio.registry.CBBlocks.IMPERMEABLE_MEMBRANE;
 
-
 public class BlockTags {
+
     public static void init(RegistrateTagsProvider<Block> provider) {
         create(provider, CBTags.GROWING_REPLACEABLE_TAG, FLESH);
         create(provider, CBTags.GROWABLE_BLOCK_TAG,
@@ -32,17 +32,16 @@ public class BlockTags {
                 MALIGNANT_FLESH,
                 ACID_FLUID_BLOCK,
 
-
                 FLESH_CASING,
                 PRIMAL_FLESH_CASING,
                 ORNATE_FLESH_CASING,
                 ACID_FLESH_CASING,
                 BIO_ACID_CASING,
-                CBBlocks.IMPERMEABLE_MEMBRANE
-                );
+                CBBlocks.IMPERMEABLE_MEMBRANE);
     }
 
-    public static void create(RegistrateTagsProvider<Block> provider, TagKey<Block> tagKey, Supplier<? extends Block> ... rls) {
+    public static void create(RegistrateTagsProvider<Block> provider, TagKey<Block> tagKey,
+                              Supplier<? extends Block>... rls) {
         var builder = provider.addTag(tagKey);
         for (var block : rls) {
             builder.addOptional(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block.get())));

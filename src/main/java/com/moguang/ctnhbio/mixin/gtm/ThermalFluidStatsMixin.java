@@ -1,16 +1,17 @@
 package com.moguang.ctnhbio.mixin.gtm;
 
-
 import com.gregtechceu.gtceu.api.item.component.ThermalFluidStats;
 import com.gregtechceu.gtceu.client.TooltipsHandler;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.gregtechceu.gtceu.utils.GTUtil;
-import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidUtil;
+
+import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -23,9 +24,9 @@ import static com.moguang.ctnhbio.data.materials.OrganicMaterials.ORGANIC;
 @Mixin(value = ThermalFluidStats.class, remap = false)
 public class ThermalFluidStatsMixin {
 
-
     @Unique
-    public ThermalFluidStats self = (ThermalFluidStats)(Object)this;
+    public ThermalFluidStats self = (ThermalFluidStats) (Object) this;
+
     /**
      * @author LuckyBlock
      * @reason Add Organic Fluid Info
@@ -53,10 +54,10 @@ public class ThermalFluidStatsMixin {
             if (self.cryoProof) tooltipComponents.add(Component.translatable("gtceu.fluid_pipe.cryo_proof"));
             if (self.acidProof) tooltipComponents.add(Component.translatable("gtceu.fluid_pipe.acid_proof"));
 
-            if(self instanceof OrganicFluidStats) ORGANIC.appendContainerTooltips(tooltipComponents::add);
+            if (self instanceof OrganicFluidStats) ORGANIC.appendContainerTooltips(tooltipComponents::add);
             else tooltipComponents.add(Component.translatable("ctnhbio.fluid_pipe.cannot_handle_organic"));
 
-        } else{
+        } else {
             tooltipComponents.add(Component.translatable("gtceu.tooltip.fluid_pipe_hold_shift"));
         }
     }

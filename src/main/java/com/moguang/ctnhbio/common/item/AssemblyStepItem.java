@@ -7,6 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+
 import org.jetbrains.annotations.Nullable;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
@@ -17,6 +18,7 @@ import java.util.List;
 import static com.moguang.ctnhbio.data.recipe.CogniRecipeBuilder.COGNI_AESSEMBLY_STEP;
 
 public class AssemblyStepItem extends Item {
+
     public AssemblyStepItem(Properties properties) {
         super(properties);
     }
@@ -30,17 +32,15 @@ public class AssemblyStepItem extends Item {
     static Lang io_constrain;
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents,
+                                TooltipFlag isAdvanced) {
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced);
         CompoundTag nbt = stack.getTag();
-        if(nbt != null && nbt.contains(COGNI_AESSEMBLY_STEP))
-        {
+        if (nbt != null && nbt.contains(COGNI_AESSEMBLY_STEP)) {
             tooltipComponents.add(
-                    cogni_assemble_step.translate(nbt.getInt(COGNI_AESSEMBLY_STEP)).withStyle(ChatFormatting.YELLOW)
-            );
+                    cogni_assemble_step.translate(nbt.getInt(COGNI_AESSEMBLY_STEP)).withStyle(ChatFormatting.YELLOW));
             tooltipComponents.add(
-                    io_constrain.translate().withStyle(ChatFormatting.DARK_RED)
-            );
+                    io_constrain.translate().withStyle(ChatFormatting.DARK_RED));
         }
     }
 }

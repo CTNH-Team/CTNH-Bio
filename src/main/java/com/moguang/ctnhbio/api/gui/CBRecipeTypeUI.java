@@ -14,6 +14,7 @@ import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.integration.emi.recipe.GTRecipeEMICategory;
 import com.gregtechceu.gtceu.integration.jei.recipe.GTRecipeJEICategory;
+
 import com.lowdragmc.lowdraglib.gui.editor.configurator.IConfigurableWidget;
 import com.lowdragmc.lowdraglib.gui.editor.data.Resources;
 import com.lowdragmc.lowdraglib.gui.texture.GuiTextureGroup;
@@ -24,6 +25,9 @@ import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.jei.JEIPlugin;
 import com.lowdragmc.lowdraglib.utils.Position;
+
+import net.minecraft.nbt.CompoundTag;
+
 import com.moguang.ctnhbio.mixin.emi.EmiApiMixin;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import dev.emi.emi.api.EmiApi;
@@ -31,7 +35,6 @@ import dev.emi.emi.api.recipe.EmiRecipe;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
 import mezz.jei.api.recipe.RecipeType;
-import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -39,7 +42,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CBRecipeTypeUI extends GTRecipeTypeUI {
+
     public GTRecipeType gtRecipeType;
+
     public CBRecipeTypeUI(@NotNull GTRecipeType recipeType) {
         super(recipeType);
         gtRecipeType = recipeType;
@@ -97,10 +102,14 @@ public class CBRecipeTypeUI extends GTRecipeTypeUI {
     }
 
     @Override
-    protected IGuiTexture getOverlaysForSlot(boolean isOutput, RecipeCapability<?> capability, boolean isLast, boolean isSteam, boolean isHighPressure) {
-        IGuiTexture base = capability == FluidRecipeCapability.CAP ? CBGuiTextures.FLUID_SLOT : (isSteam ? GuiTextures.SLOT_STEAM.get(isHighPressure) : CBGuiTextures.SLOT);
-        byte overlayKey = (byte)((isOutput ? 2 : 0) + (capability == FluidRecipeCapability.CAP ? 1 : 0) + (isLast ? 4 : 0));
-        return (IGuiTexture)(this.getSlotOverlays().containsKey(overlayKey) ? new GuiTextureGroup(new IGuiTexture[]{(IGuiTexture)base, (IGuiTexture)this.getSlotOverlays().get(overlayKey)}) : base);
+    protected IGuiTexture getOverlaysForSlot(boolean isOutput, RecipeCapability<?> capability, boolean isLast,
+                                             boolean isSteam, boolean isHighPressure) {
+        IGuiTexture base = capability == FluidRecipeCapability.CAP ? CBGuiTextures.FLUID_SLOT :
+                (isSteam ? GuiTextures.SLOT_STEAM.get(isHighPressure) : CBGuiTextures.SLOT);
+        byte overlayKey = (byte) ((isOutput ? 2 : 0) + (capability == FluidRecipeCapability.CAP ? 1 : 0) +
+                (isLast ? 4 : 0));
+        return (IGuiTexture) (this.getSlotOverlays().containsKey(overlayKey) ? new GuiTextureGroup(
+                new IGuiTexture[] { (IGuiTexture) base, (IGuiTexture) this.getSlotOverlays().get(overlayKey) }) : base);
     }
 
     @Override
@@ -159,27 +168,30 @@ public class CBRecipeTypeUI extends GTRecipeTypeUI {
                 for (Widget widget : progress) {
                     template.addWidget(new ButtonWidget(widget.getPosition().x, widget.getPosition().y,
                             widget.getSize().width, widget.getSize().height, IGuiTexture.EMPTY, cd -> {
-                        if (cd.isRemote) {
-                            if (GTCEu.Mods.isJEILoaded()) {
-                                JEIPlugin.jeiRuntime.getRecipesGui().showTypes(
-                                        Stream.concat(
-                                                gtRecipeType.getCategories().stream()
-                                                        .filter(GTRecipeCategory::isXEIVisible)
-                                                        .map(GTRecipeJEICategory::machineType),
-                                                Stream.of(new RecipeType<>(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory().registryKey, GTRecipe.class))
-                                        ).collect(Collectors.toList())
-                                );
-                            }
-                            else if(GTCEu.Mods.isEMILoaded()){
-                                var category1 = GTRecipeEMICategory.machineCategory(gtRecipeType.getCategory());
-                                var category2 = GTRecipeEMICategory.machineCategory(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory());
-                                Map<EmiRecipeCategory, List<EmiRecipe>> map = new HashMap<>();
-                                map.put(category1, EmiApi.getRecipeManager().getRecipes(category1));
-                                map.put(category2, EmiApi.getRecipeManager().getRecipes(category2));
-                                EmiApiMixin.setPages(map, EmiStack.EMPTY);
-                            }
-                        }
-                    }).setHoverTooltips("gtceu.recipe_type.show_recipes"));
+                                if (cd.isRemote) {
+                                    if (GTCEu.Mods.isJEILoaded()) {
+                                        JEIPlugin.jeiRuntime.getRecipesGui().showTypes(
+                                                Stream.concat(
+                                                        gtRecipeType.getCategories().stream()
+                                                                .filter(GTRecipeCategory::isXEIVisible)
+                                                                .map(GTRecipeJEICategory::machineType),
+                                                        Stream.of(
+                                                                new RecipeType<>(
+                                                                        CBRecipeTypes.BASIC_LIVING_RECIPES
+                                                                                .getCategory().registryKey,
+                                                                        GTRecipe.class)))
+                                                        .collect(Collectors.toList()));
+                                    } else if (GTCEu.Mods.isEMILoaded()) {
+                                        var category1 = GTRecipeEMICategory.machineCategory(gtRecipeType.getCategory());
+                                        var category2 = GTRecipeEMICategory
+                                                .machineCategory(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory());
+                                        Map<EmiRecipeCategory, List<EmiRecipe>> map = new HashMap<>();
+                                        map.put(category1, EmiApi.getRecipeManager().getRecipes(category1));
+                                        map.put(category2, EmiApi.getRecipeManager().getRecipes(category2));
+                                        EmiApiMixin.setPages(map, EmiStack.EMPTY);
+                                    }
+                                }
+                            }).setHoverTooltips("gtceu.recipe_type.show_recipes"));
                 }
             }
 
@@ -195,7 +207,8 @@ public class CBRecipeTypeUI extends GTRecipeTypeUI {
                         WidgetUtils.widgetByIdForEach(template, "^%s_[0-9]+$".formatted(cap.slotName(io)), widgetClass,
                                 widget -> {
                                     var index = WidgetUtils.widgetIdIndex(widget);
-                                    cap.applyWidgetInfo(widget, index, isJEI, io, recipeHolder, gtRecipeType, null, null,
+                                    cap.applyWidgetInfo(widget, index, isJEI, io, recipeHolder, gtRecipeType, null,
+                                            null,
                                             storage, 0, 0);
                                 });
                     }
