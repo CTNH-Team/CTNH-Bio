@@ -27,10 +27,13 @@ import com.lowdragmc.lowdraglib.utils.Position;
 import net.minecraft.Util;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
@@ -168,7 +171,6 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             if (getMachineEntity() != null) {
                 this.energyContainer.changeEnergy(GTValues.V[tier + 1]);
                 this.machineEntity.hurt(GTDamageTypes.ELECTRIC.source(this.getLevel()), tier);
-                String a = "123";
             }
         }
     }
@@ -286,6 +288,35 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         }
         if (isCircuitSlotEnabled()) {
             configuratorPanel.attachConfigurators(new BioCircuitFancyConfigurator(circuitInventory.storage));
+        }
+    }
+
+    @Override
+    public void afterWorking() {
+        super.afterWorking();
+        var recipe = getRecipeLogic().getLastRecipe();
+        if(recipe != null && recipe.data.contains("effects")){
+            var tag = recipe.data.get("effects");
+            if(tag instanceof ListTag listTag){
+                listTag.stream()
+                        .filter(CompoundTag.class::isInstance)
+                        .map(CompoundTag.class::cast)
+                        .map(MobEffectInstance::load)
+                        .filter(Objects::nonNull)
+                        .forEach(effect -> appendEffect(getMachineEntity(), effect));
+            }
+
+        }
+    }
+
+    public static void appendEffect(LivingEntity entity, MobEffectInstance mobEffect) {
+        MobEffectInstance existEffect = entity.getEffect(mobEffect.getEffect());
+        if (existEffect != null) {
+            MobEffectInstance newEffect = new MobEffectInstance(existEffect.getEffect(), existEffect.getDuration() + mobEffect.getDuration(), existEffect.getAmplifier(), existEffect.isAmbient(), existEffect.isVisible(), existEffect.showIcon());
+            entity.addEffect(newEffect);
+        }
+        else {
+            entity.addEffect(mobEffect);
         }
     }
 
