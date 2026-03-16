@@ -110,7 +110,7 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
     static Lang any_food;
 
     @CN("配方时间和产出\n由食物的饱食度和饱和度决定")
-    @EN("Recipe duration and output\nare determined by the food’s nutrition and saturation")
+    @EN("Recipe duration and output\nare determined by the food’s Hunger Value and Saturation")// 实际上食物具有的应当是“饥饿值”
     public static Lang based_on_nutrition;
 
     @Override

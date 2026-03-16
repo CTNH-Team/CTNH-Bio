@@ -100,7 +100,7 @@ public class CBItems {
             "A metal skeleton intricate as vascular circuits, with every groove pulsing rhythmically, as if transporting some invisible life energy."
     })
     static Lang[] synetcore;
-    public static ItemEntry<ComponentItem> SYNET_CORE = REGISTRATE
+    public static ItemEntry<ComponentItem> SYNET_CORE = REGISTRATE // 需要修改
             .item("synet_core", ComponentItem::create)
             .cnlang("脉络核心")
             .lang("Synet Core")
@@ -119,7 +119,7 @@ public class CBItems {
             "A geometric structure perpetually folding upon itself, its surface revealing angles that defy Euclidean laws, continuously performing impossible spatial transformations in stillness."
     })
     static Lang[] metacore;
-    public static ItemEntry<ComponentItem> META_CORE = REGISTRATE
+    public static ItemEntry<ComponentItem> META_CORE = REGISTRATE  // 需要修改？
             .item("meta_core", ComponentItem::create)
             .cnlang("拓扑核心")
             .lang("Meta Core")

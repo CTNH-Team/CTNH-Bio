@@ -243,7 +243,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             }));
 
     @CN("营养:")
-    @EN("Nutrient:")
+    @EN("Nutrients:")
     @Key("nuinfo")
     static Lang nutrient;
 
@@ -295,9 +295,9 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     public void afterWorking() {
         super.afterWorking();
         var recipe = getRecipeLogic().getLastRecipe();
-        if(recipe != null && recipe.data.contains("effects")){
+        if (recipe != null && recipe.data.contains("effects")) {
             var tag = recipe.data.get("effects");
-            if(tag instanceof ListTag listTag){
+            if (tag instanceof ListTag listTag) {
                 listTag.stream()
                         .filter(CompoundTag.class::isInstance)
                         .map(CompoundTag.class::cast)
@@ -312,10 +312,11 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     public static void appendEffect(LivingEntity entity, MobEffectInstance mobEffect) {
         MobEffectInstance existEffect = entity.getEffect(mobEffect.getEffect());
         if (existEffect != null) {
-            MobEffectInstance newEffect = new MobEffectInstance(existEffect.getEffect(), existEffect.getDuration() + mobEffect.getDuration(), existEffect.getAmplifier(), existEffect.isAmbient(), existEffect.isVisible(), existEffect.showIcon());
+            MobEffectInstance newEffect = new MobEffectInstance(existEffect.getEffect(),
+                    existEffect.getDuration() + mobEffect.getDuration(), existEffect.getAmplifier(),
+                    existEffect.isAmbient(), existEffect.isVisible(), existEffect.showIcon());
             entity.addEffect(newEffect);
-        }
-        else {
+        } else {
             entity.addEffect(mobEffect);
         }
     }

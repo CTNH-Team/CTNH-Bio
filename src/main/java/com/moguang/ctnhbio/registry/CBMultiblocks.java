@@ -41,6 +41,7 @@ import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 @Suffix("tooltip")
 public class CBMultiblocks {
 
+    // spotless off
     public static MultiblockMachineDefinition GREAT_FLESH;
     public static MultiblockMachineDefinition CIRCULATORY_SYSTEM;
     public static MultiblockMachineDefinition COGNI_ASSEMBLER;
@@ -92,9 +93,9 @@ public class CBMultiblocks {
                         LivingMultiMetaMachineBlock::new,
                         MetaMachineItem::new)
                 .cnLangValue("循环系统")
+                .langValue("Circulatory System")
                 .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
-                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
-                        CBRecipeModifier::batchMode)
+                .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
                 .pattern(definition -> FactoryBlockPattern.start()
                         .aisle("AAAAA", "BCCCB", "BCCCB", "BCCCB", "AAAAA")
                         .aisle("ADDDA", "CEEEC", "C###C", "C###C", "ADDDA")
@@ -104,7 +105,9 @@ public class CBMultiblocks {
                         .where("E",
                                 Predicates.blocks(ForgeRegistries.BLOCKS
                                         .getValue(ResourceLocation.parse("biomancy:acid_fluid_block"))))
-                        .where("C", Predicates.blocks(CBBlocks.IMPERMEABLE_MEMBRANE.get()))
+                        .where("C", Predicates.blocks(CBBlocks.IMPERMEABLE_MEMBRANE.get())
+
+                        )
                         .where("F",
                                 Predicates.blocks(ForgeRegistries.BLOCKS
                                         .getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
@@ -117,8 +120,7 @@ public class CBMultiblocks {
                                 Predicates
                                         .blocks(ForgeRegistries.BLOCKS
                                                 .getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
-                                        .or(Predicates.autoAbilities(definition.getRecipeTypes()))
-                                        .or(Predicates.autoAbilities(false, false, true)))
+                                        .or(Predicates.autoAbilities(definition.getRecipeTypes())))
                         .where("#", Predicates.any())
                         .where("B",
                                 Predicates.blocks(ForgeRegistries.BLOCKS
@@ -144,9 +146,9 @@ public class CBMultiblocks {
                         LivingMultiMetaMachineBlock::new,
                         MetaMachineItem::new)
                 .cnLangValue("意识装配机")
+                .langValue("Cogni Assembler")
                 .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES, CBRecipeTypes.COGNI_ASSEMBLY_STEP)
-                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
-                        CBRecipeModifier::batchMode)
+                .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
                 .pattern(definition -> FactoryBlockPattern.start()
                         .aisle("AAAAA", "BCACB", "BDADB", "BCACB", "AAAAA")
                         .aisle("AEEEA", "CFGFC", "DFGFD", "CFGFC", "AEEEA")
@@ -160,8 +162,7 @@ public class CBMultiblocks {
                         .where("E", Predicates.blocks(CBBlocks.PRIMAL_FLESH_CASING.get())
                                 .or(Predicates.autoAbilities(definition.getRecipeTypes(), false, false, true, true,
                                         true, true))
-                                .or(Predicates.abilities(PartAbility.INPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
-                                .or(Predicates.autoAbilities(false, false, true)))
+                                .or(Predicates.abilities(PartAbility.INPUT_ENERGY).setExactLimit(1).setPreviewCount(1)))
                         .where("H",
                                 Predicates
                                         .blocks(ForgeRegistries.BLOCKS
@@ -205,9 +206,9 @@ public class CBMultiblocks {
                         LivingMultiMetaMachineBlock::new,
                         MetaMachineItem::new)
                 .cnLangValue("风化器")
+                .langValue("Weatherer")
                 .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
-                .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
-                        CBRecipeModifier::batchMode)
+                .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
                 .pattern(definition -> FactoryBlockPattern.start()
                         .aisle("#BBBBB#", "#######", "#######", "#######", "#######", "#######", "#######", "#######")
                         .aisle("BCCCCCB", "#CDDDC#", "#C###C#", "#E###E#", "#E###E#", "#E###E#", "#EE#EE#", "#######")
@@ -231,8 +232,7 @@ public class CBMultiblocks {
                                 Predicates
                                         .blocks(ForgeRegistries.BLOCKS
                                                 .getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
-                                        .or(Predicates.autoAbilities(definition.getRecipeTypes()))
-                                        .or(Predicates.autoAbilities(false, false, true)))
+                                        .or(Predicates.autoAbilities(definition.getRecipeTypes())))
                         .where("F",
                                 Predicates.blocks(ForgeRegistries.BLOCKS
                                         .getValue(ResourceLocation.parse("ctnhbio:acid_flesh_casing"))))
@@ -259,6 +259,7 @@ public class CBMultiblocks {
         HOSTILE_OBSERVER = REGISTRATE
                 .multiblock("hostile_observer", HostileObserverMachine::new)
                 .cnLangValue("敌意观测站")
+                .langValue("Hostile Observer")
                 .recipeType(CBRecipeTypes.HOSTILE_OBSERVATION)
                 .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH,
                         HostileObserverMachine::hostileObserverMachineModifier)
@@ -425,4 +426,6 @@ public class CBMultiblocks {
     @CN("无法超频")
     @EN("NO Overclock")
     static Lang no_overclock;
+
+    // spotless on
 }

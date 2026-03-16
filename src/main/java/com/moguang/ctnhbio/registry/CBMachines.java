@@ -201,7 +201,7 @@ public class CBMachines {
         })
         @EN({
                 "§3Automated Thinking",
-                "§rProvides %d compute power when power and nutrition are sufficient",
+                "§rProvides %d compute power when power and nutrients are sufficient",
                 "§rOverclocking provides double compute power, but causes irreversible brain damage"
         })
         static Lang[] tooltip;

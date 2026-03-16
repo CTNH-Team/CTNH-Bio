@@ -3,22 +3,43 @@ package com.moguang.ctnhbio.data.lang;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.lang.utils.*;
+import com.moguang.ctnhmana.data.lang.utils.EntityPropertyLangUtil;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
 public class EnglishLangHandler {
 
     public static void init(RegistrateLangProvider provider) {
+        provider.add(CBMachines.BRAIN_IN_A_VAT[HV].getBlock(), "§6HV Brain in a vat§r");
+        provider.add(CBMachines.BRAIN_IN_A_VAT[EV].getBlock(), "§5EV Brain in a vat§r");
+        provider.add(CBMachines.BRAIN_IN_A_VAT[IV].getBlock(), "§9IV Brain in a vat§r");
+        provider.add(CBMachines.BRAIN_IN_A_VAT[LuV].getBlock(), "§dLuV Brain in a vat§r");
+
+        provider.add("ctnhbio.great_flesh.info.0",
+                "§5Feed the Primordial Cradlle and give it Potion of Healing, then the Cradle will hatch Flesh Blobs. Pick those Blobs with potentials (Those that are not hungry).");
+        provider.add("ctnhbio.great_flesh.info.1",
+                "§5Use Organic Vial to load Primordial Serum into Bio-injector and inject it to them.");
+        provider.add("ctnhbio.great_flesh.info.2",
+                "§5And they will show you the PUREST and the MOST PRIMAL forms of life.");
+
         provider.add("config.jade.plugin_gtceu.living_machine_status_provider", "[CTNH] Living Machine Status");
         provider.add("ctnhbio.living_machine", "living machine");
         provider.add("item.gtceu.tool.boning_knife", "%s Boning Knife");
         // replace(provider, );
+
+        provider.add("fluid_type.biofactory.nutrients_fluid", "Nutrients Fluid");
+
         provider.add("emi.category.ctnhbio.despoil_loot", "Despoil");
-        provider.add("ctnhbio.nutrient_bar.info", "Nutrient:");
-        provider.add("jade.nutrient.info", "Nutrient: %s");
+        provider.add("ctnhbio.nutrient_bar.info", "Nutrients:");
+        provider.add("jade.nutrient.info", "Nutrients: %s");
 
         // provider.add("recipe.condition.effect.tooltip", "Potion Effect : %s");
-        provider.add("ctnhbio.recipe.nutrient", "Nutrient Consumption: %d");
+        provider.add("ctnhbio.recipe.nutrient", "Nutrients Consumption:%d");
+        provider.add("ctnhbio.recipe.nutrient_generate", "Nutrients Generation:%d");
         provider.add("ctnhbio.jade.nutrient_stored", "%s / %s");
+
+        provider.add("jei.ctnhbio.mob_crushing", "Mob Crushing");
+        provider.add("jei.ctnhbio.tooltip.chance", "Chance:");
+        provider.add("jei.ctnhbio.tooltip.amount_range", "Amount:%d-%d");
 
         // provider.add("ctnhbio.fluid.type_organic.tooltip", "§aBioactive Fluid");
         // provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§aCan handle Bioactive Fluid");

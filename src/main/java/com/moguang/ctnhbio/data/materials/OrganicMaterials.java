@@ -14,7 +14,7 @@ import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
-@Prefix("material")
+@Prefix("organicmaterialsswinter")
 public class OrganicMaterials {
 
     @CN({
@@ -23,7 +23,7 @@ public class OrganicMaterials {
     })
     @EN({
             "§aBioactive Fluid",
-            "§aCan handle Bioactive Fluid"
+            "§aCan transport Bioactive Fluid"
     })
     static Lang[] organic;
     public static FluidAttribute ORGANIC = new FluidAttribute(
