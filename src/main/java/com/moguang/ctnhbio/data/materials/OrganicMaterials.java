@@ -14,7 +14,7 @@ import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
-@Prefix("organicmaterialsswinter")
+@Prefix("material")
 public class OrganicMaterials {
 
     @CN({

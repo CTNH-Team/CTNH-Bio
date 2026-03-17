@@ -3,17 +3,15 @@ package com.moguang.ctnhbio.data.lang;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.lang.utils.*;
-import com.moguang.ctnhmana.data.lang.utils.EntityPropertyLangUtil;
+
+import com.moguang.ctnhbio.registry.CBMachines;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
+
+import static com.gregtechceu.gtceu.api.GTValues.*;
 
 public class EnglishLangHandler {
 
     public static void init(RegistrateLangProvider provider) {
-        provider.add(CBMachines.BRAIN_IN_A_VAT[HV].getBlock(), "§6HV Brain in a vat§r");
-        provider.add(CBMachines.BRAIN_IN_A_VAT[EV].getBlock(), "§5EV Brain in a vat§r");
-        provider.add(CBMachines.BRAIN_IN_A_VAT[IV].getBlock(), "§9IV Brain in a vat§r");
-        provider.add(CBMachines.BRAIN_IN_A_VAT[LuV].getBlock(), "§dLuV Brain in a vat§r");
-
         provider.add("ctnhbio.great_flesh.info.0",
                 "§5Feed the Primordial Cradlle and give it Potion of Healing, then the Cradle will hatch Flesh Blobs. Pick those Blobs with potentials (Those that are not hungry).");
         provider.add("ctnhbio.great_flesh.info.1",
