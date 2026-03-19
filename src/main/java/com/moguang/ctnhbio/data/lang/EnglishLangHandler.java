@@ -3,8 +3,6 @@ package com.moguang.ctnhbio.data.lang;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProperties;
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.lang.utils.*;
-
-import com.moguang.ctnhbio.registry.CBMachines;
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
