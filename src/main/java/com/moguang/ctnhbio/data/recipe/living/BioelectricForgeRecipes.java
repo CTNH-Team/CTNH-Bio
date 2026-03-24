@@ -534,7 +534,7 @@ public class BioelectricForgeRecipes {
                 .inputItems(GTItems.WETWARE_PROCESSOR_LuV.get().getDefaultInstance(), 2)
                 .inputItems(CBItems.WETWARE_INDUCTOR.get().getDefaultInstance(), 2)
                 .inputItems(CBItems.WETWARE_CAPACITOR.get().getDefaultInstance(), 2)
-                .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("gtceu:advanced_ram_chip")), 4)
+                .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("ctnhcore:advanced_ram_chip")), 4)
                 .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("gtceu:fine_bio_flexible_wire")), 64)
                 .inputFluids(new FluidStack(Ageing_Serum.getFluid(), 100))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))

@@ -241,9 +241,6 @@ public class CogniRecipeBuilder {
                 .inputItems(allItemInputs.toArray(Ingredient[]::new))
                 .inputFluids(allFluidInputs.toArray(FluidIngredient[]::new))
                 .outputItems(finalOutput) // 先输出最终产物
-                .outputItems(allItemOutputs.toArray(Ingredient[]::new))
-
-                .outputFluids(allFluidOutputs.toArray(FluidIngredient[]::new))
                 .EUt(eut)
                 .duration(this.duration * subRecipes.size()); // 总时间为各步骤时间之和
         for (var model : allModels) {
