@@ -4,7 +4,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 
-import fr.lucreeper74.createmetallurgy.content.blocks.industrial_crucible.foundry.recipes.EntityIngredient;
 import lombok.Getter;
 
 import java.util.Optional;
@@ -42,7 +41,7 @@ public class MobCrushingRecipe {
         return Optional.of(stack);
     }
 
-    public EntityIngredient.EntityInput getDisplay() {
-        return new EntityIngredient.EntityInput(entityType);
-    }
+    // public EntityIngredient.EntityInput getDisplay() {
+    // return new EntityIngredient.EntityInput(entityType);
+    // }
 }
