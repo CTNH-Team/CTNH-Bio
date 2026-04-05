@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Prefix("recipe.condition")
-public class EffectCondition extends RecipeCondition {
+public class EffectCondition extends RecipeCondition<EffectCondition> {
 
     public static final Codec<EffectCondition> CODEC = RecordCodecBuilder
             .create(instance -> RecipeCondition.isReverse(instance)
@@ -54,7 +54,7 @@ public class EffectCondition extends RecipeCondition {
     }
 
     @Override
-    public RecipeConditionType<?> getType() {
+    public RecipeConditionType<EffectCondition> getType() {
         return CBRecipeConditions.EFFECT;
     }
 

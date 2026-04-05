@@ -10,7 +10,6 @@ import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.registry.registrate.MultiblockMachineBuilder;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
 
 import net.minecraft.core.BlockPos;
@@ -23,7 +22,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
 import com.moguang.ctnhbio.CTNHBio;
-import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
@@ -51,13 +49,13 @@ public class CBRegistrate extends CNRegistrate {
         return new CBRegistrate();
     }
 
-    public MultiblockMachineBuilder biomultiblock(String name,
-                                                  Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine) {
-        return new MultiblockMachineBuilder(this, name, metaMachine,
-                LivingMetaMachineBlock::new, MetaMachineItem::new,
-                (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state,
-                        CBEntities.LIVING_META_MACHINE_ENTITY.get()));
-    }
+    // public MultiblockMachineBuilder biomultiblock(String name,
+    // Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine) {
+    // return new MultiblockMachineBuilder(this, name, metaMachine,
+    // LivingMetaMachineBlock::new, MetaMachineItem::new,
+    // (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state,
+    // CBEntities.LIVING_META_MACHINE_ENTITY.get()));
+    // }
 
     public CTNHMultiblockMachineBuilder biomultiblock(String name,
                                                       Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine,
@@ -87,14 +85,14 @@ public class CBRegistrate extends CNRegistrate {
 
     @NotNull
     @ParametersAreNonnullByDefault
-    public CTNHMachineBuilder<MachineDefinition> livingMachine(int tier,
-                                                               String name,
-                                                               BiFunction<IMachineBlockEntity, Integer, MetaMachine> metaMachine,
-                                                               BiFunction<BlockBehaviour.Properties, MachineDefinition, IMachineBlock> blockFactory,
-                                                               TriFunction<BlockEntityType<?>, BlockPos, BlockState, IMachineBlockEntity> blockEntityFactory,
-                                                               GTRecipeType recipeType,
-                                                               boolean transparent) {
-        return (CTNHMachineBuilder<MachineDefinition>) super.machine(
+    public CTNHMachineBuilder livingMachine(int tier,
+                                            String name,
+                                            BiFunction<IMachineBlockEntity, Integer, MetaMachine> metaMachine,
+                                            BiFunction<BlockBehaviour.Properties, MachineDefinition, IMachineBlock> blockFactory,
+                                            TriFunction<BlockEntityType<?>, BlockPos, BlockState, IMachineBlockEntity> blockEntityFactory,
+                                            GTRecipeType recipeType,
+                                            boolean transparent) {
+        return super.machine(
                 GTValues.VN[tier].toLowerCase(Locale.ROOT) + '_' + name,
                 MachineDefinition::new,
                 holder -> metaMachine.apply(holder, tier),
@@ -121,12 +119,12 @@ public class CBRegistrate extends CNRegistrate {
 
     @NotNull
     @ParametersAreNonnullByDefault
-    public CTNHMachineBuilder<MachineDefinition> livingMachine(int tier,
-                                                               String name,
-                                                               BiFunction<IMachineBlockEntity, Integer, MetaMachine> metaMachine,
-                                                               BiFunction<BlockBehaviour.Properties, MachineDefinition, IMachineBlock> blockFactory,
-                                                               GTRecipeType recipeType,
-                                                               boolean transparent) {
+    public CTNHMachineBuilder livingMachine(int tier,
+                                            String name,
+                                            BiFunction<IMachineBlockEntity, Integer, MetaMachine> metaMachine,
+                                            BiFunction<BlockBehaviour.Properties, MachineDefinition, IMachineBlock> blockFactory,
+                                            GTRecipeType recipeType,
+                                            boolean transparent) {
         return livingMachine(
                 tier,
                 name,

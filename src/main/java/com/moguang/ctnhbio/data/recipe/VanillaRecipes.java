@@ -17,7 +17,8 @@ public class VanillaRecipes {
     @SuppressWarnings("all")
     public static void init(Consumer<FinishedRecipe> provider) {
         // LIVING_FLESH
-        VanillaRecipeHelper.addShapedRecipe(provider, false, true,
+        VanillaRecipeHelper.addShapedRecipe(provider,
+                false, false, false,
                 CTNHBio.id("living_flesh_recipe"),
                 new ItemStack(ModItems.LIVING_FLESH.get(), 16),
                 "ABC",
@@ -33,7 +34,7 @@ public class VanillaRecipes {
                 'G', Items.CHICKEN);
 
         // PRIMORDIAL_CORE
-        VanillaRecipeHelper.addShapedRecipe(provider, false, true,
+        VanillaRecipeHelper.addShapedRecipe(provider, false, false, false,
                 CTNHBio.id("primordial_core_recipe"),
                 new ItemStack(ModItems.PRIMORDIAL_CORE.get(), 1),
                 "ABA",
