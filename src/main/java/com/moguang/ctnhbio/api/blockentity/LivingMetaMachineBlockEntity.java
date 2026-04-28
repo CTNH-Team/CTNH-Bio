@@ -3,6 +3,7 @@ package com.moguang.ctnhbio.api.blockentity;
 import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
+import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableMultiblockMachine;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
 
@@ -18,13 +19,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import com.moguang.ctnhbio.api.IHostAwareEntity;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
 import lombok.Getter;
 import software.bernie.geckolib.animatable.GeoBlockEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayList;
@@ -33,6 +37,12 @@ import java.util.UUID;
 
 @Getter
 public class LivingMetaMachineBlockEntity extends MetaMachineBlockEntity implements GeoBlockEntity {
+
+    private static final RawAnimation IDLE_ANIMATION = RawAnimation.begin().thenLoop("idle");
+    private static final RawAnimation WORKING_ANIMATION = RawAnimation.begin().thenLoop("working");
+    private static final RawAnimation HURT_ANIMATION = RawAnimation.begin().thenPlay("hurt");
+    private static final int HURT_ANIMATION_EVENT = 1;
+    private static final int HURT_ANIMATION_TICKS = 10;
 
     private static final String HOSTED_ENTITY_UUID_TAG = "HostedEntityUuid";
     private static final int ENTITY_RESOLVE_INTERVAL = 20;
@@ -45,6 +55,7 @@ public class LivingMetaMachineBlockEntity extends MetaMachineBlockEntity impleme
     private UUID hostedEntityUuid;
     private long nextEntityResolveTick;
     private long missingEntitySinceTick = -1;
+    private long hurtAnimationUntilTick = -1;
     public Vec3 entityOffset = new Vec3(0.5, 0, 0.5);
 
     public LivingMetaMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState,
@@ -98,6 +109,16 @@ public class LivingMetaMachineBlockEntity extends MetaMachineBlockEntity impleme
         level.getServer().submit(() -> level.destroyBlock(getBlockPos(), !source.is(GTDamageTypes.ELECTRIC.key)));
     }
 
+    public void onHostedEntityHurt() {
+        if (level == null) {
+            return;
+        }
+        hurtAnimationUntilTick = level.getGameTime() + HURT_ANIMATION_TICKS;
+        if (!level.isClientSide) {
+            level.blockEvent(getBlockPos(), getBlockState().getBlock(), HURT_ANIMATION_EVENT, HURT_ANIMATION_TICKS);
+        }
+    }
+
     public LivingMetaMachineEntity createHostedEntity(Level level) {
         LivingMetaMachineEntity entity = entityType.create(level);
         if (entity == null) {
@@ -112,10 +133,6 @@ public class LivingMetaMachineBlockEntity extends MetaMachineBlockEntity impleme
         }
         applyMachineEntityState(entity);
         return entity;
-    }
-
-    private boolean isEntityHostAware(LivingMetaMachineEntity entity) {
-        return entity instanceof IHostAwareEntity;
     }
 
     private boolean isTrackedEntityValid(LivingMetaMachineEntity entity) {
@@ -286,7 +303,42 @@ public class LivingMetaMachineBlockEntity extends MetaMachineBlockEntity impleme
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
+    public boolean triggerEvent(int id, int type) {
+        if (id == HURT_ANIMATION_EVENT && level != null) {
+            hurtAnimationUntilTick = level.getGameTime() + type;
+            return true;
+        }
+        return super.triggerEvent(id, type);
+    }
+
+    private String getAnimationKey() {
+        String path = getDefinition().getId().getPath();
+        if (path.contains("bioelectric_forge")) return "bioelectric_forge";
+        if (path.contains("decomposer")) return "decomposer";
+        if (path.contains("digester")) return "digester";
+        if (path.contains("bioreactor")) return "bioreactor";
+        return null;
+    }
+
+    private PlayState updateAnimation(AnimationState<LivingMetaMachineBlockEntity> state) {
+        if (getAnimationKey() == null) {
+            return PlayState.STOP;
+        }
+        if (level != null && level.getGameTime() < hurtAnimationUntilTick) {
+            state.setAnimation(HURT_ANIMATION);
+            return PlayState.CONTINUE;
+        }
+        boolean isWorking = metaMachine instanceof IRecipeLogicMachine recipeLogicMachine &&
+                recipeLogicMachine.isActive();
+
+        state.setAnimation(isWorking ? WORKING_ANIMATION : IDLE_ANIMATION);
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "main", 0, this::updateAnimation));
+    }
 
     protected final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 

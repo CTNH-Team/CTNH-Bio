@@ -7,8 +7,8 @@ import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
 import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
-import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
 import com.gregtechceu.gtceu.api.machine.fancyconfigurator.FancySelectorConfigurator;
+import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
 
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
@@ -75,7 +75,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
     public WorkableLivingMultiblockMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
-        this.nutrientStorage = new SynchronizedNutrientStorage(capacity);
+        this.nutrientStorage = new SynchronizedNutrientStorage(capacity, getRecipeLogic()::updateTickSubscription);
         this.inputTrait = new NotifiableNutrientTrait(this, nutrientStorage, IO.IN);
         this.outputTrait = new NotifiableNutrientTrait(this, nutrientStorage, IO.OUT);
         nutrientStorage.add(1000);

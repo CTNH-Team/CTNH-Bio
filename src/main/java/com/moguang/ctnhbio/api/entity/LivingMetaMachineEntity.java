@@ -86,6 +86,15 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
         }
     }
 
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        boolean result = super.hurt(source, amount);
+        if (result && holder != null && !level().isClientSide) {
+            holder.onHostedEntityHurt();
+        }
+        return result;
+    }
+
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)

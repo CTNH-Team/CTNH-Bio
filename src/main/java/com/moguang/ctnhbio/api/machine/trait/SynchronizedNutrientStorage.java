@@ -19,9 +19,12 @@ public class SynchronizedNutrientStorage implements IManaged {
     @Persisted
     private double capacity;
 
-    public SynchronizedNutrientStorage(double capacity) {
+    protected final Runnable listener;
+
+    public SynchronizedNutrientStorage(double capacity, Runnable listener) {
         this.amount = 0;
         this.capacity = capacity;
+        this.listener = listener;
     }
 
     public double getAmount() {
@@ -34,6 +37,9 @@ public class SynchronizedNutrientStorage implements IManaged {
 
     public double add(double toAdd) {
         toAdd = Math.min(toAdd, capacity - amount);
+        if (toAdd > 0) {
+            onChanged();
+        }
         amount += toAdd;
         return toAdd;
     }
@@ -41,6 +47,9 @@ public class SynchronizedNutrientStorage implements IManaged {
     public double extract(double toExtract) {
         toExtract = Math.min(toExtract, amount);
         amount -= toExtract;
+        if (toExtract > 0) {
+            onChanged();
+        }
         return toExtract;
     }
 
@@ -50,5 +59,7 @@ public class SynchronizedNutrientStorage implements IManaged {
     }
 
     @Override
-    public void onChanged() {}
+    public void onChanged() {
+        listener.run();
+    }
 }

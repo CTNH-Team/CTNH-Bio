@@ -81,7 +81,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     public BasicLivingMachine(IMachineBlockEntity holder, int tier, Object... args) {
         super(holder, tier, (tiers) -> tiers * 32000, args);
-        this.storage = new SynchronizedNutrientStorage(GTValues.V[tier] * 64);
+        this.storage = new SynchronizedNutrientStorage(GTValues.V[tier] * 64, getRecipeLogic()::updateTickSubscription);
         this.inputTrait = new NotifiableNutrientTrait(this, storage, IO.IN);
         this.outputTrait = new NotifiableNutrientTrait(this, storage, IO.OUT);
 
@@ -201,7 +201,8 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         float inputTier = explosionPower - 1;
         if (inputTier - tier >= 2) {
             if (machineEntity != null && machineEntity.isAlive()) {
-                machineEntity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()), Math.max(machineEntity.getMaxHealth(), 10));
+                machineEntity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()),
+                        Math.max(machineEntity.getMaxHealth(), 10));
             }
         } else {
             if (getMachineEntity() != null) {

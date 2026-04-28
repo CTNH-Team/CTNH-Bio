@@ -1,6 +1,5 @@
 package com.moguang.ctnhbio.api.recipe.customlogic;
 
-import com.github.elenterius.biomancy.crafting.AnyFoodIngredient;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.IRecipeCapabilityHolder;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
@@ -12,12 +11,12 @@ import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import com.github.elenterius.biofactory.init.ModFluids;
+import com.github.elenterius.biomancy.crafting.AnyFoodIngredient;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
@@ -116,8 +115,8 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
 
     @Override
     public void buildRepresentativeRecipes() {
-//        var food = Items.BREAD.getDefaultInstance();
-//        food.setHoverName(any_food.translate());
+        // var food = Items.BREAD.getDefaultInstance();
+        // food.setHoverName(any_food.translate());
         var bar = ModItems.NUTRIENT_BAR.get().getDefaultInstance();
         var paste = ModItems.NUTRIENT_PASTE.get().getDefaultInstance();
         var fluid = new FluidStack(ModFluids.NUTRIENTS_FLUID.get(), 1);

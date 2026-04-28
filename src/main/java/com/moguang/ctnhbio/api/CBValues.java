@@ -7,7 +7,7 @@ import software.bernie.geckolib.core.object.Color;
 
 public class CBValues {
 
-    public static final ResourceLocation EMPTY_ANIMATION = CTNHBio.id("animation/empty.animation.json");
+    public static final ResourceLocation EMPTY_ANIMATION = CTNHBio.id("animations/empty.animation.json");
 
     public enum VoltageColor {
 
