@@ -54,8 +54,12 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILiving
 
     @Override
     protected void write(CompoundTag data, ILivingMachine machine) {
-        var maxHealth = machine.getMachineEntity().getMaxHealth();
-        var health = machine.getMachineEntity().getHealth();
+        LivingEntity living = machine.getMachineEntity();
+        if (living == null) {
+            return;
+        }
+        var maxHealth = living.getMaxHealth();
+        var health = living.getHealth();
         data.putFloat("MaxHealth", maxHealth);
         data.putFloat("Health", health);
 
@@ -64,7 +68,6 @@ public class LivingMachineStatusProvider extends CapabilityBlockProvider<ILiving
         data.putDouble("NutrientAmount", nutrientAmount);
         data.putDouble("NutrientCapacity", nutrientCapacity);
 
-        LivingEntity living = machine.getMachineEntity();
         Collection<MobEffectInstance> effects = living.getActiveEffects();
         if (!effects.isEmpty()) {
             ListTag list = new ListTag();

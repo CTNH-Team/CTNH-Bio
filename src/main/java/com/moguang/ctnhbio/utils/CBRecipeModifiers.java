@@ -13,6 +13,9 @@ public class CBRecipeModifiers {
         if (machine instanceof ILivingMachine livingMachine) {
             var builder = ModifierFunction.builder();
             var entity = livingMachine.getMachineEntity();
+            if (entity == null) {
+                return ModifierFunction.IDENTITY;
+            }
             if (entity.getEffect(MobEffects.DIG_SPEED) != null) {
                 int tier = entity.getEffect(MobEffects.DIG_SPEED).getAmplifier();
                 builder.durationMultiplier(Math.max(0, 1 - 0.2 * tier));

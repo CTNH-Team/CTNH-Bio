@@ -8,6 +8,8 @@ import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
 import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
+import com.gregtechceu.gtceu.api.machine.TickableSubscription;
+import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
@@ -58,7 +60,7 @@ import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 import java.util.*;
 import java.util.function.BiFunction;
 
-public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMachine {
+public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMachine, IMachineLife {
 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(BasicLivingMachine.class,
             SimpleTieredMachine.MANAGED_FIELD_HOLDER);
@@ -73,6 +75,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     private final SynchronizedNutrientStorage storage;
 
     private LivingMetaMachineEntity machineEntity;
+    private TickableSubscription entityBindingSubscription;
     @Setter
     private String name = null;
 
@@ -87,15 +90,44 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     @Override
     public LivingMetaMachineEntity getMachineEntity() {
-        if (machineEntity == null) {
-            machineEntity = ((LivingMetaMachineBlockEntity) holder).getHostedEntity();
+        if (machineEntity == null || !machineEntity.isAlive() || machineEntity.isRemoved()) {
+            refreshMachineEntityBinding();
         }
         return machineEntity;
     }
 
+    protected void refreshMachineEntityBinding() {
+        if (holder instanceof LivingMetaMachineBlockEntity blockEntity) {
+            blockEntity.refreshHostedEntityBinding(true);
+            machineEntity = blockEntity.getHostedEntity();
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        refreshMachineEntityBinding();
+        entityBindingSubscription = subscribeServerTick(entityBindingSubscription, this::refreshMachineEntityBinding);
+    }
+
+    @Override
+    public void onMachineRemoved() {
+        if (holder instanceof LivingMetaMachineBlockEntity blockEntity) {
+            blockEntity.removeHostedEntityImmediately();
+        }
+    }
+
+    @Override
+    public void onMachinePlaced(@Nullable LivingEntity player, ItemStack stack) {
+        if (holder instanceof LivingMetaMachineBlockEntity blockEntity) {
+            blockEntity.createHostedEntityImmediately();
+            machineEntity = blockEntity.getHostedEntity();
+        }
+    }
+
     @Override
     public boolean beforeWorking(@Nullable GTRecipe recipe) {
-        return super.beforeWorking(recipe);
+        return getMachineEntity() != null && super.beforeWorking(recipe);
     }
 
     @Override
@@ -135,12 +167,16 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         // 判断是否是食物
         if (stack.isEdible() && stack.getFoodProperties(null) != null) {
             if (!getLevel().isClientSide) {
+                var livingEntity = getMachineEntity();
+                if (livingEntity == null) {
+                    return InteractionResult.PASS;
+                }
                 // if (!player.getAbilities().instabuild && !stack.getFoodProperties(player).canAlwaysEat()) {
                 // stack.shrink(1);
                 // }
                 int nutrition = stack.getFoodProperties(null).getNutrition();
                 float saturation = stack.getFoodProperties(null).getSaturationModifier();
-                getMachineEntity().eat(getLevel(), stack);
+                livingEntity.eat(getLevel(), stack);
                 storage.add(nutrition + 0.5 * saturation);
 
                 // getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
@@ -165,7 +201,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         float inputTier = explosionPower - 1;
         if (inputTier - tier >= 2) {
             if (machineEntity != null && machineEntity.isAlive()) {
-                machineEntity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()), machineEntity.getMaxHealth());
+                machineEntity.hurt(GTDamageTypes.ELECTRIC.source(getLevel()), Math.max(machineEntity.getMaxHealth(), 10));
             }
         } else {
             if (getMachineEntity() != null) {
@@ -298,12 +334,16 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         if (recipe != null && recipe.data.contains("effects")) {
             var tag = recipe.data.get("effects");
             if (tag instanceof ListTag listTag) {
+                LivingMetaMachineEntity entity = getMachineEntity();
+                if (entity == null) {
+                    return;
+                }
                 listTag.stream()
                         .filter(CompoundTag.class::isInstance)
                         .map(CompoundTag.class::cast)
                         .map(MobEffectInstance::load)
                         .filter(Objects::nonNull)
-                        .forEach(effect -> appendEffect(getMachineEntity(), effect));
+                        .forEach(effect -> appendEffect(entity, effect));
             }
 
         }

@@ -3,6 +3,7 @@ package com.moguang.ctnhbio.api.entity;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -23,8 +24,14 @@ import java.util.Collections;
 
 public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareEntity {
 
+    private static final String HOST_POS_TAG = "HostPos";
+    private static final int HOST_MISSING_GRACE_TICKS = 100;
+
     LivingMetaMachineBlockEntity holder;
+    @Nullable
+    private BlockPos hostPos;
     public boolean ifInit = false;
+    private int missingHostTicks;
 
     public LivingMetaMachineEntity(EntityType<? extends LivingEntity> type, Level level) {
         super(type, level);
@@ -35,13 +42,27 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     }
 
     @Override
+    @Nullable
     public LivingMetaMachineBlockEntity getHost() {
         return holder;
     }
 
     @Override
-    public void setHost(LivingMetaMachineBlockEntity host) {
+    public void setHost(@Nullable LivingMetaMachineBlockEntity host) {
         holder = host;
+        if (host != null) {
+            hostPos = host.getHostPos();
+            missingHostTicks = 0;
+        }
+    }
+
+    @Nullable
+    public BlockPos getStoredHostPos() {
+        return hostPos;
+    }
+
+    public boolean hasStoredHostPos(BlockPos pos) {
+        return hostPos != null && hostPos.equals(pos);
     }
 
     public void setPos(BlockPos pos, Vec3 offset) {
@@ -162,8 +183,50 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     public void checkInsideBlocks() {}
 
     @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        if (hostPos != null) {
+            tag.putLong(HOST_POS_TAG, hostPos.asLong());
+        }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains(HOST_POS_TAG)) {
+            hostPos = BlockPos.of(tag.getLong(HOST_POS_TAG));
+        } else {
+            hostPos = null;
+        }
+        holder = null;
+        missingHostTicks = 0;
+    }
+
+    private void refreshHostBinding() {
+        if (holder != null && (holder.isRemoved() || !holder.getHostPos().equals(hostPos))) {
+            holder = null;
+        }
+        if (holder == null && hostPos != null && tickCount % 20 == 0) {
+            if (level().getBlockEntity(hostPos) instanceof LivingMetaMachineBlockEntity blockEntity) {
+                blockEntity.bindHostedEntity(this);
+            }
+        }
+        if (holder == null && hostPos != null) {
+            missingHostTicks++;
+            if (missingHostTicks >= HOST_MISSING_GRACE_TICKS) {
+                discard();
+            }
+        } else {
+            missingHostTicks = 0;
+        }
+    }
+
+    @Override
     public void tick() {
         super.tick();
+        if (!level().isClientSide) {
+            refreshHostBinding();
+        }
         if (tickCount % 40 == 0)
             if (getHealth() < getMaxHealth()) {
                 if (getHost() != null && getHost().getHostMachine() instanceof ILivingMachine livingMachine) {

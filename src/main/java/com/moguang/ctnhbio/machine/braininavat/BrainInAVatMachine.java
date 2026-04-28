@@ -9,7 +9,6 @@ import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -45,15 +44,23 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     boolean isDoubted = false;
 
     @Persisted
-    public float maxHealth = 0;
+    private float maxHealth = 0;
 
     public boolean oc = false;
 
+    public float getStoredMaxHealth() {
+        return maxHealth;
+    }
+
+    public void captureMaxHealthFromEntity() {
+        if (holder instanceof LivingMetaMachineBlockEntity blockEntity && blockEntity.getHostedEntity() != null) {
+            maxHealth = blockEntity.getHostedEntity().getMaxHealth();
+        }
+    }
+
     @Override
     public void saveToItem(CompoundTag tag) {
-        if (holder instanceof LivingMetaMachineBlockEntity blockEntity && blockEntity.getMachineEntity() != null) {
-            maxHealth = blockEntity.getMachineEntity().getMaxHealth();
-        }
+        captureMaxHealthFromEntity();
         if (maxHealth != 0) {
             tag.putFloat("maxHealth", maxHealth);
         }
@@ -63,14 +70,7 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     @Override
     public void loadFromItem(CompoundTag tag) {
         IDropSaveMachine.super.loadFromItem(tag);
-        if (tag.contains("maxHealth")) {
-            maxHealth = tag.getFloat("maxHealth");
-        }
-        if (maxHealth != 0 &&
-                holder instanceof LivingMetaMachineBlockEntity blockEntity &&
-                blockEntity.getMachineEntity() != null) {
-            blockEntity.getMachineEntity().getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
-        }
+        maxHealth = tag.contains("maxHealth") ? tag.getFloat("maxHealth") : 0;
     }
 
     @Override

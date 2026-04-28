@@ -6,6 +6,8 @@ import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
 import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
+import com.gregtechceu.gtceu.api.machine.TickableSubscription;
+import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
 import com.gregtechceu.gtceu.api.machine.fancyconfigurator.FancySelectorConfigurator;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
 
@@ -23,6 +25,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
@@ -44,7 +47,8 @@ import java.util.Objects;
 
 import static com.moguang.ctnhbio.api.machine.BasicLivingMachine.appendEffect;
 
-public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockMachine implements ILivingMachine {
+public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockMachine
+                                             implements ILivingMachine, IMachineLife {
 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
             WorkableLivingMultiblockMachine.class, WorkableElectricMultiblockMachine.MANAGED_FIELD_HOLDER);
@@ -67,6 +71,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     protected ResourceLocation lastRecipeId;
 
     protected LivingMetaMachineEntity machineEntity;
+    protected TickableSubscription entityBindingSubscription;
 
     public WorkableLivingMultiblockMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
@@ -78,10 +83,17 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
     @Override
     public LivingMetaMachineEntity getMachineEntity() {
-        if (machineEntity == null) {
-            machineEntity = ((LivingMetaMachineBlockEntity) holder).getHostedEntity();
+        if (machineEntity == null || !machineEntity.isAlive() || machineEntity.isRemoved()) {
+            refreshMachineEntityBinding();
         }
         return machineEntity;
+    }
+
+    protected void refreshMachineEntityBinding() {
+        if (holder instanceof LivingMetaMachineBlockEntity blockEntity) {
+            blockEntity.refreshHostedEntityBinding(true);
+            machineEntity = blockEntity.getHostedEntity();
+        }
     }
 
     @Override
@@ -166,9 +178,26 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     @Override
     public void onLoad() {
         super.onLoad();
+        refreshMachineEntityBinding();
+        entityBindingSubscription = subscribeServerTick(entityBindingSubscription, this::refreshMachineEntityBinding);
         // subscribeServerTick(this::checkGrow);
         checkGrow();
         subscribeServerTick(this::tickGrow);
+    }
+
+    @Override
+    public void onMachineRemoved() {
+        if (holder instanceof LivingMetaMachineBlockEntity blockEntity) {
+            blockEntity.removeHostedEntityImmediately();
+        }
+    }
+
+    @Override
+    public void onMachinePlaced(LivingEntity player, ItemStack stack) {
+        if (holder instanceof LivingMetaMachineBlockEntity blockEntity) {
+            blockEntity.createHostedEntityImmediately();
+            machineEntity = blockEntity.getHostedEntity();
+        }
     }
 
     public boolean shouldTick(int interval) {
@@ -208,12 +237,16 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
         if (recipe != null && recipe.data.contains("effects")) {
             var tag = recipe.data.get("effects");
             if (tag instanceof ListTag listTag) {
+                LivingMetaMachineEntity entity = getMachineEntity();
+                if (entity == null) {
+                    return;
+                }
                 listTag.stream()
                         .filter(CompoundTag.class::isInstance)
                         .map(CompoundTag.class::cast)
                         .map(MobEffectInstance::load)
                         .filter(Objects::nonNull)
-                        .forEach(effect -> appendEffect(getMachineEntity(), effect));
+                        .forEach(effect -> appendEffect(entity, effect));
             }
 
         }
