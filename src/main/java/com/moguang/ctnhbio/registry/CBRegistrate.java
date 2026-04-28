@@ -53,7 +53,7 @@ public class CBRegistrate extends CNRegistrate {
     // Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine) {
     // return new MultiblockMachineBuilder(this, name, metaMachine,
     // LivingMetaMachineBlock::new, MetaMachineItem::new,
-    // (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state,
+    // (type, pos, state) -> new LivingMetaMachineBlockEntity(type, pos, state,
     // CBEntities.LIVING_META_MACHINE_ENTITY.get()));
     // }
 
@@ -66,7 +66,7 @@ public class CBRegistrate extends CNRegistrate {
                 metaMachine,
                 blockFactory,
                 itemFactory,
-                (type, pos, state) -> new LivingMetaMachineBlockEntity<>(type, pos, state,
+                (type, pos, state) -> new LivingMetaMachineBlockEntity(type, pos, state,
                         CBEntities.LIVING_META_MACHINE_ENTITY.get()))
                 .allowFlip(false).allowExtendedFacing(false);
     }

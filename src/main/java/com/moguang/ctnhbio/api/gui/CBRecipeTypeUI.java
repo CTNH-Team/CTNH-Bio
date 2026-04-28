@@ -164,32 +164,18 @@ public class CBRecipeTypeUI extends GTRecipeTypeUI {
                 progress.add(dualProgressWidget);
             });
             // add recipe button
-            if (!isJEI && (GTCEu.Mods.isREILoaded() || GTCEu.Mods.isJEILoaded() || GTCEu.Mods.isEMILoaded())) {
+            if (!isJEI) {
                 for (Widget widget : progress) {
                     template.addWidget(new ButtonWidget(widget.getPosition().x, widget.getPosition().y,
                             widget.getSize().width, widget.getSize().height, IGuiTexture.EMPTY, cd -> {
                                 if (cd.isRemote) {
-                                    if (GTCEu.Mods.isJEILoaded()) {
-                                        JEIPlugin.jeiRuntime.getRecipesGui().showTypes(
-                                                Stream.concat(
-                                                        gtRecipeType.getCategories().stream()
-                                                                .filter(GTRecipeCategory::isXEIVisible)
-                                                                .map(GTRecipeJEICategory::machineType),
-                                                        Stream.of(
-                                                                new RecipeType<>(
-                                                                        CBRecipeTypes.BASIC_LIVING_RECIPES
-                                                                                .getCategory().registryKey,
-                                                                        GTRecipe.class)))
-                                                        .collect(Collectors.toList()));
-                                    } else if (GTCEu.Mods.isEMILoaded()) {
-                                        var category1 = GTRecipeEMICategory.machineCategory(gtRecipeType.getCategory());
-                                        var category2 = GTRecipeEMICategory
-                                                .machineCategory(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory());
-                                        Map<EmiRecipeCategory, List<EmiRecipe>> map = new HashMap<>();
-                                        map.put(category1, EmiApi.getRecipeManager().getRecipes(category1));
-                                        map.put(category2, EmiApi.getRecipeManager().getRecipes(category2));
-                                        EmiApiMixin.setPages(map, EmiStack.EMPTY);
-                                    }
+                                    var category1 = GTRecipeEMICategory.machineCategory(gtRecipeType.getCategory());
+                                    var category2 = GTRecipeEMICategory
+                                            .machineCategory(CBRecipeTypes.BASIC_LIVING_RECIPES.getCategory());
+                                    Map<EmiRecipeCategory, List<EmiRecipe>> map = new HashMap<>();
+                                    map.put(category1, EmiApi.getRecipeManager().getRecipes(category1));
+                                    map.put(category2, EmiApi.getRecipeManager().getRecipes(category2));
+                                    EmiApiMixin.setPages(map, EmiStack.EMPTY);
                                 }
                             }).setHoverTooltips("gtceu.recipe_type.show_recipes"));
                 }

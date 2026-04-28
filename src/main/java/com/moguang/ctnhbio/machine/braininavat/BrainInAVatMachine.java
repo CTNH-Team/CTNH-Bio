@@ -51,7 +51,7 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
 
     @Override
     public void saveToItem(CompoundTag tag) {
-        if (holder instanceof LivingMetaMachineBlockEntity<?> blockEntity && blockEntity.getMachineEntity() != null) {
+        if (holder instanceof LivingMetaMachineBlockEntity blockEntity && blockEntity.getMachineEntity() != null) {
             maxHealth = blockEntity.getMachineEntity().getMaxHealth();
         }
         if (maxHealth != 0) {
@@ -67,7 +67,7 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
             maxHealth = tag.getFloat("maxHealth");
         }
         if (maxHealth != 0 &&
-                holder instanceof LivingMetaMachineBlockEntity<?> blockEntity &&
+                holder instanceof LivingMetaMachineBlockEntity blockEntity &&
                 blockEntity.getMachineEntity() != null) {
             blockEntity.getMachineEntity().getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
         }

@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import com.moguang.ctnhbio.api.IHostAwareEntity;
-import com.moguang.ctnhbio.api.ILivingEntityHost;
 import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
@@ -24,7 +23,7 @@ import java.util.Collections;
 
 public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareEntity {
 
-    ILivingEntityHost<LivingMetaMachineEntity> holder;
+    LivingMetaMachineBlockEntity holder;
     public boolean ifInit = false;
 
     public LivingMetaMachineEntity(EntityType<? extends LivingEntity> type, Level level) {
@@ -36,13 +35,13 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     }
 
     @Override
-    public ILivingEntityHost<?> getHost() {
+    public LivingMetaMachineBlockEntity getHost() {
         return holder;
     }
 
     @Override
-    public void setHost(ILivingEntityHost<?> host) {
-        holder = (ILivingEntityHost<LivingMetaMachineEntity>) host;
+    public void setHost(LivingMetaMachineBlockEntity host) {
+        holder = host;
     }
 
     public void setPos(BlockPos pos, Vec3 offset) {
@@ -52,8 +51,7 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     @Override
     public void setCustomName(@Nullable Component name) {
         super.setCustomName(name);
-        if (holder instanceof LivingMetaMachineBlockEntity blockEntity &&
-                blockEntity.getMetaMachine() instanceof BasicLivingMachine machine) {
+        if (holder != null && holder.getMetaMachine() instanceof BasicLivingMachine machine) {
             assert name != null;
             machine.setName(name.getString());
         }

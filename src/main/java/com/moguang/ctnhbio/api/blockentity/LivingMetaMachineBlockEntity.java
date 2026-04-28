@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.common.data.GTDamageTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
@@ -16,7 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-import com.moguang.ctnhbio.api.ILivingEntityHost;
+import com.moguang.ctnhbio.api.IHostAwareEntity;
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.machine.braininavat.BrainInAVatMachine;
 import lombok.Getter;
@@ -26,12 +27,11 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 @Getter
-public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> extends MetaMachineBlockEntity
-                                         implements ILivingEntityHost<T>, GeoBlockEntity {
+public class LivingMetaMachineBlockEntity extends MetaMachineBlockEntity implements GeoBlockEntity {
 
-    private final EntityType<T> entityType;
+    private final EntityType<? extends LivingMetaMachineEntity> entityType;
 
-    private T machineEntity;
+    private LivingMetaMachineEntity machineEntity;
 
     @Getter
     private CompoundTag entityTag;
@@ -39,16 +39,16 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     public Vec3 entityOffset = new Vec3(0.5, 0, 0.5);
 
     public LivingMetaMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState,
-                                        EntityType<T> entityType) {
+                                        EntityType<? extends LivingMetaMachineEntity> entityType) {
         super(type, pos, blockState);
         this.entityType = entityType;
     }
 
-    public static <T extends LivingMetaMachineEntity> LivingMetaMachineBlockEntity<T> create(BlockEntityType<?> type,
-                                                                                             BlockPos pos,
-                                                                                             BlockState state,
-                                                                                             EntityType<T> entityType) {
-        return new LivingMetaMachineBlockEntity<>(type, pos, state, entityType);
+    public static LivingMetaMachineBlockEntity create(BlockEntityType<?> type,
+                                                      BlockPos pos,
+                                                      BlockState state,
+                                                      EntityType<? extends LivingMetaMachineEntity> entityType) {
+        return new LivingMetaMachineBlockEntity(type, pos, state, entityType);
     }
 
     public LivingMetaMachineBlockEntity setEntityOffset(double x, double y, double z) {
@@ -61,34 +61,31 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
         super.notifyBlockUpdate();
     }
 
-    @Override
-    public T getHostedEntity() {
+    public LivingMetaMachineEntity getHostedEntity() {
         return machineEntity;
     }
 
-    @Override
-    public void setHostedEntity(T entity) {
+    public void setHostedEntity(LivingMetaMachineEntity entity) {
         machineEntity = entity;
     }
 
-    @Override
     public BlockPos getHostPos() {
         return getBlockPos();
     }
 
-    @Override
     public MetaMachine getHostMachine() {
         return this.metaMachine;
     }
 
-    @Override
     public void onHostedEntityRemoved(LivingMetaMachineEntity entity, DamageSource source) {
         level.getServer().submit(() -> level.destroyBlock(getBlockPos(), !source.is(GTDamageTypes.ELECTRIC.key)));
     }
 
-    @Override
-    public T createHostedEntity(Level level) {
-        T entity = entityType.create(level);
+    public LivingMetaMachineEntity createHostedEntity(Level level) {
+        LivingMetaMachineEntity entity = entityType.create(level);
+        if (entity == null) {
+            return null;
+        }
         entity.setPos(getHostPos(), entityOffset);
         if (getMetaMachine() instanceof SimpleTieredMachine tieredMachine) {
             var tier = tieredMachine.getTier();
@@ -99,9 +96,50 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
         return entity;
     }
 
-    @Override
-    public Class<T> getEntityClass() {
-        return (Class<T>) LivingMetaMachineEntity.class;
+    private boolean isEntityHostAware(LivingMetaMachineEntity entity) {
+        return entity instanceof IHostAwareEntity;
+    }
+
+    public void spawnHostedEntity(Level level) {
+        if (getHostedEntity() != null) {
+            return;
+        }
+        LivingMetaMachineEntity entity = createHostedEntity(level);
+        if (entity == null) {
+            return;
+        }
+        setHostedEntity(entity);
+        if (isEntityHostAware(entity)) {
+            ((IHostAwareEntity) entity).bindToHost(this);
+        }
+    }
+
+    public void despawnHostedEntity() {
+        if (getHostedEntity() != null) {
+            getHostedEntity().discard();
+            setHostedEntity(null);
+        }
+    }
+
+    public void saveHostedEntityData(CompoundTag nbt) {
+        if (getHostedEntity() != null) {
+            CompoundTag hostedEntityTag = new CompoundTag();
+            getHostedEntity().save(hostedEntityTag);
+            nbt.put("HostedEntity", hostedEntityTag);
+        }
+    }
+
+    public void loadHostedEntityData(CompoundTag hostedEntityTag, Level level) {
+        if (hostedEntityTag == null) {
+            return;
+        }
+        Entity entity = EntityType.loadEntityRecursive(hostedEntityTag, level, loaded -> loaded);
+        if (entity instanceof LivingMetaMachineEntity livingEntity) {
+            setHostedEntity(livingEntity);
+            if (isEntityHostAware(livingEntity)) {
+                ((IHostAwareEntity) livingEntity).bindToHost(this);
+            }
+        }
     }
 
     @Override
@@ -115,7 +153,7 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
     @Override
     protected void saveAdditional(CompoundTag tag) {
         saveHostedEntityData(getPersistentData());
-        if (metaMachine instanceof BrainInAVatMachine vat) {
+        if (metaMachine instanceof BrainInAVatMachine vat && machineEntity != null) {
             vat.maxHealth = machineEntity.getMaxHealth();
         }
         onChanged();
@@ -129,13 +167,15 @@ public class LivingMetaMachineBlockEntity<T extends LivingMetaMachineEntity> ext
         if (getLevel().isClientSide()) return;
         if (machineEntity == null) {
             loadHostedEntityData(entityTag, level);
-            if (metaMachine instanceof BrainInAVatMachine vat && vat.maxHealth != 0) {
+            if (machineEntity == null) {
+                spawnHostedEntity(this.getLevel());
+            }
+            if (metaMachine instanceof BrainInAVatMachine vat && vat.maxHealth != 0 && machineEntity != null) {
                 machineEntity.setHealth(vat.maxHealth);
                 machineEntity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(vat.maxHealth);
             }
-            spawnHostedEntity(this.getLevel());
         }
-        if (!spawned) {
+        if (!spawned && machineEntity != null) {
             level.addFreshEntity(machineEntity);
             spawned = true;
         }

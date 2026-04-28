@@ -1,5 +1,6 @@
 package com.moguang.ctnhbio.api.recipe.customlogic;
 
+import com.github.elenterius.biomancy.crafting.AnyFoodIngredient;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.IRecipeCapabilityHolder;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
@@ -115,15 +116,15 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
 
     @Override
     public void buildRepresentativeRecipes() {
-        var food = Items.BREAD.getDefaultInstance();
-        food.setHoverName(any_food.translate());
+//        var food = Items.BREAD.getDefaultInstance();
+//        food.setHoverName(any_food.translate());
         var bar = ModItems.NUTRIENT_BAR.get().getDefaultInstance();
         var paste = ModItems.NUTRIENT_PASTE.get().getDefaultInstance();
         var fluid = new FluidStack(ModFluids.NUTRIENTS_FLUID.get(), 1);
 
         var recipe1 = CBRecipeBuilder.of(CTNHBio.id("nutrient_solid"), CBRecipeTypes.DIGEST_RECIPES)
                 .nutrient(1)
-                .inputItems(food)
+                .inputItems(new AnyFoodIngredient())
                 .circuitMeta(1)
                 .outputItems(bar, paste)
                 .duration(100)
@@ -133,7 +134,7 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
 
         var recipe2 = CBRecipeBuilder.of(CTNHBio.id("nutrient_fluid"), CBRecipeTypes.DIGEST_RECIPES)
                 .nutrient(1)
-                .inputItems(food)
+                .inputItems(new AnyFoodIngredient())
                 .circuitMeta(2)
                 .outputFluids(fluid)
                 .duration(100)
