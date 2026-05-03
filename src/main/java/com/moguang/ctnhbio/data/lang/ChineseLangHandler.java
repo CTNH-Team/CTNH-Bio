@@ -48,7 +48,7 @@ public class ChineseLangHandler {
         provider.add("jei.ctnhbio.tooltip.chance", "概率：");
         provider.add("jei.ctnhbio.tooltip.amount_range", "数量：%d-%d");
 
-        provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4生物活性流体可能失活！");
+        // provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4生物活性流体可能失活！");
 
         provider.add("recipe.capability.entity.name", "实体");
 

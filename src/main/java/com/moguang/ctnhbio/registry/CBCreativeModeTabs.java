@@ -5,15 +5,13 @@ import com.gregtechceu.gtceu.common.data.GTCreativeModeTabs;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
+import com.ctnhlang.*;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
-@Prefix("creativemodetab")
+@Category("creativemodetab")
 public class CBCreativeModeTabs {
 
     public static void init() {}

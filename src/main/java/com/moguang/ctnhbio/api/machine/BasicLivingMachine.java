@@ -40,6 +40,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 
+import com.ctnhlang.*;
 import com.google.common.collect.Tables;
 import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
@@ -55,7 +56,6 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 
 import java.util.*;
 import java.util.function.BiFunction;
@@ -281,7 +281,6 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     @CN("营养:")
     @EN("Nutrients:")
-    @Key("nuinfo")
     static Lang nutrient;
 
     protected static EditableUI<ProgressWidget, BasicLivingMachine> createNutrientBar() {

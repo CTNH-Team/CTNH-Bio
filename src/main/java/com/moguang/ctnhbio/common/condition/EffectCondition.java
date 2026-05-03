@@ -10,22 +10,20 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 
+import com.ctnhlang.CN;
+import com.ctnhlang.EN;
 import com.moguang.ctnhbio.api.ILivingMachine;
 import com.moguang.ctnhbio.registry.CBRecipeConditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import org.jetbrains.annotations.NotNull;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Prefix("recipe.condition")
 public class EffectCondition extends RecipeCondition<EffectCondition> {
 
     public static final Codec<EffectCondition> CODEC = RecordCodecBuilder

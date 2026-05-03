@@ -6,15 +6,13 @@ import com.gregtechceu.gtceu.api.fluids.attribute.FluidAttribute;
 
 import net.minecraft.resources.ResourceLocation;
 
+import com.ctnhlang.*;
 import com.moguang.ctnhbio.CTNHBio;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
-@Prefix("material")
+@Category("tooltip")
 public class OrganicMaterials {
 
     @CN({

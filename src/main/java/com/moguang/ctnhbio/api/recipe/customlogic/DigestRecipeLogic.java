@@ -15,6 +15,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
+import com.ctnhlang.CN;
+import com.ctnhlang.EN;
+import com.ctnhlang.Prefix;
 import com.github.elenterius.biofactory.init.ModFluids;
 import com.github.elenterius.biomancy.crafting.AnyFoodIngredient;
 import com.github.elenterius.biomancy.init.ModItems;
@@ -23,14 +26,10 @@ import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import org.jetbrains.annotations.Nullable;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Prefix;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Prefix("recipe_logic")
 public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
 
     @Override
@@ -105,18 +104,12 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
         return 0.0f;
     }
 
-    @CN("任意食物")
-    @EN("Any food")
-    static Lang any_food;
-
     @CN("配方时间和产出\n由食物的饱食度和饱和度决定")
     @EN("Recipe duration and output\nare determined by the food’s Hunger Value and Saturation")// 实际上食物具有的应当是“饥饿值”
     public static Lang based_on_nutrition;
 
     @Override
     public void buildRepresentativeRecipes() {
-        // var food = Items.BREAD.getDefaultInstance();
-        // food.setHoverName(any_food.translate());
         var bar = ModItems.NUTRIENT_BAR.get().getDefaultInstance();
         var paste = ModItems.NUTRIENT_PASTE.get().getDefaultInstance();
         var fluid = new FluidStack(ModFluids.NUTRIENTS_FLUID.get(), 1);

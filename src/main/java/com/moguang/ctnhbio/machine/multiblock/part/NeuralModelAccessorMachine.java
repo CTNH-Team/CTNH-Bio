@@ -1,5 +1,6 @@
 package com.moguang.ctnhbio.machine.multiblock.part;
 
+import com.ctnhlang.Category;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
@@ -32,6 +33,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import com.ctnhlang.CN;
+import com.ctnhlang.EN;
+import com.ctnhlang.Suffix;
 import com.moguang.ctnhbio.api.machine.trait.NeuralModelContainer;
 import com.moguang.ctnhbio.utils.MetaMachineUtils;
 import lombok.Getter;
@@ -39,15 +43,11 @@ import lombok.Setter;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.NotNull;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.CN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.EN;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.Suffix;
 
 import java.util.List;
 
 import static dev.shadowsoffire.hostilenetworks.Hostile.Items.PREDICTION_MATRIX;
 
-@Suffix("neuralmodel_accessor_machine")
 public class NeuralModelAccessorMachine extends MultiblockPartMachine implements IMachineLife {
 
     protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
@@ -187,7 +187,7 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
                 new AutoOutputModelConfigurator(this));
     }
 
-    @Suffix("auto_output_model_configurator")
+    @Category("output_model")
     public static class AutoOutputModelConfigurator implements IFancyConfigurator {
 
         private NeuralModelAccessorMachine machine;

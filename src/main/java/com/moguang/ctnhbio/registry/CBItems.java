@@ -15,6 +15,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.FluidUtil;
 
+import com.ctnhlang.CN;
+import com.ctnhlang.Category;
+import com.ctnhlang.EN;
+import com.ctnhlang.Suffix;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.github.elenterius.biomancy.init.ModRarities;
 import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
@@ -27,7 +31,6 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.annotation.*;
 
 import java.util.function.Supplier;
 
@@ -35,6 +38,7 @@ import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.common.data.GTItems.attach;
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 
+@Category("item")
 @Suffix("tooltip")
 public class CBItems {
 

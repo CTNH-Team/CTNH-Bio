@@ -39,7 +39,7 @@ public class EnglishLangHandler {
 
         // provider.add("ctnhbio.fluid.type_organic.tooltip", "§aBioactive Fluid");
         // provider.add("ctnhbio.fluid_pipe.can_handle_organic", "§aCan handle Bioactive Fluid");
-        provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4Bioactive Fluid may be inactivated");
+        // provider.add("ctnhbio.fluid_pipe.cannot_handle_organic", "§4Bioactive Fluid may be inactivated");
 
         provider.add("ctnhbio.recipe.datamodel.requirement", "§pAbove Are Minimum Requirement(s)");
 

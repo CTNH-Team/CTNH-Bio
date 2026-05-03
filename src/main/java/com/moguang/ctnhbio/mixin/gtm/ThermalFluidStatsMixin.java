@@ -11,11 +11,15 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.FluidUtil;
 
+import com.ctnhlang.CN;
+import com.ctnhlang.EN;
+import com.ctnhlang.Key;
 import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 
 import java.util.List;
 
@@ -26,6 +30,12 @@ public class ThermalFluidStatsMixin {
 
     @Unique
     public ThermalFluidStats self = (ThermalFluidStats) (Object) this;
+
+    @Unique
+    @EN("§4Bioactive Fluid may be inactivated")
+    @CN("§4生物活性流体可能失活！")
+    @Key("ctnhbio.fluid_pipe.cannot_handle_organic")
+    private static Lang tootlip;
 
     /**
      * @author LuckyBlock
@@ -55,7 +65,7 @@ public class ThermalFluidStatsMixin {
             if (self.acidProof) tooltipComponents.add(Component.translatable("gtceu.fluid_pipe.acid_proof"));
 
             if (self instanceof OrganicFluidStats) ORGANIC.appendContainerTooltips(tooltipComponents::add);
-            else tooltipComponents.add(Component.translatable("ctnhbio.fluid_pipe.cannot_handle_organic"));
+            else tooltipComponents.add(tootlip.translate());
 
         } else {
             tooltipComponents.add(Component.translatable("gtceu.tooltip.fluid_pipe_hold_shift"));

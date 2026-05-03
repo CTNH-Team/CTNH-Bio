@@ -1,6 +1,8 @@
 dependencies {
     modImplementation(project(":modules:CTNH-Lib")){transitive = false}
 
+
+
     modImplementation(ctnh.geckolib)
     modImplementation(ctnh.placebo)
     modImplementation(ctnh.createmetallurgy)

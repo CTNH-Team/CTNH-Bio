@@ -9,7 +9,6 @@ import com.moguang.ctnhbio.common.CommonProxy;
 import com.moguang.ctnhbio.registry.CBRegistrate;
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
-import tech.vixhentx.mcmod.ctnhlib.langprovider.LangProcessor;
 
 @SuppressWarnings("removal")
 @Mod(CTNHBio.MODID)
@@ -20,8 +19,6 @@ public class CTNHBio {
     public static final CBRegistrate REGISTRATE = CBRegistrate.create();
 
     public CTNHBio() {
-        LangProcessor langProcessor = new LangProcessor(REGISTRATE);
-        langProcessor.processAll();
         DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
     }
 
