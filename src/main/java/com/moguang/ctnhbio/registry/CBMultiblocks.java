@@ -47,7 +47,7 @@ public class CBMultiblocks {
                     (p, d) -> new LivingMultiMetaMachineBlock(p, d, true),
                     (b, p) -> new LivingMetaMachineItem(b, p, "great_flesh"))
             .cnLangValue("巨型肉块")
-            .langValue("Giant Flesh")
+            .langValue("Great Flesh")
             .recipeType(CBRecipeTypes.GREAT_FLESH)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAA", "AAA", "AAA")

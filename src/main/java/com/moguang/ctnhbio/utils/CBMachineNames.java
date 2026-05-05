@@ -27,7 +27,7 @@ public class CBMachineNames {
             put(MV, "§bTissue %s§r");
             put(HV, "§6Organ %s§r");
             put(EV, "§5System %s§r");
-            put(IV, "§9Organism %s§r");
+            put(IV, "§9Individual %s§r");
         }
     };
 
@@ -41,7 +41,7 @@ public class CBMachineNames {
                 "bioelectric_forge", "Bioelectric Forge",
                 "decomposer", "Decomposer",
                 "digester", "Digester",
-                "bioreactor", "Reactor"));
+                "bioreactor", "Bioreactor"));
     }
 
     public static String getCNName(String machineId, int tier) {

@@ -101,7 +101,7 @@ public class CBRecipeTypes {
 
         GREAT_FLESH = REGISTRATE.recipeType(CTNHBio.id("great_flesh"), NUTRIENT)
                 .cnlang("巨型肉块-分化")
-                .lang("Great Flesh")
+                .lang("Great Flesh-Differentiation")
                 .setMaxIOSize(6, 0, 3, 0)
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
@@ -117,6 +117,7 @@ public class CBRecipeTypes {
 
         COGNI_ASSEMBLY = REGISTRATE.recipeType(CTNHBio.id("cogni_assembly"), GTRecipeTypes.ELECTRIC)
                 .cnlang("意识装配流程")
+                .lang("Cogni Assembly")
                 .setMaxIOSize(9, 9, 9, 9)
                 .setMaxSize(IO.IN, ModelRecipeCapability.CAP, 9)
 
@@ -140,7 +141,7 @@ public class CBRecipeTypes {
 
         COGNI_ASSEMBLY_STEP = REGISTRATE.recipeType(CTNHBio.id("cogni_assembly_step"), GTRecipeTypes.ELECTRIC)
                 .cnlang("意识装配")
-                .lang("Cogni Assembly")
+                .lang("Cogni Assembly Step")
                 .setMaxIOSize(1, 1, 1, 1)
                 .setMaxSize(IO.IN, ModelRecipeCapability.CAP, 1)
                 .setMaxSize(IO.IN, CogniItemRecipeCapability.CAP, 1)
