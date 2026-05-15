@@ -1,6 +1,5 @@
 package com.moguang.ctnhbio.machine.multiblock.part;
 
-import com.ctnhlang.Category;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.gui.fancy.ConfiguratorPanel;
@@ -34,8 +33,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import com.ctnhlang.CN;
+import com.ctnhlang.Category;
 import com.ctnhlang.EN;
-import com.ctnhlang.Suffix;
 import com.moguang.ctnhbio.api.machine.trait.NeuralModelContainer;
 import com.moguang.ctnhbio.utils.MetaMachineUtils;
 import lombok.Getter;

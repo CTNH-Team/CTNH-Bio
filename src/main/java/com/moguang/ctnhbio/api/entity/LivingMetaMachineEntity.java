@@ -112,11 +112,6 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     }
 
     @Override
-    public boolean isAffectedByPotions() {
-        return true;
-    }
-
-    @Override
     public boolean isPushable() {
         return false;
     }
@@ -125,6 +120,9 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     protected boolean updateInWaterStateAndDoFluidPushing() {
         return false;
     }
+
+    @Override
+    public void updateSwimming() {}
 
     @Override
     public boolean isCustomNameVisible() {
@@ -160,13 +158,7 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     public void setItemSlot(EquipmentSlot equipmentSlot, ItemStack itemStack) {}
 
     @Override
-    public void aiStep() {
-        super.aiStep();
-        // this.hurtTime = 0;
-        // this.hurtMarked = false;
-
-        // this.setDeltaMovement(0, 0, 0);
-    }
+    public void aiStep() {}
 
     @Override
     public boolean canBeCollidedWith() {

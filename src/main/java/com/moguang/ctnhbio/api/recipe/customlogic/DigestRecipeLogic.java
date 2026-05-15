@@ -17,7 +17,6 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import com.ctnhlang.CN;
 import com.ctnhlang.EN;
-import com.ctnhlang.Prefix;
 import com.github.elenterius.biofactory.init.ModFluids;
 import com.github.elenterius.biomancy.crafting.AnyFoodIngredient;
 import com.github.elenterius.biomancy.init.ModItems;
