@@ -14,8 +14,6 @@ import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMa
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
-import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -50,8 +48,6 @@ import static com.moguang.ctnhbio.api.machine.BasicLivingMachine.appendEffect;
 public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockMachine
                                              implements ILivingMachine, IMachineLife {
 
-    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
-            WorkableLivingMultiblockMachine.class, WorkableElectricMultiblockMachine.MANAGED_FIELD_HOLDER);
     @Persisted
     @Getter
     protected final NotifiableNutrientTrait inputTrait;
@@ -142,11 +138,6 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
         // 默认行为（打开 GUI）
         return super.tryToOpenUI(player, hand, hit);
-    }
-
-    @Override
-    public ManagedFieldHolder getFieldHolder() {
-        return MANAGED_FIELD_HOLDER;
     }
 
     @Override

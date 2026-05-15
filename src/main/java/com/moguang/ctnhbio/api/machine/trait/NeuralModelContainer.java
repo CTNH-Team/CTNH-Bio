@@ -10,8 +10,6 @@ import com.gregtechceu.gtceu.api.transfer.item.CustomItemStackHandler;
 
 import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
-import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
-
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
@@ -28,14 +26,6 @@ import java.util.function.Predicate;
 
 public class NeuralModelContainer extends NotifiableRecipeHandlerTrait<ModelIngredient>
                                   implements ICapabilityTrait, IItemHandlerModifiable {
-
-    public static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(NeuralModelContainer.class,
-            NotifiableRecipeHandlerTrait.MANAGED_FIELD_HOLDER);
-
-    @Override
-    public ManagedFieldHolder getFieldHolder() {
-        return MANAGED_FIELD_HOLDER;
-    }
 
     @Persisted
     @DescSynced

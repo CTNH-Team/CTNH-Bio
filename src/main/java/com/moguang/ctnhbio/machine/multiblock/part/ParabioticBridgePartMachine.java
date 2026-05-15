@@ -16,8 +16,6 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
-import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -36,10 +34,6 @@ import java.util.Objects;
 @Getter
 public class ParabioticBridgePartMachine extends TieredIOPartMachine {
 
-    protected static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
-            ParabioticBridgePartMachine.class,
-            TieredIOPartMachine.MANAGED_FIELD_HOLDER);
-
     @Persisted
     private final ParabioticBridgeHandler inventory;
 
@@ -51,11 +45,6 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
     // private ResourceLocation lastOutputRecipeID;
     @Persisted
     private final List<BlockPos> lastOutput = new ArrayList<>();
-
-    @Override
-    public @NotNull ManagedFieldHolder getFieldHolder() {
-        return MANAGED_FIELD_HOLDER;
-    }
 
     public ParabioticBridgePartMachine(IMachineBlockEntity holder) {
         super(holder, GTValues.ZPM, IO.BOTH);

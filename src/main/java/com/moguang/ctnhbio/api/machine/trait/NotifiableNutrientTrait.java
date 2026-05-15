@@ -6,8 +6,6 @@ import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
-import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
-
 import com.moguang.ctnhbio.api.capability.recipe.NutrientRecipeCapability;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,8 +15,6 @@ public class NotifiableNutrientTrait extends NotifiableRecipeHandlerTrait<Double
 
     @Persisted
     private final SynchronizedNutrientStorage sharedStorage;
-    public static final ManagedFieldHolder MANAGED_FIELD_HOLDER = new ManagedFieldHolder(
-            NotifiableNutrientTrait.class, NotifiableRecipeHandlerTrait.MANAGED_FIELD_HOLDER);
     public IO io;
 
     public NotifiableNutrientTrait(MetaMachine machine, SynchronizedNutrientStorage sharedStorage, IO io) {
@@ -30,11 +26,6 @@ public class NotifiableNutrientTrait extends NotifiableRecipeHandlerTrait<Double
     @Override
     public IO getHandlerIO() {
         return io;
-    }
-
-    @Override
-    public ManagedFieldHolder getFieldHolder() {
-        return MANAGED_FIELD_HOLDER;
     }
 
     @Override
