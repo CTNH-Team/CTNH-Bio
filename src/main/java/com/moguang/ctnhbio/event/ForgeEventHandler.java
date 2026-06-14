@@ -32,7 +32,10 @@ public class ForgeEventHandler {
     @SubscribeEvent
     public static void onDataReload(AddReloadListenerEvent event) {
         // event.addListener(LootCategories.getReloadListener(new Gson(), "loot_categories"));
-        event.addListener(new SimpleJsonResourceReloadListener(GSON, "mob_crushing_recipes") {
+        class MobCrushingReloadListener extends SimpleJsonResourceReloadListener {
+            MobCrushingReloadListener(Gson gson, String directory) {
+                super(gson, directory);
+            }
 
             @Override
             protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager,
@@ -41,7 +44,8 @@ public class ForgeEventHandler {
                 jsonMap.values().forEach(recipesJson::add);
                 MobCrushingRecipeManager.loadFromJson(recipesJson);
             }
-        });
+        }
+        event.addListener(new MobCrushingReloadListener(GSON, "mob_crushing_recipes"));
     }
 
     @SubscribeEvent
