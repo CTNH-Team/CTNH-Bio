@@ -1,7 +1,9 @@
 package com.moguang.ctnhbio.api.recipe.ingredient.entity;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
@@ -19,81 +21,42 @@ import com.google.gson.JsonSyntaxException;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityPropertyDetector;
 import com.moguang.ctnhbio.integration.xei.entry.entity.EntityEntryList;
 import com.mojang.serialization.Codec;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Predicate;
 
-@Builder
-@AllArgsConstructor
 public class EntityIngredient implements Predicate<Entity> {
 
-    public static final EntityIngredient EMPTY = new EntityIngredient(new Value[0]);
+    public static final EntityIngredient EMPTY = new EntityIngredient(new Value[0], 0, null);
     public static final Codec<EntityIngredient> CODEC = ExtraCodecs.JSON
             .xmap(EntityIngredient::fromJson, EntityIngredient::toJson);
 
+    private static final byte TYPE_VALUE = 0;
+    private static final byte TYPE_CHANCED = 1;
+    private static final byte VALUE_TYPE = 0;
+    private static final byte VALUE_TAG = 1;
+
     // Contents
     @NotNull
-    public Value[] values;
+    public final Value[] values;
 
-    @Builder.Default
-    public int count = 1;
+    public final int count;
 
     @Nullable
-    @Builder.Default
-    public CompoundTag nbt = null;
+    public final CompoundTag nbt;
 
-    /* Constructors */
-    public EntityIngredient(@NotNull Value value) {
-        this(new Value[] { value }, 1, null);
-    }
+    private int hashCode;
 
-    public EntityIngredient(@NotNull Value value, int count) {
-        this(new Value[] { value }, count, null);
+    public EntityIngredient(@NotNull Value[] values, int count, @Nullable CompoundTag nbt) {
+       this.values = values;
+       this.count = count;
+       this.nbt = nbt;
     }
 
     public EntityIngredient(@NotNull Value value, int count, CompoundTag nbt) {
         this(new Value[] { value }, count, nbt);
-    }
-
-    public EntityIngredient(@NotNull Value[] values) {
-        this(values, 1, null);
-    }
-
-    public EntityIngredient(@NotNull Value[] values, int count) {
-        this(values, count, null);
-    }
-
-    public EntityIngredient(List<Value> values) {
-        this(values.toArray(Value[]::new));
-    }
-
-    public EntityIngredient(List<Value> values, int count) {
-        this(values.toArray(Value[]::new), count, null);
-    }
-
-    public EntityIngredient(List<Value> values, int count, CompoundTag nbt) {
-        this(values.toArray(Value[]::new), count, nbt);
-    }
-
-    // from value
-    public static EntityIngredient of(@Nullable Value value) {
-        return value == null ? EMPTY : new EntityIngredient(value);
-    }
-
-    public static EntityIngredient of(@Nullable Value value, int count) {
-        var ret = of(value);
-        ret.count = count;
-        return ret;
-    }
-
-    public static EntityIngredient of(@Nullable Value value, int count, CompoundTag nbt) {
-        var ret = of(value, count);
-        ret.nbt = nbt;
-        return ret;
     }
 
     // from entity
@@ -109,83 +72,103 @@ public class EntityIngredient implements Predicate<Entity> {
 
     // from entity type
     public static EntityIngredient of(EntityType<?> type) {
-        return new EntityIngredient(new TypeValue(type));
+        return of(type, 1);
     }
 
     public static EntityIngredient of(EntityType<?> type, int count) {
-        var ret = of(type);
-        ret.count = count;
-        return ret;
+        return of(type, count, null);
     }
 
     public static EntityIngredient of(EntityType<?> type, int count, CompoundTag nbt) {
-        var ret = of(type, count);
-        ret.nbt = nbt;
-        return ret;
+        return new EntityIngredient(new TypeValue(type), count, nbt);
     }
 
     // from tag
     public static EntityIngredient of(TagKey<EntityType<?>> tag) {
-        return new EntityIngredient(new TagValue(tag));
+        return of(tag, 1);
     }
 
     public static EntityIngredient of(TagKey<EntityType<?>> tag, int count) {
-        var ret = of(tag);
-        ret.count = count;
-        return ret;
+        return of(tag, count, null);
     }
 
     public static EntityIngredient of(TagKey<EntityType<?>> tag, int count, CompoundTag nbt) {
-        var ret = of(tag, count);
-        ret.nbt = nbt;
-        return ret;
+        return new EntityIngredient(new TagValue(tag), count, nbt);
     }
 
     // from id
-    public static EntityIngredient of(String id) {
+    public static EntityIngredient of(String id, int count, CompoundTag nbt) {
         if (id.startsWith("#")) {
             ResourceLocation tag = ResourceLocation.tryParse(id.substring(1));
             TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, tag);
-            return new EntityIngredient(new TagValue(tagKey));
+            return of(tagKey, count, nbt);
         } else {
             ResourceLocation type = ResourceLocation.tryParse(id);
             EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(type);
             if (entityType == null) {
                 throw new JsonSyntaxException("Unknown entity type '" + type + "'");
             }
-            return new EntityIngredient(new TypeValue(entityType));
+            return of(entityType, count, nbt);
         }
     }
 
-    public static EntityIngredient of(String id, int count) {
-        var ret = of(id);
-        ret.count = count;
-        return ret;
+    public static EntityIngredient of(String id) {
+        return of(id, 1);
     }
 
-    public static EntityIngredient of(String id, int count, CompoundTag nbt) {
-        var ret = of(id, count);
-        ret.nbt = nbt;
-        return ret;
+    public static EntityIngredient of(String id, int count) {
+        return of(id, count, null);
     }
 
     @Override
     public boolean test(@Nullable Entity entity) {
-        return entity != null && values.length != 0 &&
-                Arrays.stream(values).anyMatch(v -> v.test(entity.getType())) &&
-                (nbt == null || EntityPropertyDetector.test(nbt, entity));
+        if(entity == null || values.length == 0) return false;
+        for(var value: values) {
+            if(value.test(entity.getType()) && (nbt == null || EntityPropertyDetector.test(nbt, entity))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public EntityIngredient copy() {
+        return copyWithMultiplier(1);
+    }
+
+    public EntityIngredient getInner() {
+        return this;
+    }
+
+    public boolean isChanced() {
+        return false;
+    }
+
+    public int getChance() {
+        return ChancedEntityIngredient.MAX_CHANCE;
+    }
+
+    public EntityIngredient copyWithCount(int count) {
         return new EntityIngredient(values, count, nbt == null ? null : nbt.copy());
+    }
+
+    public EntityIngredient copyWithMultiplier(int multiplier) {
+        return new EntityIngredient(values, count * multiplier, nbt == null ? null : nbt.copy());
+    }
+
+    public EntityIngredient copyWithChance(int chance) {
+        return new ChancedEntityIngredient(copy(), chance);
+    }
+
+    public int hash() {
+        return 31 * Arrays.hashCode(values) + Objects.hashCode(nbt);
     }
 
     @Override
     public int hashCode() {
-        int result = Arrays.hashCode(values);
-        result = 31 * result + Integer.hashCode(count);
-        result = 31 * result + Objects.hashCode(nbt);
-        return result;
+        if(hashCode == 0) {
+            hashCode = hash();
+        }
+        return hashCode;
     }
 
     public sealed interface Value extends Predicate<EntityType<?>> permits TagValue, TypeValue {
@@ -227,6 +210,11 @@ public class EntityIngredient implements Predicate<Entity> {
         public boolean test(EntityType<?> entityType) {
             return entityType.getTags().toList().contains(tag);
         }
+
+        @Override
+        public int hashCode() {
+            return tag.hashCode();
+        }
     }
 
     public record TypeValue(EntityType<?> type) implements Value {
@@ -251,6 +239,11 @@ public class EntityIngredient implements Predicate<Entity> {
         @Override
         public boolean test(EntityType<?> entityType) {
             return entityType == type;
+        }
+
+        @Override
+        public int hashCode() {
+            return type.hashCode();
         }
     }
 
@@ -289,6 +282,13 @@ public class EntityIngredient implements Predicate<Entity> {
         int count = GsonHelper.getAsInt(jsonObject, "count", 1);
         CompoundTag nbt = jsonObject.has("nbt") ? CraftingHelper.getNBT(jsonObject.get("nbt")) : null;
 
+        if (jsonObject.has("chance")) {
+            EntityIngredient inner = fromJson(GsonHelper.getAsJsonObject(jsonObject, "ingredient"));
+            int chance = GsonHelper.getAsInt(jsonObject, "chance");
+            int multiplier = GsonHelper.getAsInt(jsonObject, "multiplier", 1);
+            return new ChancedEntityIngredient(inner, chance, multiplier);
+        }
+
         if (GsonHelper.isObjectNode(jsonObject, "value")) {
             Value value = valueFromJson(jsonObject.get("value").getAsJsonObject());
             return new EntityIngredient(value, count, nbt);
@@ -301,7 +301,7 @@ public class EntityIngredient implements Predicate<Entity> {
             for (JsonElement element : jsonArray) {
                 values.add(valueFromJson(element.getAsJsonObject()));
             }
-            return new EntityIngredient(values, count, nbt);
+            return new EntityIngredient(values.toArray(new Value[]{}), count, nbt);
         } else if (GsonHelper.isStringValue(jsonObject, "value")) {
             String value = GsonHelper.getAsString(jsonObject, "value");
             return of(value);
@@ -318,12 +318,70 @@ public class EntityIngredient implements Predicate<Entity> {
             jsonObject.addProperty("nbt", nbt.getAsString());
         }
 
+        if (this instanceof ChancedEntityIngredient ingredient) {
+            jsonObject.add("ingredient", ingredient.getInner().toJson());
+            jsonObject.addProperty("chance", ingredient.getChance());
+            jsonObject.addProperty("multiplier", ingredient.getMultiplier());
+            return jsonObject;
+        }
+
         JsonArray jsonArray = new JsonArray();
         for (Value value : values) {
             jsonArray.add(value.serialize());
         }
         jsonObject.add("value", jsonArray);
         return jsonObject;
+    }
+
+    public static EntityIngredient fromNetwork(FriendlyByteBuf buf) {
+        byte type = buf.readByte();
+        return switch (type) {
+            case TYPE_VALUE -> readValueIngredient(buf);
+            case TYPE_CHANCED -> new ChancedEntityIngredient(fromNetwork(buf), buf.readVarInt(), buf.readVarInt());
+            default -> throw new IllegalArgumentException("Unknown EntityIngredient network type: " + type);
+        };
+    }
+
+    public void toNetwork(FriendlyByteBuf buf) {
+        if (this instanceof ChancedEntityIngredient ingredient) {
+            buf.writeByte(TYPE_CHANCED);
+            ingredient.getInner().toNetwork(buf);
+            buf.writeVarInt(ingredient.getChance());
+            buf.writeVarInt(ingredient.getMultiplier());
+            return;
+        }
+
+        buf.writeByte(TYPE_VALUE);
+        buf.writeVarInt(count);
+        buf.writeNbt(nbt);
+        buf.writeVarInt(values.length);
+        for (Value value : values) {
+            if (value instanceof TypeValue typeValue) {
+                buf.writeByte(VALUE_TYPE);
+                buf.writeId(BuiltInRegistries.ENTITY_TYPE, typeValue.type);
+            } else if (value instanceof TagValue tagValue) {
+                buf.writeByte(VALUE_TAG);
+                buf.writeResourceLocation(tagValue.tag().location());
+            } else {
+                throw new IllegalArgumentException("Unsupported EntityIngredient value: " + value.getClass().getName());
+            }
+        }
+    }
+
+    private static EntityIngredient readValueIngredient(FriendlyByteBuf buf) {
+        int count = buf.readVarInt();
+        CompoundTag nbt = buf.readNbt();
+        int size = buf.readVarInt();
+        Value[] values = new Value[size];
+        for (int i = 0; i < size; i++) {
+            byte valueType = buf.readByte();
+            values[i] = switch (valueType) {
+                case VALUE_TYPE -> new TypeValue(buf.readById(BuiltInRegistries.ENTITY_TYPE));
+                case VALUE_TAG -> new TagValue(TagKey.create(Registries.ENTITY_TYPE, buf.readResourceLocation()));
+                default -> throw new IllegalArgumentException("Unknown EntityIngredient value network type: " + valueType);
+            };
+        }
+        return new EntityIngredient(values, count, nbt);
     }
 
     // Utils

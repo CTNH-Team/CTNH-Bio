@@ -1,22 +1,28 @@
 package com.moguang.ctnhbio.api.capability.recipe;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
-import com.gregtechceu.gtceu.api.capability.recipe.IRecipeCapabilityHolder;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.content.ContentModifier;
+import com.gregtechceu.gtceu.api.recipe.handler.RecipeHandlerGroup;
+import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
+import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.AbstractMapIngredient;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
+import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.jei.IngredientIO;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 
 import com.moguang.ctnhbio.api.gui.widget.EntityWidget;
-import com.moguang.ctnhbio.api.recipe.content.SerializerEntityIngredient;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.EntityIngredient;
+import com.moguang.ctnhbio.api.recipe.lookup.EntityTagMapIngredient;
+import com.moguang.ctnhbio.api.recipe.lookup.EntityTypeMapIngredient;
 import com.moguang.ctnhbio.integration.xei.entry.entity.EntityEntryList;
 import com.moguang.ctnhbio.integration.xei.handlers.entity.CycleEntityEntryHandler;
 import org.jetbrains.annotations.NotNull;
@@ -26,56 +32,77 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.gregtechceu.gtceu.client.util.DrawUtil.drawChance;
+import static com.gregtechceu.gtceu.client.util.DrawUtil.drawString;
+
 public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
 
     public static final EntityRecipeCapability CAP = new EntityRecipeCapability();
 
     protected EntityRecipeCapability() {
-        super("entity", 0xf5424200, true, 114514, SerializerEntityIngredient.INSTANCE);
+        super("entity", 0xf5424200, true,  EntityIngredient.CODEC);
     }
 
     @Override
-    public EntityIngredient copyInner(EntityIngredient content) {
-        return content.copy();
+    public EntityIngredient fromNetwork(FriendlyByteBuf friendlyByteBuf) {
+        return EntityIngredient.fromNetwork(friendlyByteBuf);
     }
 
     @Override
-    public EntityIngredient copyWithModifier(EntityIngredient content, ContentModifier modifier) {
-        final var ret = content.copy();
-        ret.count = modifier.apply(ret.count);
-        return ret;
+    public void toNetwork(EntityIngredient ingredient, FriendlyByteBuf friendlyByteBuf) {
+        ingredient.toNetwork(friendlyByteBuf);
     }
 
     @Override
-    public int getMaxParallelByInput(IRecipeCapabilityHolder holder, GTRecipe recipe, int limit, boolean tick) {
-        if (!holder.hasCapabilityProxies()) return 0;
+    public EntityIngredient copyInner(EntityIngredient content, int multiplier) {
+        return content.copyWithMultiplier(multiplier);
+    }
 
+    @Override
+    public boolean isChanced(EntityIngredient content) {
+        return content.isChanced();
+    }
+
+    @Override
+    public IGuiTexture createXEIOverlay(EntityIngredient content, boolean perTick) {
+        return new IGuiTexture() {
+
+            @Override
+            public void draw(GuiGraphics graphics, int mouseX, int mouseY, float x, float y, int width, int height) {
+                drawChance(graphics, x, y, width, height, content.getChance());
+                if (content.count > 1) {
+                    drawString(graphics,  x, y, width, height, String.valueOf(content.count), 0xFFFFFF, false);
+                }
+
+            }
+        };
+    }
+
+    @Override
+    public int getMaxParallelByInput(RecipeHandlerGroup holder, GTRecipe recipe, int limit, boolean tick) {
         var inputs = (tick ? recipe.tickInputs : recipe.inputs).get(this);
         if (inputs == null || inputs.isEmpty()) return limit;
 
-        // Get all entity containers from the holder
-        var handlers = holder.getCapabilitiesFlat(IO.IN, this);
-        if (handlers.isEmpty()) return 0;
+        var handlers = holder.getInputHandlerMap().get(this);
+        if (handlers == null || handlers.isEmpty()) return 0;
 
         // Separate consumable and non-consumable ingredients
         var nonConsumables = new ArrayList<EntityIngredient>();
         var consumables = new ArrayList<EntityIngredient>();
 
-        for (Content content : inputs) {
-            EntityIngredient ingredient = (EntityIngredient) content.content;
-            // if (content.chance == 0) {
-            // nonConsumables.add(ingredient.copy());
-            // } else {
-            // consumables.add(ingredient.copy());
-            // }
-            consumables.add(ingredient.copy());
+        for (EntityIngredient ingredient : inputs) {
+            if (ingredient.getChance() == 0) {
+                nonConsumables.add(ingredient.copy());
+            } else {
+                consumables.add(ingredient.copy());
+            }
         }
 
         // If no consumables, just check non-consumables
         if (consumables.isEmpty()) {
             for (var handler : handlers) {
                 for (var nc : nonConsumables) {
-                    if (!handler.getContents().contains(nc)) {
+                    if (countMatches(handler.getContents(), nc) < nc.count) {
                         return 0; // Missing required non-consumable
                     }
                 }
@@ -90,7 +117,7 @@ public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
             // First check non-consumables
             boolean hasAllNonConsumables = true;
             for (var nc : nonConsumables) {
-                if (!handler.getContents().contains(nc)) {
+                if (countMatches(handler.getContents(), nc) < nc.count) {
                     hasAllNonConsumables = false;
                     break;
                 }
@@ -102,14 +129,7 @@ public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
 
             for (var c : consumables) {
                 int required = c.count;
-                int available = 0;
-
-                // Count matching entities in this handler
-                for (Object content : handler.getContents()) {
-                    if (content instanceof Entity entity && c.test(entity)) {
-                        available++;
-                    }
-                }
+                int available = countMatches(handler.getContents(), c);
 
                 if (available < required) {
                     handlerMultiplier = 0;
@@ -127,16 +147,25 @@ public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
         return Math.min(maxMultiplier, limit);
     }
 
+    private static int countMatches(List<Object> contents, EntityIngredient ingredient) {
+        int available = 0;
+        for (Object content : contents) {
+            if (content instanceof Entity entity && ingredient.test(entity)) {
+                available++;
+            }
+        }
+        return available;
+    }
+
     @Override
     public boolean doAddGuiSlots() {
         return true;
     }
 
     @Override
-    public @NotNull List<Object> createXEIContainerContents(List<Content> contents, GTRecipe recipe, IO io) {
+    public @NotNull List<Object> createXEIContainerContents(List<EntityIngredient> contents, GTRecipeDefinition recipe,
+                                                            IO io) {
         List<Object> entryLists = contents.stream()
-                .map(Content::getContent)
-                .map(this::of)
                 .map(i -> new EntityEntryList(i, true))
                 .collect(Collectors.toList());
 
@@ -172,8 +201,8 @@ public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
                                 IO io,
                                 @Nullable("null when storage == null") GTRecipeTypeUI.RecipeHolder recipeHolder,
                                 @NotNull GTRecipeType recipeType,
-                                @Nullable("null when content == null") GTRecipe recipe,
-                                @Nullable Content content,
+                                @Nullable("null when content == null") GTRecipeDefinition recipe,
+                                @Nullable EntityIngredient content,
                                 @Nullable Object storage, int recipeTier, int chanceTier) {
         if (!isXEI || storage == null) return;
 
@@ -185,12 +214,22 @@ public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
             var list = (List<CycleEntityEntryHandler>) storage;
             ew.setCycle(list.get(index));
         }
-        if (content != null) {
-            EntityIngredient ingredient = (EntityIngredient) (content.content);
-            ew.setCount(ingredient.count);
-            ew.setChance((float) recipeType.getChanceFunction()
-                    .getBoostedChance(content, recipeTier, chanceTier) / content.maxChance);
+        if(content != null) {
+            ew.setXEIChance(content.getChance());
         }
+    }
+
+    @Override
+    public boolean isRecipeSearchFilter() {
+        return true;
+    }
+
+    @Override
+    public List<AbstractMapIngredient> getMapIngredients(EntityIngredient content) {
+        List<AbstractMapIngredient> ingredients = new ArrayList<>();
+        ingredients.addAll(EntityTypeMapIngredient.from(content));
+        ingredients.addAll(EntityTagMapIngredient.from(content));
+        return ingredients;
     }
 
     public static String getTranslationKey(boolean isInput) {

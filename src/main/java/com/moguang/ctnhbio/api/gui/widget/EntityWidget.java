@@ -46,14 +46,16 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
     // basics
     @Nullable
     CycleEntityEntryHandler cycle;
-    int count = 1;
-    float chance = 1;
     @Getter
     IngredientIO ingredientIO = IngredientIO.RENDER_ONLY;
 
     public EntityWidget() {
         super(new Position(0, 0), new Size(18, 18));
     }
+
+    @Setter
+    @Getter
+    protected float XEIChance = 1f;
 
     // Render
     private void renderEntityModel(@NotNull Entity entity, GuiGraphics graphics, float partialTicks, int mouseX,
@@ -122,21 +124,6 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
         if (entity == null) return;
         renderEntityModel(entity, graphics, partialTicks, mouseX, mouseY);
         entity.remove(Entity.RemovalReason.DISCARDED);
-
-        // 绘制数量
-        if (count > 1) {
-            graphics.drawString(Minecraft.getInstance().font,
-                    String.valueOf(count),
-                    getPosition().x + 12, getPosition().y + 9, 0xFFFFFF, false);
-        }
-
-        // 绘制概率条
-        if (chance < 1.0f) {
-            int width = (int) (16 * chance);
-            graphics.fill(getPosition().x + 1, getPosition().y + 17,
-                    getPosition().x + 1 + width, getPosition().y + 18,
-                    0xFF00FF00);
-        }
     }
 
     @Override
@@ -152,11 +139,6 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
     @Override
     public List<Component> getFullTooltipTexts() {
         return cycle != null ? cycle.tooltips : List.of();
-    }
-
-    @Override
-    public float getXEIChance() {
-        return chance;
     }
 
     @Override
@@ -191,17 +173,9 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
 
     private Object mapToIngredient(EntityType<?> type) {
         ItemStack egg = getSpawnEgg(type);
-        // if (GTCEu.Mods.isJEILoaded() && !egg.isEmpty()) {
-        // return SlotWidget.JEICallWrapper.getJEIStackClickable(egg, getPosition(), getSize());
-        // }
-        // else
-        if (GTCEu.Mods.isEMILoaded()) {
-            return new ItemEmiStack(egg) {
-
-                @Override
-                public void render(GuiGraphics draw, int x, int y, float delta, int flags) {}
-            };
-        }
-        return egg;
+        return new ItemEmiStack(egg) {
+            @Override
+            public void render(GuiGraphics draw, int x, int y, float delta, int flags) {}
+        };
     }
 }

@@ -5,19 +5,25 @@ import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
-import com.gregtechceu.gtceu.api.machine.trait.ICapabilityTrait;
+import com.gregtechceu.gtceu.api.machine.feature.IWorkLogicMachine;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
+import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.AbstractMapIngredient;
 
 import com.lowdragmc.lowdraglib.syncdata.ISubscription;
 
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
 import com.moguang.ctnhbio.api.capability.IEntityContainer;
 import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
+import com.moguang.ctnhbio.api.recipe.ingredient.entity.ChancedEntityIngredient;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.EntityIngredient;
+import com.moguang.ctnhbio.api.recipe.lookup.EntityTagMapIngredient;
+import com.moguang.ctnhbio.api.recipe.lookup.EntityTypeMapIngredient;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,7 +34,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class NotifiableEntityContainer extends NotifiableRecipeHandlerTrait<EntityIngredient>
-                                       implements IEntityContainer, ICapabilityTrait {
+                                       implements IEntityContainer{
 
     @Getter
     public final IO handlerIO;
@@ -47,75 +53,89 @@ public class NotifiableEntityContainer extends NotifiableRecipeHandlerTrait<Enti
     }
 
     public NotifiableEntityContainer(MetaMachine machine, AABB boundingBox, IO io) {
-        this(machine, boundingBox, io, io == IO.IN);
+        this(machine, boundingBox, io, io.support(IO.IN));
     }
 
     @Override
-    @Nullable
-    public List<EntityIngredient> handleRecipeInner(IO io, GTRecipe recipe, List<EntityIngredient> left,
-                                                    boolean simulate) {
-        if (!handlerIO.support(io)) return left;
-        if (io != IO.IN && io != IO.OUT) return left.isEmpty() ? null : left;
+    public boolean handleRecipe(IO io, GTRecipe recipe, List<EntityIngredient> left, boolean simulate) {
+        if (!handlerIO.support(io)) return false;
+        if (io != IO.IN && io != IO.OUT) return false;
 
-        ArrayList<EntityIngredient> ret = new ArrayList<>();
         if (io == IO.IN) {
             var cache = new LinkedList<>(getAllEntities());
             ArrayList<Entity> toRemove = new ArrayList<>(); // 实际上是交集
-            for (EntityIngredient ingredient : left) {
+            for (var it = left.listIterator(); it.hasNext();) {
+                EntityIngredient ingredient = it.next();
+                int amount = getRecipeAmount(ingredient, simulate);
+                if (amount <= 0) {
+                    it.remove();
+                    continue;
+                }
                 var iter = cache.iterator();
 
-                while (iter.hasNext() && ingredient.count > 0) {
+                while (iter.hasNext()) {
                     Entity entity = iter.next();
 
                     if (ingredient.test(entity)) {
-                        ingredient.count--;
-                        // remove
-                        iter.remove(); // 不能用cache.remove(entity)
+                        amount--;
+                        iter.remove();
                         toRemove.add(entity);
-                        if (ingredient.count <= 0) break;
+                        if (amount <= 0) break;
                     }
                 }
 
-                if (ingredient.count > 0) ret.add(ingredient);
+                if (amount == 0) {
+                    it.remove();
+                } else {
+                    it.set(ingredient.copyWithCount(amount));
+                }
             }
             if (!simulate) toRemove.forEach(this::removeEntity);
         } else { // io == IO.OUT
             Level level = getLevel();
             Predicate<Entity> detector = simulate ? this::canAddEntity : this::addEntity;
 
-            for (EntityIngredient ingredient : left) {
-                Entity entity = ingredient.createEntity(level);
-
-                while (ingredient.count > 0) {
-                    if (!detector.test(entity)) break;
-                    ingredient.count--;
+            for (var it = left.listIterator(); it.hasNext();) {
+                EntityIngredient ingredient = it.next();
+                int amount = getRecipeAmount(ingredient, simulate);
+                if (amount <= 0) {
+                    it.remove();
+                    continue;
                 }
-                if (ingredient.count > 0) ret.add(ingredient);
+
+                while (amount > 0) {
+                    Entity entity = ingredient.createEntity(level);
+                    if (!detector.test(entity)) break;
+                    amount--;
+                }
+                if (amount <= 0) {
+                    it.remove();
+                } else {
+                    it.set(ingredient.copyWithCount(amount));
+                }
             }
         }
-        return ret.isEmpty() ? null : ret; // 差点忘了要null才跑配方
+        return left.isEmpty();
+    }
+
+    private static int getRecipeAmount(EntityIngredient ingredient, boolean simulate) {
+        if (simulate || !ingredient.isChanced()) return ingredient.count;
+        ChancedEntityIngredient chanced = (ChancedEntityIngredient) ingredient;
+        return chanced.getInner().count * IChancedIngredient.rollSuccesses(chanced.getMultiplier(),
+                chanced.getChance());
     }
 
     // Notify
     protected TickableSubscription subscription;
 
-    private ISubscription rlSubscription;
-
     @Override
     public void onMachineLoad() {
         updateTickSubscription();
-        if (machine instanceof IRecipeLogicMachine rlm) {
-            rlSubscription = addChangedListener(rlm.getRecipeLogic()::updateTickSubscription);
-        }
     }
 
     @Override
     public void onMachineUnLoad() {
         unsubscribe();
-        if (rlSubscription != null) {
-            rlSubscription.unsubscribe();
-            rlSubscription = null;
-        }
     }
 
     private void unsubscribe() {
@@ -127,38 +147,32 @@ public class NotifiableEntityContainer extends NotifiableRecipeHandlerTrait<Enti
 
     // 配方机器自动处理,非配方机器需要手动处理shouldNotify
     public void updateTickSubscription() {
-        if (!shouldNotify ||
-                (machine instanceof IRecipeLogicMachine rlm && !rlm.isWorkingEnabled())) {
+        if (!shouldNotify) {
             unsubscribe();
         } else {
             subscription = getMachine().subscribeServerTick(subscription, this::serverTick);
         }
     }
 
-    private int lastHashCode;
+    IntOpenHashSet lastIds = new IntOpenHashSet();
     private int lastCount = -1;
 
     public void serverTick() {
-        Level level = getLevel();
-        if (level == null || level.getGameTime() % 20 != 0) return;
+        if (getMachine().getOffsetTimer() % 40 != 0) return;
         var entities = getAllEntities();
         if (lastCount != entities.size()) {
-            notifyListeners();
             lastCount = entities.size();
-        } else if (lastHashCode != entities.hashCode()) {
             notifyListeners();
-            lastHashCode = entities.hashCode();
+        } else {
+            IntOpenHashSet current = new IntOpenHashSet();
+            for (Entity e : entities) {
+                current.add(e.getId());
+                if (!current.equals(lastIds)) {
+                    lastIds = current;
+                    notifyListeners();
+                }
+            }
         }
-    }
-
-    public void startNotify() {
-        shouldNotify = true;
-        updateTickSubscription();
-    }
-
-    public void stopNotify() {
-        shouldNotify = false;
-        unsubscribe();
     }
 
     @Override
@@ -167,17 +181,22 @@ public class NotifiableEntityContainer extends NotifiableRecipeHandlerTrait<Enti
     }
 
     @Override
+    public @NotNull List<AbstractMapIngredient> getMapIngredients() {
+        List<AbstractMapIngredient> ingredients = new ArrayList<>();
+        for (Entity entity : getAllEntities()) {
+            ingredients.addAll(EntityTypeMapIngredient.from(entity));
+            ingredients.addAll(EntityTagMapIngredient.from(entity));
+        }
+        return ingredients;
+    }
+
+    @Override
     public double getTotalContentAmount() {
-        return getAllEntities().size();
+        return lastCount;
     }
 
     @Override
     public Level getLevel() {
         return machine.getLevel();
-    }
-
-    @Override
-    public IO getCapabilityIO() {
-        return handlerIO;
     }
 }
