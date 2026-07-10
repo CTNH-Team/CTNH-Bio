@@ -1,5 +1,7 @@
 package com.moguang.ctnhbio.machine.multiblock.part;
 
+import com.ctnhlang.CN;
+import com.ctnhlang.EN;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
@@ -10,13 +12,15 @@ import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.TieredIOPartMachine;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
-import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 
+import com.gregtechceu.gtceu.api.recipe.ingredient.item.ItemIngredient;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -26,6 +30,7 @@ import com.moguang.ctnhbio.machine.multiblock.CogniAssemblerMachine;
 import com.moguang.ctnhbio.utils.MetaMachineUtils;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,11 +71,6 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
         return inventory.insertItemInternal(slot, stack, simulate);
     }
 
-    @Override
-    public @NotNull List<RecipeHandlerList> getRecipeHandlers() {
-        return MetaMachineUtils.getRecipeHandlers(this, inventory);
-    }
-
     public class ParabioticBridgeHandler extends NotifiableItemStackHandler {
 
         public ParabioticBridgeHandler(MetaMachine machine) {
@@ -78,30 +78,8 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
         }
 
         @Override
-        public RecipeCapability<Ingredient> getCapability() {
+        public RecipeCapability<ItemIngredient> getCapability() {
             return CogniItemRecipeCapability.CAP;
-        }
-
-        @Override
-        public List<Ingredient> handleRecipeInner(IO io, GTRecipe recipe, List<Ingredient> left, boolean simulate) {
-            if (io == IO.IN) {
-                if (getControllers().stream().filter(
-                        m -> m instanceof CogniAssemblerMachine machine &&
-                                machine.tryingRecipe != null &&
-                                machine.tryingRecipe.id.equals(recipe.id))
-                        .anyMatch(p -> lastOutput.contains(p.self().getPos())))
-                    return left;
-                List<Ingredient> result = handleRecipe(io, recipe, left, simulate, io, storage);
-                if (!(Objects.equals(result, left)))
-                    lastInputRecipeID = recipe.id;
-                return result;
-            } else {
-                if (recipe.id.equals(lastInputRecipeID)) return left;
-                List<Ingredient> result = handleRecipe(io, recipe, left, simulate, io, storage);
-                if (!(Objects.equals(result, left)))
-                    updateLastOutput(recipe);
-                return result;
-            }
         }
     }
 
@@ -118,5 +96,23 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
         group.addWidget(container);
 
         return group;
+    }
+
+    @CN("联体桥建立连接失败")
+    @EN("Parabiotic Bridge fails to build connection")
+    static Lang fail_to_connect;
+
+    @Override
+    public Component modifyRecipe(GTRecipe recipe) {
+        if(getControllers().size() < 2)
+            return fail_to_connect.translate();
+        return null;
+    }
+
+    @Override
+    public void addMultiText(List<Component> textList) {
+        if(getControllers().size() < 2) {
+            textList.add(fail_to_connect.translate());
+        }
     }
 }

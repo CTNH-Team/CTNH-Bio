@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.fancyconfigurator.FancySelectorConfigurator;
 import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
+import com.gregtechceu.gtceu.api.machine.multiblock.RecipeElectricMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
 
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
@@ -45,7 +46,7 @@ import java.util.Objects;
 
 import static com.moguang.ctnhbio.api.machine.BasicLivingMachine.appendEffect;
 
-public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockMachine
+public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMachine
                                              implements ILivingMachine, IMachineLife {
 
     @Persisted
@@ -139,13 +140,13 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     }
 
     @Override
-    public void attachConfigurators(ConfiguratorPanel configuratorPanel) {
-        configuratorPanel.attachConfigurators(new FancySelectorConfigurator<>(VoidingMode.VALUES, getVoidingMode(),
+    public void attachConfigurators(ConfiguratorPanel left, ConfiguratorPanel right) {
+        left.attachConfigurators(new FancySelectorConfigurator<>(VoidingMode.VALUES, getVoidingMode(),
                 this::setVoidingMode)
                 .setTooltip(m -> List.of(Component.translatable("gtceu.gui.multiblock.voiding_mode"),
                         Component.translatable(m.getSerializedName()))));
 
-        configuratorPanel.attachConfigurators(new IFancyConfiguratorButton.Toggle(
+        left.attachConfigurators(new IFancyConfiguratorButton.Toggle(
                 CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0, 1, 0.5),
                 CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0.5, 1, 0.5),
                 this::isWorkingEnabled, (clickData, pressed) -> setWorkingEnabled(pressed))

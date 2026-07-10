@@ -339,4 +339,31 @@ public class CogniRecipeBuilder {
             return parent;
         }
     }
+
+    public static boolean isNextStep(ResourceLocation first, ResourceLocation second) {
+        if (!first.getNamespace().equals(second.getNamespace())) {
+            return false;
+        }
+
+        String firstPath = first.getPath();
+        String secondPath = second.getPath();
+
+        if (firstPath.length() != secondPath.length() || firstPath.isEmpty()) {
+            return false;
+        }
+
+        char firstLast = firstPath.charAt(firstPath.length() - 1);
+        char secondLast = secondPath.charAt(secondPath.length() - 1);
+
+        if (!Character.isDigit(firstLast) || !Character.isDigit(secondLast)) {
+            return false;
+        }
+
+        if (!firstPath.substring(0, firstPath.length() - 1)
+                .equals(secondPath.substring(0, secondPath.length() - 1))) {
+            return false;
+        }
+
+        return secondLast == firstLast + 1;
+    }
 }

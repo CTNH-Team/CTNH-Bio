@@ -1,23 +1,20 @@
 package com.moguang.ctnhbio.api.capability.recipe;
 
-import com.gregtechceu.gtceu.api.capability.recipe.IRecipeCapabilityHolder;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-
-import com.moguang.ctnhbio.mixin.gtm.RecipeCapabilityAccessor;
+import com.gregtechceu.gtceu.api.recipe.handler.RecipeHandlerGroup;
+import com.gregtechceu.gtceu.api.recipe.ingredient.item.ItemIngredient;
 
 public class CogniItemRecipeCapability extends ItemRecipeCapability {
 
     public static final CogniItemRecipeCapability CAP = new CogniItemRecipeCapability();
 
     protected CogniItemRecipeCapability() {
-        super();
-        ((RecipeCapabilityAccessor) this).setName("cogni_item");
-        ((RecipeCapabilityAccessor) this).setSortIndex(-100);
+        super("cogni_item", 0xFFD96106, true, ItemIngredient.CODEC);
     }
 
     @Override
-    public int getMaxParallelByInput(IRecipeCapabilityHolder holder, GTRecipe recipe, int limit, boolean tick) {
+    public int getMaxParallelByInput(RecipeHandlerGroup holder, GTRecipe recipe, int limit, boolean tick) {
         return 1;
     }
 }
