@@ -14,6 +14,7 @@ import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMa
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -34,8 +35,7 @@ import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 import com.moguang.ctnhbio.api.gui.CBGuiTextures;
 import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
-import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientTrait;
-import com.moguang.ctnhbio.api.machine.trait.SynchronizedNutrientStorage;
+import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientHandler;
 import com.moguang.ctnhbio.api.pattern.GrowingBlockPattern;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -50,16 +50,10 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
     @Persisted
     @Getter
-    protected final NotifiableNutrientTrait inputTrait;
-    @Persisted
-    @Getter
-    protected final NotifiableNutrientTrait outputTrait;
-    @Persisted
-    @Getter
-    protected final SynchronizedNutrientStorage nutrientStorage;
+    protected final NotifiableNutrientHandler nutrientHandler;
 
-    protected static final double capacity = 1000000;
-    protected static final double NUTRIENT_NEEDED_FOR_GROWTH = 1;
+    protected static final float capacity = 1000000;
+    protected static final float NUTRIENT_NEEDED_FOR_GROWTH = 1;
 
     protected GrowingBlockPattern growingBlockPattern;
 
@@ -71,10 +65,9 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
 
     public WorkableLivingMultiblockMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
-        this.nutrientStorage = new SynchronizedNutrientStorage(capacity, getRecipeLogic()::updateTickSubscription);
-        this.inputTrait = new NotifiableNutrientTrait(this, nutrientStorage, IO.IN);
-        this.outputTrait = new NotifiableNutrientTrait(this, nutrientStorage, IO.OUT);
-        nutrientStorage.add(1000);
+        this.nutrientHandler = new NotifiableNutrientHandler(this, capacity);
+        nutrientHandler.addChangedListener(getRecipeLogic()::updateTickSubscription);
+        nutrientHandler.add(1000);
     }
 
     @Override
@@ -93,23 +86,23 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
     }
 
     @Override
-    public double getNutrientAmount() {
-        return nutrientStorage.getAmount();
+    public float getNutrientAmount() {
+        return nutrientHandler.getAmount();
     }
 
     @Override
-    public double getNutrientCapacity() {
-        return nutrientStorage.getCapacity();
+    public float getNutrientCapacity() {
+        return nutrientHandler.getCapacity();
     }
 
     @Override
-    public void extractNutrient(double amount) {
-        nutrientStorage.extract(amount);
+    public void extractNutrient(float amount) {
+        nutrientHandler.extract(amount);
     }
 
     @Override
-    public void addNutrient(double amount) {
-        nutrientStorage.add(amount);
+    public void addNutrient(float amount) {
+        nutrientHandler.add(amount);
     }
 
     @Override
@@ -125,7 +118,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
                 }
                 int nutrition = stack.getFoodProperties(null).getNutrition();
                 float saturation = stack.getFoodProperties(null).getSaturationModifier();
-                nutrientStorage.add(nutrition + 0.5 * saturation);
+                nutrientHandler.add(nutrition + 0.5f * saturation);
 
                 getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
                         SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
@@ -215,7 +208,7 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
                 getNutrientAmount() >= NUTRIENT_NEEDED_FOR_GROWTH &&
                 growingBlockPattern != null &&
                 growingBlockPattern.growPlan.tick()) {
-            nutrientStorage.extract(NUTRIENT_NEEDED_FOR_GROWTH);
+            nutrientHandler.extract(NUTRIENT_NEEDED_FOR_GROWTH);
             if (growingBlockPattern.growPlan.isCompleted()) checkPattern();
         }
         // updatePartPositions();
@@ -241,11 +234,6 @@ public class WorkableLivingMultiblockMachine extends WorkableElectricMultiblockM
             }
 
         }
-    }
-
-    @Override
-    public boolean canVoidRecipeOutputs(RecipeCapability<?> capability) {
-        return capability == EURecipeCapability.CAP;
     }
 
     @Override

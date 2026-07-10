@@ -14,7 +14,7 @@ import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 
 public class CBRecipeCapabilities {
 
-    public static final RecipeCapability<Double> NUTRIENT = NutrientRecipeCapability.CAP;
+    public static final RecipeCapability<Float> NUTRIENT = NutrientRecipeCapability.CAP;
     public static final RecipeCapability<EntityIngredient> ENTITY = EntityRecipeCapability.CAP;
     public static final RecipeCapability<ModelIngredient> MODEL = ModelRecipeCapability.CAP;
     public static final RecipeCapability<Ingredient> COGNI_ITEM = CogniItemRecipeCapability.CAP;

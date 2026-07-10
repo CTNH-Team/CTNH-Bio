@@ -1,66 +1,85 @@
 package com.moguang.ctnhbio.api.capability.recipe;
 
-import com.gregtechceu.gtceu.api.capability.recipe.IRecipeCapabilityHolder;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.content.*;
+import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
+import com.gregtechceu.gtceu.api.recipe.handler.RecipeHandlerGroup;
+import com.gregtechceu.gtceu.utils.GTMath;
 
 import com.lowdragmc.lowdraglib.gui.widget.LabelWidget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.utils.LocalizationUtils;
 
-import com.moguang.ctnhbio.api.ILivingMachine;
+import com.mojang.serialization.Codec;
+import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientHandler;
+import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.List;
 
-public class NutrientRecipeCapability extends RecipeCapability<Double> {
+public class NutrientRecipeCapability extends RecipeCapability<Float> {
 
     public static NutrientRecipeCapability CAP = new NutrientRecipeCapability();
 
     protected NutrientRecipeCapability() {
-        super("nutrient", 0xFEEE00, false, 80802345, SerializerDouble.INSTANCE);
+        super("nutrient", 0xFEEE00, false, Codec.FLOAT);
     }
 
     @Override
-    public int limitMaxParallelByOutput(IRecipeCapabilityHolder holder, GTRecipe recipe, int maxMultiplier,
-                                        boolean tick) {
-        if (holder instanceof ILivingMachine livingMachine) {
-            double nutrient = recipe.getOutputContents(NutrientRecipeCapability.CAP)
-                    .stream().map(Content::getContent).mapToDouble(NutrientRecipeCapability.CAP::of).sum();
-            return (int) Math
-                    .floor((livingMachine.getNutrientCapacity() - livingMachine.getNutrientAmount()) / nutrient);
-        }
-        return Integer.MAX_VALUE;
+    public Float fromNetwork(net.minecraft.network.FriendlyByteBuf friendlyByteBuf) {
+        return friendlyByteBuf.readFloat();
     }
 
     @Override
-    public int getMaxParallelByInput(IRecipeCapabilityHolder holder, GTRecipe recipe, int limit, boolean tick) {
-        if (holder instanceof ILivingMachine livingMachine) {
-            double nutrient = recipe.getInputContents(NutrientRecipeCapability.CAP)
-                    .stream().map(Content::getContent).mapToDouble(NutrientRecipeCapability.CAP::of).sum();
-            return (int) Math.floor(livingMachine.getNutrientAmount() / nutrient);
-        }
-        return Integer.MAX_VALUE;
+    public void toNetwork(Float nutrient, net.minecraft.network.FriendlyByteBuf friendlyByteBuf) {
+        friendlyByteBuf.writeFloat(nutrient);
     }
 
     @Override
-    public Double copyInner(Double content) {
-        return content;
+    public Float copyInner(Float content, int multiplier) {
+        return content * multiplier;
     }
 
     @Override
-    public Double copyWithModifier(Double content, ContentModifier modifier) {
-        return modifier.apply(content);
+    public int limitMaxParallelByOutput(RecipeHandlerGroup holder, GTRecipe recipe, int limit, boolean tick) {
+        float produced = (tick ? recipe.getTickOutputContents(this) : recipe.getOutputContents(this))
+                .stream().reduce(0.0f, Float::sum);
+        if (produced <= 0) return limit;
+
+        float available = holder.getOutputHandlerMap().getOrDefault(this, List.of()).stream()
+                .filter(NotifiableNutrientHandler.class::isInstance)
+                .map(NotifiableNutrientHandler.class::cast)
+                .map(NotifiableNutrientHandler::getLeft)
+                .reduce(0.0f, Float::sum);
+        return Math.min(limit, GTMath.saturatedCast((long) (available / produced)));
     }
 
     @Override
-    public void addXEIInfo(WidgetGroup group, int xOffset, GTRecipe recipe, List<Content> contents, boolean perTick,
+    public int getMaxParallelByInput(RecipeHandlerGroup holder, GTRecipe recipe, int limit, boolean tick) {
+        float consumed = (tick ? recipe.getTickInputContents(this) : recipe.getInputContents(this))
+                .stream().reduce(0.0f, Float::sum);
+        if (consumed <= 0) return limit;
+
+        float available = holder.getInputHandlerMap().getOrDefault(this, List.of()).stream()
+                .filter(NotifiableNutrientHandler.class::isInstance)
+                .map(NotifiableNutrientHandler.class::cast)
+                .map(NotifiableNutrientHandler::getAmount)
+                .reduce(0.0f, Float::sum);
+        return Math.min(limit, GTMath.saturatedCast((long) (available / consumed)));
+    }
+
+    @Override
+    public void addXEIInfo(WidgetGroup group, int xOffset, GTRecipeDefinition recipe, List<Float> contents,
+                           int duration, boolean perTick,
                            boolean isInput, MutableInt yOffset) {
-        double nutrient = contents.stream().map(Content::getContent).mapToDouble(NutrientRecipeCapability.CAP::of)
-                .sum();
+        float nutrient = contents.stream().reduce(0.0f, Float::sum);
         group.addWidget(new LabelWidget(3 - xOffset, yOffset.addAndGet(10),
-                LocalizationUtils.format(
+                Component.translatable(
                         isInput ? "ctnhbio.recipe.nutrient_consume" : "ctnhbio.recipe.nutrient_generate", nutrient)));
+    }
+
+    @Override
+    public boolean shouldBypassDistinct() {
+        return true;
     }
 }
