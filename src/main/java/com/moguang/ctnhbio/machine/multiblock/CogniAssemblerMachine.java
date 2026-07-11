@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiPart;
 import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
+import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.ActionResult;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 
@@ -37,7 +38,7 @@ public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
         return new CogniAssemblerRecipeLogic(this);
     }
 
-    public static class CogniAssemblerRecipeLogic extends BasicLivingMachine.BasicLivingRecipeLogic {
+    public static class CogniAssemblerRecipeLogic extends RecipeLogic {
 
         @Persisted
         private ResourceLocation lastRecipeID;

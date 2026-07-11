@@ -1,13 +1,15 @@
 package com.moguang.ctnhbio.data.recipe.living;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.OreProperty;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
+import com.gregtechceu.gtceu.api.recipe.ingredient.fluid.FluidIngredient;
 
+import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
@@ -47,6 +49,7 @@ public class DecomposerRecipes {
         if (finalDust.isEmpty()) return;
         CBRecipeBuilder.of(CTNHBio.id("decompose_raw_" + material.getName()),
                 CBRecipeTypes.DECOMPOSER_RECIPES)
+                .category(CBRecipeCategories.BIO_ORE_PROCESSING)
                 .effect(MobEffects.DAMAGE_BOOST)
                 .nutrient(10)
                 .inputItems(TagPrefix.crushed, material)
@@ -64,7 +67,7 @@ public class DecomposerRecipes {
                         ChemicalHelper.get(dust, property.getOreByProduct(2, material)),
                         1700,
                         0)
-                .EUt(128)
+                .EUt(GTValues.VA[GTValues.MV])
                 .duration(60)
                 .save(provider);
         // 洗矿-粉碎-离心
@@ -73,6 +76,7 @@ public class DecomposerRecipes {
         if (Dust.isEmpty()) return;
         CBRecipeBuilder.of(CTNHBio.id("wash_grind_centrifuge_" + material.getName()),
                 CBRecipeTypes.DECOMPOSER_RECIPES)
+                .category(CBRecipeCategories.BIO_ORE_PROCESSING)
                 .nutrient(5)
                 .inputItems(TagPrefix.crushed, material)
                 .inputFluids(new FluidStack(Fluids.WATER, 1500))
@@ -89,7 +93,6 @@ public class DecomposerRecipes {
                         ChemicalHelper.get(dust, one.getOreByProduct(1, material)),
                         1700,
                         0)
-                // .EUt(24) 不要电
                 .duration(100)
                 .save(provider);
         // 酸洗-粉碎-离心
@@ -98,6 +101,7 @@ public class DecomposerRecipes {
             // ObjectIntPair<Material> washedInTuple = property.getWashedIn();
             CBRecipeBuilder.of(CTNHBio.id("acid_grind_centrifuge_" + material.getName()),
                     CBRecipeTypes.DECOMPOSER_RECIPES)
+                    .category(CBRecipeCategories.BIO_ORE_PROCESSING)
                     // .effect(MobEffects.DAMAGE_BOOST)
                     .nutrient(5)
                     .inputItems(TagPrefix.crushed, material)
@@ -115,7 +119,6 @@ public class DecomposerRecipes {
                             ChemicalHelper.get(dust, property.getOreByProduct(1, material)),
                             1300,
                             0)
-                    // .EUt(64)
                     .duration(100)
                     .save(provider);
         }

@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.api.recipe.customlogic;
 
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.ingredient.fluid.FluidIngredient;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +46,7 @@ public final class BasicLivingLogic {
         for (var tank : machine.importFluids.getStorages()) {
             FluidStack fluid = tank.getFluid().copy();
             if (!fluid.isEmpty() && fluid.getFluid().is(CBTags.NUTRIENT_FLUIDS_TAG)) {
-                builder.inputFluids(fluid);
+                builder.inputFluids(FluidIngredient.of(CBTags.NUTRIENT_FLUIDS_TAG, fluid.getAmount()));
                 nutrient += fluid.getAmount();
             }
         }

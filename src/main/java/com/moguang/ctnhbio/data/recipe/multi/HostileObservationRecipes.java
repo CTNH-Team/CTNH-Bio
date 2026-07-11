@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.common.data.GTItems;
 
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -12,7 +13,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
-import dev.latvian.mods.kubejs.util.Tags;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 
 import java.util.function.Consumer;
@@ -45,9 +45,9 @@ public class HostileObservationRecipes {
     public static void addEntityTypeWithItem(EntityType<?> type, ItemLike item, Consumer<FinishedRecipe> provider) {
         CBRecipeBuilder.of(getRecipeId(type, ModelTier.BASIC), HOSTILE_OBSERVATION)
                 .inputEntity(type, 1, 0)
-                .inputModel(ModelIngredient.of(ModelTier.FAULTY, type))
+                .inputModel(ModelIngredient.of(ModelTier.FAULTY, type, 0))
                 .outputModel(ModelIngredient.of(ModelTier.BASIC, type), 3000)
-                .notConsumable(Ingredient.of(Tags.item(ResourceLocation.parse("minecraft:swords"))))
+                .notConsumable(ItemTags.SWORDS)
                 .inputItems(item.asItem())
                 .EUt(VA[EV])
                 .duration(200)
@@ -55,7 +55,7 @@ public class HostileObservationRecipes {
 
         CBRecipeBuilder.of(getRecipeId(type, ModelTier.ADVANCED), HOSTILE_OBSERVATION)
                 .inputEntity(type, 1, 0)
-                .inputModel(ModelIngredient.of(ModelTier.BASIC, type))
+                .inputModel(ModelIngredient.of(ModelTier.BASIC, type, 0))
                 .outputModel(ModelIngredient.of(ModelTier.ADVANCED, type), 1000)
                 .inputItems(PREDICTION_MATRIX)
                 .inputItems(item.asItem())
@@ -65,7 +65,7 @@ public class HostileObservationRecipes {
 
         CBRecipeBuilder.of(getRecipeId(type, ModelTier.SUPERIOR), HOSTILE_OBSERVATION)
                 .inputEntity(type, 1, 0)
-                .inputModel(ModelIngredient.of(ModelTier.ADVANCED, type))
+                .inputModel(ModelIngredient.of(ModelTier.ADVANCED, type, 0))
                 .outputModel(ModelIngredient.of(ModelTier.SUPERIOR, type), 500)
                 .inputItems(GTItems.TOOL_DATA_STICK)
                 .inputItems(item.asItem())

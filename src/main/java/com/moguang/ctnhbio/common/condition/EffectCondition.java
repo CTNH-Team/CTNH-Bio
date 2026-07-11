@@ -101,52 +101,8 @@ public class EffectCondition extends RecipeCondition<EffectCondition> {
         return new EffectCondition();
     }
 
-    // @NotNull
-    // @Override
-    // public JsonObject serialize() {
-    // JsonObject config = super.serialize();
-    // JsonArray effectsArray = new JsonArray();
-    // for (MobEffect effect : effects) {
-    // effectsArray.add(BuiltInRegistries.MOB_EFFECT.getKey(effect).toString());
-    // }
-    // config.add("mob_effect", effectsArray);
-    // return config;
-    // }
-    //
-    // @Override
-    // public RecipeCondition deserialize(@NotNull JsonObject config) {
-    // super.deserialize(config);
-    // JsonArray effectsArray = GsonHelper.getAsJsonArray(config, "mob_effect");
-    // List<String> effectStrings = new ArrayList<>();
-    // for (JsonElement element : effectsArray) {
-    // effectStrings.add(element.getAsString());
-    // }
-    // this.effects = effectStrings.stream()
-    // .map(ResourceLocation::parse)
-    // .filter(BuiltInRegistries.MOB_EFFECT::containsKey)
-    // .map(BuiltInRegistries.MOB_EFFECT::get)
-    // .toArray(MobEffect[]::new);
-    // return this;
-    // }
-    //
-    // @Override
-    // public RecipeCondition fromNetwork(FriendlyByteBuf buf) {
-    // super.fromNetwork(buf);
-    // int effectCount = buf.readVarInt();
-    // this.effects = new MobEffect[effectCount];
-    // for (int i = 0; i < effectCount; i++) {
-    // ResourceLocation effectId = buf.readResourceLocation();
-    // this.effects[i] = BuiltInRegistries.MOB_EFFECT.get(effectId);
-    // }
-    // return this;
-    // }
-    //
-    // @Override
-    // public void toNetwork(FriendlyByteBuf buf) {
-    // super.toNetwork(buf);
-    // buf.writeVarInt(effects.length);
-    // for (MobEffect effect : effects) {
-    // buf.writeResourceLocation(BuiltInRegistries.MOB_EFFECT.getKey(effect));
-    // }
-    // }
+    @Override
+    public boolean perTick() {
+        return true;
+    }
 }

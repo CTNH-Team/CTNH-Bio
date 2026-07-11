@@ -3,7 +3,8 @@ package com.moguang.ctnhbio.data.recipe;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
+import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
+import com.gregtechceu.gtceu.api.recipe.ingredient.fluid.FluidIngredient;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 
 import net.minecraft.resources.ResourceLocation;
@@ -21,6 +22,7 @@ import com.moguang.ctnhbio.api.capability.recipe.NutrientRecipeCapability;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.EntityIngredient;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
 import com.moguang.ctnhbio.common.condition.EffectCondition;
+import org.jetbrains.annotations.NotNull;
 
 public class CBRecipeBuilder extends GTRecipeBuilder {
 
@@ -42,6 +44,12 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
     }
 
     @Override
+    public CBRecipeBuilder category(@NotNull GTRecipeCategory category) {
+        super.category(category);
+        return this;
+    }
+
+    @Override
     @SuppressWarnings("all")
     public final <T> CBRecipeBuilder input(RecipeCapability<T> capability, T... obj) {
         super.input(capability, obj);
@@ -55,7 +63,7 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
         return this;
     }
 
-    public CBRecipeBuilder nutrient(double nutrient) {
+    public CBRecipeBuilder nutrient(float nutrient) {
         if (nutrient >= 0) {
             input(NutrientRecipeCapability.CAP, nutrient);
         } else {
@@ -74,10 +82,7 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
 
     public CBRecipeBuilder inputEntity(EntityIngredient entity, int chance) {
         perTick = false;
-        int lastChance = this.chance;
-        this.chance = chance;
-        input(EntityRecipeCapability.CAP, entity);
-        this.chance = lastChance;
+        input(EntityRecipeCapability.CAP, entity.copyWithChance(chance));
         return this;
     }
 
@@ -144,10 +149,7 @@ public class CBRecipeBuilder extends GTRecipeBuilder {
 
     public CBRecipeBuilder outputModel(ModelIngredient model, int chance) {
         perTick = false;
-        int lastChance = this.chance;
-        this.chance = chance;
-        output(ModelRecipeCapability.CAP, model);
-        this.chance = lastChance;
+        output(ModelRecipeCapability.CAP, model.copyWithChance(chance));
         return this;
     }
 

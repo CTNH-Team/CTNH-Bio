@@ -1,8 +1,8 @@
 package com.moguang.ctnhbio.utils;
 
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.ingredient.IntProviderIngredient;
 
+import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -45,7 +45,7 @@ public class DecomposingRecipeHandler {
             BILE.get(), Bile.getFluid(),
             VOLATILE_FLUID.get(), Volatile_Fluid.getFluid());
 
-    public static GTRecipe toGTrecipe(DecomposingRecipe recipe) {
+    public static GTRecipeDefinition toGTrecipe(DecomposingRecipe recipe) {
         var outputs = extractOutputs(recipe);
         if (outputs.isEmpty()) return null;
 
@@ -58,8 +58,7 @@ public class DecomposingRecipeHandler {
             output.min = Math.max(output.min, 1);
             output.ingredient.ifLeft(item -> {
                 if (output.max > 0) {
-                    builder.outputItemRanged(
-                            IntProviderIngredient.of(item.getDefaultInstance(), UniformInt.of(output.min, output.max)));
+                    builder.outputItemsRanged(item.getDefaultInstance(), UniformInt.of(output.min, output.max));
                 } else {
                     builder.outputItems(new ItemStack(item, output.count));
                 }
@@ -74,18 +73,18 @@ public class DecomposingRecipeHandler {
             });
         }
         builder.EUt(hasFluid.get() ? VA[MV] : VA[LV]);
-        JsonObject js = builder.build().serializeRecipe();
+//        JsonObject js = builder.build().serializeRecipe();
 
-        try {
-            java.nio.file.Path outputPath = java.nio.file.Paths
-                    .get("resources/data/ctnhbio/recipes/decomposing/" + recipe.getId().getPath() + ".json");
-            java.nio.file.Files.createDirectories(outputPath.getParent());
-            com.google.gson.Gson gson = new com.google.gson.GsonBuilder().setPrettyPrinting().create();
-            String prettyJson = gson.toJson(js);
-            java.nio.file.Files.writeString(outputPath, prettyJson);
-        } catch (Exception e) {
-
-        }
+//        try {
+//            java.nio.file.Path outputPath = java.nio.file.Paths
+//                    .get("resources/data/ctnhbio/recipes/decomposing/" + recipe.getId().getPath() + ".json");
+//            java.nio.file.Files.createDirectories(outputPath.getParent());
+//            com.google.gson.Gson gson = new com.google.gson.GsonBuilder().setPrettyPrinting().create();
+//            String prettyJson = gson.toJson(js);
+//            java.nio.file.Files.writeString(outputPath, prettyJson);
+//        } catch (Exception e) {
+//
+//        }
         return builder.buildRawRecipe();
     }
 
@@ -107,7 +106,7 @@ public class DecomposingRecipeHandler {
                 data.count = constantValue.value();
             } else if (range instanceof ItemCountRange.UniformRange uniformRange) {
                 data.min = uniformRange.min();
-                data.max = uniformRange.max();
+                data.max = uniformRange.max() == data.min ? 0 : uniformRange.max();
             } else if (range instanceof ItemCountRange.BinomialRange binomialRange) {
                 data.max = binomialRange.n();
             }

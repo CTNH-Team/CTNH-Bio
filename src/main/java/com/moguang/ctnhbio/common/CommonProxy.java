@@ -76,6 +76,6 @@ public class CommonProxy {
 
     @SubscribeEvent
     public void registerCapabilities(RegisterCapabilitiesEvent event) {
-        CBCapabilities.register(event);
+        // CBCapabilities.register(event);
     }
 }

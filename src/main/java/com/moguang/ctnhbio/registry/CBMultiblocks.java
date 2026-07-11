@@ -266,7 +266,7 @@ public class CBMultiblocks {
             .cnLangValue("敌意观测站")
             .langValue("Hostile Observer")
             .recipeType(CBRecipeTypes.HOSTILE_OBSERVATION)
-            .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH,
+            .recipeModifiers(GTRecipeModifiers.TIER_CHECK, GTRecipeModifiers.PARALLEL_HATCH,
                     HostileObserverMachine::hostileObserverMachineModifier)
             .pattern(definition -> FactoryBlockPattern.start()
                     // spotless:off

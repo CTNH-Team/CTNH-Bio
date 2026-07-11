@@ -1,6 +1,6 @@
 package com.moguang.ctnhbio.data.recipe.living;
 
-import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
+import com.gregtechceu.gtceu.api.recipe.ingredient.fluid.FluidIngredient;
 
 import net.minecraft.data.recipes.FinishedRecipe;
 

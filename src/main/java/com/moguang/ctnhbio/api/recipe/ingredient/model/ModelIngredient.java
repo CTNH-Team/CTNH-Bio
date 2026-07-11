@@ -22,22 +22,32 @@ import dev.shadowsoffire.hostilenetworks.data.DataModel;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
 
+import java.util.Objects;
+
 @Getter
 public final class ModelIngredient implements IChancedIngredient {
 
     public static final Codec<ModelIngredient> CODEC = ExtraCodecs.JSON.xmap(ModelIngredient::fromJson,
             ModelIngredient::toJson);
 
-    private final DataModel model;
+    private final EntityType<?> type;
+    private DataModel model;
     private final ModelTier tier;
     private final int chance;
 
     private ItemStack itemStack;
 
-    public ModelIngredient(DataModel model, ModelTier tier, int chance) {
-        this.model = model;
+    public ModelIngredient(EntityType<?> type, ModelTier tier, int chance) {
+        this.type = type;
         this.tier = tier;
         this.chance = Mth.clamp(chance, 0, MAX_CHANCE);
+    }
+
+    private DataModel getModel() {
+        if(model == null) {
+            model = Objects.requireNonNull(DataModelRegistry.INSTANCE.getForEntity(type));
+        }
+        return model;
     }
 
     public boolean isChanced() {
@@ -45,31 +55,31 @@ public final class ModelIngredient implements IChancedIngredient {
     }
 
     public ModelIngredient copy() {
-        return new ModelIngredient(model, tier, chance);
+        return new ModelIngredient(type, tier, chance);
     }
 
     public ModelIngredient copyWithChance(int chance) {
-        return new ModelIngredient(model, tier, chance);
+        return new ModelIngredient(type, tier, chance);
     }
 
     public boolean test(ItemStack stack) {
         if (!(stack.getItem() instanceof DataModelItem)) return false;
         var storedModel = DataModelItem.getStoredModel(stack).getOptional().orElse(null);
-        return storedModel == model &&
+        return storedModel == getModel() &&
                 ModelTier.getByData(storedModel, DataModelItem.getData(stack)).ordinal() >= tier.ordinal();
     }
 
     public boolean testHigher(ItemStack stack) {
         if (!(stack.getItem() instanceof DataModelItem)) return false;
         var storedModel = DataModelItem.getStoredModel(stack).getOptional().orElse(null);
-        return storedModel == model &&
-                ModelTier.getByData(storedModel, DataModelItem.getData(stack)).ordinal() > tier.ordinal();
+        return storedModel == getModel() &&
+                tier.ordinal() > ModelTier.getByData(storedModel, DataModelItem.getData(stack)).ordinal();
     }
 
     public ItemStack getItem() {
         if(itemStack == null) {
             ItemStack stack = new ItemStack(Hostile.Items.DATA_MODEL.get());
-            DataModelItem.setStoredModel(stack, model);
+            DataModelItem.setStoredModel(stack, getModel());
             DataModelItem.setData(stack, tier.data().requiredData());
             itemStack = stack;
         }
@@ -80,28 +90,32 @@ public final class ModelIngredient implements IChancedIngredient {
         return IChancedIngredient.rollSuccesses(1, chance) == 1 ? getItem() : ItemStack.EMPTY;
     }
 
-    public static ModelIngredient of(ItemStack stack) {
-        var storedModel = DataModelItem.getStoredModel(stack);
-        return new ModelIngredient(storedModel.get(), ModelTier.getByData(storedModel, DataModelItem.getData(stack)),
-                MAX_CHANCE);
-    }
+//    public static ModelIngredient of(ItemStack stack) {
+//        var storedModel = DataModelItem.getStoredModel(stack);
+//        return new ModelIngredient(storedModel.get(), ModelTier.getByData(storedModel, DataModelItem.getData(stack)),
+//                MAX_CHANCE);
+//    }
 
-    public static ModelIngredient of(ModelTier tier, DataModel model) {
-        return new ModelIngredient(model, tier, MAX_CHANCE);
-    }
+//    public static ModelIngredient of(ModelTier tier, DataModel model) {
+//        return new ModelIngredient(model, tier, MAX_CHANCE);
+//    }
 
     public static ModelIngredient of(ModelTier tier, EntityType<?> type) {
-        return of(tier, DataModelRegistry.INSTANCE.getForEntity(type));
+        return new ModelIngredient(type, tier, IChancedIngredient.MAX_CHANCE);
+    }
+
+    public static ModelIngredient of(ModelTier tier, EntityType<?> type, int chance) {
+        return new ModelIngredient(type, tier, chance);
     }
 
     public static ModelIngredient fromNetwork(FriendlyByteBuf buffer) {
         EntityType<?> type = buffer.readById(BuiltInRegistries.ENTITY_TYPE);
         ModelTier tier = ModelTier.values()[buffer.readByte()];
-        return new ModelIngredient(DataModelRegistry.INSTANCE.getForEntity(type), tier, buffer.readVarInt());
+        return new ModelIngredient(type, tier, buffer.readVarInt());
     }
 
     public void toNetwork(FriendlyByteBuf buffer) {
-        buffer.writeId(BuiltInRegistries.ENTITY_TYPE, model.type());
+        buffer.writeId(BuiltInRegistries.ENTITY_TYPE, type);
         buffer.writeByte(tier.ordinal());
         buffer.writeVarInt(chance);
     }
@@ -111,12 +125,12 @@ public final class ModelIngredient implements IChancedIngredient {
         EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(
                 GsonHelper.getAsString(object, "entity")));
         ModelTier tier = ModelTier.valueOf(GsonHelper.getAsString(object, "tier").toUpperCase());
-        return new ModelIngredient(DataModelRegistry.INSTANCE.getForEntity(type), tier, GsonHelper.getAsInt(object, "chance", MAX_CHANCE));
+        return new ModelIngredient(type, tier, GsonHelper.getAsInt(object, "chance", MAX_CHANCE));
     }
 
     public JsonElement toJson() {
         JsonObject object = new JsonObject();
-        object.addProperty("entity", ForgeRegistries.ENTITY_TYPES.getKey(model.type()).toString());
+        object.addProperty("entity", ForgeRegistries.ENTITY_TYPES.getKey(type).toString());
         object.addProperty("tier", tier.getSerializedName());
         object.addProperty("chance", chance);
         return object;

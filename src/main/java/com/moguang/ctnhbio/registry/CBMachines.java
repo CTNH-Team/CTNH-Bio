@@ -1,5 +1,7 @@
 package com.moguang.ctnhbio.registry;
 
+import com.ctnhlang.Category;
+import com.ctnhlang.Suffix;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.RotationState;
@@ -33,6 +35,8 @@ import static com.gregtechceu.gtceu.common.data.models.GTMachineModels.createOve
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
 import static com.moguang.ctnhbio.utils.CBMachineNames.*;
 
+@Suffix("tooltip")
+@Category("machine")
 public class CBMachines {
 
     public static final MachineDefinition[] BIOELECTRIC_FORGE = new MachineDefinition[GTValues.TIER_COUNT];
@@ -193,7 +197,7 @@ public class CBMachines {
             "§rProvides %d compute power when power and nutrients are sufficient",
             "§rOverclocking provides double compute power, but causes irreversible brain damage"
     })
-    static Lang[] brain_tooltip;
+    static Lang[] brain;
 
     @CN({
             "它觉得自己是一名出色的格雷员工",
@@ -224,9 +228,9 @@ public class CBMachines {
                             true)
                     .editableUI(null)
                     .tooltips(
-                            brain_tooltip[0].translate(),
-                            brain_tooltip[1].translate(tier >= GTValues.HV ? 1 << (tier - GTValues.HV) : 0),
-                            brain_tooltip[2].translate())
+                            brain[0].translate(),
+                            brain[1].translate(tier >= GTValues.HV ? 1 << (tier - GTValues.HV) : 0),
+                            brain[2].translate())
                     .tooltips(brain_story[tier - 3].translate().withStyle(ChatFormatting.GRAY))
                     .register();
         }

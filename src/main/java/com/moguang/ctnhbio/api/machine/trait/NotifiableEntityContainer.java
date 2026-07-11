@@ -167,10 +167,10 @@ public class NotifiableEntityContainer extends NotifiableRecipeHandlerTrait<Enti
             IntOpenHashSet current = new IntOpenHashSet();
             for (Entity e : entities) {
                 current.add(e.getId());
-                if (!current.equals(lastIds)) {
-                    lastIds = current;
-                    notifyListeners();
-                }
+            }
+            if (!current.equals(lastIds)) {
+                lastIds = current;
+                notifyListeners();
             }
         }
     }

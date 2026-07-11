@@ -1,6 +1,5 @@
 package com.moguang.ctnhbio.utils;
 
-import com.gregtechceu.gtceu.api.recipe.modifier.ModifierFunction;
 import com.gregtechceu.gtceu.api.recipe.modifier.RecipeModifier;
 
 import net.minecraft.world.effect.MobEffects;
@@ -9,25 +8,24 @@ import com.moguang.ctnhbio.api.ILivingMachine;
 
 public class CBRecipeModifiers {
 
-    public static RecipeModifier BASIC_LIVING_MODIFIER = ((machine, recipe) -> {
+    public static final RecipeModifier BASIC_LIVING_MODIFIER = (machine, group, recipe) -> {
         if (machine instanceof ILivingMachine livingMachine) {
-            var builder = ModifierFunction.builder();
             var entity = livingMachine.getMachineEntity();
             if (entity == null) {
-                return ModifierFunction.IDENTITY;
+                return null;
             }
             if (entity.getEffect(MobEffects.DIG_SPEED) != null) {
                 int tier = entity.getEffect(MobEffects.DIG_SPEED).getAmplifier();
-                builder.durationMultiplier(Math.max(0, 1 - 0.2 * tier));
+                recipe.multiplyDuration(Math.max(0, 1 - 0.2 * tier));
             }
             if (entity.getEffect(MobEffects.DIG_SLOWDOWN) != null) {
                 int tier = entity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier();
-                builder.durationMultiplier(1 + tier);
+                recipe.multiplyDuration(1 + tier);
             }
             if (entity.getEffect(MobEffects.DAMAGE_BOOST) != null) {
                 int tier = entity.getEffect(MobEffects.DAMAGE_BOOST).getAmplifier();
             }
         }
-        return ModifierFunction.IDENTITY;
-    });
+        return null;
+    };
 }

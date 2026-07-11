@@ -86,48 +86,15 @@ public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
         var handlers = holder.getInputHandlerMap().get(this);
         if (handlers == null || handlers.isEmpty()) return 0;
 
-        // Separate consumable and non-consumable ingredients
-        var nonConsumables = new ArrayList<EntityIngredient>();
-        var consumables = new ArrayList<EntityIngredient>();
-
-        for (EntityIngredient ingredient : inputs) {
-            if (ingredient.getChance() == 0) {
-                nonConsumables.add(ingredient.copy());
-            } else {
-                consumables.add(ingredient.copy());
-            }
-        }
-
-        // If no consumables, just check non-consumables
-        if (consumables.isEmpty()) {
-            for (var handler : handlers) {
-                for (var nc : nonConsumables) {
-                    if (countMatches(handler.getContents(), nc) < nc.count) {
-                        return 0; // Missing required non-consumable
-                    }
-                }
-            }
-            return limit;
-        }
-
         int maxMultiplier = 0;
 
         // Check each handler's capacity
         for (var handler : handlers) {
-            // First check non-consumables
-            boolean hasAllNonConsumables = true;
-            for (var nc : nonConsumables) {
-                if (countMatches(handler.getContents(), nc) < nc.count) {
-                    hasAllNonConsumables = false;
-                    break;
-                }
-            }
-            if (!hasAllNonConsumables) continue;
 
             // Then calculate parallel based on consumables
             int handlerMultiplier = Integer.MAX_VALUE;
 
-            for (var c : consumables) {
+            for (var c : inputs) {
                 int required = c.count;
                 int available = countMatches(handler.getContents(), c);
 

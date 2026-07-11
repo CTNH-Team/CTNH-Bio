@@ -302,7 +302,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     public static class BasicLivingRecipeLogic extends RecipeLogic {
 
-        private long lastDietTime = -20;
+        private boolean update = false;
 
         public BasicLivingRecipeLogic(IRecipeLogicMachine machine) {
             super(machine);
@@ -315,9 +315,8 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
         @Override
         public void serverTick() {
-            long time = getMachine().getOffsetTimer();
-            if (!isSuspend() && (time - lastDietTime >= 20)) {
-                lastDietTime = time;
+            if (!isSuspend() && update) {
+                update = false;
                 BasicLivingMachine livingMachine = (BasicLivingMachine) machine;
                 executeAuxiliaryRecipe(BasicLivingLogic.createNutrientRecipe(livingMachine));
                 var potionRecipe = BasicLivingLogic.createPotionRecipe(livingMachine);
@@ -330,6 +329,12 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             }
 
             super.serverTick();
+        }
+
+        @Override
+        public void updateTickSubscription() {
+            update = true;
+            super.updateTickSubscription();
         }
 
         private boolean executeAuxiliaryRecipe(@Nullable GTRecipe recipe) {

@@ -4,8 +4,9 @@ import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.IRecipeCapabilityHolder;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
+import com.gregtechceu.gtceu.api.recipe.handler.RecipeHandlerGroup;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 
 import net.minecraft.world.food.FoodProperties;
@@ -32,8 +33,8 @@ import java.util.List;
 public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
 
     @Override
-    public @Nullable GTRecipe createCustomRecipe(IRecipeCapabilityHolder holder) {
-        var itemHandlers = holder.getCapabilitiesFlat(IO.IN, ItemRecipeCapability.CAP).stream()
+    public @Nullable GTRecipeDefinition createCustomRecipe(RecipeHandlerGroup holder) {
+        var itemHandlers = holder.getInputHandlerMap().get(ItemRecipeCapability.CAP).stream()
                 .filter(IItemHandlerModifiable.class::isInstance)
                 .map(IItemHandlerModifiable.class::cast)
                 .toArray(IItemHandlerModifiable[]::new);
@@ -55,35 +56,29 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
 
         float totalNutrition = 0.0f;
         for (ItemStack stack : foods) {
-            totalNutrition += getFoodNutritionValue(stack) * stack.getCount() * 2; // 营养值乘以2
+            totalNutrition += getFoodNutritionValue(stack) * stack.getCount() * 2;
         }
 
         if (circuit == 1) {
             int totalPaste = Math.round(totalNutrition / 3);
             int barCount = totalPaste / 9;
             int remainingPaste = totalPaste % 9;
-            // 创建输出列表
-            List<ItemStack> newOutputs = new ArrayList<>();
-            if (barCount > 0) {
-                newOutputs.add(new ItemStack(ModItems.NUTRIENT_BAR.get(), barCount));
-            }
-            if (remainingPaste > 0) {
-                newOutputs.add(new ItemStack(ModItems.NUTRIENT_PASTE.get(), remainingPaste));
-            }
+            List<ItemStack> outputs = new ArrayList<>();
+            if (barCount > 0) outputs.add(new ItemStack(ModItems.NUTRIENT_BAR.get(), barCount));
+            if (remainingPaste > 0) outputs.add(new ItemStack(ModItems.NUTRIENT_PASTE.get(), remainingPaste));
 
             return CBRecipeBuilder.of(CTNHBio.id("nutrient_solid"), CBRecipeTypes.DIGEST_RECIPES)
                     .nutrient(1)
-                    .inputItems(foods.stream().map(SizedIngredient::create).toArray(SizedIngredient[]::new))
-                    .outputItems(newOutputs.toArray(new ItemStack[0]))
-                    .duration((int) totalNutrition) // 持续时间基于总营养值
+                    .inputItems(foods.toArray(ItemStack[]::new))
+                    .outputItems(outputs.toArray(ItemStack[]::new))
+                    .duration((int) totalNutrition)
                     .EUt(32)
                     .buildRawRecipe();
         } else if (circuit == 2) {
-            int fluidAmount = Math.round(totalNutrition); // 1营养值 = 1mB流体
             return CBRecipeBuilder.of(CTNHBio.id("nutrient_fluid"), CBRecipeTypes.DIGEST_RECIPES)
                     .nutrient(1)
-                    .inputItems(foods.stream().map(SizedIngredient::create).toArray(SizedIngredient[]::new))
-                    .outputFluids(new FluidStack(ModFluids.NUTRIENTS_FLUID.get(), fluidAmount))
+                    .inputItems(foods.toArray(ItemStack[]::new))
+                    .outputFluids(new FluidStack(ModFluids.NUTRIENTS_FLUID.get(), Math.round(totalNutrition)))
                     .duration((int) totalNutrition)
                     .EUt(32)
                     .buildRawRecipe();
@@ -96,15 +91,13 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
         Item item = stack.getItem();
         if (item.isEdible()) {
             FoodProperties food = item.getFoodProperties();
-            if (food != null) {
-                return food.getNutrition() + food.getSaturationModifier();
-            }
+            if (food != null) return food.getNutrition() + food.getSaturationModifier();
         }
         return 0.0f;
     }
 
     @CN("配方时间和产出\n由食物的饱食度和饱和度决定")
-    @EN("Recipe duration and output\nare determined by the food’s Hunger Value and Saturation")// 实际上食物具有的应当是“饥饿值”
+    @EN("Recipe duration and output\nare determined by the food’s Hunger Value and Saturation")
     public static Lang based_on_nutrition;
 
     @Override

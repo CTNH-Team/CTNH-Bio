@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.mixin.gtm;
 
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +21,7 @@ public class GTRecipeTypeMixin {
 
     @Inject(method = "toGTrecipe", at = @At("HEAD"), cancellable = true)
     void handleBiomancyRecipes(ResourceLocation id, Recipe<?> r,
-                               CallbackInfoReturnable<GTRecipe> cir) throws IOException {
+                               CallbackInfoReturnable<GTRecipeDefinition> cir) throws IOException {
         if (r instanceof DecomposingRecipe recipe) {
             var result = DecomposingRecipeHandler.toGTrecipe(recipe);
             cir.setReturnValue(result);

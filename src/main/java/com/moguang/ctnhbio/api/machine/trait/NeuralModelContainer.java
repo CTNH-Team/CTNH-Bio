@@ -102,7 +102,7 @@ public class NeuralModelContainer extends NotifiableRecipeHandlerTrait<ModelIngr
         else {
             for (var iterator = left.iterator(); iterator.hasNext();) {
                 ModelIngredient ingredient = iterator.next();
-                var result = ingredient.toStack();
+                var result = simulate ? ingredient.getItem() : ingredient.toStack();
                 if(!simulate && result.isEmpty()) continue;
                 for(int slot = 0; slot < getSlots(); slot ++) {
                     if(getStackInSlot(slot).isEmpty()) {

@@ -26,27 +26,29 @@ import static com.moguang.ctnhbio.registry.CBMultiblocks.GREAT_FLESH;
 
 @Mod.EventBusSubscriber(modid = CTNHBio.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeEventHandler {
-
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
-    @SubscribeEvent
-    public static void onDataReload(AddReloadListenerEvent event) {
-        // event.addListener(LootCategories.getReloadListener(new Gson(), "loot_categories"));
-        class MobCrushingReloadListener extends SimpleJsonResourceReloadListener {
-            MobCrushingReloadListener(Gson gson, String directory) {
-                super(gson, directory);
-            }
-
-            @Override
-            protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager,
-                                 ProfilerFiller profiler) {
-                JsonArray recipesJson = new JsonArray();
-                jsonMap.values().forEach(recipesJson::add);
-                MobCrushingRecipeManager.loadFromJson(recipesJson);
-            }
-        }
-        event.addListener(new MobCrushingReloadListener(GSON, "mob_crushing_recipes"));
-    }
+//  spotless: off
+//    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+//
+//    @SubscribeEvent
+//    public static void onDataReload(AddReloadListenerEvent event) {
+//        // event.addListener(LootCategories.getReloadListener(new Gson(), "loot_categories"));
+//        class MobCrushingReloadListener extends SimpleJsonResourceReloadListener {
+//
+//            MobCrushingReloadListener(Gson gson, String directory) {
+//                super(gson, directory);
+//            }
+//
+//            @Override
+//            protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager,
+//                                 ProfilerFiller profiler) {
+//                JsonArray recipesJson = new JsonArray();
+//                jsonMap.values().forEach(recipesJson::add);
+//                MobCrushingRecipeManager.loadFromJson(recipesJson);
+//            }
+//        }
+//        event.addListener(new MobCrushingReloadListener(GSON, "mob_crushing_recipes"));
+//    }
+//   spotless: on
 
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {

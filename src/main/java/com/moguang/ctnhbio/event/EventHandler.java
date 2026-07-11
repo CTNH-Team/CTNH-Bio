@@ -23,6 +23,10 @@ import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
 import com.moguang.ctnhbio.data.recipe.VanillaRecipeProvider;
 import com.moguang.ctnhbio.registry.*;
 
+import java.util.ArrayList;
+
+import static com.github.elenterius.biomancy.init.ModRecipes.DECOMPOSING_RECIPE_TYPE;
+
 @Mod.EventBusSubscriber(modid = CTNHBio.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EventHandler {
 
@@ -56,10 +60,9 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-        // event.enqueueWork(() -> {
-        // CraftingHelper.register(ModelIngredient.TYPE, ModelIngredient.SERIALIZER);
-        // CBRecipeTypes.DECOMPOSER_RECIPES.getProxyRecipes().put(DECOMPOSING_RECIPE_TYPE.get(), new ArrayList<>());
-        // });
+         event.enqueueWork(() -> {
+            CBRecipeTypes.DECOMPOSER_RECIPES.getProxyRecipes().put(DECOMPOSING_RECIPE_TYPE.get(), new ArrayList<>());
+         });
     }
 
     @SubscribeEvent

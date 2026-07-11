@@ -1,5 +1,7 @@
 package com.moguang.ctnhbio.api.capability.recipe;
 
+import com.ctnhlang.CN;
+import com.ctnhlang.EN;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
@@ -15,6 +17,7 @@ import com.lowdragmc.lowdraglib.jei.IngredientIO;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
@@ -22,6 +25,7 @@ import com.gregtechceu.gtceu.integration.xei.entry.item.ItemStackList;
 import com.gregtechceu.gtceu.integration.xei.handlers.item.CycleItemEntryHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 
 import java.util.List;
 
@@ -33,6 +37,15 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
 
     protected ModelRecipeCapability() {
         super("model", 0xFFC458C4, true, ModelIngredient.CODEC);
+    }
+
+    @CN("数据模型")
+    @EN("DataModel")
+    static Lang name;
+
+    @Override
+    public MutableComponent getName(){
+        return name.translate();
     }
 
     @Override
