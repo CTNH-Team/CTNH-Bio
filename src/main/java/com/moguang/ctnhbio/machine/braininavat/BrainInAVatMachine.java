@@ -1,9 +1,10 @@
 package com.moguang.ctnhbio.machine.braininavat;
 
 import com.gregtechceu.gtceu.api.GTValues;
-import com.gregtechceu.gtceu.api.capability.IOpticalComputationProvider;
+import com.gregtechceu.gtceu.api.computation.ComputationProducer;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.feature.IDropSaveMachine;
+import com.gregtechceu.gtceu.api.machine.trait.DirectComputationPortTrait;
 
 import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
@@ -14,23 +15,19 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Collection;
-
 import static com.gregtechceu.gtceu.api.GTValues.RNG;
 
-public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalComputationProvider, IDropSaveMachine {
+public class BrainInAVatMachine extends BasicLivingMachine implements ComputationProducer, IDropSaveMachine {
 
     public record Quad(int CWUt,
-                       double NUt,
+                       float NUt,
                        long EUt,
                        byte chanceToDoubt // 自我怀疑的概率,0~128
     ) {
 
         public static Quad tier(int tier) {
             int CWUt = (tier >= GTValues.HV ? 1 << (tier - GTValues.HV) : 0);
-            double NUt = CWUt / 20.0;
+            float NUt = CWUt / 20.0f;
             long EUt = GTValues.VA[tier];
             byte chanceToDoubt = (byte) (tier >= GTValues.IV ? (tier - GTValues.IV + 1) : 0);
             return new Quad(CWUt, NUt, EUt, chanceToDoubt);
@@ -47,6 +44,13 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     private float maxHealth = 0;
 
     public boolean oc = false;
+
+
+    public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Object... args) {
+        super(holder, tier, args);
+        q = Quad.tier(tier);
+        new DirectComputationPortTrait(this, true, this, null);
+    }
 
     public float getStoredMaxHealth() {
         return maxHealth;
@@ -79,11 +83,6 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
         oc = true;
     }
 
-    public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Object... args) {
-        super(holder, tier, args);
-        q = Quad.tier(tier);
-    }
-
     protected Object workingSound;
 
     @OnlyIn(Dist.CLIENT)
@@ -113,46 +112,30 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     @Override
     public void clientTick() {
         super.clientTick();
-        updateSound();
+        // updateSound();
     }
 
     @Override
-    public int requestCWUt(int cwut, boolean simulate, @NotNull Collection<IOpticalComputationProvider> seen) {
-        seen.add(this);
-        var ret = isWorkingEnabled() && consume(simulate);
-        if (!ret) return 0;
+    public int getOfferedCWUt() {
+        int offered = getCurrentCWUt();
+        return isWorkingEnabled() && canConsume(offered) ? offered : 0;
+    }
 
-        if (!simulate) {
-            if (getLevel() != null) {
-                lastWorkingTime = getLevel().getGameTime();
-                onChanged();
-            }
-            long nowTick = getLevel() != null ? getLevel().getGameTime() : getOffsetTimer();
-            if (nowTick % 20 == 0 && !isDoubted && q.chanceToDoubt > 0 &&
-                    RNG.nextInt(Byte.MAX_VALUE) <= q.chanceToDoubt)
-                isDoubted = true;
+    @Override
+    public void applyProducedCWUt(int allocatedCWUt) {
+        int produced = Math.min(Math.max(allocatedCWUt, 0), getOfferedCWUt());
+        if (produced == 0 || !consume(produced)) return;
+
+        if (getLevel() != null) {
+            lastWorkingTime = getLevel().getGameTime();
+            onChanged();
         }
-        int output;
-        if (oc) {
-            output = 2 * q.CWUt;
-        } else {
-            output = q.CWUt / (isDoubted ? 2 : 1);
+        long nowTick = getLevel() != null ? getLevel().getGameTime() : getOffsetTimer();
+        if (nowTick % 20 == 0 && !isDoubted && q.chanceToDoubt > 0 &&
+                RNG.nextInt(Byte.MAX_VALUE) <= q.chanceToDoubt) {
+            isDoubted = true;
         }
-        if (!simulate) oc = false;
-        return output;
-    }
-
-    @Override
-    public int getMaxCWUt(@NotNull Collection<IOpticalComputationProvider> seen) {
-        seen.add(this);
-        int output = oc ? 2 * q.CWUt : (isDoubted ? q.CWUt / 2 : q.CWUt);
-        return isWorkingEnabled() ? output : 0;
-    }
-
-    @Override
-    public boolean canBridge(@NotNull Collection<IOpticalComputationProvider> seen) {
-        seen.add(this);
-        return true;
+        oc = false;
     }
 
     @Override
@@ -167,11 +150,22 @@ public class BrainInAVatMachine extends BasicLivingMachine implements IOpticalCo
     }
 
     // Utils
-    private boolean consume(boolean simulate) {
-        var nut = oc ? 4 * q.NUt : q.NUt;
-        var eut = oc ? 4 * q.EUt : q.EUt;
+    private int getCurrentCWUt() {
+        return oc ? 2 * q.CWUt : q.CWUt / (isDoubted ? 2 : 1);
+    }
 
-        return simulate ? getStorage().getAmount() >= nut && energyContainer.getEnergyStored() >= eut :
-                getStorage().extract(nut) >= nut && energyContainer.removeEnergy(eut) >= eut;
+    private boolean canConsume(int producedCWUt) {
+        if (producedCWUt == 0) return false;
+        float ratio = (float) producedCWUt / getCurrentCWUt();
+        return getNutrientHandler().getAmount() >= q.NUt * ratio &&
+                energyContainer.getEnergyStored() >= Math.ceil(q.EUt * ratio);
+    }
+
+    private boolean consume(int producedCWUt) {
+        if (!canConsume(producedCWUt)) return false;
+        float ratio = (float) producedCWUt / getCurrentCWUt();
+        float nutrient = q.NUt * ratio;
+        long energy = (long) Math.ceil(q.EUt * ratio);
+        return getNutrientHandler().extract(nutrient) >= nutrient && energyContainer.removeEnergy(energy) >= energy;
     }
 }
