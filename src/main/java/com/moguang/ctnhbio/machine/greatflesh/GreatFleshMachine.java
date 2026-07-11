@@ -24,13 +24,6 @@ public class GreatFleshMachine extends WorkableLivingMultiblockMachine {
     }
 
     @Override
-    public boolean beforeWorking(@Nullable GTRecipe recipe) {
-        if (recipe != null) lastRecipeId = recipe.id;
-
-        return super.beforeWorking(recipe);
-    }
-
-    @Override
     public void afterWorking() {
         super.afterWorking();
         if (!isRemote()) {
@@ -39,7 +32,7 @@ public class GreatFleshMachine extends WorkableLivingMultiblockMachine {
     }
 
     public void tryDifferentiate() {
-        String name = lastRecipeId.getPath();
+        String name = getRecipeLogic().getLastRecipe().id.getPath();
         String target = name.substring(name.indexOf("/") + 1);
         var definition = GTRegistries.MACHINES.get(CTNHBio.id(target));
         Level level = getLevel();
@@ -53,7 +46,7 @@ public class GreatFleshMachine extends WorkableLivingMultiblockMachine {
                 }
             }
 
-            // 2. 异步销毁所有机器
+            // 2. 下一tick销毁所有机器
             level.getServer().submit(() -> {
                 for (BlockPos pos : positionsToDestroy) {
                     level.destroyBlock(pos, true);

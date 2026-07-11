@@ -58,9 +58,6 @@ public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMac
 
     protected GrowingBlockPattern growingBlockPattern;
 
-    @Persisted
-    protected ResourceLocation lastRecipeId;
-
     protected LivingMetaMachineEntity machineEntity;
     protected TickableSubscription entityBindingSubscription;
 
@@ -213,37 +210,5 @@ public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMac
             if (growingBlockPattern.growPlan.isCompleted()) checkPattern();
         }
         // updatePartPositions();
-    }
-
-    @Override
-    public void afterWorking() {
-        super.afterWorking();
-        var recipe = getRecipeLogic().getLastRecipe();
-        if (recipe != null && recipe.data.contains("effects")) {
-            var tag = recipe.data.get("effects");
-            if (tag instanceof ListTag listTag) {
-                LivingMetaMachineEntity entity = getMachineEntity();
-                if (entity == null) {
-                    return;
-                }
-                listTag.stream()
-                        .filter(CompoundTag.class::isInstance)
-                        .map(CompoundTag.class::cast)
-                        .map(MobEffectInstance::load)
-                        .filter(Objects::nonNull)
-                        .forEach(effect -> appendEffect(entity, effect));
-            }
-
-        }
-    }
-
-    @Override
-    protected BasicLivingMachine.BasicLivingRecipeLogic createRecipeLogic(Object... args) {
-        return new BasicLivingMachine.BasicLivingRecipeLogic(this);
-    }
-
-    @Override
-    public BasicLivingMachine.BasicLivingRecipeLogic getRecipeLogic() {
-        return (BasicLivingMachine.BasicLivingRecipeLogic) super.getRecipeLogic();
     }
 }

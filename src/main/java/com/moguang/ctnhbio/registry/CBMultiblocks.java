@@ -27,7 +27,7 @@ import com.moguang.ctnhbio.api.block.LivingMultiMetaMachineBlock;
 import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.multiblock.CBPartAbility;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
-import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
+import com.moguang.ctnhbio.api.recipe.CBRecipeModifiers;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
 import com.moguang.ctnhbio.client.Text.ModelOutputLine;
 import com.moguang.ctnhbio.machine.bioobservation.HostileObserverMachine;
@@ -85,7 +85,7 @@ public class CBMultiblocks {
             .langValue("Circulatory System")
             .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
             .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
-                    CBRecipeModifier::autoBatchMode)
+                    CBRecipeModifiers::autoBatchMode)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCCCB", "BCCCB", "BCCCB", "AAAAA")
                     .aisle("ADDDA", "CEEEC", "C###C", "C###C", "ADDDA")
@@ -138,7 +138,7 @@ public class CBMultiblocks {
             .langValue("Cogni Assembler")
             .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES, CBRecipeTypes.COGNI_ASSEMBLY_STEP)
             .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
-                    CBRecipeModifier::autoBatchMode)
+                    CBRecipeModifiers::autoBatchMode)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCACB", "BDADB", "BCACB", "AAAAA")
                     .aisle("AEEEA", "CFGFC", "DFGFD", "CFGFC", "AEEEA")
@@ -200,7 +200,7 @@ public class CBMultiblocks {
             .langValue("Weatherer")
             .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
             .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
-                    CBRecipeModifier::autoBatchMode)
+                    CBRecipeModifiers::autoBatchMode)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("#BBBBB#", "#######", "#######", "#######", "#######", "#######", "#######", "#######")
                     .aisle("BCCCCCB", "#CDDDC#", "#C###C#", "#E###E#", "#E###E#", "#E###E#", "#EE#EE#", "#######")

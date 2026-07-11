@@ -38,7 +38,6 @@ public class LivingMetaMachineBlock extends MetaMachineBlock
         registerDefaultState(getStateDefinition().any().setValue(WATERLOGGED, Boolean.FALSE));
     }
 
-    // private LivingMetaMachineEntity machineEntity = null;
     @Override
     public LivingMetaMachineEntity getHostedEntity(Level level, BlockPos pos, BlockState state) {
         if (!level.isClientSide() &&
@@ -106,13 +105,5 @@ public class LivingMetaMachineBlock extends MetaMachineBlock
     @Override
     public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
         return Shapes.empty();
-    }
-
-    @Override
-    public String getDescriptionId() {
-        // if (name != null) {
-        // return name.getString();
-        // }
-        return super.getDescriptionId();
     }
 }

@@ -25,7 +25,7 @@ import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
-import com.moguang.ctnhbio.api.recipe.CBRecipeModifier;
+import com.moguang.ctnhbio.api.recipe.CBRecipeModifiers;
 import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
 import org.apache.commons.lang3.function.TriFunction;
 import org.jetbrains.annotations.NotNull;
@@ -49,14 +49,6 @@ public class CBRegistrate extends CNRegistrate {
         return new CBRegistrate();
     }
 
-    // public MultiblockMachineBuilder biomultiblock(String name,
-    // Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine) {
-    // return new MultiblockMachineBuilder(this, name, metaMachine,
-    // LivingMetaMachineBlock::new, MetaMachineItem::new,
-    // (type, pos, state) -> new LivingMetaMachineBlockEntity(type, pos, state,
-    // CBEntities.LIVING_META_MACHINE_ENTITY.get()));
-    // }
-
     public CTNHMultiblockMachineBuilder biomultiblock(String name,
                                                       Function<IMachineBlockEntity, ? extends MultiblockControllerMachine> metaMachine,
                                                       BiFunction<BlockBehaviour.Properties, MultiblockMachineDefinition, IMachineBlock> blockFactory,
@@ -70,18 +62,6 @@ public class CBRegistrate extends CNRegistrate {
                         CBEntities.LIVING_META_MACHINE_ENTITY.get()))
                 .allowFlip(false).allowExtendedFacing(false);
     }
-
-    // @Override
-    // @ParametersAreNonnullByDefault
-    // public <DEFINITION extends MachineDefinition> CTNHMachineBuilder<DEFINITION> machine(String name,
-    // Function<ResourceLocation, DEFINITION> definitionFactory,
-    // Function<IMachineBlockEntity, MetaMachine> metaMachine,
-    // BiFunction<BlockBehaviour.Properties, DEFINITION, IMachineBlock> blockFactory,
-    // BiFunction<IMachineBlock, Item.Properties, MetaMachineItem> itemFactory,
-    // TriFunction<BlockEntityType<?>, BlockPos, BlockState, IMachineBlockEntity> blockEntityFactory) {
-    // return super.machine(name, definitionFactory, metaMachine, blockFactory, itemFactory, blockEntityFactory)
-    // .hasBER(false);
-    // }
 
     @NotNull
     @ParametersAreNonnullByDefault
@@ -100,7 +80,7 @@ public class CBRegistrate extends CNRegistrate {
                 (b, p) -> new LivingMetaMachineItem(b, p, name),
                 blockEntityFactory)
 
-                .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::autoBatchMode)
+                .recipeModifiers(CBRecipeModifiers.BIO_OC_NON_PERFECT, CBRecipeModifiers::autoBatchMode)
                 .tier(tier)
                 .hasBER(false)
                 .recipeType(recipeType)

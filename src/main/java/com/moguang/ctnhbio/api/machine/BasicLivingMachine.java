@@ -13,6 +13,7 @@ import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
 import com.gregtechceu.gtceu.utils.GTUtil;
@@ -28,7 +29,6 @@ import com.lowdragmc.lowdraglib.utils.Position;
 import net.minecraft.Util;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -48,6 +48,7 @@ import com.moguang.ctnhbio.api.gui.CBGuiTextures;
 import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
 import com.moguang.ctnhbio.api.gui.LivingMachineUIWidget;
 import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientHandler;
+import com.moguang.ctnhbio.api.recipe.customlogic.BasicLivingLogic;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import lombok.Getter;
 import lombok.Setter;
@@ -115,12 +116,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     }
 
     @Override
-    public boolean beforeWorking(@Nullable GTRecipe recipe) {
-        return getMachineEntity() != null && super.beforeWorking(recipe);
-    }
-
-    @Override
-    protected BasicLivingRecipeLogic createRecipeLogic(Object... args) {
+    protected BasicLivingRecipeLogic createRecipeLogic() {
         return new BasicLivingRecipeLogic(this);
     }
 
@@ -201,23 +197,6 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
         }
     }
 
-    // @Override
-    // public int getTier() {
-    // return tier + 1;
-    // }
-    //
-    // @Override
-    // public int getOverclockTier() {
-    // return 1;
-    // }
-
-    @Override
-    public int getMaxOverclockTier() {
-        // this.energyContainer.getInputVoltage()
-        return GTUtil
-                .getTierByVoltage(4 * Math.max(energyContainer.getInputVoltage(), energyContainer.getOutputVoltage()));
-    }
-
     //////////////////////////////////////
     // ************ GUI ****************//
     //////////////////////////////////////
@@ -249,8 +228,6 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                     storages.put(IO.OUT, ItemRecipeCapability.CAP, livingMachine.exportItems.storage);
                     storages.put(IO.IN, FluidRecipeCapability.CAP, livingMachine.importFluids);
                     storages.put(IO.OUT, FluidRecipeCapability.CAP, livingMachine.exportFluids);
-                    storages.put(IO.IN, CWURecipeCapability.CAP, livingMachine.importComputation);
-                    storages.put(IO.OUT, CWURecipeCapability.CAP, livingMachine.exportComputation);
 
                     livingMachine.getRecipeType().getRecipeUI().createEditableUITemplate(false, false).setupUI(template,
                             new CBRecipeTypeUI.RecipeHolder(livingMachine.recipeLogic::getProgressPercent,
@@ -291,8 +268,8 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
     }
 
     @Override
-    public void attachConfigurators(ConfiguratorPanel configuratorPanel) {
-        configuratorPanel.attachConfigurators(new IFancyConfiguratorButton.Toggle(
+    public void attachConfigurators(ConfiguratorPanel left, ConfiguratorPanel right) {
+        left.attachConfigurators(new IFancyConfiguratorButton.Toggle(
                 CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0, 1, 0.5),
                 CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0.5, 1, 0.5),
                 this::isWorkingEnabled, (clickData, pressed) -> setWorkingEnabled(pressed))
@@ -303,33 +280,11 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             if (getCoverContainer().hasCover(direction)) {
                 var configurator = getCoverContainer().getCoverAtSide(direction).getConfigurator();
                 if (configurator != null)
-                    configuratorPanel.attachConfigurators(configurator);
+                    left.attachConfigurators(configurator);
             }
         }
         if (isCircuitSlotEnabled()) {
-            configuratorPanel.attachConfigurators(new BioCircuitFancyConfigurator(circuitInventory.storage));
-        }
-    }
-
-    @Override
-    public void afterWorking() {
-        super.afterWorking();
-        var recipe = getRecipeLogic().getLastRecipe();
-        if (recipe != null && recipe.data.contains("effects")) {
-            var tag = recipe.data.get("effects");
-            if (tag instanceof ListTag listTag) {
-                LivingMetaMachineEntity entity = getMachineEntity();
-                if (entity == null) {
-                    return;
-                }
-                listTag.stream()
-                        .filter(CompoundTag.class::isInstance)
-                        .map(CompoundTag.class::cast)
-                        .map(MobEffectInstance::load)
-                        .filter(Objects::nonNull)
-                        .forEach(effect -> appendEffect(entity, effect));
-            }
-
+            left.attachConfigurators(new BioCircuitFancyConfigurator(circuitInventory.storage));
         }
     }
 
@@ -347,17 +302,40 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     public static class BasicLivingRecipeLogic extends RecipeLogic {
 
+        private long lastDietTime = -20;
+
         public BasicLivingRecipeLogic(IRecipeLogicMachine machine) {
             super(machine);
         }
 
         @Override
-        public @NotNull Iterator<GTRecipe> searchRecipe() {
-            var recipes = CBRecipeTypes.BASIC_LIVING_RECIPES.searchRecipe(machine, r -> matchRecipe(r).isSuccess());
-            if (!recipes.equals(Collections.emptyIterator())) {
-                return recipes;
+        public BasicLivingMachine getMachine() {
+            return (BasicLivingMachine) super.getMachine();
+        }
+
+        @Override
+        public void serverTick() {
+            long time = getMachine().getOffsetTimer();
+            if (!isSuspend() && (time - lastDietTime >= 20)) {
+                lastDietTime = time;
+                BasicLivingMachine livingMachine = (BasicLivingMachine) machine;
+                executeAuxiliaryRecipe(BasicLivingLogic.createNutrientRecipe(livingMachine));
+                var potionRecipe = BasicLivingLogic.createPotionRecipe(livingMachine);
+                if (potionRecipe != null && executeAuxiliaryRecipe(potionRecipe.recipe())) {
+                    LivingMetaMachineEntity entity = livingMachine.getMachineEntity();
+                    if (entity != null) {
+                        potionRecipe.effects().forEach(effect -> appendEffect(entity, effect));
+                    }
+                }
             }
-            return super.searchRecipe();
+
+            super.serverTick();
+        }
+
+        private boolean executeAuxiliaryRecipe(@Nullable GTRecipe recipe) {
+            if (recipe == null || !RecipeHelper.matchRecipe(getLastGroup(), recipe).isSuccess()) return false;
+            if (!RecipeHelper.handleRecipeIO(getLastGroup(), recipe, IO.IN).isSuccess()) return false;
+            return RecipeHelper.handleRecipeIO(getLastGroup(), recipe, IO.OUT).isSuccess();
         }
     }
 }

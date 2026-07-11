@@ -14,7 +14,6 @@ import com.moguang.ctnhbio.api.capability.recipe.EntityRecipeCapability;
 import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
 import com.moguang.ctnhbio.api.gui.CBGuiTextures;
 import com.moguang.ctnhbio.api.gui.CBRecipeTypeUI;
-import com.moguang.ctnhbio.api.recipe.customlogic.BasicLivingLogic;
 import com.moguang.ctnhbio.api.recipe.customlogic.DigestRecipeLogic;
 
 import static com.moguang.ctnhbio.CTNHBio.REGISTRATE;
@@ -96,8 +95,7 @@ public class CBRecipeTypes {
                 .setEUIO(IO.IN)
                 .setMaxTooltips(5)
                 .setSound(CBSoundEntries.EAT)
-                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT)
-                .addCustomRecipeLogic(new BasicLivingLogic());
+                .setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressTexture.FillDirection.LEFT_TO_RIGHT);
 
         GREAT_FLESH = REGISTRATE.recipeType(CTNHBio.id("great_flesh"), NUTRIENT)
                 .cnlang("巨型肉块-分化")
