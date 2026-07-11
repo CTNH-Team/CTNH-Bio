@@ -85,7 +85,7 @@ public class CBMultiblocks {
             .langValue("Circulatory System")
             .recipeType(CBRecipeTypes.BIO_REACTOR_RECIPES)
             .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
-                    CBRecipeModifier::batchMode)
+                    CBRecipeModifier::autoBatchMode)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCCCB", "BCCCB", "BCCCB", "AAAAA")
                     .aisle("ADDDA", "CEEEC", "C###C", "C###C", "ADDDA")
@@ -138,7 +138,7 @@ public class CBMultiblocks {
             .langValue("Cogni Assembler")
             .recipeTypes(CBRecipeTypes.BIOELECTRIC_FORGE_RECIPES, CBRecipeTypes.COGNI_ASSEMBLY_STEP)
             .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
-                    CBRecipeModifier::batchMode)
+                    CBRecipeModifier::autoBatchMode)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("AAAAA", "BCACB", "BDADB", "BCACB", "AAAAA")
                     .aisle("AEEEA", "CFGFC", "DFGFD", "CFGFC", "AEEEA")
@@ -200,7 +200,7 @@ public class CBMultiblocks {
             .langValue("Weatherer")
             .recipeType(CBRecipeTypes.DECOMPOSER_RECIPES)
             .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH, GTRecipeModifiers.OC_NON_PERFECT,
-                    CBRecipeModifier::batchMode)
+                    CBRecipeModifier::autoBatchMode)
             .pattern(definition -> FactoryBlockPattern.start()
                     .aisle("#BBBBB#", "#######", "#######", "#######", "#######", "#######", "#######", "#######")
                     .aisle("BCCCCCB", "#CDDDC#", "#C###C#", "#E###E#", "#E###E#", "#E###E#", "#EE#EE#", "#######")

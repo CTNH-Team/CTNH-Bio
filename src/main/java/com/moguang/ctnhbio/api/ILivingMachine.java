@@ -4,13 +4,13 @@ import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
 
 public interface ILivingMachine {
 
-    double getNutrientAmount();
+    float getNutrientAmount();
 
-    double getNutrientCapacity();
+    float getNutrientCapacity();
 
-    void extractNutrient(double amount);
+    void extractNutrient(float amount);
 
-    void addNutrient(double amount);
+    void addNutrient(float amount);
 
     LivingMetaMachineEntity getMachineEntity();
 }

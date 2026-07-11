@@ -6,8 +6,6 @@ import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 
-import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
-import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelMapIngredient;
 import com.moguang.ctnhbio.data.CBElements;
 import com.moguang.ctnhbio.data.recipe.RecipeRemoval;
 import com.moguang.ctnhbio.registry.*;

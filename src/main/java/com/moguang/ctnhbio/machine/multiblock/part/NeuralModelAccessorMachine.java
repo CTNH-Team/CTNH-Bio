@@ -11,9 +11,9 @@ import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiController;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IWorkableMultiController;
+import com.gregtechceu.gtceu.api.machine.multiblock.RecipeMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.MultiblockPartMachine;
-import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
 import com.gregtechceu.gtceu.api.recipe.ActionResult;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
@@ -51,13 +51,11 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
     @Getter
     @Setter
     @Persisted
-    @DescSynced
     protected boolean outputModel = false;
 
     @Getter
     @Setter
     @Persisted
-    @DescSynced
     protected int ticksPerCycle = 200;
 
     protected int tick;
@@ -66,9 +64,14 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
     boolean isAdvanced;
 
     @Persisted
-    @DescSynced
     @Getter
     private final NeuralModelContainer modelHolder;
+
+    public NeuralModelAccessorMachine(IMachineBlockEntity holder, boolean isAdvanced) {
+        super(holder);
+        modelHolder = new NeuralModelContainer(this, 1);
+        this.isAdvanced = isAdvanced;
+    }
 
     @MustBeInvokedByOverriders
     @Override
@@ -76,6 +79,12 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
         super.removedFromController(controller);
         if (controllers.isEmpty())
             setLocked(false);
+    }
+
+    @Override
+    public Component beforeWorking(IWorkableMultiController controller) {
+        setLocked(true);
+        return super.beforeWorking(controller);
     }
 
     @Override
@@ -88,12 +97,6 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
     public void onLoad() {
         super.onLoad();
         if (isAdvanced) subscribeServerTick(this::tryOutputModel);
-    }
-
-    public NeuralModelAccessorMachine(IMachineBlockEntity holder, boolean isAdvanced) {
-        super(holder);
-        modelHolder = new NeuralModelContainer(this);
-        this.isAdvanced = isAdvanced;
     }
 
     // Life cycle
@@ -126,25 +129,20 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
     }
 
     @Override
-    public @NotNull List<RecipeHandlerList> getRecipeHandlers() {
-        return MetaMachineUtils.getRecipeHandlers(this, modelHolder);
-    }
-
-    @Override
     public boolean canShared() {
         return false;
     }
 
     private void tryOutputModel() {
         var machine = getControllers().stream().findFirst().orElse(null);
-        if (machine instanceof WorkableMultiblockMachine r && r.isFormed()) {
+        if (machine instanceof RecipeMultiblockMachine r && r.isFormed()) {
             if (r.isActive()) tick = 0;
-            else if (isOutputModel() && !modelHolder.getItemStack().isEmpty()) tick++;
+            else if (isOutputModel() && !modelHolder.getStackInSlot(0).isEmpty()) tick++;
             if (tick >= ticksPerCycle) {
-                var model = modelHolder.getItemStack();
-                var Recipe = GTRecipeBuilder.ofRaw().outputItems(model).buildRawRecipe();
-                if (RecipeHelper.matchRecipe(r, Recipe).isSuccess() &&
-                        RecipeHelper.handleRecipeIO(r, Recipe, IO.OUT, r.getRecipeLogic().getChanceCaches()) ==
+                var model = modelHolder.getStackInSlot(0);
+                var Recipe = GTRecipeBuilder.ofRaw().outputItems(model).buildRawRecipe().toRuntime();
+                if (RecipeHelper.matchRecipe(r.getRecipeLogic().getLastGroup(), Recipe).isSuccess() &&
+                        RecipeHelper.handleRecipeIO(r.getRecipeLogic().getLastGroup(), Recipe, IO.OUT) ==
                                 ActionResult.SUCCESS) {
                     tick = 0;
                     modelHolder.setStackInSlot(0, ItemStack.EMPTY);
@@ -164,9 +162,9 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
     static Lang[] output_model;
 
     @Override
-    public void attachConfigurators(ConfiguratorPanel configuratorPanel) {
+    public void attachConfigurators(ConfiguratorPanel left, ConfiguratorPanel right) {
         if (!isAdvanced) return;
-        configuratorPanel.attachConfigurators(new IFancyConfiguratorButton.Toggle(
+        left.attachConfigurators(new IFancyConfiguratorButton.Toggle(
                 GuiTextures.BUTTON_POWER.getSubTexture(0, 0, 1, 0.5),
                 GuiTextures.BUTTON_POWER.getSubTexture(0, 0.5, 1, 0.5),
                 this::isOutputModel, (clickData, pressed) -> this.setOutputModel(pressed))

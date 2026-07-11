@@ -1,172 +1,124 @@
 package com.moguang.ctnhbio.api.recipe.ingredient.model;
 
+import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
+
+import dev.shadowsoffire.hostilenetworks.data.DataModelRegistry;
+import lombok.Getter;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.moguang.ctnhbio.CTNHBio;
 import com.mojang.serialization.Codec;
 import dev.shadowsoffire.hostilenetworks.Hostile;
+import dev.shadowsoffire.hostilenetworks.data.DataModel;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
-import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.stream.Stream;
+@Getter
+public final class ModelIngredient implements IChancedIngredient {
 
-public class ModelIngredient extends Ingredient {
+    public static final Codec<ModelIngredient> CODEC = ExtraCodecs.JSON.xmap(ModelIngredient::fromJson,
+            ModelIngredient::toJson);
 
-    public static Codec<ModelIngredient> CODEC = ExtraCodecs.JSON
-            .xmap(ModelIngredient::fromJson, ModelIngredient::toJson);
-    public static Value dummyDataModelIngredient = new Ingredient.ItemValue(
-            new ItemStack(Hostile.Items.DATA_MODEL.get()));
-    public static ResourceLocation TYPE = CTNHBio.id("model");
-    public static ModelIngredient DEFAULT = of(0, getModelId(EntityType.PIG));
-    final int requiredData;
-    final ResourceLocation modelID;
-    @Getter
-    final ItemStack model;
+    private final DataModel model;
+    private final ModelTier tier;
+    private final int chance;
 
-    protected ModelIngredient(ItemStack modelStack) {
-        super(Stream.of(dummyDataModelIngredient));
-        model = modelStack;
-        this.requiredData = DataModelItem.getData(modelStack);
-        this.modelID = DataModelItem.getStoredModel(modelStack).getId();
+    private ItemStack itemStack;
+
+    public ModelIngredient(DataModel model, ModelTier tier, int chance) {
+        this.model = model;
+        this.tier = tier;
+        this.chance = Mth.clamp(chance, 0, MAX_CHANCE);
     }
 
-    protected ModelIngredient(int requiredData, ResourceLocation modelID) {
-        super(Stream.of(dummyDataModelIngredient));
-        model = ModelIngredient.getModelStack(modelID, requiredData);
-        this.requiredData = requiredData;
-        this.modelID = modelID;
-    }
-
-    @Override
-    public boolean test(@Nullable ItemStack target) {
-        if (getItems().length == 0) return false;
-        if (target == null) return true;
-        // final ItemStack requirement = getItems()[0];
-        // final int requiredData = DataModelItem.getData(requirement);
-        final int targetData = DataModelItem.getData(target);
-        var targetID = DataModelItem.getStoredModel(target).getId();// target.getTagElement("data_model");
-
-        return targetData >= requiredData &&
-                modelID.equals(targetID);
-    }
-
-    public boolean check(ItemStack target) {
-        if (getItems().length == 0) return false;
-        if (target == null) return true;
-        // final ItemStack requirement = getItems()[0];
-        // final int requiredData = DataModelItem.getData(requirement);
-        final int targetData = DataModelItem.getData(target);
-        var targetID = DataModelItem.getStoredModel(target).getId();// target.getTagElement("data_model");
-
-        return targetData >= requiredData &&
-                modelID.equals(targetID);
-    }
-
-    public static ResourceLocation getModelId(ResourceLocation type) {
-        return type.getNamespace().equals("minecraft") ?
-                ResourceLocation.fromNamespaceAndPath("hostilenetworks", type.getPath()) :
-                ResourceLocation.fromNamespaceAndPath("hostilenetworks",
-                        "%s/%s".formatted(type.getNamespace(), type.getPath()));
-    }
-
-    public static ResourceLocation getModelId(EntityType<?> type) {
-        ResourceLocation t = ForgeRegistries.ENTITY_TYPES.getKey(type);
-        return getModelId(t);
-    }
-
-    public static ItemStack getModelStack(ResourceLocation modelId, int data) {
-        var ret = new ItemStack(Hostile.Items.DATA_MODEL.get());
-        DataModelItem.setStoredModel(ret, modelId);
-        DataModelItem.setData(ret, data);
-        return ret;
+    public boolean isChanced() {
+        return chance < MAX_CHANCE;
     }
 
     public ModelIngredient copy() {
-        return new ModelIngredient(requiredData, modelID);
+        return new ModelIngredient(model, tier, chance);
     }
 
-    public static ModelIngredient of(@NotNull ItemStack modelStack) {
-        return new ModelIngredient(modelStack);
+    public ModelIngredient copyWithChance(int chance) {
+        return new ModelIngredient(model, tier, chance);
     }
 
-    public static ModelIngredient of(int requiredData, ResourceLocation modelID) {
-        return new ModelIngredient(requiredData, modelID);
+    public boolean test(ItemStack stack) {
+        if (!(stack.getItem() instanceof DataModelItem)) return false;
+        var storedModel = DataModelItem.getStoredModel(stack).getOptional().orElse(null);
+        return storedModel == model &&
+                ModelTier.getByData(storedModel, DataModelItem.getData(stack)).ordinal() >= tier.ordinal();
     }
 
-    public static ModelIngredient of(ResourceLocation modelID) {
-        return new ModelIngredient(0, modelID);
+    public boolean testHigher(ItemStack stack) {
+        if (!(stack.getItem() instanceof DataModelItem)) return false;
+        var storedModel = DataModelItem.getStoredModel(stack).getOptional().orElse(null);
+        return storedModel == model &&
+                ModelTier.getByData(storedModel, DataModelItem.getData(stack)).ordinal() > tier.ordinal();
     }
 
-    public static ModelIngredient of(ModelTier requiredTier, ResourceLocation modelID) {
-        return new ModelIngredient(requiredTier.data().requiredData(), modelID);
+    public ItemStack getItem() {
+        if(itemStack == null) {
+            ItemStack stack = new ItemStack(Hostile.Items.DATA_MODEL.get());
+            DataModelItem.setStoredModel(stack, model);
+            DataModelItem.setData(stack, tier.data().requiredData());
+            itemStack = stack;
+        }
+        return itemStack;
     }
 
-    public static ModelIngredient of(int requiredData, EntityType<?> type) {
-        return of(requiredData, getModelId(type));
+    public ItemStack toStack() {
+        return IChancedIngredient.rollSuccesses(1, chance) == 1 ? getItem() : ItemStack.EMPTY;
     }
 
-    public static ModelIngredient of(EntityType<?> type) {
-        return of(0, getModelId(type));
+    public static ModelIngredient of(ItemStack stack) {
+        var storedModel = DataModelItem.getStoredModel(stack);
+        return new ModelIngredient(storedModel.get(), ModelTier.getByData(storedModel, DataModelItem.getData(stack)),
+                MAX_CHANCE);
     }
 
-    public static ModelIngredient of(ModelTier requiredTier, EntityType<?> type) {
-        return of(requiredTier, getModelId(type));
+    public static ModelIngredient of(ModelTier tier, DataModel model) {
+        return new ModelIngredient(model, tier, MAX_CHANCE);
     }
 
-    @Override
-    public IIngredientSerializer<? extends Ingredient> getSerializer() {
-        return SERIALIZER;
+    public static ModelIngredient of(ModelTier tier, EntityType<?> type) {
+        return of(tier, DataModelRegistry.INSTANCE.getForEntity(type));
     }
 
-    public JsonElement toJson() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("type", TYPE.toString());
-        jsonObject.addProperty("model", modelID.toString());
-        jsonObject.addProperty("data", requiredData);
-        return jsonObject;
+    public static ModelIngredient fromNetwork(FriendlyByteBuf buffer) {
+        EntityType<?> type = buffer.readById(BuiltInRegistries.ENTITY_TYPE);
+        ModelTier tier = ModelTier.values()[buffer.readByte()];
+        return new ModelIngredient(DataModelRegistry.INSTANCE.getForEntity(type), tier, buffer.readVarInt());
+    }
+
+    public void toNetwork(FriendlyByteBuf buffer) {
+        buffer.writeId(BuiltInRegistries.ENTITY_TYPE, model.type());
+        buffer.writeByte(tier.ordinal());
+        buffer.writeVarInt(chance);
     }
 
     public static ModelIngredient fromJson(JsonElement json) {
-        return SERIALIZER.parse(json.getAsJsonObject());
+        JsonObject object = GsonHelper.convertToJsonObject(json, "model ingredient");
+        EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(
+                GsonHelper.getAsString(object, "entity")));
+        ModelTier tier = ModelTier.valueOf(GsonHelper.getAsString(object, "tier").toUpperCase());
+        return new ModelIngredient(DataModelRegistry.INSTANCE.getForEntity(type), tier, GsonHelper.getAsInt(object, "chance", MAX_CHANCE));
     }
 
-    public static final IIngredientSerializer<ModelIngredient> SERIALIZER = new IIngredientSerializer<ModelIngredient>() {
-
-        @Override
-        @NotNull
-        public ModelIngredient parse(FriendlyByteBuf buffer) {
-            // 从网络数据包解析
-            ResourceLocation modelID = buffer.readResourceLocation();
-            int requiredData = buffer.readVarInt();
-            return ModelIngredient.of(requiredData, modelID);
-        }
-
-        @Override
-        @NotNull
-        public ModelIngredient parse(JsonObject json) {
-            // 从 JSON 解析
-            ResourceLocation modelID = ResourceLocation.tryParse(json.get("model").getAsString());
-            int requiredData = json.get("data").getAsInt();
-            return ModelIngredient.of(requiredData, modelID);
-        }
-
-        @Override
-        public void write(FriendlyByteBuf buffer, ModelIngredient ingredient) {
-            // 写入网络数据包
-            buffer.writeResourceLocation(ingredient.modelID);
-            buffer.writeVarInt(ingredient.requiredData);
-        }
-    };
+    public JsonElement toJson() {
+        JsonObject object = new JsonObject();
+        object.addProperty("entity", ForgeRegistries.ENTITY_TYPES.getKey(model.type()).toString());
+        object.addProperty("tier", tier.getSerializedName());
+        object.addProperty("chance", chance);
+        return object;
+    }
 }

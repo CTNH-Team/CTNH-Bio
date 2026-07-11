@@ -215,7 +215,7 @@ public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
             ew.setCycle(list.get(index));
         }
         if(content != null) {
-            ew.setXEIChance(content.getChance());
+            ew.setXEIChance((float) content.getChance() / IChancedIngredient.MAX_CHANCE);
         }
     }
 

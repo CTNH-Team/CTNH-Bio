@@ -6,10 +6,12 @@ import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.trait.ICapabilityTrait;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
 import com.gregtechceu.gtceu.api.transfer.item.CustomItemStackHandler;
 
 import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
+
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
@@ -20,30 +22,28 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class NeuralModelContainer extends NotifiableRecipeHandlerTrait<ModelIngredient>
                                   implements ICapabilityTrait, IItemHandlerModifiable {
 
     @Persisted
-    @DescSynced
     @Getter
     @Setter
     private boolean isLocked = false;
     @Persisted
-    @DescSynced
-    public final CustomItemStackHandler storage = new CustomItemStackHandler(1) {
+    public final CustomItemStackHandler storage;
 
-        @Override
-        public int getSlotLimit(int slot) {
-            return 1;
-        }
-    };
-
-    public NeuralModelContainer(MetaMachine machine) {
+    public NeuralModelContainer(MetaMachine machine, int inventorySize) {
         super(machine);
+        storage = new CustomItemStackHandler(inventorySize){
+
+            @Override
+            public int getSlotLimit(int slot) {
+                return 1;
+            }
+        };;
         storage.setFilter(stack -> stack.isEmpty() || stack.getItem() instanceof DataModelItem);
         storage.setOnContentsChanged(this::notifyListeners);
     }
@@ -60,7 +60,7 @@ public class NeuralModelContainer extends NotifiableRecipeHandlerTrait<ModelIngr
 
     @Override
     public @NotNull ItemStack getStackInSlot(int slot) {
-        return storage.getStackInSlot(0);
+        return storage.getStackInSlot(slot);
     }
 
     @Override
@@ -79,69 +79,64 @@ public class NeuralModelContainer extends NotifiableRecipeHandlerTrait<ModelIngr
     }
 
     @Override
-    public int getSize() {
-        return storage.getSlots();
-    }
-
-    public ItemStack getItemStack() {
-        return this.getStackInSlot(0);
-    }
-
-    @Override
     public RecipeCapability<ModelIngredient> getCapability() {
         return ModelRecipeCapability.CAP;
     }
 
     @Override
-    public List<ModelIngredient> handleRecipeInner(IO io, GTRecipe recipe, List<ModelIngredient> left,
-                                                   boolean simulate) {
-        if (io != IO.IN && io != IO.OUT) return left.isEmpty() ? null : left;
-
-        Predicate<ModelIngredient> testAndAction = io == IO.IN ? ingredient -> ingredient.test(getItemStack()) :   // input:
-                                                                                                                   // only
-                                                                                                                   // try
-                                                                                                                   // to
-                                                                                                                   // test
-                                                                                                                   // the
-                                                                                                                   // model
-                simulate ? ingredient -> DataModelItem.getData(getItemStack()) <
-                        DataModelItem.getData(ingredient.getModel()) : ingredient -> {                                // output:
-                                                                                                                      // no
-                                                                                                                      // simulate:
-                                                                                                                      // set
-                                                                                                                      // data
-                                                                                                                      // and
-                                                                                                                      // model
-                            var output = ingredient.getModel();
-                            DataModelItem.setStoredModel(getItemStack(), DataModelItem.getStoredModel(output).get());
-                            DataModelItem.setData(getItemStack(), DataModelItem.getData(output));
-                            return true;
-                        };
-
-        boolean changed = false;
-
-        for (var it = left.iterator(); it.hasNext();) {
-            var ingredient = it.next();
-            if (testAndAction.test(ingredient)) {
-                it.remove();
-                changed = true;
-                break;
+    public boolean handleRecipe(IO io, GTRecipe recipe, List<ModelIngredient> left, boolean simulate) {
+        if(io == IO.IN) {
+            for (var iterator = left.iterator(); iterator.hasNext();) {
+                ModelIngredient ingredient = iterator.next();
+                for(int slot = 0; slot < getSlots(); slot ++) {
+                    if (ingredient.test(getStackInSlot(slot))) {
+                        iterator.remove();
+                        if(!simulate && !ingredient.toStack().isEmpty()) {
+                            storage.setStackInSlot(slot, ItemStack.EMPTY);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        else {
+            for (var iterator = left.iterator(); iterator.hasNext();) {
+                ModelIngredient ingredient = iterator.next();
+                var result = ingredient.toStack();
+                if(!simulate && result.isEmpty()) continue;
+                for(int slot = 0; slot < getSlots(); slot ++) {
+                    if(getStackInSlot(slot).isEmpty()) {
+                        if(ingredient.getTier().ordinal() == 0) {
+                            iterator.remove();
+                            if(!simulate) setStackInSlot(slot, result);
+                        }
+                    } else {
+                        if(ingredient.testHigher(getStackInSlot(slot))) {
+                            iterator.remove();
+                            if(!simulate) setStackInSlot(slot, result);
+                        }
+                    }
+                }
             }
         }
 
-        if (!simulate) isLocked = (io == IO.IN && changed);
-
-        return left.isEmpty() ? null : left;
+        return left.isEmpty();
     }
 
     @Override
     public @NotNull List<Object> getContents() {
-        return Collections.singletonList(ModelIngredient.of(getItemStack()));
+        List<Object> stacks = new ArrayList<>();
+        for(int slot = 0; slot < getSlots(); slot ++) {
+            if(!getStackInSlot(slot).isEmpty()) {
+                stacks.add(getStackInSlot(slot));
+            }
+        }
+        return stacks;
     }
 
     @Override
     public double getTotalContentAmount() {
-        return getItemStack().isEmpty() ? 0 : 1;
+        return getContents().size();
     }
 
     @Override
@@ -156,7 +151,6 @@ public class NeuralModelContainer extends NotifiableRecipeHandlerTrait<ModelIngr
 
     @Override
     public void setStackInSlot(int slot, @NotNull ItemStack stack) {
-        if (!isLocked)
-            storage.setStackInSlot(0, stack);
+        storage.setStackInSlot(slot, stack);
     }
 }

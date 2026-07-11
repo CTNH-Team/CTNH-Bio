@@ -3,25 +3,25 @@ package com.moguang.ctnhbio.machine.bioobservation;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
+import com.gregtechceu.gtceu.api.machine.multiblock.RecipeElectricMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.modifier.ModifierFunction;
+import com.gregtechceu.gtceu.api.recipe.handler.RecipeHandlerGroup;
+import com.gregtechceu.gtceu.api.recipe.modifier.RecipeModifier;
 
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.AABB;
 
 import com.moguang.ctnhbio.api.capability.recipe.ModelRecipeCapability;
 import com.moguang.ctnhbio.api.machine.trait.NotifiableEntityContainer;
 
-import java.util.List;
-
-public class HostileObserverMachine extends WorkableElectricMultiblockMachine {
+public class HostileObserverMachine extends RecipeElectricMultiblockMachine {
 
     public HostileObserverMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
         // add traits
-        new NotifiableEntityContainer(this, getAABB(), IO.IN, false);
+        new NotifiableEntityContainer(this, getAABB(), IO.IN);
     }
 
     public AABB getAABB() {
@@ -34,17 +34,12 @@ public class HostileObserverMachine extends WorkableElectricMultiblockMachine {
                 getPos().relative(b, 10).relative(l, -5).relative(u, 10));
     }
 
-    public static ModifierFunction hostileObserverMachineModifier(MetaMachine machine, GTRecipe gtRecipe) {
-        return recipe -> {
-            Content model = recipe.outputs.get(ModelRecipeCapability.CAP).get(0);
-            if (model != null) {
-                GTRecipe newRecipe = recipe.copy();
-                model = newRecipe.outputs.get(ModelRecipeCapability.CAP).get(0);
-                Content newModel = new Content(model.content, model.chance * recipe.parallels, 10000, 0);
-                newRecipe.outputs.put(ModelRecipeCapability.CAP, List.of(newModel));// .set(0, newModel);
-                return newRecipe;
-            }
-            return recipe;
-        };
+    public static Component hostileObserverMachineModifier(MetaMachine machine, RecipeHandlerGroup group,
+                                                           GTRecipe recipe) {
+        var outputs = recipe.outputs.get(ModelRecipeCapability.CAP);
+        if (outputs != null && !outputs.isEmpty()) {
+            outputs.set(0, outputs.get(0).copyWithChance(outputs.get(0).getChance() * recipe.parallels));
+        }
+        return null;
     }
 }

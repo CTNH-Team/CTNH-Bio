@@ -100,7 +100,7 @@ public class CBRegistrate extends CNRegistrate {
                 (b, p) -> new LivingMetaMachineItem(b, p, name),
                 blockEntityFactory)
 
-                .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::batchMode)
+                .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, CBRecipeModifier::autoBatchMode)
                 .tier(tier)
                 .hasBER(false)
                 .recipeType(recipeType)
