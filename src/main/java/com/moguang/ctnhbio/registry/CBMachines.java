@@ -1,7 +1,5 @@
 package com.moguang.ctnhbio.registry;
 
-import com.ctnhlang.Category;
-import com.ctnhlang.Suffix;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.RotationState;
@@ -19,7 +17,9 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import com.ctnhlang.CN;
+import com.ctnhlang.Category;
 import com.ctnhlang.EN;
+import com.ctnhlang.Suffix;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.block.LivingMetaMachineBlock;
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;

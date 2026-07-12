@@ -23,7 +23,5 @@ public class CBRecipeCategories {
                 .setIcon(new ResourceTexture("biomancy:textures/item/nutrient_paste.png"));
         GTRegistries.RECIPE_CATEGORIES.get(CBRecipeTypes.COGNI_ASSEMBLY.registryName)
                 .setIcon(new ResourceTexture("ctnhbio:textures/item/wetware_capacitor.png"));
-
-
     }
 }

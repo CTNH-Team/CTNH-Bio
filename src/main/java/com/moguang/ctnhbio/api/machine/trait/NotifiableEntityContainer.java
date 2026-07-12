@@ -4,16 +4,11 @@ import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
-import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
-import com.gregtechceu.gtceu.api.machine.feature.IWorkLogicMachine;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
 import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.AbstractMapIngredient;
 
-import com.lowdragmc.lowdraglib.syncdata.ISubscription;
-
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -24,9 +19,9 @@ import com.moguang.ctnhbio.api.recipe.ingredient.entity.ChancedEntityIngredient;
 import com.moguang.ctnhbio.api.recipe.ingredient.entity.EntityIngredient;
 import com.moguang.ctnhbio.api.recipe.lookup.EntityTagMapIngredient;
 import com.moguang.ctnhbio.api.recipe.lookup.EntityTypeMapIngredient;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -34,7 +29,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class NotifiableEntityContainer extends NotifiableRecipeHandlerTrait<EntityIngredient>
-                                       implements IEntityContainer{
+                                       implements IEntityContainer {
 
     @Getter
     public final IO handlerIO;

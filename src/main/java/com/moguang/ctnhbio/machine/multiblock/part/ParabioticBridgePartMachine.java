@@ -1,7 +1,5 @@
 package com.moguang.ctnhbio.machine.multiblock.part;
 
-import com.ctnhlang.CN;
-import com.ctnhlang.EN;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
@@ -13,8 +11,8 @@ import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.TieredIOPartMachine;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-
 import com.gregtechceu.gtceu.api.recipe.ingredient.item.ItemIngredient;
+
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
@@ -23,18 +21,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 
+import com.ctnhlang.CN;
+import com.ctnhlang.EN;
 import com.moguang.ctnhbio.api.capability.recipe.CogniItemRecipeCapability;
-import com.moguang.ctnhbio.machine.multiblock.CogniAssemblerMachine;
-import com.moguang.ctnhbio.utils.MetaMachineUtils;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 public class ParabioticBridgePartMachine extends TieredIOPartMachine {
@@ -104,14 +100,14 @@ public class ParabioticBridgePartMachine extends TieredIOPartMachine {
 
     @Override
     public Component modifyRecipe(GTRecipe recipe) {
-        if(getControllers().size() < 2)
+        if (getControllers().size() < 2)
             return fail_to_connect.translate();
         return null;
     }
 
     @Override
     public void addMultiText(List<Component> textList) {
-        if(getControllers().size() < 2) {
+        if (getControllers().size() < 2) {
             textList.add(fail_to_connect.translate());
         }
     }

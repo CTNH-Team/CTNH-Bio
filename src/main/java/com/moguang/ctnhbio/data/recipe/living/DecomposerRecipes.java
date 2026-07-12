@@ -9,7 +9,6 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.recipe.ingredient.fluid.FluidIngredient;
 
-import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
+import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import com.moguang.ctnhbio.registry.CBTags;
 

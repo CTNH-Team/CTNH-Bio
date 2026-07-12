@@ -1,7 +1,5 @@
 package com.moguang.ctnhbio.api.capability.recipe;
 
-import com.ctnhlang.CN;
-import com.ctnhlang.EN;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
@@ -9,8 +7,10 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
-
 import com.gregtechceu.gtceu.integration.xei.entry.item.ItemEntryList;
+import com.gregtechceu.gtceu.integration.xei.entry.item.ItemStackList;
+import com.gregtechceu.gtceu.integration.xei.handlers.item.CycleItemEntryHandler;
+
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.jei.IngredientIO;
@@ -20,9 +20,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
+import com.ctnhlang.CN;
+import com.ctnhlang.EN;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
-import com.gregtechceu.gtceu.integration.xei.entry.item.ItemStackList;
-import com.gregtechceu.gtceu.integration.xei.handlers.item.CycleItemEntryHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
@@ -44,7 +44,7 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
     static Lang name;
 
     @Override
-    public MutableComponent getName(){
+    public MutableComponent getName() {
         return name.translate();
     }
 
@@ -82,7 +82,7 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
 
     @Override
     public @NotNull List<ItemStackList> createXEIContainerContents(List<ModelIngredient> contents,
-                                                                     GTRecipeDefinition recipe, IO io) {
+                                                                   GTRecipeDefinition recipe, IO io) {
         return contents.stream().map(ModelRecipeCapability::mapModel).toList();
     }
 
@@ -128,5 +128,4 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
             slot.setXEIChance((float) content.getChance() / IChancedIngredient.MAX_CHANCE);
         }
     }
-
 }

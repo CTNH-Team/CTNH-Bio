@@ -1,24 +1,22 @@
 package com.moguang.ctnhbio.machine.multiblock;
 
-import com.ctnhlang.CN;
-import com.ctnhlang.EN;
-import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiPart;
 import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
-import com.gregtechceu.gtceu.api.recipe.ActionResult;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-
 import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
+
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
-import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+
+import net.minecraft.resources.ResourceLocation;
+
+import com.ctnhlang.CN;
+import com.ctnhlang.EN;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
 import com.moguang.ctnhbio.data.recipe.CogniRecipeBuilder;
 import com.moguang.ctnhbio.machine.multiblock.part.ParabioticBridgePartMachine;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
-import net.minecraft.resources.ResourceLocation;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 
 import java.util.Comparator;
@@ -54,7 +52,7 @@ public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
 
         @Override
         public void onRecipeFinish() {
-            if(lastRecipe != null) lastRecipeID = lastRecipe.id;
+            if (lastRecipe != null) lastRecipeID = lastRecipe.id;
             super.onRecipeFinish();
         }
 
@@ -64,7 +62,7 @@ public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
 
         @Override
         public boolean checkMatchedRecipeAvailable(GTRecipeDefinition match) {
-            if(match.recipeType == CBRecipeTypes.COGNI_ASSEMBLY_STEP &&
+            if (match.recipeType == CBRecipeTypes.COGNI_ASSEMBLY_STEP &&
                     CogniRecipeBuilder.isNextStep(lastRecipeID, match.id)) {
                 failureReasonsMap.put(match.id, fail_to_handle.translate());
                 return false;

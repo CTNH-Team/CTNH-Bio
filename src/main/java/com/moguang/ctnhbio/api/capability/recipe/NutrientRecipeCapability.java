@@ -8,11 +8,11 @@ import com.gregtechceu.gtceu.utils.GTMath;
 
 import com.lowdragmc.lowdraglib.gui.widget.LabelWidget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
-import com.lowdragmc.lowdraglib.utils.LocalizationUtils;
 
-import com.mojang.serialization.Codec;
-import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientHandler;
 import net.minecraft.network.chat.Component;
+
+import com.moguang.ctnhbio.api.machine.trait.NotifiableNutrientHandler;
+import com.mojang.serialization.Codec;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.List;

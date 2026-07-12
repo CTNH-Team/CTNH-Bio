@@ -12,7 +12,6 @@ import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiController;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IWorkableMultiController;
 import com.gregtechceu.gtceu.api.machine.multiblock.RecipeMultiblockMachine;
-import com.gregtechceu.gtceu.api.machine.multiblock.WorkableMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.MultiblockPartMachine;
 import com.gregtechceu.gtceu.api.recipe.ActionResult;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
@@ -35,7 +34,6 @@ import com.ctnhlang.CN;
 import com.ctnhlang.Category;
 import com.ctnhlang.EN;
 import com.moguang.ctnhbio.api.machine.trait.NeuralModelContainer;
-import com.moguang.ctnhbio.utils.MetaMachineUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
@@ -66,6 +64,12 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
     @Persisted
     @Getter
     private final NeuralModelContainer modelHolder;
+
+    @Persisted
+    @DescSynced
+    @Getter
+    @Setter
+    private boolean isLocked = false;
 
     public NeuralModelAccessorMachine(IMachineBlockEntity holder, boolean isAdvanced) {
         super(holder);
@@ -103,15 +107,6 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
     @Override
     public void onMachineRemoved() {
         clearInventory(this.modelHolder.storage);
-    }
-
-    // Recipe Related
-    public boolean isLocked() {
-        return modelHolder.isLocked();
-    }
-
-    public void setLocked(boolean locked) {
-        modelHolder.setLocked(locked);
     }
 
     @Override

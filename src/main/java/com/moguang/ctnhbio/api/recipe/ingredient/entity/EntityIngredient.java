@@ -50,9 +50,9 @@ public class EntityIngredient implements Predicate<Entity> {
     private int hashCode;
 
     public EntityIngredient(@NotNull Value[] values, int count, @Nullable CompoundTag nbt) {
-       this.values = values;
-       this.count = count;
-       this.nbt = nbt;
+        this.values = values;
+        this.count = count;
+        this.nbt = nbt;
     }
 
     public EntityIngredient(@NotNull Value value, int count, CompoundTag nbt) {
@@ -122,9 +122,9 @@ public class EntityIngredient implements Predicate<Entity> {
 
     @Override
     public boolean test(@Nullable Entity entity) {
-        if(entity == null || values.length == 0) return false;
-        for(var value: values) {
-            if(value.test(entity.getType()) && (nbt == null || EntityPropertyDetector.test(nbt, entity))) {
+        if (entity == null || values.length == 0) return false;
+        for (var value : values) {
+            if (value.test(entity.getType()) && (nbt == null || EntityPropertyDetector.test(nbt, entity))) {
                 return true;
             }
         }
@@ -165,7 +165,7 @@ public class EntityIngredient implements Predicate<Entity> {
 
     @Override
     public int hashCode() {
-        if(hashCode == 0) {
+        if (hashCode == 0) {
             hashCode = hash();
         }
         return hashCode;
@@ -301,7 +301,7 @@ public class EntityIngredient implements Predicate<Entity> {
             for (JsonElement element : jsonArray) {
                 values.add(valueFromJson(element.getAsJsonObject()));
             }
-            return new EntityIngredient(values.toArray(new Value[]{}), count, nbt);
+            return new EntityIngredient(values.toArray(new Value[] {}), count, nbt);
         } else if (GsonHelper.isStringValue(jsonObject, "value")) {
             String value = GsonHelper.getAsString(jsonObject, "value");
             return of(value);
@@ -378,7 +378,8 @@ public class EntityIngredient implements Predicate<Entity> {
             values[i] = switch (valueType) {
                 case VALUE_TYPE -> new TypeValue(buf.readById(BuiltInRegistries.ENTITY_TYPE));
                 case VALUE_TAG -> new TagValue(TagKey.create(Registries.ENTITY_TYPE, buf.readResourceLocation()));
-                default -> throw new IllegalArgumentException("Unknown EntityIngredient value network type: " + valueType);
+                default -> throw new IllegalArgumentException(
+                        "Unknown EntityIngredient value network type: " + valueType);
             };
         }
         return new EntityIngredient(values, count, nbt);

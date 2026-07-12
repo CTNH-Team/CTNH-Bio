@@ -1,8 +1,7 @@
 package com.moguang.ctnhbio.utils;
 
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-
 import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
+
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +10,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.github.elenterius.biomancy.crafting.ItemCountRange;
 import com.github.elenterius.biomancy.crafting.recipe.DecomposingRecipe;
-import com.google.gson.JsonObject;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
@@ -73,18 +71,18 @@ public class DecomposingRecipeHandler {
             });
         }
         builder.EUt(hasFluid.get() ? VA[MV] : VA[LV]);
-//        JsonObject js = builder.build().serializeRecipe();
+        // JsonObject js = builder.build().serializeRecipe();
 
-//        try {
-//            java.nio.file.Path outputPath = java.nio.file.Paths
-//                    .get("resources/data/ctnhbio/recipes/decomposing/" + recipe.getId().getPath() + ".json");
-//            java.nio.file.Files.createDirectories(outputPath.getParent());
-//            com.google.gson.Gson gson = new com.google.gson.GsonBuilder().setPrettyPrinting().create();
-//            String prettyJson = gson.toJson(js);
-//            java.nio.file.Files.writeString(outputPath, prettyJson);
-//        } catch (Exception e) {
-//
-//        }
+        // try {
+        // java.nio.file.Path outputPath = java.nio.file.Paths
+        // .get("resources/data/ctnhbio/recipes/decomposing/" + recipe.getId().getPath() + ".json");
+        // java.nio.file.Files.createDirectories(outputPath.getParent());
+        // com.google.gson.Gson gson = new com.google.gson.GsonBuilder().setPrettyPrinting().create();
+        // String prettyJson = gson.toJson(js);
+        // java.nio.file.Files.writeString(outputPath, prettyJson);
+        // } catch (Exception e) {
+        //
+        // }
         return builder.buildRawRecipe();
     }
 

@@ -2,8 +2,6 @@ package com.moguang.ctnhbio.api.recipe.ingredient.model;
 
 import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
 
-import dev.shadowsoffire.hostilenetworks.data.DataModelRegistry;
-import lombok.Getter;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -19,8 +17,10 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import dev.shadowsoffire.hostilenetworks.Hostile;
 import dev.shadowsoffire.hostilenetworks.data.DataModel;
+import dev.shadowsoffire.hostilenetworks.data.DataModelRegistry;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
+import lombok.Getter;
 
 import java.util.Objects;
 
@@ -44,7 +44,7 @@ public final class ModelIngredient implements IChancedIngredient {
     }
 
     private DataModel getModel() {
-        if(model == null) {
+        if (model == null) {
             model = Objects.requireNonNull(DataModelRegistry.INSTANCE.getForEntity(type));
         }
         return model;
@@ -77,7 +77,7 @@ public final class ModelIngredient implements IChancedIngredient {
     }
 
     public ItemStack getItem() {
-        if(itemStack == null) {
+        if (itemStack == null) {
             ItemStack stack = new ItemStack(Hostile.Items.DATA_MODEL.get());
             DataModelItem.setStoredModel(stack, getModel());
             DataModelItem.setData(stack, tier.data().requiredData());
@@ -90,15 +90,15 @@ public final class ModelIngredient implements IChancedIngredient {
         return IChancedIngredient.rollSuccesses(1, chance) == 1 ? getItem() : ItemStack.EMPTY;
     }
 
-//    public static ModelIngredient of(ItemStack stack) {
-//        var storedModel = DataModelItem.getStoredModel(stack);
-//        return new ModelIngredient(storedModel.get(), ModelTier.getByData(storedModel, DataModelItem.getData(stack)),
-//                MAX_CHANCE);
-//    }
+    // public static ModelIngredient of(ItemStack stack) {
+    // var storedModel = DataModelItem.getStoredModel(stack);
+    // return new ModelIngredient(storedModel.get(), ModelTier.getByData(storedModel, DataModelItem.getData(stack)),
+    // MAX_CHANCE);
+    // }
 
-//    public static ModelIngredient of(ModelTier tier, DataModel model) {
-//        return new ModelIngredient(model, tier, MAX_CHANCE);
-//    }
+    // public static ModelIngredient of(ModelTier tier, DataModel model) {
+    // return new ModelIngredient(model, tier, MAX_CHANCE);
+    // }
 
     public static ModelIngredient of(ModelTier tier, EntityType<?> type) {
         return new ModelIngredient(type, tier, IChancedIngredient.MAX_CHANCE);

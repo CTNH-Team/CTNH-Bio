@@ -10,11 +10,10 @@ import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
 import com.gregtechceu.gtceu.api.recipe.lookup.ingredient.AbstractMapIngredient;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 
-import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
+import com.lowdragmc.lowdraglib.gui.widget.Widget;
 import com.lowdragmc.lowdraglib.jei.IngredientIO;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
@@ -40,7 +39,7 @@ public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
     public static final EntityRecipeCapability CAP = new EntityRecipeCapability();
 
     protected EntityRecipeCapability() {
-        super("entity", 0xf5424200, true,  EntityIngredient.CODEC);
+        super("entity", 0xf5424200, true, EntityIngredient.CODEC);
     }
 
     @Override
@@ -71,9 +70,8 @@ public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
             public void draw(GuiGraphics graphics, int mouseX, int mouseY, float x, float y, int width, int height) {
                 drawChance(graphics, x, y, width, height, content.getChance());
                 if (content.count > 1) {
-                    drawString(graphics,  x, y, width, height, String.valueOf(content.count), 0xFFFFFF, false);
+                    drawString(graphics, x, y, width, height, String.valueOf(content.count), 0xFFFFFF, false);
                 }
-
             }
         };
     }
@@ -181,7 +179,7 @@ public class EntityRecipeCapability extends RecipeCapability<EntityIngredient> {
             var list = (List<CycleEntityEntryHandler>) storage;
             ew.setCycle(list.get(index));
         }
-        if(content != null) {
+        if (content != null) {
             ew.setXEIChance((float) content.getChance() / IChancedIngredient.MAX_CHANCE);
         }
     }

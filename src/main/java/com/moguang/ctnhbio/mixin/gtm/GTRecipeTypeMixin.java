@@ -1,6 +1,5 @@
 package com.moguang.ctnhbio.mixin.gtm;
 
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 

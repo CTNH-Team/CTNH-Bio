@@ -1,7 +1,5 @@
 package com.moguang.ctnhbio.api.gui.widget;
 
-import com.gregtechceu.gtceu.GTCEu;
-
 import com.lowdragmc.lowdraglib.gui.editor.configurator.IConfigurableWidget;
 import com.lowdragmc.lowdraglib.gui.ingredient.IRecipeIngredientSlot;
 import com.lowdragmc.lowdraglib.gui.widget.Widget;
@@ -174,6 +172,7 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
     private Object mapToIngredient(EntityType<?> type) {
         ItemStack egg = getSpawnEgg(type);
         return new ItemEmiStack(egg) {
+
             @Override
             public void render(GuiGraphics draw, int x, int y, float delta, int flags) {}
         };

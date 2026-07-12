@@ -51,4 +51,3 @@ public final class EntityTypeMapIngredient extends AbstractMapIngredient {
         return "EntityTypeMapIngredient{type=" + EntityType.getKey(type) + "}";
     }
 }
-

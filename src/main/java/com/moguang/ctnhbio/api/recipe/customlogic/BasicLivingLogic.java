@@ -2,6 +2,7 @@ package com.moguang.ctnhbio.api.recipe.customlogic;
 
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.ingredient.fluid.FluidIngredient;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -10,12 +11,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import com.github.elenterius.biomancy.init.ModItems;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
 import com.moguang.ctnhbio.registry.CBRecipeTypes;
 import com.moguang.ctnhbio.registry.CBTags;
-import com.github.elenterius.biomancy.init.ModItems;
 
 import java.util.ArrayList;
 import java.util.List;

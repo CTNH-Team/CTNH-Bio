@@ -15,6 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
+
 import static com.gregtechceu.gtceu.api.GTValues.RNG;
 
 public class BrainInAVatMachine extends BasicLivingMachine implements ComputationProducer, IDropSaveMachine {
@@ -44,7 +45,6 @@ public class BrainInAVatMachine extends BasicLivingMachine implements Computatio
     private float maxHealth = 0;
 
     public boolean oc = false;
-
 
     public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Object... args) {
         super(holder, tier, args);
