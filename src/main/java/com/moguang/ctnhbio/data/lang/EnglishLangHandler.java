@@ -46,6 +46,8 @@ public class EnglishLangHandler {
         provider.add("recipe.capability.entity.name", "Entity");
 
         provider.add("ctnhbio.copyright.info", "Added By CTNHBio");
+
+        provider.add("hostilenetworks.fail.faulty", "Unsupported model tier\nplease insert a basic model\nor lower ");
         // EntityProperties
         EntityPropertyLangUtil epu = new EntityPropertyLangUtil(provider, "Input Entity", "Output Entity",
                 "Available: %s", "Requirement:");

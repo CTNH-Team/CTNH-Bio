@@ -23,6 +23,8 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import com.ctnhlang.CN;
 import com.ctnhlang.EN;
 import com.moguang.ctnhbio.api.recipe.ingredient.model.ModelIngredient;
+import dev.emi.emi.api.stack.EmiIngredient;
+import dev.emi.emi.api.stack.EmiStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
@@ -127,5 +129,15 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
         if (content != null && content.isChanced()) {
             slot.setXEIChance((float) content.getChance() / IChancedIngredient.MAX_CHANCE);
         }
+    }
+
+    @Override
+    public List<?> getXEIIngredients(List<ModelIngredient> contents, GTRecipeDefinition recipe, IO io) {
+        var list = createXEIContainerContents(contents, recipe, io);
+        return list.stream()
+                .map(ItemEntryList::getStacks)
+                .map(stacks -> stacks.stream().map(EmiStack::of).toList())
+                .map(EmiIngredient::of)
+                .toList();
     }
 }

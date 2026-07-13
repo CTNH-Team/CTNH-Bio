@@ -105,6 +105,7 @@ public abstract class EmiGamePlayLootMixin extends EmiBaseLoot {
                 final Bounds bounds = new Bounds((widgetHolder.getWidth() - WIDGET_SIZE) / 2, 10, WIDGET_SIZE,
                         WIDGET_SIZE);
                 final Rect rect = new Rect(bounds.x(), bounds.y(), bounds.width(), bounds.height());
+                final Entity entity = ctnhbio$entityType.create(level);
 
                 @Override
                 public Bounds getBounds() {
@@ -116,7 +117,6 @@ public abstract class EmiGamePlayLootMixin extends EmiBaseLoot {
                     Level level = Minecraft.getInstance().level;
 
                     if (level != null) {
-                        Entity entity = ctnhbio$entityType.create(level);
                         GenericUtils.renderEntity(entity, rect, widgetHolder.getWidth(), guiGraphics, mouseX, mouseY);
                     }
                 }

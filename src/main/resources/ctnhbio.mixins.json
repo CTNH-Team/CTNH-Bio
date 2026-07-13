@@ -19,7 +19,8 @@
     "hostilenetworks.CacheModelMixin",
     "hostilenetworks.HostileEventsMixin",
     "hostilenetworks.HostileJeiPluginMixin",
-    "hostilenetworks.SimChamberTileEntityMixin"
+    "hostilenetworks.SimChamberTileEntityMixin",
+    "hostilenetworks.DataModelItemMixin"
   ],
   "client": [
     "biomancy.InjectorScreenMixin",

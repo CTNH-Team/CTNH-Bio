@@ -52,6 +52,8 @@ public class ChineseLangHandler {
 
         provider.add("recipe.capability.entity.name", "实体");
 
+        provider.add("hostilenetworks.fail.faulty", "不支持的模型等级\n请插入等级为基础或以下\n的数据模型");
+
         provider.add("ctnhbio.copyright.info", "由CTNHBio添加");
 
         // Entity Properties

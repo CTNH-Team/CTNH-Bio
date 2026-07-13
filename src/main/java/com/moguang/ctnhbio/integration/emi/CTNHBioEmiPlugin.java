@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static com.github.elenterius.biomancy.init.ModItems.*;
-import static dev.shadowsoffire.hostilenetworks.Hostile.Items.SIM_CHAMBER;
 
 @EmiEntrypoint
 public class CTNHBioEmiPlugin implements EmiPlugin {
@@ -57,8 +56,7 @@ public class CTNHBioEmiPlugin implements EmiPlugin {
                 ABSORPTION_BOOST,
                 CLEANSING_SERUM,
                 INSOMNIA_CURE,
-                FRENZY_SERUM,
-                SIM_CHAMBER
+                FRENZY_SERUM
 
         );
         for (var item : disabled) {
