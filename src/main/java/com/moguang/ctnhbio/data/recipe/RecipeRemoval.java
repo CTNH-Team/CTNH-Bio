@@ -1,6 +1,7 @@
 package com.moguang.ctnhbio.data.recipe;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fml.ModList;
 
 import tech.vixhentx.mcmod.ctnhlib.data.DataFilterPack;
 
@@ -27,5 +28,8 @@ public class RecipeRemoval {
             registry.accept(ResourceLocation.tryParse(recipe));
         }
         DataFilterPack.removeData("alexsmobs", "^loot_tables/biomancy");
+        if (!ModList.get().isLoaded("alexscaves")) {
+            DataFilterPack.removeData("alexscaves", "^loot_tables/biomancy");
+        }
     }
 }

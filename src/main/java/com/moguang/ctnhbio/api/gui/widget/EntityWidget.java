@@ -44,6 +44,10 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
     // basics
     @Nullable
     CycleEntityEntryHandler cycle;
+    @Nullable
+    private Entity previewEntity;
+    @Nullable
+    private EntityType<?> previewType;
     @Getter
     IngredientIO ingredientIO = IngredientIO.RENDER_ONLY;
 
@@ -56,6 +60,12 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
     protected float XEIChance = 1f;
 
     // Render
+    public void setCycle(@Nullable CycleEntityEntryHandler cycle) {
+        this.cycle = cycle;
+        this.previewEntity = null;
+        this.previewType = null;
+    }
+
     private void renderEntityModel(@NotNull Entity entity, GuiGraphics graphics, float partialTicks, int mouseX,
                                    int mouseY) {
         Minecraft mc = Minecraft.getInstance();
@@ -69,35 +79,32 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
         // Reference to Create Metallurgy :: EntityIngredientRenderer
         PoseStack matrixStack = graphics.pose();
         matrixStack.pushPose();
-        if (entity instanceof LivingEntity livingEntity) {
-            int entityScale = Integer.max(getSizeHeight(), getSizeWidth());
-            float maxSize = entity.getBbHeight() + entity.getBbWidth();
-            entityScale = (int) ((float) entityScale / maxSize);
-            PoseStack modelView = RenderSystem.getModelViewStack();
-            modelView.pushPose();
-            modelView.mulPoseMatrix(matrixStack.last().pose());
-            livingEntity.setYHeadRot(0.0F);
-            InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, centerX, centerY, entityScale,
-                    centerX - mouseX, centerY - mouseY, livingEntity);
-            modelView.popPose();
-            RenderSystem.applyModelViewMatrix();
-        } else {
+        RenderSystem.enableDepthTest();
+        RenderSystem.depthMask(true);
+        RenderSystem.enableCull();
+        try {
+            if (entity instanceof LivingEntity livingEntity) {
+                float maxSize = Math.max(0.1F, entity.getBbHeight() + entity.getBbWidth());
+                int entityScale = Math.max(1, Math.round(Math.min(getSizeWidth(), getSizeWidth() / maxSize)));
+                InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, centerX, centerY, entityScale,
+                        centerX - mouseX, centerY - mouseY, livingEntity);
+            } else {
+                float scale = calculateEntityScale(entity);
+                matrixStack.translate(centerX, centerY, 50);
+                matrixStack.scale(scale, -scale, scale); // 反转Y轴
+                matrixStack.mulPose(Axis.YP.rotationDegrees((level.getGameTime() + partialTicks) * 2));
 
-            float scale = calculateEntityScale(entity);
-            matrixStack.translate(centerX, centerY, 50);
-            matrixStack.scale(scale, -scale, scale); // 反转Y轴
-
-            // rot
-            matrixStack.mulPose(Axis.YP.rotationDegrees((level.getGameTime() + partialTicks) * 2));
-
-            EntityRenderDispatcher dispatcher = mc.getEntityRenderDispatcher();
-            MultiBufferSource.BufferSource buffer = graphics.bufferSource();
-            dispatcher.render(entity, 0, 0, 0, 0, partialTicks, matrixStack, buffer, LightTexture.FULL_BRIGHT);
-            buffer.endBatch();
-            dispatcher.setRenderShadow(true);
+                EntityRenderDispatcher dispatcher = mc.getEntityRenderDispatcher();
+                MultiBufferSource.BufferSource buffer = graphics.bufferSource();
+                dispatcher.render(entity, 0, 0, 0, 0, partialTicks, matrixStack, buffer, LightTexture.FULL_BRIGHT);
+                buffer.endBatch();
+            }
+        } finally {
+            RenderSystem.disableCull();
+            RenderSystem.depthMask(false);
+            RenderSystem.disableDepthTest();
+            matrixStack.popPose();
         }
-
-        matrixStack.popPose();
     }
 
     // 根据实体大小动态调整缩放
@@ -116,12 +123,16 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
     public void drawInBackground(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         if (cycle == null || cycle.isEmpty()) return;
         var mc = Minecraft.getInstance();
+        if (mc.level == null) return;
 
-        // render entity
-        Entity entity = cycle.currentEntity(mc);
+        EntityType<?> type = cycle.currentType();
+        if (previewEntity == null || previewType != type) {
+            previewEntity = cycle.currentEntity(mc);
+            previewType = type;
+        }
+        Entity entity = previewEntity;
         if (entity == null) return;
         renderEntityModel(entity, graphics, partialTicks, mouseX, mouseY);
-        entity.remove(Entity.RemovalReason.DISCARDED);
     }
 
     @Override

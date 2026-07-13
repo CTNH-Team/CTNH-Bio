@@ -42,6 +42,9 @@ public class DigestRecipeLogic implements GTRecipeType.ICustomRecipeLogic {
 
         for (int i = 0; i < inputItems.getSlots(); i++) {
             ItemStack stack = inputItems.getStackInSlot(i);
+            if (stack.is(ModItems.NUTRIENT_BAR.get()) || stack.is(ModItems.NUTRIENT_PASTE.get())) {
+                continue;
+            }
             if (!stack.isEmpty() && stack.isEdible()) {
                 foods.add(stack);
             }
