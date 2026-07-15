@@ -4,8 +4,8 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.storage.loot.LootTable;
 
 import com.moguang.ctnhbio.api.entity.LivingMetaMachineEntity;
-import com.moguang.ctnhbio.client.Renderer.BasicLivingMachineEntityRenderer;
-import com.moguang.ctnhbio.client.Renderer.ColorableEntityRenderer;
+import com.moguang.ctnhbio.client.renderer.BasicLivingMachineEntityRenderer;
+import com.moguang.ctnhbio.client.renderer.ColorableEntityRenderer;
 import com.moguang.ctnhbio.machine.braininavat.Brain;
 import com.tterrag.registrate.util.entry.EntityEntry;
 

@@ -25,7 +25,7 @@ import com.moguang.ctnhbio.api.blockentity.LivingMetaMachineBlockEntity;
 import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.BasicLivingMachine;
 import com.moguang.ctnhbio.api.recipe.CBRecipeModifiers;
-import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
+import com.moguang.ctnhbio.client.renderer.LivingMetaMachineBERProvider;
 import org.apache.commons.lang3.function.TriFunction;
 import org.jetbrains.annotations.NotNull;
 import tech.vixhentx.mcmod.ctnhlib.registrate.CNRegistrate;

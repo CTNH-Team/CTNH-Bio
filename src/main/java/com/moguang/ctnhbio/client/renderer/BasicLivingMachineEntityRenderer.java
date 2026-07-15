@@ -1,4 +1,4 @@
-package com.moguang.ctnhbio.client.Renderer;
+package com.moguang.ctnhbio.client.renderer;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.SlimeModel;

@@ -28,7 +28,7 @@ import com.moguang.ctnhbio.api.item.LivingMetaMachineItem;
 import com.moguang.ctnhbio.api.machine.multiblock.CBPartAbility;
 import com.moguang.ctnhbio.api.machine.multiblock.WorkableLivingMultiblockMachine;
 import com.moguang.ctnhbio.api.recipe.CBRecipeModifiers;
-import com.moguang.ctnhbio.client.Renderer.LivingMetaMachineBERProvider;
+import com.moguang.ctnhbio.client.renderer.LivingMetaMachineBERProvider;
 import com.moguang.ctnhbio.client.Text.ModelOutputLine;
 import com.moguang.ctnhbio.machine.bioobservation.HostileObserverMachine;
 import com.moguang.ctnhbio.machine.greatflesh.GreatFleshMachine;
