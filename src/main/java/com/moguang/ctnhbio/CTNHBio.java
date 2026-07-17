@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 public class CTNHBio {
 
     public static final String MODID = "ctnhbio";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     public static final CBRegistrate REGISTRATE = CBRegistrate.create();
 
     public CTNHBio() {

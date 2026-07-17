@@ -2,6 +2,7 @@ package com.moguang.ctnhbio.api.recipe.ingredient.model;
 
 import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
 
+import com.moguang.ctnhbio.CTNHBio;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +46,11 @@ public final class ModelIngredient implements IChancedIngredient {
 
     private DataModel getModel() {
         if (model == null) {
-            model = Objects.requireNonNull(DataModelRegistry.INSTANCE.getForEntity(type));
+            model = DataModelRegistry.INSTANCE.getForEntity(type);
+            if(model == null) {
+                CTNHBio.LOGGER.error("Data model of {} does not exist", type.getCategory().getName());
+                model = DataModelRegistry.INSTANCE.getForEntity(EntityType.PIG);
+            }
         }
         return model;
     }
