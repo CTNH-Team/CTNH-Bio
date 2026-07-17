@@ -1,6 +1,6 @@
 dependencies {
     modImplementation(project(":modules:CTNH-Lib")){transitive = false}
-
+    modImplementation(project(":modules:Create-Enough-Items")){ transitive = false }
 
 
     modImplementation(ctnh.geckolib)
@@ -14,5 +14,5 @@ dependencies {
 
     modLocalRuntime(ctnh.constructionwand)
     modLocalRuntime(ctnh.citadel)
-    modLocalRuntime(ctnh.alexscaves)
+
 }

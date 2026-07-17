@@ -52,7 +52,7 @@ public final class BasicLivingLogic {
             }
         }
 
-        return nutrient <= 0 ? null : builder.nutrient(-nutrient).duration(1).buildRawRecipe().toRuntime();
+        return nutrient <= 0 ? null : builder.nutrient(-nutrient).duration(1).buildRuntime();
     }
 
     public static PotionRecipe createPotionRecipe(BasicLivingMachine machine) {
@@ -94,7 +94,7 @@ public final class BasicLivingLogic {
         }
 
         return effects.isEmpty() ? null :
-                new PotionRecipe(builder.duration(10).buildRawRecipe().toRuntime(), effects);
+                new PotionRecipe(builder.duration(10).buildRuntime(), effects);
     }
 
     public record PotionRecipe(GTRecipe recipe, List<MobEffectInstance> effects) {}

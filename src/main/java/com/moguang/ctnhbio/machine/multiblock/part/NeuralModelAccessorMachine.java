@@ -135,7 +135,7 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
             else if (isOutputModel() && !modelHolder.getStackInSlot(0).isEmpty()) tick++;
             if (tick >= ticksPerCycle) {
                 var model = modelHolder.getStackInSlot(0);
-                var Recipe = GTRecipeBuilder.ofRaw().outputItems(model).buildRawRecipe().toRuntime();
+                var Recipe = GTRecipeBuilder.ofRaw().outputItems(model).buildRuntime();
                 if (RecipeHelper.matchRecipe(r.getRecipeLogic().getLastGroup(), Recipe).isSuccess() &&
                         RecipeHelper.handleRecipeIO(r.getRecipeLogic().getLastGroup(), Recipe, IO.OUT) ==
                                 ActionResult.SUCCESS) {
