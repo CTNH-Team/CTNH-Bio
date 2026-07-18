@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.gregtechceu.gtceu.client.util.DrawUtil.drawChance;
 
@@ -85,7 +86,7 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
     @Override
     public @NotNull List<ItemStackList> createXEIContainerContents(List<ModelIngredient> contents,
                                                                    GTRecipeDefinition recipe, IO io) {
-        return contents.stream().map(ModelRecipeCapability::mapModel).toList();
+        return contents.stream().map(ModelRecipeCapability::mapModel).collect(Collectors.toList());
     }
 
     private static ItemStackList mapModel(ModelIngredient ingredient) {
