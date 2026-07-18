@@ -10,8 +10,6 @@
 // import com.simibubi.create.compat.jei.category.animations.AnimatedCrushingWheels;
 // import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 // import com.simibubi.create.foundation.gui.AllGuiTextures;
-// import fr.lucreeper74.createmetallurgy.compat.jei.CMJeiConstants;
-// import fr.lucreeper74.createmetallurgy.compat.jei.category.entity.EntityIngredientRenderer;
 // import mezz.jei.api.constants.VanillaTypes;
 // import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 // import mezz.jei.api.gui.drawable.IDrawable;
@@ -95,10 +93,6 @@
 // builder.addSlot(RecipeIngredientRole.INPUT, 2, 2)
 // .addItemStack(getEntityIcon(recipe.getEntityType()))
 // .setStandardSlotBackground();
-//
-// builder.addSlot(RecipeIngredientRole.INPUT, 75, -2)
-// .setCustomRenderer(CMJeiConstants.ENTITY_TYPE, new EntityIngredientRenderer(35))
-// .addIngredient(CMJeiConstants.ENTITY_TYPE, recipe.getDisplay());
 //
 // // 输出槽：粉碎产物（支持多输出）
 // layoutOutput(recipe).forEach(layoutEntry -> builder

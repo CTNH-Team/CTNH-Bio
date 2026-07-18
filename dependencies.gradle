@@ -5,7 +5,6 @@ dependencies {
 
     modImplementation(ctnh.geckolib)
     modImplementation(ctnh.placebo)
-    modImplementation(ctnh.createmetallurgy)
     modImplementation(ctnh.ali)
     modImplementation(ctnh.hostile)
 

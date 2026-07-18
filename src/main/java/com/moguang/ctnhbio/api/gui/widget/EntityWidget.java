@@ -76,7 +76,6 @@ public class EntityWidget extends Widget implements IRecipeIngredientSlot, IConf
         int centerX = getPosition().x + 9;
         int centerY = getPosition().y + 16;
 
-        // Reference to Create Metallurgy :: EntityIngredientRenderer
         PoseStack matrixStack = graphics.pose();
         matrixStack.pushPose();
         RenderSystem.enableDepthTest();
