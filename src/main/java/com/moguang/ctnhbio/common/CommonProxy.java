@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -36,13 +35,13 @@ import java.util.ArrayList;
 import static com.github.elenterius.biomancy.init.ModRecipes.DECOMPOSING_RECIPE_TYPE;
 
 @SuppressWarnings("removal")
-@Mod.EventBusSubscriber(modid = CTNHBio.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonProxy {
 
     public CommonProxy() {
         init();
         IEventBus modEventBus = FMLJavaModLoadingContext
                 .get().getModEventBus();
+        modEventBus.register(this);
         CBSerums.SERUMS.register(modEventBus);
 
         modEventBus.addGenericListener(MachineDefinition.class, CommonProxy::registerMachines);
@@ -100,19 +99,19 @@ public class CommonProxy {
     }
 
     @SubscribeEvent
-    public static void registerMaterial(MaterialRegistryEvent event) {
+    public void registerMaterial(MaterialRegistryEvent event) {
         MaterialRegistryManager.getInstance().createRegistry(CTNHBio.MODID);
     }
 
     @SubscribeEvent
-    public static void commonSetup(FMLCommonSetupEvent event) {
+    public void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             CBRecipeTypes.DECOMPOSER_RECIPES.getProxyRecipes().put(DECOMPOSING_RECIPE_TYPE.get(), new ArrayList<>());
         });
     }
 
     @SubscribeEvent
-    public static void registerMaterials(MaterialEvent event) {
+    public void registerMaterials(MaterialEvent event) {
         CBMaterials.init();
     }
 }

@@ -2,7 +2,6 @@ package com.moguang.ctnhbio.api.recipe.ingredient.model;
 
 import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
 
-import com.moguang.ctnhbio.CTNHBio;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.moguang.ctnhbio.CTNHBio;
 import com.mojang.serialization.Codec;
 import dev.shadowsoffire.hostilenetworks.Hostile;
 import dev.shadowsoffire.hostilenetworks.data.DataModel;
@@ -22,8 +22,6 @@ import dev.shadowsoffire.hostilenetworks.data.DataModelRegistry;
 import dev.shadowsoffire.hostilenetworks.data.ModelTier;
 import dev.shadowsoffire.hostilenetworks.item.DataModelItem;
 import lombok.Getter;
-
-import java.util.Objects;
 
 @Getter
 public final class ModelIngredient implements IChancedIngredient {
@@ -47,7 +45,7 @@ public final class ModelIngredient implements IChancedIngredient {
     private DataModel getModel() {
         if (model == null) {
             model = DataModelRegistry.INSTANCE.getForEntity(type);
-            if(model == null) {
+            if (model == null) {
                 CTNHBio.LOGGER.error("Data model of {} does not exist", type.getCategory().getName());
                 model = DataModelRegistry.INSTANCE.getForEntity(EntityType.PIG);
             }

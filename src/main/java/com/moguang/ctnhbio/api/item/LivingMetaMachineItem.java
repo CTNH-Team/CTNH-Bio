@@ -6,8 +6,8 @@ import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
-import com.moguang.ctnhbio.client.renderer.ColorableMachineItemRenderer;
 import com.moguang.ctnhbio.client.model.CBModels;
+import com.moguang.ctnhbio.client.renderer.ColorableMachineItemRenderer;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
