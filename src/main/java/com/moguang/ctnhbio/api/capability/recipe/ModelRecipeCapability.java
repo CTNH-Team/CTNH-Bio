@@ -29,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -134,11 +135,13 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
 
     @Override
     public List<?> getXEIIngredients(List<ModelIngredient> contents, GTRecipeDefinition recipe, IO io) {
-        var list = createXEIContainerContents(contents, recipe, io);
-        return list.stream()
-                .map(ItemEntryList::getStacks)
-                .map(stacks -> stacks.stream().map(EmiStack::of).toList())
-                .map(EmiIngredient::of)
-                .toList();
+        List<EmiIngredient> emiIngredients = new ArrayList<>();
+        for (var content : contents) {
+            var list = mapModel(content).getStacks().stream()
+                    .map(stack -> EmiStack.of(stack).setChance(content.getChance()))
+                    .toList();
+            emiIngredients.add(EmiIngredient.of(list));
+        }
+        return emiIngredients;
     }
 }
