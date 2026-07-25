@@ -49,7 +49,7 @@ public class CBRecipes {
 
     public static void recipeAddition(Consumer<FinishedRecipe> provider) {
         for (Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
-            if (material.hasFlag(MaterialFlags.NO_UNIFICATION) || !material.hasFlag(GENERATE_PLATE) ||
+            if (material.hasFlag(MaterialFlags.DISABLE_MATERIAL_RECIPES) || !material.hasFlag(GENERATE_PLATE) ||
                     !material.shouldGenerateRecipesFor(plate) || material.getProperty(PropertyKey.TOOL) == null ||
                     !material.getProperty(PropertyKey.TOOL).hasType(GTToolType.SWORD)
 
