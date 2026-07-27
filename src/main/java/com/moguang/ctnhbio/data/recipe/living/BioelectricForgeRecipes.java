@@ -431,7 +431,7 @@ public class BioelectricForgeRecipes {
                 .inputItems(TagPrefix.wireFine, Platinum, 16)
                 .inputItems(TagPrefix.wireFine, Tantalum, 16)
                 .inputFluids(FluidIngredient
-                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:polypyrrole")), 144))
+                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("ctnhcore:polypyrrole")), 144))
                 .outputItemsRanged(new ItemStack(CBItems.WETWARE_RESISTOR.get()), UniformInt.of(30, 48))
                 .EUt(6144)
                 .duration(100)
@@ -444,7 +444,7 @@ public class BioelectricForgeRecipes {
                 .inputItems(TagPrefix.foil, Polycaprolactam, 2)
                 .inputItems(TagPrefix.foil, UraniumRhodiumDinaquadide, 2)
                 .inputFluids(FluidIngredient
-                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:polypyrrole")), 144))
+                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("ctnhcore:polypyrrole")), 144))
                 .outputItemsRanged(new ItemStack(CBItems.WETWARE_CAPACITOR.get()), UniformInt.of(18, 28))
                 .EUt(6144)
                 .duration(100)
@@ -458,7 +458,7 @@ public class BioelectricForgeRecipes {
                 .inputItems(TagPrefix.wireFine, Platinum, 16)
                 .inputItems(TagPrefix.wireFine, Tantalum, 16)
                 .inputFluids(FluidIngredient
-                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:polypyrrole")), 144))
+                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("ctnhcore:polypyrrole")), 144))
                 .outputItemsRanged(new ItemStack(CBItems.WETWARE_INDUCTOR.get()), UniformInt.of(24, 32))
                 .EUt(6144)
                 .duration(100)
@@ -470,7 +470,7 @@ public class BioelectricForgeRecipes {
                 .inputItems(TagPrefix.dust, IndiumGalliumPhosphide, 1)
                 .inputItems(TagPrefix.wireFine, YttriumBariumCuprate, 16)
                 .inputFluids(FluidIngredient
-                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:polypyrrole")), 144))
+                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("ctnhcore:polypyrrole")), 144))
                 .outputItemsRanged(new ItemStack(CBItems.WETWARE_DIODE.get()), UniformInt.of(20, 30))
                 .EUt(6144)
                 .duration(100)
@@ -483,7 +483,7 @@ public class BioelectricForgeRecipes {
                 .inputItems(TagPrefix.foil, Osmiridium, 4)
                 .inputItems(TagPrefix.wireFine, Tantalum, 16)
                 .inputFluids(FluidIngredient
-                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("gtceu:polypyrrole")), 144))
+                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("ctnhcore:polypyrrole")), 144))
                 .outputItemsRanged(new ItemStack(CBItems.WETWARE_TRANSISTOR.get()), UniformInt.of(16, 32))
                 .EUt(6144)
                 .duration(100)
@@ -521,7 +521,7 @@ public class BioelectricForgeRecipes {
                 .inputItems(GTItems.NANO_CENTRAL_PROCESSING_UNIT.get().getDefaultInstance(), 1)
                 .inputItems(CBItems.WETWARE_CAPACITOR.get().getDefaultInstance(), 2)
                 .inputItems(CBItems.WETWARE_TRANSISTOR.get().getDefaultInstance(), 2)
-                .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("gtceu:fine_bio_flexible_wire")), 16)
+                .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("ctnhcore:fine_bio_flexible_wire")), 16)
                 .inputFluids(new FluidStack(Ageing_Serum.getFluid(), 150))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 150))
                 .outputItemsRanged(new ItemStack(GTItems.WETWARE_PROCESSOR_LuV.get()), UniformInt.of(2, 4))
@@ -535,7 +535,7 @@ public class BioelectricForgeRecipes {
                 .inputItems(CBItems.WETWARE_INDUCTOR.get().getDefaultInstance(), 2)
                 .inputItems(CBItems.WETWARE_CAPACITOR.get().getDefaultInstance(), 2)
                 .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("ctnhcore:advanced_ram_chip")), 4)
-                .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("gtceu:fine_bio_flexible_wire")), 64)
+                .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("ctnhcore:fine_bio_flexible_wire")), 64)
                 .inputFluids(new FluidStack(Ageing_Serum.getFluid(), 100))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .outputItemsRanged(new ItemStack(GTItems.WETWARE_PROCESSOR_ASSEMBLY_ZPM.get()), UniformInt.of(1, 3))
