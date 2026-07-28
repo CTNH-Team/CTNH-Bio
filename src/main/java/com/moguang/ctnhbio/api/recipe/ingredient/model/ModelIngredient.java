@@ -93,6 +93,10 @@ public final class ModelIngredient implements IChancedIngredient {
         return IChancedIngredient.rollSuccesses(1, chance) == 1 ? getItem() : ItemStack.EMPTY;
     }
 
+    public float getRealChance() {
+        return (float) chance / IChancedIngredient.MAX_CHANCE;
+    }
+
     // public static ModelIngredient of(ItemStack stack) {
     // var storedModel = DataModelItem.getStoredModel(stack);
     // return new ModelIngredient(storedModel.get(), ModelTier.getByData(storedModel, DataModelItem.getData(stack)),

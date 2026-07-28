@@ -5,7 +5,6 @@ import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.gui.widget.SlotWidget;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.recipe.ingredient.IChancedIngredient;
 import com.gregtechceu.gtceu.api.recipe.ui.GTRecipeTypeUI;
 import com.gregtechceu.gtceu.integration.xei.entry.item.ItemEntryList;
 import com.gregtechceu.gtceu.integration.xei.entry.item.ItemStackList;
@@ -129,7 +128,7 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
             slot.setCanPutItems(!isXEI && io.support(IO.IN));
         }
         if (content != null && content.isChanced()) {
-            slot.setXEIChance((float) content.getChance() / IChancedIngredient.MAX_CHANCE);
+            slot.setXEIChance(content.getRealChance());
         }
     }
 
@@ -138,7 +137,7 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
         List<EmiIngredient> emiIngredients = new ArrayList<>();
         for (var content : contents) {
             var list = mapModel(content).getStacks().stream()
-                    .map(stack -> EmiStack.of(stack).setChance(content.getChance()))
+                    .map(stack -> EmiStack.of(stack).setChance(content.getRealChance()))
                     .toList();
             emiIngredients.add(EmiIngredient.of(list));
         }

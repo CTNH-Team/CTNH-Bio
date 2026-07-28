@@ -521,7 +521,8 @@ public class BioelectricForgeRecipes {
                 .inputItems(GTItems.NANO_CENTRAL_PROCESSING_UNIT.get().getDefaultInstance(), 1)
                 .inputItems(CBItems.WETWARE_CAPACITOR.get().getDefaultInstance(), 2)
                 .inputItems(CBItems.WETWARE_TRANSISTOR.get().getDefaultInstance(), 2)
-                .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("ctnhcore:fine_bio_flexible_wire")), 16)
+                .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("ctnhcore:fine_bio_flexible_wire")),
+                        16)
                 .inputFluids(new FluidStack(Ageing_Serum.getFluid(), 150))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 150))
                 .outputItemsRanged(new ItemStack(GTItems.WETWARE_PROCESSOR_LuV.get()), UniformInt.of(2, 4))
@@ -535,7 +536,8 @@ public class BioelectricForgeRecipes {
                 .inputItems(CBItems.WETWARE_INDUCTOR.get().getDefaultInstance(), 2)
                 .inputItems(CBItems.WETWARE_CAPACITOR.get().getDefaultInstance(), 2)
                 .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("ctnhcore:advanced_ram_chip")), 4)
-                .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("ctnhcore:fine_bio_flexible_wire")), 64)
+                .inputItems(ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("ctnhcore:fine_bio_flexible_wire")),
+                        64)
                 .inputFluids(new FluidStack(Ageing_Serum.getFluid(), 100))
                 .inputFluids(new FluidStack(Genetic_Compound.getFluid(), 100))
                 .outputItemsRanged(new ItemStack(GTItems.WETWARE_PROCESSOR_ASSEMBLY_ZPM.get()), UniformInt.of(1, 3))
