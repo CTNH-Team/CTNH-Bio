@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeDefinition;
 
+import com.gregtechceu.gtceu.api.recipe.handler.RecipeHandlerGroup;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 
 import net.minecraft.resources.ResourceLocation;
@@ -61,13 +62,13 @@ public class CogniAssemblerMachine extends WorkableLivingMultiblockMachine {
         static Lang fail_to_handle;
 
         @Override
-        public boolean checkMatchedRecipeAvailable(GTRecipeDefinition match) {
+        public boolean checkMatchedRecipeAvailable(GTRecipeDefinition match, RecipeHandlerGroup group) {
             if (match.recipeType == CBRecipeTypes.COGNI_ASSEMBLY_STEP &&
                     CogniRecipeBuilder.isNextStep(lastRecipeID, match.id)) {
                 failureReasonsMap.put(match.id, fail_to_handle.translate());
                 return false;
             }
-            return super.checkMatchedRecipeAvailable(match);
+            return super.checkMatchedRecipeAvailable(match, group);
         }
     }
 }
