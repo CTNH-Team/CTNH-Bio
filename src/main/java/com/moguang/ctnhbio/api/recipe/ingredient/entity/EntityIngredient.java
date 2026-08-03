@@ -79,6 +79,10 @@ public class EntityIngredient implements Predicate<Entity> {
         return of(type, count, null);
     }
 
+    public static EntityIngredient of(EntityType<?> type, int count, int chance) {
+        return new ChancedEntityIngredient(of(type, count, null), chance, 1);
+    }
+
     public static EntityIngredient of(EntityType<?> type, int count, CompoundTag nbt) {
         return new EntityIngredient(new TypeValue(type), count, nbt);
     }
