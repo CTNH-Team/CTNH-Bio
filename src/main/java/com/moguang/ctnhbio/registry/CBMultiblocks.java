@@ -93,27 +93,21 @@ public class CBMultiblocks {
                     .aisle("ADDDA", "CEEEC", "C###C", "C###C", "ADDDA")
                     .aisle("AAAAA", "BC@CB", "BCCCB", "BCCCB", "AAAAA")
                     .where("E",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("biomancy:acid_fluid_block"))))
+                            Predicates.blocks(ModBlocks.ACID_FLUID_BLOCK.get()))
                     .where("C", Predicates.blocks(CBBlocks.IMPERMEABLE_MEMBRANE.get()))
                     .where("F",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
+                            Predicates.blocks(CBBlocks.PRIMAL_FLESH_CASING.get()))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
                     .where("G", Predicates.heatingCoils())
                     .where("D",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("ctnhbio:bio_acid_casing"))))
+                            Predicates.blocks(CBBlocks.BIO_ACID_CASING.get()))
                     .where("A",
-                            Predicates
-                                    .blocks(ForgeRegistries.BLOCKS
-                                            .getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
+                            Predicates.blocks(CBBlocks.ORNATE_FLESH_CASING.get())
                                     .or(Predicates.autoAbilities(definition.getRecipeTypes()))
                                     .or(Predicates.autoAbilities(false, false, true)))
                     .where("#", Predicates.any())
                     .where("B",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("ctnhbio:flesh_casing"))))
+                            Predicates.blocks(CBBlocks.FLESH_CASING.get()))
                     .build())
 
             .workableCasingModel(CTNHBio.id("block/casings/ornate_flesh_casing"),
@@ -155,22 +149,15 @@ public class CBMultiblocks {
                             .or(Predicates.abilities(PartAbility.INPUT_ENERGY).setExactLimit(1).setPreviewCount(1))
                             .or(Predicates.autoAbilities(false, false, true)))
                     .where("H",
-                            Predicates
-                                    .blocks(ForgeRegistries.BLOCKS
-                                            .getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
+                            Predicates.blocks(CBBlocks.ORNATE_FLESH_CASING.get())
                                     .or(Predicates.blocks(CBMachines.PARABIOTIC_BRIDGE.get())))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
-                    .where("A", Predicates.blocks(
-                            ForgeRegistries.BLOCKS.getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
-
-                    )
+                    .where("A", Predicates.blocks(CBBlocks.ORNATE_FLESH_CASING.get()))
                     .where("#", Predicates.any())
                     .where("F",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("ctnhbio:acid_flesh_casing"))))
+                            Predicates.blocks(CBBlocks.ACID_FLESH_CASING.get()))
                     .where("D",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("biomancy:flesh_fence"))))
+                            Predicates.blocks(ModBlocks.FLESH_FENCE.get()))
                     .where("I", Predicates.abilities(CBPartAbility.NEURAL_MODEL_ACCESSOR)
                             .or(Predicates.blocks(CBBlocks.PRIMAL_FLESH_CASING.get())))
                     .where("G",
@@ -210,31 +197,23 @@ public class CBMultiblocks {
                     .aisle("BCCCCCB", "#CD@DC#", "#C###C#", "#E###E#", "#E###E#", "#E###E#", "#EE#EE#", "#######")
                     .aisle("#BBBBB#", "#######", "#######", "#######", "#######", "#######", "#######", "#######")
                     .where("B",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("biomancy:ornate_flesh_slab"))))
+                            Predicates.blocks(ModBlocks.ORNATE_FLESH_SLAB.get()))
                     .where("H",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("biomancy:flesh_spike"))))
+                            Predicates.blocks(ModBlocks.FLESH_SPIKE.get()))
                     .where("G",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("ctnhbio:primal_flesh_casing"))))
+                            Predicates.blocks(CBBlocks.PRIMAL_FLESH_CASING.get()))
                     .where("@", Predicates.controller(Predicates.blocks(definition.get())))
                     .where("#", Predicates.any())
                     .where("C",
-                            Predicates
-                                    .blocks(ForgeRegistries.BLOCKS
-                                            .getValue(ResourceLocation.parse("ctnhbio:ornate_flesh_casing")))
+                            Predicates.blocks(CBBlocks.ORNATE_FLESH_CASING.get())
                                     .or(Predicates.autoAbilities(definition.getRecipeTypes()))
                                     .or(Predicates.autoAbilities(false, false, true)))
                     .where("F",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("ctnhbio:acid_flesh_casing"))))
+                            Predicates.blocks(CBBlocks.ACID_FLESH_CASING.get()))
                     .where("E",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("biomancy:flesh_fence"))))
+                            Predicates.blocks(ModBlocks.FLESH_FENCE.get()))
                     .where("D",
-                            Predicates.blocks(ForgeRegistries.BLOCKS
-                                    .getValue(ResourceLocation.parse("ctnhbio:flesh_casing"))))
+                            Predicates.blocks(CBBlocks.FLESH_CASING.get()))
                     .build())
 
             .workableCasingModel(CTNHBio.id("block/casings/flesh_casing"),

@@ -8,11 +8,10 @@ import com.gregtechceu.gtceu.common.data.GTMachines;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
+import com.github.elenterius.biomancy.init.ModFluids;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.moguang.ctnhbio.CTNHBio;
 import com.moguang.ctnhbio.data.recipe.CBRecipeBuilder;
@@ -66,8 +65,7 @@ public class GreatFleshRecipes {
                 .inputItems(TagPrefix.plateDense, BLOODSTEEL, 6)
                 .inputItems(TagPrefix.plateDense, BLOODSTEEL, 6)
                 .inputItems(ModItems.CREATOR_MIX, 8)
-                .inputFluids(FluidIngredient
-                        .of(ForgeRegistries.FLUIDS.getValue(ResourceLocation.parse("biomancy:acid")), 6000))
+                .inputFluids(FluidIngredient.of(ModFluids.ACID.get(), 6000))
                 .inputFluids(new FluidStack(Decay_Essence.getFluid(), 6000))
                 .inputFluids(new FluidStack(Bile.getFluid(), 6000))
                 .duration(1000)
