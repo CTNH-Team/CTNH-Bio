@@ -155,8 +155,8 @@ public class EntityIngredient implements Predicate<Entity> {
         return new EntityIngredient(values, count, nbt == null ? null : nbt.copy());
     }
 
-    public EntityIngredient copyWithMultiplier(int multiplier) {
-        return new EntityIngredient(values, count * multiplier, nbt == null ? null : nbt.copy());
+    public EntityIngredient copyWithMultiplier(float multiplier) {
+        return new EntityIngredient(values, (int) (count * multiplier), nbt == null ? null : nbt.copy());
     }
 
     public EntityIngredient copyWithChance(int chance) {

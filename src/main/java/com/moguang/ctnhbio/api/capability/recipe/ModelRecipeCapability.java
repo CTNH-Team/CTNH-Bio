@@ -62,7 +62,7 @@ public class ModelRecipeCapability extends RecipeCapability<ModelIngredient> {
     }
 
     @Override
-    public ModelIngredient copyInner(ModelIngredient content, int multiplier) {
+    public ModelIngredient copyWithMultiplier(ModelIngredient content, float multiplier) {
         return content.copy();
     }
 

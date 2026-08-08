@@ -58,8 +58,8 @@ public final class ChancedEntityIngredient extends EntityIngredient implements I
     }
 
     @Override
-    public ChancedEntityIngredient copyWithMultiplier(int multiplier) {
-        return new ChancedEntityIngredient(inner.copy(), chance, this.multiplier * multiplier);
+    public ChancedEntityIngredient copyWithMultiplier(float multiplier) {
+        return new ChancedEntityIngredient(inner.copy(), chance, (int) (this.multiplier * multiplier));
     }
 
     @Override

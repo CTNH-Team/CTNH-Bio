@@ -36,7 +36,7 @@ public class NutrientRecipeCapability extends RecipeCapability<Float> {
     }
 
     @Override
-    public Float copyInner(Float content, int multiplier) {
+    public Float copyWithMultiplier(Float content, float multiplier) {
         return content * multiplier;
     }
 
