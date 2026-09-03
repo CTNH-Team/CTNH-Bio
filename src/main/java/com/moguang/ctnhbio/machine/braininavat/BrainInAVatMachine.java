@@ -49,7 +49,7 @@ public class BrainInAVatMachine extends BasicLivingMachine implements Computatio
     public BrainInAVatMachine(IMachineBlockEntity holder, int tier, Object... args) {
         super(holder, tier, args);
         q = Quad.tier(tier);
-        new DirectComputationPortTrait(this, true, this, null);
+        attachTrait(new DirectComputationPortTrait(this, true, this, null));
     }
 
     public float getStoredMaxHealth() {

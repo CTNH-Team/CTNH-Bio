@@ -9,13 +9,16 @@ import com.gregtechceu.gtceu.api.gui.fancy.IFancyConfiguratorButton;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.SimpleTieredMachine;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
+import com.gregtechceu.gtceu.api.machine.fancyconfigurator.CircuitFancyConfigurator;
 import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
+import com.gregtechceu.gtceu.api.machine.trait.ProgrammableCircuitSlotTrait;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
 import com.gregtechceu.gtceu.common.data.GTDamageTypes;
+import com.gregtechceu.gtceu.utils.FormattingUtil;
 
 import com.lowdragmc.lowdraglib.gui.modular.ModularUI;
 import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
@@ -26,12 +29,17 @@ import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.utils.Position;
 
 import net.minecraft.Util;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -51,10 +59,19 @@ import com.moguang.ctnhbio.api.recipe.customlogic.BasicLivingLogic;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
+import snownee.jade.api.BlockAccessor;
+import snownee.jade.api.ITooltip;
+import snownee.jade.api.config.IPluginConfig;
+import snownee.jade.api.theme.IThemeHelper;
+import snownee.jade.api.ui.BoxStyle;
+import snownee.jade.api.ui.IElementHelper;
+import snownee.jade.impl.ui.HealthElement;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 
 import java.util.*;
 import java.util.function.BiFunction;
+
+import static snownee.jade.addon.vanilla.StatusEffectsProvider.getEffectName;
 
 public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMachine, IMachineLife {
 
@@ -69,7 +86,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     public BasicLivingMachine(IMachineBlockEntity holder, int tier, Object... args) {
         super(holder, tier, (tiers) -> tiers * 32000, args);
-        this.nutrientHandler = new NotifiableNutrientHandler(this, GTValues.V[tier] * 64);
+        this.nutrientHandler = attachTrait(new NotifiableNutrientHandler(this, GTValues.V[tier] * 64));
         nutrientHandler.addChangedListener(getRecipeLogic()::updateTickSubscription);
 
         getMachineEntity();
@@ -266,6 +283,10 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
 
     @Override
     public void attachConfigurators(ConfiguratorPanel left, ConfiguratorPanel right) {
+        getTraitOptional(ProgrammableCircuitSlotTrait.class).ifPresent(
+                trait -> left.attachConfigurators(
+                        new CircuitFancyConfigurator(trait.getStorage())
+                                .setSlotBackground(CBGuiTextures.SLOT)));
         left.attachConfigurators(new IFancyConfiguratorButton.Toggle(
                 CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0, 1, 0.5),
                 CBGuiTextures.BUTTON_POWER.getSubTexture(0, 0.5, 1, 0.5),
@@ -280,9 +301,7 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
                     left.attachConfigurators(configurator);
             }
         }
-        if (isCircuitSlotEnabled()) {
-            left.attachConfigurators(new BioCircuitFancyConfigurator(circuitInventory.storage));
-        }
+        attachAllowSameConfigurators(right);
     }
 
     public static void appendEffect(LivingEntity entity, MobEffectInstance mobEffect) {
@@ -339,5 +358,94 @@ public class BasicLivingMachine extends SimpleTieredMachine implements ILivingMa
             if (!RecipeHelper.handleRecipeIO(getLastGroup(), recipe, IO.IN).isSuccess()) return false;
             return RecipeHelper.handleRecipeIO(getLastGroup(), recipe, IO.OUT).isSuccess();
         }
+    }
+
+    @Override
+    protected void writeMachineJadeData(CompoundTag data, BlockAccessor accessor) {
+        super.writeMachineJadeData(data, accessor);
+        LivingEntity living = getMachineEntity();
+        if (living == null) {
+            return;
+        }
+        var maxHealth = living.getMaxHealth();
+        var health = living.getHealth();
+        data.putFloat("MaxHealth", maxHealth);
+        data.putFloat("Health", health);
+
+        var nutrientAmount = getNutrientAmount();
+        var nutrientCapacity = getNutrientCapacity();
+        data.putDouble("NutrientAmount", nutrientAmount);
+        data.putDouble("NutrientCapacity", nutrientCapacity);
+
+        Collection<MobEffectInstance> effects = living.getActiveEffects();
+        if (!effects.isEmpty()) {
+            ListTag list = new ListTag();
+
+            for (MobEffectInstance effect : effects) {
+                CompoundTag compound = new CompoundTag();
+                compound.putString("Name", Component.Serializer.toJson(getEffectName(effect)));
+                if (effect.isInfiniteDuration()) {
+                    compound.putBoolean("Infinite", true);
+                } else {
+                    compound.putInt("Duration", effect.getDuration());
+                }
+
+                compound.putBoolean("Bad", effect.getEffect().getCategory() == MobEffectCategory.HARMFUL);
+                list.add(compound);
+            }
+
+            data.put("StatusEffects", list);
+        }
+    }
+
+    @Override
+    protected void appendMachineJadeTooltip(CompoundTag data, ITooltip tooltip, BlockAccessor accessor,
+                                            IPluginConfig config) {
+        if (data.contains("MaxHealth") && data.contains("Health")) {
+            float maxHealth = data.getFloat("MaxHealth");
+            float health = data.getFloat("Health");
+            tooltip.add(new HealthElement(maxHealth, health));
+        }
+        if (data.contains("NutrientAmount") && data.contains("NutrientCapacity")) {
+            double nutrientAmount = data.getDouble("NutrientAmount");
+            double nutrientCapacity = data.getDouble("NutrientCapacity");
+            var helper = tooltip.getElementHelper();
+            var progress = nutrientCapacity == 0 ? 0 : (float) (nutrientAmount / nutrientCapacity);
+            tooltip.add(
+                    helper.progress(
+                            progress,
+                            Component.translatable("ctnhbio.jade.nutrient_stored",
+                                    FormattingUtil.formatNumbers(nutrientAmount),
+                                    FormattingUtil.formatNumbers(nutrientCapacity)),
+                            helper.progressStyle().color(0xFF7d8c39, 0x566223).textColor(-1),
+                            Util.make(BoxStyle.DEFAULT, style -> style.borderColor = 0xFF555555),
+                            true));
+        }
+        if (data.contains("StatusEffects")) {
+            IElementHelper helper = IElementHelper.get();
+            ITooltip box = helper.tooltip();
+            ListTag list = data.getList("StatusEffects", 10);
+            Component[] lines = new Component[list.size()];
+
+            for (int i = 0; i < lines.length; ++i) {
+                CompoundTag compound = list.getCompound(i);
+                MutableComponent name = Component.Serializer.fromJsonLenient(compound.getString("Name"));
+                if (name != null) {
+                    String duration;
+                    if (compound.getBoolean("Infinite")) {
+                        duration = I18n.get("effect.duration.infinite", new Object[0]);
+                    } else {
+                        duration = StringUtil.formatTickDuration(compound.getInt("Duration"));
+                    }
+
+                    MutableComponent s = Component.translatable("jade.potion", new Object[] { name, duration });
+                    IThemeHelper t = IThemeHelper.get();
+                    box.add(compound.getBoolean("Bad") ? t.danger(s) : t.success(s));
+                }
+            }
+
+            tooltip.add(helper.box(box, BoxStyle.DEFAULT));
+        }
+        super.appendMachineJadeTooltip(data, tooltip, accessor, config);
     }
 }

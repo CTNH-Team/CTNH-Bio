@@ -129,7 +129,8 @@ public class NotifiableEntityContainer extends NotifiableRecipeHandlerTrait<Enti
     }
 
     @Override
-    public void onMachineUnLoad() {
+    public void onMachineUnload() {
+        super.onMachineUnload();
         unsubscribe();
     }
 

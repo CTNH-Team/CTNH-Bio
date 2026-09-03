@@ -11,8 +11,6 @@ import com.gregtechceu.gtceu.api.sound.SoundEntry;
 import com.gregtechceu.gtceu.common.unification.material.MaterialRegistryManager;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -23,12 +21,10 @@ import com.moguang.ctnhbio.api.recipe.ingredient.entity.property.data.EntityProp
 import com.moguang.ctnhbio.api.recipe.matcher.PropertyOperators;
 import com.moguang.ctnhbio.data.CBDatagen;
 import com.moguang.ctnhbio.data.recipe.CBRecipeCategories;
-import com.moguang.ctnhbio.integration.jade.LivingMachineStatusProvider;
 import com.moguang.ctnhbio.registry.*;
 import com.moguang.ctnhbio.registry.CBCreativeModeTabs;
 import com.moguang.ctnhbio.registry.CBEntities;
 import com.moguang.ctnhbio.registry.CBSerums;
-import tech.vixhentx.mcmod.ctnhlib.jade.JadePriorityManager;
 
 import java.util.ArrayList;
 
@@ -63,18 +59,6 @@ public class CommonProxy {
 
         PropertyOperators.init();
         EntityProperties.init();
-
-        JadePriorityManager.registerBlockData(
-                new LivingMachineStatusProvider(),
-                BlockEntity.class,
-                900,
-                "living_machine_status");
-
-        JadePriorityManager.registerBlockComponent(
-                new LivingMachineStatusProvider(),
-                Block.class,
-                900,
-                "living_machine_status");
     }
 
     public static void registerMachines(GTCEuAPI.RegisterEvent<ResourceLocation, MachineDefinition> event) {

@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -45,6 +46,14 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
     @Nullable
     public LivingMetaMachineBlockEntity getHost() {
         return holder;
+    }
+
+    @Nullable
+    public BasicLivingMachine getMachine() {
+        if (holder != null && holder.getMetaMachine() instanceof BasicLivingMachine basicLivingMachine) {
+            return basicLivingMachine;
+        }
+        return null;
     }
 
     @Override
@@ -91,6 +100,21 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
         boolean result = super.hurt(source, amount);
         if (result && holder != null && !level().isClientSide) {
             holder.onHostedEntityHurt();
+            if (getMachine() != null && source.is(DamageTypes.PLAYER_ATTACK)) {
+                var logic = getMachine().getRecipeLogic();
+                if (logic.getLastRecipe() != null) {
+                    var r = getRandom().nextInt(100);
+                    if (r < 3) {
+                        logic.setProgress(logic.getProgress() + 1000);
+                    } else if (r < 30) {
+                        logic.setProgress(logic.getProgress() + 20);
+                    } else if (r > 95) {
+                        logic.reset();
+                    } else if (r > 70) {
+                        logic.setProgress(Math.max(logic.getProgress() - 20, 0));
+                    }
+                }
+            }
         }
         return result;
     }

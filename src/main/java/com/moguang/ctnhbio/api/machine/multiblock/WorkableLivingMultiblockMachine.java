@@ -51,7 +51,7 @@ public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMac
 
     public WorkableLivingMultiblockMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
-        this.nutrientHandler = new NotifiableNutrientHandler(this, capacity);
+        this.nutrientHandler = attachTrait(new NotifiableNutrientHandler(this, capacity));
         nutrientHandler.addChangedListener(getRecipeLogic()::updateTickSubscription);
         nutrientHandler.add(1000);
     }
