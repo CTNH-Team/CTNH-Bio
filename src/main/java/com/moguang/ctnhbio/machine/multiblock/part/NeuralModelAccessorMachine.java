@@ -9,7 +9,6 @@ import com.gregtechceu.gtceu.api.gui.widget.BlockableSlotWidget;
 import com.gregtechceu.gtceu.api.gui.widget.IntInputWidget;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.feature.IMachineLife;
-import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiController;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IWorkableMultiController;
 import com.gregtechceu.gtceu.api.machine.multiblock.RecipeMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.MultiblockPartMachine;
@@ -26,6 +25,7 @@ import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.utils.Position;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -36,8 +36,6 @@ import com.ctnhlang.EN;
 import com.moguang.ctnhbio.api.machine.trait.NeuralModelContainer;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.MustBeInvokedByOverriders;
-import org.jetbrains.annotations.NotNull;
 import tech.vixhentx.mcmod.ctnhlib.langprovider.Lang;
 
 import java.util.List;
@@ -77,12 +75,11 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
         this.isAdvanced = isAdvanced;
     }
 
-    @MustBeInvokedByOverriders
     @Override
-    public void removedFromController(@NotNull IMultiController controller) {
-        super.removedFromController(controller);
-        if (controllers.isEmpty())
+    public void onControllerBindingRetired(BlockPos controllerPos, long instanceId) {
+        if (!isFormed()) {
             setLocked(false);
+        }
     }
 
     @Override
@@ -130,7 +127,7 @@ public class NeuralModelAccessorMachine extends MultiblockPartMachine implements
 
     private void tryOutputModel() {
         var machine = getControllers().stream().findFirst().orElse(null);
-        if (machine instanceof RecipeMultiblockMachine r && r.isFormed()) {
+        if (machine instanceof RecipeMultiblockMachine r && r.isStructureOperational()) {
             if (r.isActive()) tick = 0;
             else if (isOutputModel() && !modelHolder.getStackInSlot(0).isEmpty()) tick++;
             if (tick >= ticksPerCycle) {

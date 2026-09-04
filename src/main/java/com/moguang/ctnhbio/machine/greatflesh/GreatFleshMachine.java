@@ -24,7 +24,7 @@ public class GreatFleshMachine extends WorkableLivingMultiblockMachine {
     @Override
     public void afterWorking() {
         super.afterWorking();
-        if (!isRemote()) {
+        if (!isRemote() && isStructureOperational()) {
             tryDifferentiate();
         }
     }
@@ -46,6 +46,9 @@ public class GreatFleshMachine extends WorkableLivingMultiblockMachine {
 
             // 2. 下一tick销毁所有机器
             level.getServer().submit(() -> {
+                if (!isStructureOperational() || MetaMachine.getMachine(level, getPos()) != this) {
+                    return;
+                }
                 for (BlockPos pos : positionsToDestroy) {
                     level.destroyBlock(pos, true);
                 }

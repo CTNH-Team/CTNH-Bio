@@ -22,7 +22,6 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -139,7 +138,9 @@ public class GrowingBlockPattern extends BlockPattern {
         }
 
         public boolean execute() {
-            updateWorldState(context.worldState, pos, predicate);
+            if (!context.worldState.update(pos, predicate)) {
+                return false;
+            }
 
             if (!canReplaceExistingBlock(pos, predicate))
                 return false;
@@ -176,13 +177,18 @@ public class GrowingBlockPattern extends BlockPattern {
         }
 
         public boolean tick() {
-            if (isCompleted()) return false;
+            if (isCompleted() || context.controller.isStructureRevalidationPending()) return false;
 
             // 每tick处理一定数量的方块
             try {
                 for (int i = 0; i < BLOCKS_PER_TICK && !isCompleted(); i++) {
                     BuildTask task = buildQueue.poll();
                     while (task != null) {
+                        if (!context.world.isLoaded(task.pos)) {
+                            buildQueue.add(task);
+                            context.controller.setStructureRevalidationPending(true);
+                            return false;
+                        }
                         if (task.isFluid()) {
                             fluidQueue.add(task);
                         } else if (task.execute()) return true;
@@ -190,6 +196,11 @@ public class GrowingBlockPattern extends BlockPattern {
                     }
                     task = fluidQueue.poll();
                     if (task != null) {
+                        if (!context.world.isLoaded(task.pos)) {
+                            fluidQueue.add(task);
+                            context.controller.setStructureRevalidationPending(true);
+                            return false;
+                        }
                         return task.execute();
                     }
                 }
@@ -273,17 +284,17 @@ public class GrowingBlockPattern extends BlockPattern {
 
         context.world = controller.self().getLevel();
 
-        context.worldState = controller.getMultiblockState();
         context.settings = setting;
         context.controller = controller;
         context.centerPos = controller.self().getPos();
+        // Growth predicates need scratch counters and match context, but must never clean or mutate the controller's
+        // authoritative state owned by GTM's queued validator.
+        context.worldState = new MultiblockState(context.world, context.centerPos);
+        context.worldState.clean();
         context.facing = controller.self().getFrontFacing();
         context.upwardsFacing = controller.self().getUpwardsFacing();
         context.isFlipped = controller.self().isFlipped();
         context.minZ = -centerOffset[4];
-
-        clearWorldState(context.worldState);
-        // context.blocks.put(context.centerPos, controller);
     }
 
     private int[] calculateLayerRepeatCounts(GrowSetting settings) {
@@ -468,25 +479,6 @@ public class GrowingBlockPattern extends BlockPattern {
         int minZ;
 
         boolean inFluid;
-    }
-
-    private void clearWorldState(MultiblockState worldState) {
-        try {
-            Class<?> clazz = Class.forName("com.gregtechceu.gtceu.api.pattern.MultiblockState");
-            // Object obj = clazz.newInstance();
-            Method method = clazz.getDeclaredMethod("clean");
-            method.setAccessible(true);
-            method.invoke(worldState);
-        } catch (Exception ignored) {}
-    }
-
-    private void updateWorldState(MultiblockState worldState, BlockPos posIn, TraceabilityPredicate predicate) {
-        try {
-            Class<?> clazz = Class.forName("com.gregtechceu.gtceu.api.pattern.MultiblockState");
-            Method method = clazz.getDeclaredMethod("update", BlockPos.class, TraceabilityPredicate.class);
-            method.setAccessible(true);
-            method.invoke(worldState, posIn, predicate);
-        } catch (Exception ignored) {}
     }
 
     private BlockPos setActualRelativeOffset(int x, int y, int z, Direction facing, Direction upwardsFacing,

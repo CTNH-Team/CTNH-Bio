@@ -48,6 +48,7 @@ public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMac
 
     protected LivingMetaMachineEntity machineEntity;
     protected TickableSubscription entityBindingSubscription;
+    protected TickableSubscription growthSubscription;
 
     public WorkableLivingMultiblockMachine(IMachineBlockEntity holder, Object... args) {
         super(holder, args);
@@ -58,13 +59,17 @@ public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMac
 
     @Override
     public LivingMetaMachineEntity getMachineEntity() {
-        if (machineEntity == null || !machineEntity.isAlive() || machineEntity.isRemoved()) {
+        if (!isStructureRevalidationPending() &&
+                (machineEntity == null || !machineEntity.isAlive() || machineEntity.isRemoved())) {
             refreshMachineEntityBinding();
         }
         return machineEntity;
     }
 
     protected void refreshMachineEntityBinding() {
+        if (isStructureRevalidationPending()) {
+            return;
+        }
         if (holder instanceof LivingMetaMachineBlockEntity blockEntity) {
             blockEntity.refreshHostedEntityBinding(true);
             machineEntity = blockEntity.getHostedEntity();
@@ -83,7 +88,9 @@ public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMac
 
     @Override
     public void extractNutrient(float amount) {
-        nutrientHandler.extract(amount);
+        if (isStructureOperational()) {
+            nutrientHandler.extract(amount);
+        }
     }
 
     @Override
@@ -97,7 +104,7 @@ public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMac
 
         // 判断是否是食物
         if (stack.isEdible()) {
-            if (!getLevel().isClientSide) {
+            if (!getLevel().isClientSide && !isStructureRevalidationPending()) {
                 // 消耗一个物品
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
@@ -109,7 +116,7 @@ public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMac
                 getLevel().playSound(null, getPos().getX(), getPos().getY(), getPos().getZ(),
                         SoundEvents.GENERIC_EAT, SoundSource.PLAYERS,
                         1.0f, 1.0f);
-                if (!isFormed()) checkGrow();
+                if (!isStructureFormedSnapshot()) checkGrow();
             }
 
             return InteractionResult.sidedSuccess(getLevel().isClientSide);
@@ -150,9 +157,9 @@ public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMac
         super.onLoad();
         refreshMachineEntityBinding();
         entityBindingSubscription = subscribeServerTick(entityBindingSubscription, this::refreshMachineEntityBinding);
-        // subscribeServerTick(this::checkGrow);
-        checkGrow();
-        subscribeServerTick(this::tickGrow);
+        // super.onLoad() has already queued the authoritative structure check. Growth waits for that check to
+        // distinguish a definitive mismatch from a temporarily unloaded structure.
+        growthSubscription = subscribeServerTick(growthSubscription, this::tickGrow);
     }
 
     @Override
@@ -171,32 +178,37 @@ public class WorkableLivingMultiblockMachine extends RecipeElectricMultiblockMac
     }
 
     public boolean shouldTick(int interval) {
-        return (!isFormed() && getOffsetTimer() % interval == 0) || getOffsetTimer() % 10 * interval == 0;
+        return getOffsetTimer() % interval == 0;
+    }
+
+    private boolean canGrow() {
+        return !isStructureRevalidationPending() && !isStructureFormedSnapshot();
     }
 
     public void checkGrow() {
-        if (true || shouldTick(20)) {
-            isFormed = false;
-            checkPattern();
-            if (!isFormed()) {
-                if (growingBlockPattern == null)
-                    growingBlockPattern = GrowingBlockPattern.getGrowingBlockPattern(getPattern());
-
-                if (growingBlockPattern.growPlan.isCompleted())
-                    growingBlockPattern.generateGrowPlan(this, new GrowingBlockPattern.GrowSetting());
-            }
-
+        if (!canGrow() || isRemote()) {
+            return;
+        }
+        if (growingBlockPattern == null) {
+            growingBlockPattern = GrowingBlockPattern.getGrowingBlockPattern(getPattern());
+        }
+        if (growingBlockPattern != null && growingBlockPattern.growPlan.isCompleted()) {
+            growingBlockPattern.generateGrowPlan(this, new GrowingBlockPattern.GrowSetting());
         }
     }
 
     public void tickGrow() {
+        if (!canGrow()) {
+            return;
+        }
+        if (shouldTick(20)) {
+            checkGrow();
+        }
         if (shouldTick(2) &&
                 getNutrientAmount() >= NUTRIENT_NEEDED_FOR_GROWTH &&
                 growingBlockPattern != null &&
                 growingBlockPattern.growPlan.tick()) {
             nutrientHandler.extract(NUTRIENT_NEEDED_FOR_GROWTH);
-            if (growingBlockPattern.growPlan.isCompleted()) checkPattern();
         }
-        // updatePartPositions();
     }
 }

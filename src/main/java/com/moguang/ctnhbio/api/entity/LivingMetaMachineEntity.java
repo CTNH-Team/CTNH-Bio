@@ -1,5 +1,7 @@
 package com.moguang.ctnhbio.api.entity;
 
+import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiController;
+
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -255,7 +257,9 @@ public class LivingMetaMachineEntity extends LivingEntity implements IHostAwareE
         if (tickCount % 40 == 0)
             if (getHealth() < getMaxHealth()) {
                 if (getHost() != null && getHost().getHostMachine() instanceof ILivingMachine livingMachine) {
-                    if (livingMachine.getNutrientAmount() >= 2) {
+                    boolean structureOperational = !(livingMachine instanceof IMultiController controller) ||
+                            controller.isStructureOperational();
+                    if (structureOperational && livingMachine.getNutrientAmount() >= 2) {
                         livingMachine.extractNutrient(2);
                         heal(1);
                         var pos = getHost().getHostPos().getCenter();
