@@ -23,6 +23,8 @@ public final class CTNHBioPonderTags {
                 .item(CBMultiblocks.COGNI_ASSEMBLER.getItem(), true, false)
                 .register();
 
-        helper.addToTag(BioMultiblock).add(CBMultiblocks.COGNI_ASSEMBLER.getId());
+        helper.addToTag(BioMultiblock)
+                .add(CBMultiblocks.COGNI_ASSEMBLER.getId())
+                .add(CBMultiblocks.GREAT_FLESH.getId());
     }
 }

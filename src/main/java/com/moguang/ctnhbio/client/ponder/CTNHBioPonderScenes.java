@@ -13,6 +13,11 @@ public final class CTNHBioPonderScenes {
     public static void register(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         helper.forComponents(CBMultiblocks.COGNI_ASSEMBLER.getId())
                 .addStoryBoard("cogni_assembler/common", CogniAssembler::common, CTNHBioPonderTags.BioMultiblock);
+        helper.forComponents(CBMultiblocks.GREAT_FLESH.getId())
+                .addStoryBoard("great_flesh/growth", GreatFlesh::growth,
+                        CTNHBioPonderTags.BioMultiblock)
+                .addStoryBoard("great_flesh/differentiation", GreatFlesh::differentiation,
+                        CTNHBioPonderTags.BioMultiblock);
 
         CTNHBio.LOGGER.info("Bio Ponder scenes initialized");
     }
