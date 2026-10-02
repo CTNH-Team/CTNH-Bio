@@ -1,17 +1,39 @@
 package com.moguang.ctnhbio.client.ponder;
 
 import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.common.data.GTItems;
+import com.gregtechceu.gtceu.common.data.GTMachines;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.machines.GCYMMachines;
 
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
+import com.github.elenterius.biomancy.init.ModItems;
+import com.moguang.ctnhbio.data.materials.OrganicMaterials;
 import com.moguang.ctnhbio.registry.CBMachines;
+import dev.shadowsoffire.hostilenetworks.Hostile;
+import tech.vixhentx.mcmod.ctnhlib.client.ponder.ui.MachineUI;
 
 public final class CogniAssembler {
+
+    /** 数据模型接口自己的界面：意识模型就放在它唯一的槽位里。 */
+    private static final MachineUI NEURAL_MODEL_ACCESSOR_UI = MachineUI.of(CBMachines.NEURAL_MODEL_ACCESSOR)
+            .scale(0.6f);
+
+    /** LV 输入总成：以锻炉的肥料配方为例，3 种物品 + 2 种流体一块方块就装得下。 */
+    private static final MachineUI INPUT_HATCH_UI = MachineUI.of(GTMachines.DUAL_IMPORT_HATCH[GTValues.LV])
+            .scale(0.6f);
+
+    /** LV 物品输出总线：这台机器的配方只出物品，没有流体产物。 */
+    private static final MachineUI ITEM_OUTPUT_BUS_UI = MachineUI.of(GTMachines.ITEM_EXPORT_BUS[GTValues.LV])
+            .scale(0.6f);
 
     private CogniAssembler() {}
 
@@ -79,12 +101,18 @@ public final class CogniAssembler {
                 Pointing.LEFT, 60)
                 .rightClick()
                 .withItem(CBMachines.NEURAL_MODEL_ACCESSOR.asStack());
+        scene.showUI(NEURAL_MODEL_ACCESSOR_UI).at(util.vector().topOf(util.grid().at(3, 3, 2)))
+                .forMachine(util.grid().at(3, 3, 2))
+                .slot(0)
+                .withItem(new ItemStack(Hostile.Items.DATA_MODEL.get()), 20)
+                .outlineSlot(0, 20)
+                .show(170);
         scene.showText(120,
                 "Install the Neural Model Accessor in the unique I position. Put the consciousness model into its slot; assembly steps read the model from this accessor.",
                 "将数据模型接口安装在唯一的 I 位，并把意识模型放入接口槽位；装配步骤会从这里读取意识模型。")
                 .pointAt(util.vector().blockSurface(util.grid().at(3, 3, 2), Direction.NORTH))
                 .attachKeyFrame();
-        scene.idle(140);
+        scene.idle(180);
 
         scene.showText(100,
                 "Fill the remaining ability positions with the energy, item, and fluid handlers required by the recipe.",
@@ -92,6 +120,39 @@ public final class CogniAssembler {
                 .pointAt(util.vector().blockSurface(util.grid().at(2, 2, 2), Direction.NORTH))
                 .attachKeyFrame();
         scene.idle(120);
+
+        // 输入这一路以锻炉的肥料配方为例：3 种物品进格、2 种流体进罐，全在一块总成里。
+        var inputPos = util.grid().at(4, 2, 2);
+        scene.world().setBlock(inputPos, GTMachines.DUAL_IMPORT_HATCH[GTValues.LV].defaultBlockState()
+                .setValue(BlockStateProperties.FACING, Direction.NORTH), true);
+        scene.showUI(INPUT_HATCH_UI).at(util.vector().topOf(inputPos))
+                .forMachine(inputPos)
+                .slot(0)
+                .withItem(new ItemStack(ModItems.NUTRIENTS.get(), 30), 20)
+                .slot(1)
+                .withItem(new ItemStack(ModItems.ORGANIC_MATTER.get(), 4), 20)
+                .slot(2)
+                .withItem(new ItemStack(ChemicalHelper.get(TagPrefix.dust, GTMaterials.Steel).getItem(), 4), 20)
+                .tank(0)
+                .withFluid(OrganicMaterials.Hormone_Secretion.getFluid(600), 20)
+                .tank(1)
+                .withFluid(OrganicMaterials.Regenerative_Fluid.getFluid(400), 20)
+                .outlineSlot(0, 20)
+                .outlineTank(0, 20)
+                .show(180);
+        scene.idle(195);
+
+        // 输出侧只出物品：锻炉配方一条流体产物都没有，这里用物品总线而不是输出总成。
+        var outputPos = util.grid().at(4, 4, 2);
+        scene.world().setBlock(outputPos, GTMachines.ITEM_EXPORT_BUS[GTValues.LV].defaultBlockState()
+                .setValue(BlockStateProperties.FACING, Direction.NORTH), true);
+        scene.showUI(ITEM_OUTPUT_BUS_UI).at(util.vector().topOf(outputPos))
+                .forMachine(outputPos)
+                .slot(0)
+                .withItem(new ItemStack(ModItems.FERTILIZER.get(), 1), 20)
+                .outlineSlot(0, 20)
+                .show(180);
+        scene.idle(195);
 
         var parallelHatchPosition = util.grid().at(4, 3, 2);
         scene.world().setBlock(parallelHatchPosition,

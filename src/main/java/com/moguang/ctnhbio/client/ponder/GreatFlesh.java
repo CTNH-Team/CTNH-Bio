@@ -1,19 +1,38 @@
 package com.moguang.ctnhbio.client.ponder;
 
 import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.data.GTMachines;
 
 import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
+import com.github.elenterius.biomancy.init.ModItems;
+import com.moguang.ctnhbio.data.materials.CommonMaterials;
+import com.moguang.ctnhbio.data.materials.OrganicMaterials;
+import com.moguang.ctnhbio.registry.CBItems;
 import com.moguang.ctnhbio.registry.CBMultiblocks;
+import tech.vixhentx.mcmod.ctnhlib.client.ponder.ui.MachineUI;
 
 public final class GreatFlesh {
+
+    /**
+     * MV 输入总成：一块方块上同时有 6 格物品与 3 个储罐，这条配方的物品和流体一起从这里进。
+     *
+     * <p>
+     * 用总成而不是物品总线 + 流体仓：同样占一块方块，面板也只占一块。等级按需求挑——
+     * LV 的 4 格 / 2 罐装不下这条配方的 6 份物品栈与 3 种化合物。
+     */
+    private static final MachineUI INPUT_HATCH_UI = MachineUI.of(GTMachines.DUAL_IMPORT_HATCH[GTValues.MV])
+            .scale(0.6f);
 
     private GreatFlesh() {}
 
@@ -90,8 +109,7 @@ public final class GreatFlesh {
         var controllerPos = util.grid().at(2, 2, 1);
         var controller = util.select().position(2, 2, 1);
         var flesh = util.select().fromTo(1, 1, 1, 3, 3, 3).substract(controller);
-        var itemInputPos = util.grid().at(1, 1, 1);
-        var fluidInputPos = util.grid().at(2, 1, 1);
+        var inputHatchPos = util.grid().at(1, 1, 1);
         var energyInputPos = util.grid().at(3, 1, 1);
 
         scene.world().showSection(controller, Direction.DOWN);
@@ -106,30 +124,42 @@ public final class GreatFlesh {
         scene.showText(180,
                 "Provide the remaining item, fluid, energy, and nutrient inputs required by the selected recipe. The machine selects the corresponding Great Flesh differentiation recipe based on the input item.",
                 "提供选定配方其余所需的物品、流体、电力和营养。机器会根据输入物品选择对应的巨型肉块分化配方。")
-                .pointAt(util.vector().centerOf(itemInputPos))
+                .pointAt(util.vector().centerOf(inputHatchPos))
                 .attachKeyFrame();
 
-        scene.world().setBlock(itemInputPos,
-                GTMachines.ITEM_IMPORT_BUS[GTValues.LV].defaultBlockState()
+        // 物品与流体都要：直接用 MV 输入总成——一块方块 6 格物品 + 3 个储罐，
+        // 正好装下这条配方的 6 份物品栈与 3 种化合物。
+        scene.world().setBlock(inputHatchPos,
+                GTMachines.DUAL_IMPORT_HATCH[GTValues.MV].defaultBlockState()
                         .setValue(BlockStateProperties.FACING, Direction.NORTH),
                 true);
         scene.overlay().showControls(
-                util.vector().blockSurface(itemInputPos, Direction.NORTH),
-                Pointing.DOWN, 10)
+                util.vector().blockSurface(inputHatchPos, Direction.NORTH),
+                Pointing.DOWN, 30)
                 .rightClick()
-                .withItem(GTMachines.ITEM_IMPORT_BUS[GTValues.LV].asStack());
-        scene.idle(10);
-
-        scene.world().setBlock(fluidInputPos,
-                GTMachines.FLUID_IMPORT_HATCH[GTValues.LV].defaultBlockState()
-                        .setValue(BlockStateProperties.FACING, Direction.NORTH),
-                true);
-        scene.overlay().showControls(
-                util.vector().blockSurface(fluidInputPos, Direction.NORTH),
-                Pointing.DOWN, 10)
-                .rightClick()
-                .withItem(GTMachines.FLUID_IMPORT_HATCH[GTValues.LV].asStack());
-        scene.idle(10);
+                .withItem(GTMachines.DUAL_IMPORT_HATCH[GTValues.MV].asStack());
+        // 以分化出意识装配机的那条配方为例：物品进格、流体进罐，一块面板全演完。
+        scene.showUI(INPUT_HATCH_UI).at(util.vector().topOf(inputHatchPos))
+                .forMachine(inputHatchPos)
+                .slot(0)
+                .withItem(new ItemStack(CBItems.OMNI_CORE.get(), 2), 20)
+                .slot(1)
+                .withItem(new ItemStack(GTItems.QUBIT_CENTRAL_PROCESSING_UNIT.get(), 16), 20)
+                .slot(2)
+                .withItem(new ItemStack(ChemicalHelper.get(TagPrefix.plateDense, CommonMaterials.BLOODSTEEL).getItem(),
+                        12), 20)
+                .slot(3)
+                .withItem(new ItemStack(ModItems.CREATOR_MIX.get(), 8), 20)
+                .tank(0)
+                .withFluid(OrganicMaterials.Unstable_Compound.getFluid(6000), 20)
+                .tank(1)
+                .withFluid(OrganicMaterials.Genetic_Compound.getFluid(6000), 20)
+                .tank(2)
+                .withFluid(OrganicMaterials.Heterogeneous_Compound.getFluid(6000), 20)
+                .outlineSlot(0, 20)
+                .outlineTank(0, 20)
+                .show(190);
+        scene.idle(205);
 
         scene.world().setBlock(energyInputPos,
                 GTMachines.ENERGY_INPUT_HATCH[GTValues.ZPM].defaultBlockState()
