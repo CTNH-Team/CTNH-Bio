@@ -101,8 +101,7 @@ public final class CogniAssembler {
                 Pointing.LEFT, 60)
                 .rightClick()
                 .withItem(CBMachines.NEURAL_MODEL_ACCESSOR.asStack());
-        scene.showUI(NEURAL_MODEL_ACCESSOR_UI).at(util.vector().topOf(util.grid().at(3, 3, 2)))
-                .forMachine(util.grid().at(3, 3, 2))
+        scene.showUI(NEURAL_MODEL_ACCESSOR_UI).at(util.vector().topOf(util.grid().at(3, 3, 2))).machinePos(util.grid().at(3, 3, 2))
                 .slot(0)
                 .withItem(new ItemStack(Hostile.Items.DATA_MODEL.get()), 20)
                 .outlineSlot(0, 20)
@@ -125,8 +124,7 @@ public final class CogniAssembler {
         var inputPos = util.grid().at(4, 2, 2);
         scene.world().setBlock(inputPos, GTMachines.DUAL_IMPORT_HATCH[GTValues.LV].defaultBlockState()
                 .setValue(BlockStateProperties.FACING, Direction.NORTH), true);
-        scene.showUI(INPUT_HATCH_UI).at(util.vector().topOf(inputPos))
-                .forMachine(inputPos)
+        scene.showUI(INPUT_HATCH_UI).at(util.vector().topOf(inputPos)).machinePos(inputPos)
                 .slot(0)
                 .withItem(new ItemStack(ModItems.NUTRIENTS.get(), 30), 20)
                 .slot(1)
@@ -146,8 +144,7 @@ public final class CogniAssembler {
         var outputPos = util.grid().at(4, 4, 2);
         scene.world().setBlock(outputPos, GTMachines.ITEM_EXPORT_BUS[GTValues.LV].defaultBlockState()
                 .setValue(BlockStateProperties.FACING, Direction.NORTH), true);
-        scene.showUI(ITEM_OUTPUT_BUS_UI).at(util.vector().topOf(outputPos))
-                .forMachine(outputPos)
+        scene.showUI(ITEM_OUTPUT_BUS_UI).at(util.vector().topOf(outputPos)).machinePos(outputPos)
                 .slot(0)
                 .withItem(new ItemStack(ModItems.FERTILIZER.get(), 1), 20)
                 .outlineSlot(0, 20)

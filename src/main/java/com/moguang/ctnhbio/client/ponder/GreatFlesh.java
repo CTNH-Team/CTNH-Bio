@@ -139,8 +139,7 @@ public final class GreatFlesh {
                 .rightClick()
                 .withItem(GTMachines.DUAL_IMPORT_HATCH[GTValues.MV].asStack());
         // 以分化出意识装配机的那条配方为例：物品进格、流体进罐，一块面板全演完。
-        scene.showUI(INPUT_HATCH_UI).at(util.vector().topOf(inputHatchPos))
-                .forMachine(inputHatchPos)
+        scene.showUI(INPUT_HATCH_UI).at(util.vector().topOf(inputHatchPos)).machinePos(inputHatchPos)
                 .slot(0)
                 .withItem(new ItemStack(CBItems.OMNI_CORE.get(), 2), 20)
                 .slot(1)
