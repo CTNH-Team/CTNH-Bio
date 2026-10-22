@@ -8,6 +8,7 @@ import com.gregtechceu.gtceu.api.item.component.IItemComponent;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.TooltipBehavior;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -57,42 +58,89 @@ public class CBItems {
 
     public static final Supplier<? extends Item>[] BIO_CORES = new Supplier[GTValues.TIER_COUNT];
 
-    public static final ItemEntry<StyleItem> WETWARE_CAPACITOR = REGISTRATE.item("wetware_capacitor", StyleItem::new)
+    @CN("脂质膜电荷存储")
+    @EN("Lipid Membrane Charge Storage")
+    public static Lang WetwareCapacitorTooltip;
+    @CN("离子通道开关")
+    @EN("Ion-channel Switch")
+    public static Lang WetwareTransistorTooltip;
+    @CN("神经冲动阻滞")
+    @EN("Nerve Impulse Blockade")
+    public static Lang WetwareResistorTooltip;
+    @CN("髓鞘惯性延迟")
+    @EN("Myelin Sheath Conduction Delay")
+    public static Lang WetwareInductorTooltip;
+    @CN("突触单向传导")
+    @EN("Unidirectional Synaptic Transmission")
+    public static Lang WetwareDiodeTooltip;
+    @CN("维生之板")//卫生纸板
+    @EN("A Board That Keeping Live")
+    public static Lang WetCircuitBoardTooltip;
+
+    public static final ItemEntry<ComponentItem> WETWARE_CAPACITOR = REGISTRATE.item("wetware_capacitor", ComponentItem::create)
             .cnlang("湿件电容")
-            .lang("Wetware-Capacitor")
+            .lang("Wetware Capacitor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
+            .onRegister(attach(new TooltipBehavior(
+                    list -> {
+                        list.add(WetwareCapacitorTooltip.translate().withStyle(ChatFormatting.GREEN));
+                    })))
             .register();
-    public static final ItemEntry<StyleItem> WETWARE_TRANSISTOR = REGISTRATE.item("wetware_transistor", StyleItem::new)
+    public static final ItemEntry<ComponentItem> WETWARE_TRANSISTOR = REGISTRATE.item("wetware_transistor", ComponentItem::create)
             .cnlang("湿件晶体管")
-            .lang("Wetware-Transistor")
+            .lang("Wetware Transistor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
+            .onRegister(attach(new TooltipBehavior(
+                    list -> {
+                        list.add(WetwareTransistorTooltip.translate().withStyle(ChatFormatting.GREEN));
+                    })))
             .register();
-    public static final ItemEntry<StyleItem> WETWARE_RESISTOR = REGISTRATE.item("wetware_resistor", StyleItem::new)
+    public static final ItemEntry<ComponentItem> WETWARE_RESISTOR = REGISTRATE.item("wetware_resistor", ComponentItem::create)
             .cnlang("湿件电阻")
-            .lang("Wetware-Resistor")
+            .lang("Wetware Resistor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
+            .onRegister(attach(new TooltipBehavior(
+                    list -> {
+                        list.add(WetwareResistorTooltip.translate().withStyle(ChatFormatting.GREEN));
+                    })))
             .register();
-    public static final ItemEntry<StyleItem> WETWARE_INDUCTOR = REGISTRATE.item("wetware_inductor", StyleItem::new)
+    public static final ItemEntry<ComponentItem> WETWARE_INDUCTOR = REGISTRATE.item("wetware_inductor", ComponentItem::create)
             .cnlang("湿件电感")
-            .lang("Wetware-Inductor")
+            .lang("Wetware Inductor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
+            .onRegister(attach(new TooltipBehavior(
+                    list -> {
+                        list.add(WetwareInductorTooltip.translate().withStyle(ChatFormatting.GREEN));
+                    })))
             .register();
-    public static final ItemEntry<StyleItem> WETWARE_DIODE = REGISTRATE.item("wetware_diode", StyleItem::new)
+    public static final ItemEntry<ComponentItem> WETWARE_DIODE = REGISTRATE.item("wetware_diode", ComponentItem::create)
             .cnlang("湿件二极管")
-            .lang("Wetware-Diode")
+            .lang("Wetware Diode")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
+            .onRegister(attach(new TooltipBehavior(
+                    list -> {
+                        list.add(WetwareDiodeTooltip.translate().withStyle(ChatFormatting.GREEN));
+                    })))
             .register();
-    public static final ItemEntry<StyleItem> WETWARE_CIRCUIT_BOARD = REGISTRATE
-            .item("wetware_circuit_board", StyleItem::new)
+    public static final ItemEntry<ComponentItem> WETWARE_CIRCUIT_BOARD = REGISTRATE
+            .item("wetware_circuit_board", ComponentItem::create)
             .cnlang("湿件电路基板")
             .lang("Wet Circuit Board")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
+            .onRegister(attach(new TooltipBehavior(
+                    list -> {
+                        list.add(WetCircuitBoardTooltip.translate().withStyle(ChatFormatting.GREEN));
+                    })))
             .register();
-    public static final ItemEntry<StyleItem> WETWARE_PRINTED_CIRCUIT_BOARD = REGISTRATE
-            .item("wetware_printed_circuit_board", StyleItem::new)
+    public static final ItemEntry<ComponentItem> WETWARE_PRINTED_CIRCUIT_BOARD = REGISTRATE
+            .item("wetware_printed_circuit_board", ComponentItem::create)
             .cnlang("湿件印刷电路基板")
             .lang("Wet Printed Circuit Board")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
+            .onRegister(attach(new TooltipBehavior(
+                    list -> {
+                        list.add(WetCircuitBoardTooltip.translate().withStyle(ChatFormatting.GREEN));
+                    })))
             .register();
 
     @CN({
