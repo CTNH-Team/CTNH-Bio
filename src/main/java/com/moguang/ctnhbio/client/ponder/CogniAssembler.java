@@ -101,7 +101,8 @@ public final class CogniAssembler {
                 Pointing.LEFT, 60)
                 .rightClick()
                 .withItem(CBMachines.NEURAL_MODEL_ACCESSOR.asStack());
-        scene.showUI(NEURAL_MODEL_ACCESSOR_UI).at(util.vector().topOf(util.grid().at(3, 3, 2))).machinePos(util.grid().at(3, 3, 2))
+        scene.showUI(NEURAL_MODEL_ACCESSOR_UI).at(util.vector().topOf(util.grid().at(3, 3, 2)))
+                .machinePos(util.grid().at(3, 3, 2))
                 .slot(0)
                 .withItem(new ItemStack(Hostile.Items.DATA_MODEL.get()), 20)
                 .outlineSlot(0, 20)

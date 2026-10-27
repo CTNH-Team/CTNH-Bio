@@ -23,7 +23,6 @@ import com.ctnhlang.Suffix;
 import com.github.elenterius.biomancy.init.ModItems;
 import com.github.elenterius.biomancy.init.ModRarities;
 import com.moguang.ctnhbio.api.item.component.OrganicFluidStats;
-import com.moguang.ctnhbio.api.item.component.StyleItem;
 import com.moguang.ctnhbio.common.item.AssemblyStepItem;
 import com.moguang.ctnhbio.common.item.OrganicVialItem;
 import com.moguang.ctnhbio.utils.VialCraftingRemainingItem;
@@ -73,11 +72,12 @@ public class CBItems {
     @CN("突触单向传导")
     @EN("Unidirectional Synaptic Transmission")
     public static Lang WetwareDiodeTooltip;
-    @CN("维生之板")//卫生纸板
+    @CN("维生之板")// 卫生纸板
     @EN("A Board That Keeping Live")
     public static Lang WetCircuitBoardTooltip;
 
-    public static final ItemEntry<ComponentItem> WETWARE_CAPACITOR = REGISTRATE.item("wetware_capacitor", ComponentItem::create)
+    public static final ItemEntry<ComponentItem> WETWARE_CAPACITOR = REGISTRATE
+            .item("wetware_capacitor", ComponentItem::create)
             .cnlang("湿件电容")
             .lang("Wetware Capacitor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
@@ -86,7 +86,8 @@ public class CBItems {
                         list.add(WetwareCapacitorTooltip.translate().withStyle(ChatFormatting.GREEN));
                     })))
             .register();
-    public static final ItemEntry<ComponentItem> WETWARE_TRANSISTOR = REGISTRATE.item("wetware_transistor", ComponentItem::create)
+    public static final ItemEntry<ComponentItem> WETWARE_TRANSISTOR = REGISTRATE
+            .item("wetware_transistor", ComponentItem::create)
             .cnlang("湿件晶体管")
             .lang("Wetware Transistor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
@@ -95,7 +96,8 @@ public class CBItems {
                         list.add(WetwareTransistorTooltip.translate().withStyle(ChatFormatting.GREEN));
                     })))
             .register();
-    public static final ItemEntry<ComponentItem> WETWARE_RESISTOR = REGISTRATE.item("wetware_resistor", ComponentItem::create)
+    public static final ItemEntry<ComponentItem> WETWARE_RESISTOR = REGISTRATE
+            .item("wetware_resistor", ComponentItem::create)
             .cnlang("湿件电阻")
             .lang("Wetware Resistor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
@@ -104,7 +106,8 @@ public class CBItems {
                         list.add(WetwareResistorTooltip.translate().withStyle(ChatFormatting.GREEN));
                     })))
             .register();
-    public static final ItemEntry<ComponentItem> WETWARE_INDUCTOR = REGISTRATE.item("wetware_inductor", ComponentItem::create)
+    public static final ItemEntry<ComponentItem> WETWARE_INDUCTOR = REGISTRATE
+            .item("wetware_inductor", ComponentItem::create)
             .cnlang("湿件电感")
             .lang("Wetware Inductor")
             .properties(p -> new Item.Properties().rarity(ModRarities.RARE))
